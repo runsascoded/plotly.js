@@ -2,16 +2,16 @@ import { coerce2 } from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
 export default function handleTickMarkDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {
-    var isMinor = options.isMinor;
-    var cIn = isMinor ? containerIn.minor || {} : containerIn;
-    var cOut = isMinor ? containerOut.minor : containerOut;
-    var lAttr = isMinor ? layoutAttributes.minor : layoutAttributes;
-    var prefix = isMinor ? 'minor.' : '';
+    const isMinor = options.isMinor;
+    const cIn = isMinor ? containerIn.minor || {} : containerIn;
+    const cOut = isMinor ? containerOut.minor : containerOut;
+    const lAttr = isMinor ? layoutAttributes.minor : layoutAttributes;
+    const prefix = isMinor ? 'minor.' : '';
 
-    var tickLen = coerce2(cIn, cOut, lAttr, 'ticklen', isMinor ? ((containerOut.ticklen || 5) * 0.6) : undefined);
-    var tickWidth = coerce2(cIn, cOut, lAttr, 'tickwidth', isMinor ? (containerOut.tickwidth || 1) : undefined);
-    var tickColor = coerce2(cIn, cOut, lAttr, 'tickcolor', (isMinor ? containerOut.tickcolor : undefined) || cOut.color);
-    var showTicks = coerce(prefix + 'ticks', (
+    const tickLen = coerce2(cIn, cOut, lAttr, 'ticklen', isMinor ? ((containerOut.ticklen || 5) * 0.6) : undefined);
+    const tickWidth = coerce2(cIn, cOut, lAttr, 'tickwidth', isMinor ? (containerOut.tickwidth || 1) : undefined);
+    const tickColor = coerce2(cIn, cOut, lAttr, 'tickcolor', (isMinor ? containerOut.tickcolor : undefined) || cOut.color);
+    const showTicks = coerce(prefix + 'ticks', (
         (!isMinor && options.outerTicks) || tickLen || tickWidth || tickColor
     ) ? 'outside' : '');
 

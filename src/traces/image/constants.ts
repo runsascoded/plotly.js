@@ -5,13 +5,13 @@ export default {
         rgb: {
             min: [0, 0, 0],
             max: [255, 255, 255],
-            fmt: function(c) {return c.slice(0, 3);},
+            fmt: function(c: any) {return c.slice(0, 3);},
             suffix: ['', '', '']
         },
         rgba: {
             min: [0, 0, 0, 0],
             max: [255, 255, 255, 1],
-            fmt: function(c) {return c.slice(0, 4);},
+            fmt: function(c: any) {return c.slice(0, 4);},
             suffix: ['', '', '', '']
         },
         rgba256: {
@@ -20,14 +20,14 @@ export default {
             zmaxDflt: [255, 255, 255, 255],
             min: [0, 0, 0, 0],
             max: [255, 255, 255, 1],
-            fmt: function(c) {return c.slice(0, 4);},
+            fmt: function(c: any) {return c.slice(0, 4);},
             suffix: ['', '', '', '']
         },
         hsl: {
             min: [0, 0, 0],
             max: [360, 100, 100],
-            fmt: function(c) {
-                var p = c.slice(0, 3);
+            fmt: function(c: any) {
+                const p = c.slice(0, 3);
                 p[1] = p[1] + '%';
                 p[2] = p[2] + '%';
                 return p;
@@ -37,8 +37,8 @@ export default {
         hsla: {
             min: [0, 0, 0, 0],
             max: [360, 100, 100, 1],
-            fmt: function(c) {
-                var p = c.slice(0, 4);
+            fmt: function(c: any) {
+                const p = c.slice(0, 4);
                 p[1] = p[1] + '%';
                 p[2] = p[2] + '%';
                 return p;

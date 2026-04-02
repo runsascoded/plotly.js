@@ -19,7 +19,7 @@ export default {
  * returns: boolean
  */
 function hasClickToShow(gd: GraphDiv, hoverData: any) {
-    var sets = getToggleSets(gd, hoverData);
+    const sets = getToggleSets(gd, hoverData);
     return sets.on.length > 0 || sets.explicitOff.length > 0;
 }
 
@@ -34,23 +34,23 @@ function hasClickToShow(gd: GraphDiv, hoverData: any) {
  * returns: Promise that the update is complete
  */
 function onClick(gd: GraphDiv, hoverData: any) {
-    var toggleSets = getToggleSets(gd, hoverData);
-    var onSet = toggleSets.on;
-    var offSet = toggleSets.off.concat(toggleSets.explicitOff);
-    var update: any = {};
-    var annotationsOut = gd._fullLayout.annotations;
-    var i, editHelpers;
+    const toggleSets = getToggleSets(gd, hoverData);
+    const onSet = toggleSets.on;
+    const offSet = toggleSets.off.concat(toggleSets.explicitOff);
+    const update: any = {};
+    const annotationsOut = gd._fullLayout.annotations;
+    let i, editHelpers;
 
     if(!(onSet.length || offSet.length)) return;
 
     for(i = 0; i < onSet.length; i++) {
-        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut[onSet[i]]);
+        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut![onSet[i]]);
         editHelpers.modifyItem('visible', true);
         Lib.extendFlat(update, editHelpers.getUpdateObj());
     }
 
     for(i = 0; i < offSet.length; i++) {
-        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut[offSet[i]]);
+        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut![offSet[i]]);
         editHelpers.modifyItem('visible', false);
         Lib.extendFlat(update, editHelpers.getUpdateObj());
     }
@@ -73,16 +73,16 @@ function onClick(gd: GraphDiv, hoverData: any) {
  * }
  */
 function getToggleSets(gd: GraphDiv, hoverData: any) {
-    var annotations = gd._fullLayout.annotations;
-    var onSet = [];
-    var offSet = [];
-    var explicitOffSet = [];
-    var hoverLen = (hoverData || []).length;
+    const annotations = gd._fullLayout.annotations;
+    const onSet: any[] = [];
+    const offSet: any[] = [];
+    const explicitOffSet: any[] = [];
+    const hoverLen = (hoverData || []).length;
 
-    var i, j, anni, showMode, pointj, xa, ya, toggleType;
+    let i, j, anni, showMode, pointj, xa, ya, toggleType;
 
-    for(i = 0; i < annotations.length; i++) {
-        anni = annotations[i];
+    for(i = 0; i < annotations!.length; i++) {
+        anni = annotations![i];
         showMode = anni.clicktoshow;
 
         if(showMode) {

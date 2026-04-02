@@ -1,11 +1,11 @@
 import Axes from '../../plots/cartesian/axes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-export default function calcLabels(trace, axis) {
-    var i, tobj, prefix, suffix, gridline;
+export default function calcLabels(trace: any, axis: any) {
+    let i, tobj, prefix, suffix, gridline;
 
-    var labels = axis._labels = [];
-    var gridlines = axis._gridlines;
+    const labels = axis._labels = [] as any[];
+    const gridlines = axis._gridlines;
 
     for(i = 0; i < gridlines.length; i++) {
         gridline = gridlines[i];

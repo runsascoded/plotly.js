@@ -1,10 +1,10 @@
 import { isTypedArraySpec } from '../../lib/array.js';
 
 function findCategories(ax?: any, opts?: any): any {
-    var dataAttr = opts.dataAttr || ax._id.charAt(0);
-    var lookup: any = {};
-    var axData;
-    var i, j;
+    const dataAttr = opts.dataAttr || ax._id.charAt(0);
+    const lookup: any = {};
+    let axData;
+    let i, j;
 
     if(opts.axData) {
         // non-x/y case
@@ -13,7 +13,7 @@ function findCategories(ax?: any, opts?: any): any {
         // x/y case
         axData = [];
         for(i = 0; i < opts.data.length; i++) {
-            var trace = opts.data[i];
+            const trace = opts.data[i];
             if(trace[dataAttr + 'axis'] === ax._id) {
                 axData.push(trace);
             }
@@ -21,9 +21,9 @@ function findCategories(ax?: any, opts?: any): any {
     }
 
     for(i = 0; i < axData.length; i++) {
-        var vals = axData[i][dataAttr];
+        const vals = axData[i][dataAttr];
         for(j = 0; j < vals.length; j++) {
-            var v = vals[j];
+            const v = vals[j];
             if(v !== null && v !== undefined) {
                 lookup[v] = 1;
             }
@@ -36,16 +36,16 @@ function findCategories(ax?: any, opts?: any): any {
 export default function handleCategoryOrderDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): void {
     if(containerOut.type !== 'category') return;
 
-    var arrayIn = containerIn.categoryarray;
-    var isValidArray = (Array.isArray(arrayIn) && arrayIn.length > 0) ||
+    const arrayIn = containerIn.categoryarray;
+    const isValidArray = (Array.isArray(arrayIn) && arrayIn.length > 0) ||
         isTypedArraySpec(arrayIn);
 
     // override default 'categoryorder' value when non-empty array is supplied
-    var orderDefault;
+    let orderDefault;
     if(isValidArray) orderDefault = 'array';
 
-    var order = coerce('categoryorder', orderDefault);
-    var array;
+    let order = coerce('categoryorder', orderDefault);
+    let array;
 
     // coerce 'categoryarray' only in array order case
     if(order === 'array') {

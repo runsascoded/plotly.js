@@ -4,30 +4,30 @@ import Lib from '../../lib/index.js';
 // Maybe add kernels more down the road,
 // but note that the default `spanmode: 'soft'` bounds might have
 // to become kernel-dependent
-var kernels = {
+const kernels = {
     gaussian: function(v: number): number {
         return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * v * v);
     }
 };
 
-export var makeKDE = function(calcItem: any, trace: FullTrace, vals: number[]): (x: number) => number {
-    var len = vals.length;
-    var kernel = kernels.gaussian;
-    var bandwidth = calcItem.bandwidth;
-    var factor = 1 / (len * bandwidth);
+export const makeKDE = function(calcItem: any, trace: FullTrace, vals: number[]): (x: number) => number {
+    const len = vals.length;
+    const kernel = kernels.gaussian;
+    const bandwidth = calcItem.bandwidth;
+    const factor = 1 / (len * bandwidth);
 
     // don't use Lib.aggNums to skip isNumeric checks
     return function(x) {
-        var sum = 0;
-        for(var i = 0; i < len; i++) {
+        let sum = 0;
+        for(let i = 0; i < len; i++) {
             sum += kernel((x - vals[i]) / bandwidth);
         }
         return factor * sum;
     };
 };
 
-export var getPositionOnKdePath = function(calcItem: any, trace: FullTrace, valuePx: number): [number, number] {
-    var posLetter, valLetter;
+export const getPositionOnKdePath = function(calcItem: any, trace: FullTrace, valuePx: number): [number, number] {
+    let posLetter, valLetter;
 
     if(trace.orientation === 'h') {
         posLetter = 'y';
@@ -37,28 +37,28 @@ export var getPositionOnKdePath = function(calcItem: any, trace: FullTrace, valu
         valLetter = 'y';
     }
 
-    var pointOnPath = Lib.findPointOnPath(
+    const pointOnPath = Lib.findPointOnPath(
         calcItem.path,
         valuePx,
         valLetter,
         {pathLength: calcItem.pathLength}
     );
 
-    var posCenterPx = calcItem.posCenterPx;
-    var posOnPath0 = pointOnPath[posLetter];
-    var posOnPath1 = trace.side === 'both' ?
+    const posCenterPx = calcItem.posCenterPx;
+    const posOnPath0 = pointOnPath[posLetter];
+    const posOnPath1 = trace.side === 'both' ?
         2 * posCenterPx - posOnPath0 :
         posCenterPx;
 
     return [posOnPath0, posOnPath1];
 };
 
-export var getKdeValue = function(calcItem: any, trace: FullTrace, valueDist: number): number {
-    var vals = calcItem.pts.map(extractVal);
-    var kde = makeKDE(calcItem, trace, vals);
+export const getKdeValue = function(calcItem: any, trace: FullTrace, valueDist: number): number {
+    const vals = calcItem.pts.map(extractVal);
+    const kde = makeKDE(calcItem, trace, vals);
     return kde(valueDist) / calcItem.posDensityScale;
 };
 
-export var extractVal = function(o: any): number { return o.v; };
+export const extractVal = function(o: any): number { return o.v; };
 
 export default { makeKDE, getPositionOnKdePath, getKdeValue, extractVal };

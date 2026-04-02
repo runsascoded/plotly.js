@@ -1,18 +1,18 @@
 import type { FullTrace } from '../../../types/core';
 import Lib from '../../lib/index.js';
 
-export default function arraysToCalcdata(cd,  trace: FullTrace) {
-    for(var i = 0; i < cd.length; i++) cd[i].i = i;
+export default function arraysToCalcdata(cd: any,  trace: FullTrace) {
+    for(let i = 0; i < cd.length; i++) cd[i].i = i;
 
     Lib.mergeArray(trace.text, cd, 'tx');
     Lib.mergeArray(trace.hovertext, cd, 'htx');
 
-    var marker = trace.marker;
+    const marker = trace.marker;
     if(marker) {
         Lib.mergeArray(marker.opacity, cd, 'mo');
         Lib.mergeArray(marker.color, cd, 'mc');
 
-        var markerLine = marker.line;
+        const markerLine = marker.line;
         if(markerLine) {
             Lib.mergeArray(markerLine.color, cd, 'mlc');
             Lib.mergeArrayCastPositive(markerLine.width, cd, 'mlw');

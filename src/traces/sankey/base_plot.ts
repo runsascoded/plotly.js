@@ -11,23 +11,23 @@ const { prepSelect } = _index;
 import Lib from '../../lib/index.js';
 import Registry from '../../registry.js';
 
-var SANKEY = 'sankey';
+const SANKEY = 'sankey';
 
-export var name = SANKEY;
+export const name = SANKEY;
 
-export var baseLayoutAttrOverrides = overrideAll({
+export const baseLayoutAttrOverrides = overrideAll({
     hoverlabel: fxAttrs.hoverlabel
 }, 'plot', 'nested');
 
-export var plot = function(gd: GraphDiv): void {
-    var calcData = getModuleCalcData(gd.calcdata, SANKEY)[0];
+export const plot = function(gd: GraphDiv): void {
+    const calcData = getModuleCalcData(gd.calcdata, SANKEY)[0];
     sankeyPlot(gd, calcData);
     updateFx(gd);
 };
 
-export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
-    var hadPlot = (oldFullLayout._has && oldFullLayout._has(SANKEY));
-    var hasPlot = (newFullLayout._has && newFullLayout._has(SANKEY));
+export const clean = function(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
+    const hadPlot = (oldFullLayout._has && oldFullLayout._has(SANKEY));
+    const hasPlot = (newFullLayout._has && newFullLayout._has(SANKEY));
 
     if(hadPlot && !hasPlot) {
         oldFullLayout._paperdiv.selectAll('.sankey').remove();
@@ -35,32 +35,32 @@ export var clean = function(newFullData: FullTrace[], newFullLayout: FullLayout,
     }
 };
 
-export var updateFx = function(gd: GraphDiv): void {
-    for(var i = 0; i < gd._fullData.length; i++) {
+export const updateFx = function(gd: GraphDiv): void {
+    for(let i = 0; i < gd._fullData.length; i++) {
         subplotUpdateFx(gd, i);
     }
 };
 
 function subplotUpdateFx(gd: GraphDiv, index: number) {
-    var trace = gd._fullData[index];
-    var fullLayout = gd._fullLayout;
+    const trace = gd._fullData[index];
+    const fullLayout = gd._fullLayout;
 
-    var dragMode = fullLayout.dragmode;
-    var cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
-    var bgRect = trace._bgRect;
+    const dragMode = fullLayout.dragmode;
+    const cursor = fullLayout.dragmode === 'pan' ? 'move' : 'crosshair';
+    const bgRect = trace._bgRect;
     if(!bgRect) return;
 
     if(dragMode === 'pan' || dragMode === 'zoom') return;
 
     setCursor(bgRect, cursor);
 
-    var xaxis = {
+    const xaxis = {
         _id: 'x',
         c2p: Lib.identity,
         _offset: trace._sankey.translateX,
         _length: trace._sankey.width
     };
-    var yaxis = {
+    const yaxis = {
         _id: 'y',
         c2p: Lib.identity,
         _offset: trace._sankey.translateY,
@@ -69,7 +69,7 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
 
     // Note: dragOptions is needed to be declared for all dragmodes because
     // it's the object that holds persistent selection state.
-    var dragOptions: Record<string, any> = {
+    const dragOptions: Record<string, any> = {
         gd: gd,
         element: bgRect.node(),
         plotinfo: {
@@ -82,27 +82,27 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
         // create mock x/y axes for hover routine
         xaxes: [xaxis],
         yaxes: [yaxis],
-        doneFnCompleted: function(selection) {
-            var traceNow = gd._fullData[index];
-            var newGroups;
-            var oldGroups = traceNow.node.groups.slice();
-            var newGroup = [];
+        doneFnCompleted: function(selection: any) {
+            const traceNow = gd._fullData[index];
+            let newGroups;
+            const oldGroups = traceNow.node.groups.slice();
+            const newGroup: any[] = [];
 
-            function findNode(pt) {
-                var nodes = traceNow._sankey.graph.nodes;
-                for(var i = 0; i < nodes.length; i++) {
+            function findNode(pt: any) {
+                const nodes = traceNow._sankey.graph.nodes;
+                for(let i = 0; i < nodes.length; i++) {
                     if(nodes[i].pointNumber === pt) return nodes[i];
                 }
             }
 
-            for(var j = 0; j < selection.length; j++) {
-                var node = findNode(selection[j].pointNumber);
+            for(let j = 0; j < selection.length; j++) {
+                const node = findNode(selection[j].pointNumber);
                 if(!node) continue;
 
                 // If the node represents a group
                 if(node.group) {
                     // Add all its children to the current selection
-                    for(var k = 0; k < node.childrenNodes.length; k++) {
+                    for(let k = 0; k < node.childrenNodes.length; k++) {
                         newGroup.push(node.childrenNodes[k].pointNumber);
                     }
                     // Flag group for removal from existing list of groups
@@ -122,7 +122,7 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
         }
     };
 
-    dragOptions.prepFn = function(e, startX, startY) {
+    dragOptions.prepFn = function(e: any, startX: any, startY: any) {
         prepSelect(e, startX, startY, dragOptions, dragMode);
     };
 

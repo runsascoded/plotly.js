@@ -10,12 +10,12 @@ import Lib from '../../lib/index.js';
 import isNumeric from 'fast-isnumeric';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var visibleDims = Lib.filterVisible(trace.dimensions);
+    const visibleDims = Lib.filterVisible(trace.dimensions);
 
     if(visibleDims.length === 0) return [];
 
-    var uniqueInfoDims = visibleDims.map(function(dim) {
-        var categoryValues;
+    const uniqueInfoDims = visibleDims.map(function(dim: any) {
+        let categoryValues;
         if(dim.categoryorder === 'trace') {
             // Use order of first occurrence in trace
             categoryValues = null;
@@ -28,8 +28,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
             categoryValues = filterUnique(dim.values);
 
             // order them
-            var allNumeric = true;
-            for(var i = 0; i < categoryValues.length; i++) {
+            let allNumeric = true;
+            for(let i = 0; i < categoryValues.length; i++) {
                 if(!isNumeric(categoryValues[i])) {
                     allNumeric = false;
                     break;
@@ -44,7 +44,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         return getUniqueInfo(dim.values, categoryValues);
     });
 
-    var counts,
+    let counts,
         count,
         totalCount;
     if(Lib.isArrayOrTypedArray(trace.counts)) {
@@ -55,14 +55,14 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     validateDimensionDisplayInds(visibleDims);
 
-    visibleDims.forEach(function(dim, dimInd) {
+    visibleDims.forEach(function(dim: any, dimInd: any) {
         validateCategoryProperties(dim, uniqueInfoDims[dimInd]);
     });
 
     // Handle path colors
     // ------------------
-    var line = trace.line;
-    var markerColorscale;
+    const line = trace.line;
+    let markerColorscale: any;
 
     // Process colorscale
     if(line) {
@@ -79,8 +79,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     }
 
     // Build color generation function
-    function getMarkerColorInfo(index) {
-        var value, rawColor;
+    function getMarkerColorInfo(index: any) {
+        let value, rawColor;
         if(Lib.isArrayOrTypedArray(line.color)) {
             value = line.color[index % line.color.length];
             rawColor = value;
@@ -93,24 +93,24 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     // Number of values and counts
     // ---------------------------
-    var numValues = visibleDims[0].values.length;
+    const numValues = visibleDims[0].values.length;
 
     // Build path info
     // ---------------
     // Mapping from category inds to PathModel objects
-    var pathModels: any = {};
+    const pathModels: any = {};
 
     // Category inds array for each dimension
-    var categoryIndsDims = uniqueInfoDims.map(function(di) {return di.inds;});
+    const categoryIndsDims = uniqueInfoDims.map(function(di: any) {return di.inds;});
 
     // Initialize total count
     totalCount = 0;
-    var valueInd;
-    var d;
+    let valueInd;
+    let d;
 
     for(valueInd = 0; valueInd < numValues; valueInd++) {
         // Category inds for this input value across dimensions
-        var categoryIndsPath = [];
+        const categoryIndsPath: any[] = [];
         for(d = 0; d < categoryIndsDims.length; d++) {
             categoryIndsPath.push(categoryIndsDims[d][valueInd]);
         }
@@ -122,10 +122,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         totalCount += count;
 
         // Path color
-        var pathColorInfo = getMarkerColorInfo(valueInd);
+        const pathColorInfo = getMarkerColorInfo(valueInd);
 
         // path key
-        var pathKey = categoryIndsPath + '-' + pathColorInfo.rawColor;
+        const pathKey = categoryIndsPath + '-' + pathColorInfo.rawColor;
 
         // Create / Update PathModel
         if(pathModels[pathKey] === undefined) {
@@ -136,7 +136,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         updatePathModel(pathModels[pathKey], valueInd, count);
     }
 
-    var dimensionModels = visibleDims.map(function(di, i) {
+    const dimensionModels = visibleDims.map(function(di: any, i: any) {
         return createDimensionModel(i, di._index, di._displayindex, di.label, totalCount);
     });
 
@@ -144,13 +144,13 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         count = counts[valueInd % counts.length];
 
         for(d = 0; d < dimensionModels.length; d++) {
-            var containerInd = dimensionModels[d].containerInd;
-            var catInd = uniqueInfoDims[d].inds[valueInd];
-            var cats = dimensionModels[d].categories;
+            const containerInd = dimensionModels[d].containerInd;
+            const catInd = uniqueInfoDims[d].inds[valueInd];
+            const cats = dimensionModels[d].categories;
 
             if(cats[catInd] === undefined) {
-                var catValue = trace.dimensions[containerInd]._categoryarray[catInd];
-                var catLabel = trace.dimensions[containerInd]._ticktext[catInd];
+                const catValue = trace.dimensions[containerInd]._categoryarray[catInd];
+                const catLabel = trace.dimensions[containerInd]._ticktext[catInd];
                 cats[catInd] = createCategoryModel(d, catInd, catValue, catLabel);
             }
 
@@ -189,10 +189,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
  * @param {Number} count
  * @return {ParcatsModel}
  */
-function createParcatsModel(dimensions, paths, count) {
-    var maxCats = dimensions
-        .map(function(d) {return d.categories.length;})
-        .reduce(function(v1, v2) {return Math.max(v1, v2);});
+function createParcatsModel(dimensions: any, paths: any, count: any) {
+    const maxCats = dimensions
+        .map(function(d: any) {return d.categories.length;})
+        .reduce(function(v1: any, v2: any) {return Math.max(v1, v2);});
     return {dimensions: dimensions, paths: paths, trace: undefined, maxCats: maxCats, count: count};
 }
 
@@ -228,7 +228,7 @@ function createParcatsModel(dimensions, paths, count) {
  *  Total number of input values
  * @return {DimensionModel}
  */
-function createDimensionModel(dimensionInd, containerInd, displayInd, dimensionLabel, count) {
+function createDimensionModel(dimensionInd: any, containerInd: any, displayInd: any, dimensionLabel: any, count: any) {
     return {
         dimensionInd: dimensionInd,
         containerInd: containerInd,
@@ -272,7 +272,7 @@ function createDimensionModel(dimensionInd, containerInd, displayInd, dimensionL
  * @param {String} categoryLabel
  * @return {CategoryModel}
  */
-function createCategoryModel(dimensionInd, categoryInd, categoryValue, categoryLabel) {
+function createCategoryModel(dimensionInd: any, categoryInd: any, categoryValue: any, categoryLabel: any) {
     return {
         dimensionInd: dimensionInd,
         categoryInd: categoryInd,
@@ -293,7 +293,7 @@ function createCategoryModel(dimensionInd, categoryInd, categoryValue, categoryL
  * @param {Number} valueInd
  * @param {Number} count
  */
-function updateCategoryModel(categoryModel, valueInd, count) {
+function updateCategoryModel(categoryModel: any, valueInd: any, count: any) {
     categoryModel.valueInds.push(valueInd);
     categoryModel.count += count;
 }
@@ -325,7 +325,7 @@ function updateCategoryModel(categoryModel, valueInd, count) {
  * @param rawColor
  * @return {PathModel}
  */
-function createPathModel(categoryInds, color, rawColor) {
+function createPathModel(categoryInds: any, color: any, rawColor: any) {
     return {
         categoryInds: categoryInds,
         color: color,
@@ -343,7 +343,7 @@ function createPathModel(categoryInds, color, rawColor) {
  * @param {Number} valueInd
  * @param {Number} count
  */
-function updatePathModel(pathModel, valueInd, count) {
+function updatePathModel(pathModel: any, valueInd: any, count: any) {
     pathModel.valueInds.push(valueInd);
     pathModel.count += count;
 }
@@ -377,30 +377,30 @@ function updatePathModel(pathModel, valueInd, count) {
  *  UniqueInfo object.
  * @return {UniqueInfo}
  */
-function getUniqueInfo(values, uniqueValues) {
+function getUniqueInfo(values: any, uniqueValues: any) {
     // Initialize uniqueValues if not specified
     if(uniqueValues === undefined || uniqueValues === null) {
         uniqueValues = [];
     } else {
         // Shallow copy so append below doesn't alter input array
-        uniqueValues = uniqueValues.map(function(e) {return e;});
+        uniqueValues = uniqueValues.map(function(e: any) {return e;});
     }
 
     // Initialize Variables
-    var uniqueValueCounts: any = {};
-    var uniqueValueInds: any = {};
-    var inds = [];
+    const uniqueValueCounts: any = {};
+    const uniqueValueInds: any = {};
+    const inds: any[] = [];
 
     // Initialize uniqueValueCounts and
-    uniqueValues.forEach(function(uniqueVal, valInd) {
+    uniqueValues.forEach(function(uniqueVal: any, valInd: any) {
         uniqueValueCounts[uniqueVal] = 0;
         uniqueValueInds[uniqueVal] = valInd;
     });
 
     // Compute the necessary unique info in a single pass
-    for(var i = 0; i < values.length; i++) {
-        var item = values[i];
-        var itemInd;
+    for(let i = 0; i < values.length; i++) {
+        const item = values[i];
+        let itemInd;
 
         if(uniqueValueCounts[item] === undefined) {
             // This item has a previously unseen value
@@ -416,7 +416,7 @@ function getUniqueInfo(values, uniqueValues) {
     }
 
     // Build UniqueInfo
-    var uniqueCounts = uniqueValues.map(function(v) { return uniqueValueCounts[v]; });
+    const uniqueCounts = uniqueValues.map(function(v: any) { return uniqueValueCounts[v]; });
 
     return {
         uniqueValues: uniqueValues,
@@ -431,9 +431,9 @@ function getUniqueInfo(values, uniqueValues) {
  * Otherwise, replace the display order with the dimension order
  * @param {Object} trace
  */
-function validateDimensionDisplayInds(visibleDims) {
-    var displayInds = visibleDims.map(function(d) { return d.displayindex; });
-    var i;
+function validateDimensionDisplayInds(visibleDims: any) {
+    const displayInds = visibleDims.map(function(d: any) { return d.displayindex; });
+    let i;
 
     if(isRangePermutation(displayInds)) {
         for(i = 0; i < visibleDims.length; i++) {
@@ -451,7 +451,7 @@ function validateDimensionDisplayInds(visibleDims) {
  * @param {Object} dim
  * @param {UniqueInfo} uniqueInfoDim
  */
-function validateCategoryProperties(dim, uniqueInfoDim) {
+function validateCategoryProperties(dim: any, uniqueInfoDim: any) {
     // Update categoryarray
     dim._categoryarray = uniqueInfoDim.uniqueValues;
 
@@ -464,7 +464,7 @@ function validateCategoryProperties(dim, uniqueInfoDim) {
     }
 
     // Extend ticktext with elements from uniqueInfoDim.uniqueValues
-    for(var i = dim._ticktext.length; i < uniqueInfoDim.uniqueValues.length; i++) {
+    for(let i = dim._ticktext.length; i < uniqueInfoDim.uniqueValues.length; i++) {
         dim._ticktext.push(uniqueInfoDim.uniqueValues[i]);
     }
 }
@@ -474,10 +474,10 @@ function validateCategoryProperties(dim, uniqueInfoDim) {
  * @param {Array} inds
  * @return {boolean}
  */
-function isRangePermutation(inds) {
-    var indsSpecified = new Array(inds.length);
+function isRangePermutation(inds: any) {
+    const indsSpecified = new Array(inds.length);
 
-    for(var i = 0; i < inds.length; i++) {
+    for(let i = 0; i < inds.length; i++) {
         // Check for out of bounds
         if(inds[i] < 0 || inds[i] >= inds.length) {
             return false;

@@ -1,6 +1,6 @@
-export default function smoothFillArray(data) {
-    var i, i0, i1;
-    var n = data.length;
+export default function smoothFillArray(data: any) {
+    let i, i0, i1: any;
+    const n = data.length;
 
     for(i = 0; i < n; i++) {
         if(data[i] !== undefined) {
@@ -32,9 +32,9 @@ export default function smoothFillArray(data) {
         return data;
     }
 
-    var iA = i0;
-    var iB;
-    var m, b, dA, dB;
+    let iA = i0;
+    let iB;
+    let m, b, dA, dB;
 
     // Fill in interior data. When we land on an undefined point,
     // look ahead until the next defined point and then fill in linearly:
@@ -71,8 +71,8 @@ export default function smoothFillArray(data) {
 
     // Fill in after the last data point:
     if(i1 < n - 1) {
-        m = data[i1] - data[i1 - 1];
-        b = data[i1];
+        m = data[i1 as any] - data[i1 - 1];
+        b = data[i1 as any];
         for(i = i1 + 1; i < n; i++) {
             data[i] = m * (i - i1) + b;
         }

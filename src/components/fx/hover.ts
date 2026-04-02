@@ -20,29 +20,29 @@ import type { GraphDiv, FullLayout, FullAxis, FullTrace } from '../../../types/c
 
 // hover labels for multiple horizontal bars get tilted by some angle,
 // then need to be offset differently if they overlap
-var YANGLE = constants.YANGLE;
-var YA_RADIANS = (Math.PI * YANGLE) / 180;
+const YANGLE = constants.YANGLE;
+const YA_RADIANS = (Math.PI * YANGLE) / 180;
 
 // expansion of projected height
-var YFACTOR = 1 / Math.sin(YA_RADIANS);
+const YFACTOR = 1 / Math.sin(YA_RADIANS);
 
 // to make the appropriate post-rotation x offset,
 // you need both x and y offsets
-var YSHIFTX = Math.cos(YA_RADIANS);
-var YSHIFTY = Math.sin(YA_RADIANS);
+const YSHIFTX = Math.cos(YA_RADIANS);
+const YSHIFTY = Math.sin(YA_RADIANS);
 
 // size and display constants for hover text
-var HOVERARROWSIZE = constants.HOVERARROWSIZE;
-var HOVERTEXTPAD = constants.HOVERTEXTPAD;
+const HOVERARROWSIZE = constants.HOVERARROWSIZE;
+const HOVERTEXTPAD = constants.HOVERTEXTPAD;
 
-var multipleHoverPoints: Record<string, boolean> = {
+const multipleHoverPoints: Record<string, boolean> = {
     box: true,
     ohlc: true,
     violin: true,
     candlestick: true
 };
 
-var cartesianScatterPoints: Record<string, boolean> = {
+const cartesianScatterPoints: Record<string, boolean> = {
     scatter: true,
     scattergl: true,
     splom: true
@@ -52,45 +52,45 @@ function distanceSort(a: any, b: any): number {
     return a.distance - b.distance;
 }
 
-export var hover = function hover(gd: GraphDiv, evt: any, subplot?: any, noHoverEvent?: boolean): void {
+export const hover = function hover(gd: GraphDiv, evt: any, subplot?: any, noHoverEvent?: boolean): void {
     gd = getGraphDiv(gd) as GraphDiv;
     // The 'target' property changes when bubbling out of Shadow DOM.
     // Throttling can delay reading the target, so we save the current value.
-    var eventTarget = evt.target;
+    const eventTarget = evt.target;
     throttle(gd._fullLayout._uid + constants.HOVERID, constants.HOVERMINTIME, function () {
         _hover(gd, evt, subplot, noHoverEvent, eventTarget);
     });
 };
 
-export var loneHover = function loneHover(hoverItems: any, opts: any): any {
-    var multiHover = true;
+export const loneHover = function loneHover(hoverItems: any, opts: any): any {
+    let multiHover = true;
     if (!Array.isArray(hoverItems)) {
         multiHover = false;
         hoverItems = [hoverItems];
     }
 
-    var gd = opts.gd;
-    var gTop = getTopOffset(gd);
-    var gLeft = getLeftOffset(gd);
+    const gd = opts.gd;
+    const gTop = getTopOffset(gd);
+    const gLeft = getLeftOffset(gd);
 
-    var pointsData = hoverItems.map(function (hoverItem) {
-        var _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
-        var _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
-        var _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
-        var _y1 = hoverItem._y1 || hoverItem.y1 || hoverItem.y || 0;
+    const pointsData = hoverItems.map(function (hoverItem: any) {
+        const _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
+        const _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
+        const _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
+        const _y1 = hoverItem._y1 || hoverItem.y1 || hoverItem.y || 0;
 
-        var eventData = hoverItem.eventData;
+        let eventData = hoverItem.eventData;
         if (eventData) {
-            var x0 = Math.min(_x0, _x1);
-            var x1 = Math.max(_x0, _x1);
-            var y0 = Math.min(_y0, _y1);
-            var y1 = Math.max(_y0, _y1);
+            let x0 = Math.min(_x0, _x1);
+            let x1 = Math.max(_x0, _x1);
+            let y0 = Math.min(_y0, _y1);
+            let y1 = Math.max(_y0, _y1);
 
-            var trace = hoverItem.trace;
+            const trace = hoverItem.trace;
             if (Registry.traceIs(trace, 'gl3d')) {
-                var container = gd._fullLayout[trace.scene]._scene.container;
-                var dx = container.offsetLeft;
-                var dy = container.offsetTop;
+                const container = gd._fullLayout[trace.scene]._scene.container;
+                const dx = container.offsetLeft;
+                const dy = container.offsetTop;
                 x0 += dx;
                 x1 += dx;
                 y0 += dy;
@@ -151,9 +151,9 @@ export var loneHover = function loneHover(hoverItems: any, opts: any): any {
         };
     });
 
-    var rotateLabels = false;
+    const rotateLabels = false;
 
-    var hoverText = createHoverText(pointsData, {
+    const hoverText = createHoverText(pointsData, {
         gd: gd,
         hovermode: 'closest',
         rotateLabels: rotateLabels,
@@ -161,18 +161,18 @@ export var loneHover = function loneHover(hoverItems: any, opts: any): any {
         container: select(opts.container),
         outerContainer: opts.outerContainer || opts.container
     });
-    var hoverLabel = hoverText.hoverLabels;
+    const hoverLabel = hoverText.hoverLabels;
 
     // Fix vertical overlap
-    var tooltipSpacing = 5;
-    var lastBottomY = 0;
-    var anchor = 0;
+    const tooltipSpacing = 5;
+    let lastBottomY = 0;
+    let anchor = 0;
     hoverLabel
-        .sort(function (a, b) {
+        .sort(function (a: any, b: any) {
             return a.y0 - b.y0;
         })
-        .each(function (d, i) {
-            var topY = d.y0 - d.by / 2;
+        .each(function (d: any, i: any) {
+            const topY = d.y0 - d.by / 2;
 
             if (topY - tooltipSpacing < lastBottomY) {
                 d.offset = lastBottomY - topY + tooltipSpacing;
@@ -184,12 +184,12 @@ export var loneHover = function loneHover(hoverItems: any, opts: any): any {
 
             if (i === opts.anchorIndex || 0) anchor = d.offset;
         })
-        .each(function (d) {
+        .each(function (d: any) {
             d.offset -= anchor;
         });
 
-    var scaleX = gd._fullLayout._invScaleX;
-    var scaleY = gd._fullLayout._invScaleY;
+    const scaleX = gd._fullLayout._invScaleX;
+    const scaleY = gd._fullLayout._invScaleY;
     alignHoverText(hoverLabel, rotateLabels, scaleX, scaleY);
 
     return multiHover ? hoverLabel : hoverLabel.node();
@@ -206,26 +206,26 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // if the user passed in an array of subplots,
     // use those instead of finding overlayed plots
-    var subplots = Array.isArray(subplot) ? subplot : [subplot];
+    let subplots = Array.isArray(subplot) ? subplot : [subplot];
 
-    var spId;
+    let spId;
 
-    var fullLayout = gd._fullLayout;
-    var hoversubplots = fullLayout.hoversubplots;
-    var plots = fullLayout._plots || [];
-    var plotinfo = plots[subplot];
-    var hasCartesian = fullLayout._has('cartesian');
+    const fullLayout = gd._fullLayout;
+    const hoversubplots = fullLayout.hoversubplots;
+    const plots = fullLayout._plots || [];
+    const plotinfo = plots[subplot];
+    const hasCartesian = fullLayout._has('cartesian');
 
-    var hovermode = evt.hovermode || fullLayout.hovermode;
-    var hovermodeHasX = (hovermode || '').charAt(0) === 'x';
-    var hovermodeHasY = (hovermode || '').charAt(0) === 'y';
+    let hovermode = evt.hovermode || fullLayout.hovermode;
+    const hovermodeHasX = (hovermode || '').charAt(0) === 'x';
+    const hovermodeHasY = (hovermode || '').charAt(0) === 'y';
 
-    var firstXaxis;
-    var firstYaxis;
+    let firstXaxis: any;
+    let firstYaxis: any;
 
     if (hasCartesian && (hovermodeHasX || hovermodeHasY) && hoversubplots === 'axis') {
-        var subplotsLength = subplots.length;
-        for (var p = 0; p < subplotsLength; p++) {
+        const subplotsLength = subplots.length;
+        for (let p = 0; p < subplotsLength; p++) {
             spId = subplots[p];
             if (plots[spId]) {
                 // 'cartesian' case
@@ -233,10 +233,10 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                 firstXaxis = Axes.getFromId(gd, spId, 'x');
                 firstYaxis = Axes.getFromId(gd, spId, 'y');
 
-                var subplotsWith = (hovermodeHasX ? firstXaxis : firstYaxis)._subplotsWith;
+                const subplotsWith = (hovermodeHasX ? firstXaxis : firstYaxis)._subplotsWith;
 
                 if (subplotsWith && subplotsWith.length) {
-                    for (var q = 0; q < subplotsWith.length; q++) {
+                    for (let q = 0; q < subplotsWith.length; q++) {
                         pushUnique(subplots, subplotsWith[q]);
                     }
                 }
@@ -246,19 +246,19 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // list of all overlaid subplots to look at
     if (plotinfo && hoversubplots !== 'single') {
-        var overlayedSubplots = plotinfo.overlays.map(function (pi) {
+        const overlayedSubplots = plotinfo.overlays.map(function (pi: any) {
             return pi.id;
         });
 
         subplots = subplots.concat(overlayedSubplots);
     }
 
-    var len = subplots.length;
-    var xaArray = new Array(len);
-    var yaArray = new Array(len);
-    var supportsCompare = false;
+    const len = subplots.length;
+    const xaArray = new Array(len);
+    const yaArray = new Array(len);
+    let supportsCompare = false;
 
-    for (var i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
         spId = subplots[i];
 
         if (plots[spId]) {
@@ -268,7 +268,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             yaArray[i] = plots[spId].yaxis;
         } else if (fullLayout[spId] && fullLayout[spId]._subplot) {
             // other subplot types
-            var _subplot = fullLayout[spId]._subplot;
+            const _subplot = fullLayout[spId]._subplot;
             xaArray[i] = _subplot.xaxis;
             yaArray[i] = _subplot.yaxis;
         } else {
@@ -288,36 +288,36 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         return dragElement.unhoverRaw(gd, evt);
     }
 
-    var hoverdistance = fullLayout.hoverdistance;
+    let hoverdistance = fullLayout.hoverdistance;
     if (hoverdistance === -1) hoverdistance = Infinity;
 
-    var spikedistance = fullLayout.spikedistance;
+    let spikedistance = fullLayout.spikedistance;
     if (spikedistance === -1) spikedistance = Infinity;
 
     // hoverData: the set of candidate points we've found to highlight
-    var hoverData = [];
+    let hoverData: any[] = [];
 
     // searchData: the data to search in. Mostly this is just a copy of
     // gd.calcdata, filtered to the subplot and overlays we're on
     // but if a point array is supplied it will be a mapping
     // of indicated curves
-    var searchData = [];
+    const searchData: any[] = [];
 
     // [x|y]valArray: the axis values of the hover event
     // mapped onto each of the currently selected overlaid subplots
-    var xvalArray, yvalArray;
+    let xvalArray: any, yvalArray: any;
 
-    var itemnum, curvenum, cd, trace, subplotId, subploti, _mode, xval, yval, pointData, closedataPreviousLength;
+    let itemnum, curvenum, cd, trace, subplotId, subploti, _mode, xval: any, yval: any, pointData: any, closedataPreviousLength;
 
     // spikePoints: the set of candidate points we've found to draw spikes to
-    var spikePoints = {
+    const spikePoints = {
         hLinePoint: null,
         vLinePoint: null
     };
 
     // does subplot have one (or more) horizontal traces?
     // This is used to determine whether we rotate the labels or not
-    var hasOneHorizontalTrace = false;
+    let hasOneHorizontalTrace = false;
 
     // Figure out what we're hovering on:
     // mouse location or user-supplied data
@@ -339,10 +339,10 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         }
     } else {
         // take into account zorder
-        var zorderedCalcdata = gd.calcdata.slice();
+        const zorderedCalcdata = gd.calcdata.slice();
         zorderedCalcdata.sort(function (a, b) {
-            var aZorder = a[0].trace.zorder || 0;
-            var bZorder = b[0].trace.zorder || 0;
+            const aZorder = a[0].trace.zorder || 0;
+            const bZorder = b[0].trace.zorder || 0;
             return aZorder - bZorder;
         });
 
@@ -360,8 +360,8 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         // [x|y]px: the pixels (from top left) of the mouse location
         // on the currently selected plot area
         // add pointerX|Y property for drawing the spikes in spikesnap 'cursor' situation
-        var hasUserCalledHover = !eventTarget;
-        var xpx, ypx;
+        const hasUserCalledHover = !eventTarget;
+        let xpx, ypx;
 
         if (hasUserCalledHover) {
             if ('xpx' in evt) xpx = evt.xpx;
@@ -377,13 +377,13 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                 return;
             }
 
-            var dbb = eventTarget.getBoundingClientRect();
+            const dbb = eventTarget.getBoundingClientRect();
 
             xpx = evt.clientX - dbb.left;
             ypx = evt.clientY - dbb.top;
 
             fullLayout._calcInverseTransform(gd);
-            var transformedCoords = apply3DTransform(fullLayout._invTransform)(xpx, ypx);
+            const transformedCoords = apply3DTransform(fullLayout._invTransform)(xpx, ypx);
 
             xpx = transformedCoords[0];
             ypx = transformedCoords[1];
@@ -412,7 +412,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // the pixel distance to beat as a matching point
     // in 'x' or 'y' mode this resets for each trace
-    var distance = Infinity;
+    let distance = Infinity;
 
     // find the closest point in each trace
     // this is minimum dx and/or dy, depending on mode
@@ -502,7 +502,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             // for a highlighting array, figure out what
             // we're searching for with this element
             if (_mode === 'array') {
-                var selection = evt[curvenum];
+                const selection = evt[curvenum];
                 if ('pointNumber' in selection) {
                     pointData.index = selection.pointNumber;
                     _mode = 'closest';
@@ -530,7 +530,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             // Now if there is range to look in, find the points to hover.
             if (hoverdistance !== 0) {
                 if (trace._module && trace._module.hoverPoints) {
-                    var newPoints = trace._module.hoverPoints(pointData, xval, yval, _mode, {
+                    const newPoints = trace._module.hoverPoints(pointData, xval, yval, _mode, {
                         finiteRange: true,
                         hoverLayer: fullLayout._hoverlayer,
 
@@ -540,11 +540,11 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                     });
 
                     if (newPoints) {
-                        var newPoint;
-                        for (var newPointNum = 0; newPointNum < newPoints.length; newPointNum++) {
+                        let newPoint;
+                        for (let newPointNum = 0; newPointNum < newPoints.length; newPointNum++) {
                             newPoint = newPoints[newPointNum];
                             if (isNumeric(newPoint.x0) && isNumeric(newPoint.y0)) {
-                                hoverData.push(cleanPoint(newPoint, hovermode));
+                                hoverData.push((cleanPoint(newPoint, hovermode) as any));
                             }
                         }
                     }
@@ -558,7 +558,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             // traces like box & violin make multiple hover labels at once)
             if (hovermode === 'closest' && hoverData.length > closedataPreviousLength) {
                 hoverData.splice(0, closedataPreviousLength);
-                distance = hoverData[0].distance;
+                distance = (hoverData[0] as any).distance;
             }
 
             // Now if there is range to look in, find the points to draw the spikelines
@@ -567,44 +567,44 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                 if (hoverData.length === 0) {
                     pointData.distance = spikedistance;
                     pointData.index = false;
-                    var closestPoints = trace._module.hoverPoints(pointData, xval, yval, 'closest', {
+                    let closestPoints = trace._module.hoverPoints(pointData, xval, yval, 'closest', {
                         hoverLayer: fullLayout._hoverlayer
                     });
                     if (closestPoints) {
-                        closestPoints = closestPoints.filter(function (point) {
+                        closestPoints = closestPoints.filter(function (point: any) {
                             // some hover points, like scatter fills, do not allow spikes,
                             // so will generate a hover point but without a valid spikeDistance
                             return point.spikeDistance <= spikedistance;
                         });
                     }
                     if (closestPoints && closestPoints.length) {
-                        var tmpPoint;
-                        var closestVPoints = closestPoints.filter(function (point) {
+                        let tmpPoint;
+                        const closestVPoints = closestPoints.filter(function (point: any) {
                             return point.xa.showspikes && point.xa.spikesnap !== 'hovered data';
                         });
                         if (closestVPoints.length) {
-                            var closestVPt = closestVPoints[0];
+                            const closestVPt = closestVPoints[0];
                             if (isNumeric(closestVPt.x0) && isNumeric(closestVPt.y0)) {
                                 tmpPoint = fillSpikePoint(closestVPt);
                                 if (
                                     !spikePoints.vLinePoint ||
-                                    spikePoints.vLinePoint.spikeDistance > tmpPoint.spikeDistance
+                                    (spikePoints.vLinePoint as any).spikeDistance > tmpPoint.spikeDistance
                                 ) {
                                     spikePoints.vLinePoint = tmpPoint;
                                 }
                             }
                         }
 
-                        var closestHPoints = closestPoints.filter(function (point) {
+                        const closestHPoints = closestPoints.filter(function (point: any) {
                             return point.ya.showspikes && point.ya.spikesnap !== 'hovered data';
                         });
                         if (closestHPoints.length) {
-                            var closestHPt = closestHPoints[0];
+                            const closestHPt = closestHPoints[0];
                             if (isNumeric(closestHPt.x0) && isNumeric(closestHPt.y0)) {
                                 tmpPoint = fillSpikePoint(closestHPt);
                                 if (
                                     !spikePoints.hLinePoint ||
-                                    spikePoints.hLinePoint.spikeDistance > tmpPoint.spikeDistance
+                                    (spikePoints.hLinePoint as any).spikeDistance > tmpPoint.spikeDistance
                                 ) {
                                     spikePoints.hLinePoint = tmpPoint;
                                 }
@@ -619,11 +619,11 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     findHoverPoints();
 
     function selectClosestPoint(pointsData: any[], spikedistance: number, spikeOnWinning: any): any {
-        var resultPoint = null;
-        var minDistance = Infinity;
-        var thisSpikeDistance;
+        let resultPoint = null;
+        let minDistance = Infinity;
+        let thisSpikeDistance;
 
-        for (var i = 0; i < pointsData.length; i++) {
+        for (let i = 0; i < pointsData.length; i++) {
             if (firstXaxis && firstXaxis._id !== pointsData[i].xa._id) continue;
             if (firstYaxis && firstYaxis._id !== pointsData[i].ya._id) continue;
 
@@ -653,28 +653,28 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         };
     }
 
-    var spikelineOpts = {
+    const spikelineOpts = {
         fullLayout: fullLayout,
         container: fullLayout._hoverlayer,
         event: evt
     };
-    var oldspikepoints = gd._spikepoints;
-    var newspikepoints = {
+    const oldspikepoints = gd._spikepoints;
+    const newspikepoints = {
         vLinePoint: spikePoints.vLinePoint,
         hLinePoint: spikePoints.hLinePoint
     };
     gd._spikepoints = newspikepoints;
 
-    var sortHoverData = function () {
+    const sortHoverData = function () {
         // When sorting keep the points in the main subplot at the top
         // then add points in other subplots
 
-        var hoverDataInSubplot = hoverData.filter(function (a) {
-            return firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id;
+        const hoverDataInSubplot = hoverData.filter(function (a) {
+            return firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id;
         });
 
-        var hoverDataOutSubplot = hoverData.filter(function (a) {
-            return !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
+        const hoverDataOutSubplot = hoverData.filter(function (a) {
+            return !(firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id);
         });
 
         hoverDataInSubplot.sort(distanceSort);
@@ -682,34 +682,34 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         hoverData = hoverDataInSubplot.concat(hoverDataOutSubplot);
 
         // move period positioned points and box/bar-like traces to the end of the list
-        hoverData = orderRangePoints(hoverData, hovermode);
+        hoverData = (orderRangePoints(hoverData, hovermode) as any);
     };
     sortHoverData();
 
-    var axLetter = hovermode.charAt(0);
-    var spikeOnWinning =
-        (axLetter === 'x' || axLetter === 'y') && hoverData[0] && cartesianScatterPoints[hoverData[0].trace.type];
+    const axLetter = hovermode.charAt(0);
+    const spikeOnWinning =
+        (axLetter === 'x' || axLetter === 'y') && hoverData[0] && cartesianScatterPoints[(hoverData[0] as any).trace.type];
 
     // Now if it is not restricted by spikedistance option, set the points to draw the spikelines
     if (hasCartesian && spikedistance !== 0) {
         if (hoverData.length !== 0) {
-            var tmpHPointData = hoverData.filter(function (point) {
-                return point.ya.showspikes;
+            const tmpHPointData = hoverData.filter(function (point) {
+                return (point as any).ya.showspikes;
             });
-            var tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
+            const tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
             spikePoints.hLinePoint = fillSpikePoint(tmpHPoint);
 
-            var tmpVPointData = hoverData.filter(function (point) {
-                return point.xa.showspikes;
+            const tmpVPointData = hoverData.filter(function (point) {
+                return (point as any).xa.showspikes;
             });
-            var tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
+            const tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
             spikePoints.vLinePoint = fillSpikePoint(tmpVPoint);
         }
     }
 
     // if hoverData is empty check for the spikes to draw and quit if there are none
     if (hoverData.length === 0) {
-        var result = dragElement.unhoverRaw(gd, evt);
+        const result = dragElement.unhoverRaw(gd, evt);
         if (hasCartesian && (spikePoints.hLinePoint !== null || spikePoints.vLinePoint !== null)) {
             if (spikesChanged(oldspikepoints)) {
                 createSpikelines(gd, spikePoints, spikelineOpts);
@@ -726,45 +726,45 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     if (
         helpers.isXYhover(_mode) &&
-        hoverData[0].length !== 0 &&
-        hoverData[0].trace.type !== 'splom' // TODO: add support for splom
+        (hoverData[0] as any).length !== 0 &&
+        (hoverData[0] as any).trace.type !== 'splom' // TODO: add support for splom
     ) {
         // pick winning point
-        var winningPoint = hoverData[0];
+        const winningPoint = hoverData[0];
         // discard other points
-        if (multipleHoverPoints[winningPoint.trace.type]) {
-            hoverData = hoverData.filter((d) => d.trace.index === winningPoint.trace.index);
+        if (multipleHoverPoints[(winningPoint as any).trace.type]) {
+            hoverData = hoverData.filter((d) => (d as any).trace.index === (winningPoint as any).trace.index);
         } else {
             hoverData = [winningPoint];
         }
-        var initLen = hoverData.length;
+        const initLen = hoverData.length;
 
-        var winX = getCoord('x', winningPoint, fullLayout);
-        var winY = getCoord('y', winningPoint, fullLayout);
+        const winX = getCoord('x', winningPoint, fullLayout);
+        const winY = getCoord('y', winningPoint, fullLayout);
 
         // in compare mode, select every point at position
         findHoverPoints(winX, winY);
 
-        var finalPoints = [];
-        var seen: any = {};
-        var id = 0;
-        var insert = function (newHd) {
-            var key = multipleHoverPoints[newHd.trace.type] ? hoverDataKey(newHd) : newHd.trace.index;
+        const finalPoints: any[] = [];
+        const seen: any = {};
+        let id = 0;
+        const insert = function (newHd: any) {
+            const key = multipleHoverPoints[newHd.trace.type] ? hoverDataKey(newHd) : newHd.trace.index;
             if (!seen[key]) {
                 id++;
                 seen[key] = id;
                 finalPoints.push(newHd);
             } else {
-                var oldId = seen[key] - 1;
-                var oldHd = finalPoints[oldId];
-                if (oldId > 0 && Math.abs(newHd.distance) < Math.abs(oldHd.distance)) {
+                const oldId = seen[key] - 1;
+                const oldHd = finalPoints[oldId];
+                if (oldId > 0 && Math.abs(newHd.distance) < Math.abs((oldHd as any).distance)) {
                     // replace with closest
                     finalPoints[oldId] = newHd;
                 }
             }
         };
 
-        var k;
+        let k;
         // insert the winnig point(s) first
         for (k = 0; k < initLen; k++) {
             insert(hoverData[k]);
@@ -773,40 +773,40 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         for (k = hoverData.length - 1; k > initLen - 1; k--) {
             insert(hoverData[k]);
         }
-        hoverData = finalPoints;
+        hoverData = (finalPoints as any);
         sortHoverData();
     }
 
     // lastly, emit custom hover/unhover events
-    var oldhoverdata = gd._hoverdata;
-    var newhoverdata = [];
+    const oldhoverdata = gd._hoverdata;
+    const newhoverdata: any[] = [];
 
-    var gTop = getTopOffset(gd);
-    var gLeft = getLeftOffset(gd);
+    const gTop = getTopOffset(gd);
+    const gLeft = getLeftOffset(gd);
 
     // pull out just the data that's useful to
     // other people and send it to the event
     for (const pt of hoverData) {
-        var eventData = helpers.makeEventData(pt, pt.trace, pt.cd);
+        const eventData = helpers.makeEventData(pt, (pt as any).trace, (pt as any).cd);
 
-        if (pt.hovertemplate !== false) {
-            var ht = false;
-            if (pt.cd[pt.index] && pt.cd[pt.index].ht) {
-                ht = pt.cd[pt.index].ht;
+        if ((pt as any).hovertemplate !== false) {
+            let ht = false;
+            if ((pt as any).cd[(pt as any).index] && (pt as any).cd[(pt as any).index].ht) {
+                ht = (pt as any).cd[(pt as any).index].ht;
             }
-            pt.hovertemplate = ht || pt.trace.hovertemplate || false;
+            (pt as any).hovertemplate = ht || (pt as any).trace.hovertemplate || false;
         }
 
-        if (pt.xa && pt.ya) {
-            var _x0 = pt.x0 + pt.xa._offset;
-            var _x1 = pt.x1 + pt.xa._offset;
-            var _y0 = pt.y0 + pt.ya._offset;
-            var _y1 = pt.y1 + pt.ya._offset;
+        if ((pt as any).xa && (pt as any).ya) {
+            const _x0 = (pt as any).x0 + (pt as any).xa._offset;
+            const _x1 = (pt as any).x1 + (pt as any).xa._offset;
+            const _y0 = (pt as any).y0 + (pt as any).ya._offset;
+            const _y1 = (pt as any).y1 + (pt as any).ya._offset;
 
-            var x0 = Math.min(_x0, _x1);
-            var x1 = Math.max(_x0, _x1);
-            var y0 = Math.min(_y0, _y1);
-            var y1 = Math.max(_y0, _y1);
+            const x0 = Math.min(_x0, _x1);
+            const x1 = Math.max(_x0, _x1);
+            const y0 = Math.min(_y0, _y1);
+            const y1 = Math.max(_y0, _y1);
 
             eventData.bbox = {
                 x0: x0 + gLeft,
@@ -816,19 +816,19 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             };
         }
 
-        pt.eventData = [eventData];
+        (pt as any).eventData = [eventData];
         newhoverdata.push(eventData);
     }
 
     gd._hoverdata = newhoverdata;
 
-    var rotateLabels =
+    const rotateLabels =
         (hovermode === 'y' && (searchData.length > 1 || hoverData.length > 1)) ||
         (hovermode === 'closest' && hasOneHorizontalTrace && hoverData.length > 1);
 
-    var bgColor = Color.combine(fullLayout.plot_bgcolor || Color.background, fullLayout.paper_bgcolor);
+    const bgColor = Color.combine(fullLayout.plot_bgcolor || Color.background, fullLayout.paper_bgcolor);
 
-    var hoverText = createHoverText(hoverData, {
+    const hoverText = createHoverText(hoverData, {
         gd: gd,
         hovermode: hovermode,
         rotateLabels: rotateLabels,
@@ -838,7 +838,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         commonLabelOpts: fullLayout.hoverlabel,
         hoverdistance: fullLayout.hoverdistance
     });
-    var hoverLabels = hoverText.hoverLabels;
+    const hoverLabels = hoverText.hoverLabels;
 
     if (!helpers.isUnifiedHover(hovermode)) {
         hoverAvoidOverlaps(hoverLabels, rotateLabels, fullLayout, hoverText.commonLabelBoundingBox);
@@ -846,7 +846,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     } // TODO: tagName hack is needed to appease geo.js's hack of using eventTarget=true
     // we should improve the "fx" API so other plots can use it without these hack.
     if (eventTarget && eventTarget.tagName) {
-        var hasClickToShow = Registry.getComponentMethod('annotations', 'hasClickToShow')(gd, newhoverdata);
+        const hasClickToShow = Registry.getComponentMethod('annotations', 'hasClickToShow')(gd, newhoverdata);
         overrideCursor(select(eventTarget), hasClickToShow ? 'pointer' : '');
     }
 
@@ -874,69 +874,69 @@ function hoverDataKey(d: any): string {
     return [d.trace.index, d.index, d.x0, d.y0, d.name, d.attr, d.xa ? d.xa._id : '', d.ya ? d.ya._id : ''].join(',');
 }
 
-var EXTRA_STRING_REGEX = /<extra>([\s\S]*)<\/extra>/;
+const EXTRA_STRING_REGEX = /<extra>([\s\S]*)<\/extra>/;
 
 function createHoverText(hoverData: any[], opts: any): any {
-    var gd = opts.gd;
-    var fullLayout = gd._fullLayout;
-    var hovermode = opts.hovermode;
-    var rotateLabels = opts.rotateLabels;
-    var bgColor = opts.bgColor;
-    var container = opts.container;
-    var outerContainer = opts.outerContainer;
-    var commonLabelOpts = opts.commonLabelOpts || {};
+    const gd = opts.gd;
+    const fullLayout = gd._fullLayout;
+    const hovermode = opts.hovermode;
+    const rotateLabels = opts.rotateLabels;
+    const bgColor = opts.bgColor;
+    const container = opts.container;
+    const outerContainer = opts.outerContainer;
+    const commonLabelOpts = opts.commonLabelOpts || {};
     // Early exit if no labels are drawn
     if (hoverData.length === 0) return [[]];
 
     // opts.fontFamily/Size are used for the common label
     // and as defaults for each hover label, though the individual labels
     // can override this.
-    var fontFamily = opts.fontFamily || constants.HOVERFONT;
-    var fontSize = opts.fontSize || constants.HOVERFONTSIZE;
-    var fontWeight = opts.fontWeight || fullLayout.font.weight;
-    var fontStyle = opts.fontStyle || fullLayout.font.style;
-    var fontVariant = opts.fontVariant || fullLayout.font.variant;
-    var fontTextcase = opts.fontTextcase || fullLayout.font.textcase;
-    var fontLineposition = opts.fontLineposition || fullLayout.font.lineposition;
-    var fontShadow = opts.fontShadow || fullLayout.font.shadow;
+    const fontFamily = opts.fontFamily || constants.HOVERFONT;
+    const fontSize = opts.fontSize || constants.HOVERFONTSIZE;
+    const fontWeight = opts.fontWeight || fullLayout.font.weight;
+    const fontStyle = opts.fontStyle || fullLayout.font.style;
+    const fontVariant = opts.fontVariant || fullLayout.font.variant;
+    const fontTextcase = opts.fontTextcase || fullLayout.font.textcase;
+    const fontLineposition = opts.fontLineposition || fullLayout.font.lineposition;
+    const fontShadow = opts.fontShadow || fullLayout.font.shadow;
 
-    var c0 = hoverData[0];
-    var xa = c0.xa;
-    var ya = c0.ya;
-    var axLetter = hovermode.charAt(0);
-    var axLabel = axLetter + 'Label';
-    var t0 = c0[axLabel];
+    const c0 = hoverData[0];
+    const xa = c0.xa;
+    const ya = c0.ya;
+    const axLetter = hovermode.charAt(0);
+    const axLabel = axLetter + 'Label';
+    let t0 = c0[axLabel];
 
     // search in array for the label
     if (t0 === undefined && xa.type === 'multicategory') {
-        for (var q = 0; q < hoverData.length; q++) {
+        for (let q = 0; q < hoverData.length; q++) {
             t0 = hoverData[q][axLabel];
             if (t0 !== undefined) break;
         }
     }
 
-    var outerContainerBB = getBoundingClientRect(gd, outerContainer);
-    var outerTop = outerContainerBB.top;
-    var outerWidth = outerContainerBB.width;
-    var outerHeight = outerContainerBB.height;
+    const outerContainerBB = getBoundingClientRect(gd, outerContainer);
+    const outerTop = outerContainerBB.top;
+    const outerWidth = outerContainerBB.width;
+    const outerHeight = outerContainerBB.height;
 
     // show the common label, if any, on the axis
     // never show a common label in array mode,
     // even if sometimes there could be one
-    var showCommonLabel =
+    let showCommonLabel =
         t0 !== undefined && c0.distance <= opts.hoverdistance && (hovermode === 'x' || hovermode === 'y');
 
     // all hover traces hoverinfo must contain the hovermode
     // to have common labels
     if (showCommonLabel) {
-        var allHaveZ = true;
-        var i, traceHoverinfo;
+        let allHaveZ = true;
+        let i, traceHoverinfo;
         for (i = 0; i < hoverData.length; i++) {
             if (allHaveZ && hoverData[i].zLabel === undefined) allHaveZ = false;
 
             traceHoverinfo = hoverData[i].hoverinfo || hoverData[i].trace.hoverinfo;
             if (traceHoverinfo) {
-                var parts = Array.isArray(traceHoverinfo) ? traceHoverinfo : traceHoverinfo.split('+');
+                const parts = Array.isArray(traceHoverinfo) ? traceHoverinfo : traceHoverinfo.split('+');
                 if (parts.indexOf('all') === -1 && parts.indexOf(hovermode) === -1) {
                     showCommonLabel = false;
                     break;
@@ -948,33 +948,34 @@ function createHoverText(hoverData: any[], opts: any): any {
         if (allHaveZ) showCommonLabel = false;
     }
 
-    var commonLabel = container.selectAll('g.axistext').data(showCommonLabel ? [0] : []);
-    commonLabel.enter().append('g').classed('axistext', true);
-    commonLabel.exit().remove();
+    const commonLabelJoin = container.selectAll('g.axistext').data(showCommonLabel ? [0] : []);
+    const commonLabelEnter = commonLabelJoin.enter().append('g').classed('axistext', true);
+    commonLabelJoin.exit().remove();
+    const commonLabel = commonLabelJoin.merge(commonLabelEnter);
 
     // set rect (without arrow) behind label below for later collision detection
-    var commonLabelRect: any = {
+    const commonLabelRect: any = {
         minX: 0,
         maxX: 0,
         minY: 0,
         maxY: 0
     };
-    commonLabel.each(function () {
-        var label = select(this);
-        var lpath = ensureSingle(label, 'path', '', function (s) {
-            s.style({ 'stroke-width': '1px' });
+    commonLabel.each(function (this: any) {
+        const label = select(this);
+        const lpath = ensureSingle(label, 'path', '', function (s: any) {
+            s.style('stroke-width', '1px');
         });
-        var ltext = ensureSingle(label, 'text', '', function (s) {
+        const ltext = ensureSingle(label, 'text', '', function (s: any) {
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             s.attr('data-notex', 1);
         });
 
-        var commonBgColor = commonLabelOpts.bgcolor || Color.defaultLine;
-        var commonStroke = commonLabelOpts.bordercolor || Color.contrast(commonBgColor);
-        var contrastColor = Color.contrast(commonBgColor);
-        var commonLabelOptsFont = commonLabelOpts.font;
-        var commonLabelFont = {
+        const commonBgColor = commonLabelOpts.bgcolor || Color.defaultLine;
+        const commonStroke = commonLabelOpts.bordercolor || Color.contrast(commonBgColor);
+        const contrastColor = Color.contrast(commonBgColor);
+        const commonLabelOptsFont = commonLabelOpts.font;
+        const commonLabelFont = {
             weight: commonLabelOptsFont.weight || fontWeight,
             style: commonLabelOptsFont.style || fontStyle,
             variant: commonLabelOptsFont.variant || fontVariant,
@@ -986,10 +987,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             color: commonLabelOptsFont.color || contrastColor
         };
 
-        lpath.style({
-            fill: commonBgColor,
-            stroke: commonStroke
-        });
+        lpath
+            .style('fill', commonBgColor)
+            .style('stroke', commonStroke);
 
         ltext
             .text(t0)
@@ -999,11 +999,11 @@ function createHoverText(hoverData: any[], opts: any): any {
 
         label.attr('transform', '');
 
-        var tbb = getBoundingClientRect(gd, ltext.node());
-        var lx, ly;
+        const tbb = getBoundingClientRect(gd, ltext.node());
+        let lx, ly;
 
         if (hovermode === 'x') {
-            var topsign = xa.side === 'top' ? '-' : '';
+            const topsign = xa.side === 'top' ? '-' : '';
 
             ltext
                 .attr('text-anchor', 'middle')
@@ -1018,9 +1018,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             lx = xa._offset + (c0.x0 + c0.x1) / 2;
             ly = ya._offset + (xa.side === 'top' ? 0 : ya._length);
 
-            var halfWidth = tbb.width / 2 + HOVERTEXTPAD;
+            const halfWidth = tbb.width / 2 + HOVERTEXTPAD;
 
-            var tooltipMidX = lx;
+            let tooltipMidX = lx;
             if (lx < halfWidth) {
                 tooltipMidX = halfWidth;
             } else if (lx > fullLayout.width - halfWidth) {
@@ -1064,9 +1064,9 @@ function createHoverText(hoverData: any[], opts: any): any {
                 commonLabelRect.maxY = ly + (HOVERTEXTPAD * 2 + tbb.height);
             }
         } else {
-            var anchor;
-            var sgn;
-            var leftsign;
+            let anchor;
+            let sgn;
+            let leftsign;
             if (ya.side === 'right') {
                 anchor = 'start';
                 sgn = 1;
@@ -1117,10 +1117,10 @@ function createHoverText(hoverData: any[], opts: any): any {
                 commonLabelRect.maxX = lx - HOVERARROWSIZE;
             }
 
-            var halfHeight = tbb.height / 2;
-            var lty = outerTop - tbb.top - halfHeight;
-            var clipId = 'clip' + fullLayout._uid + 'commonlabel' + ya._id;
-            var clipPath;
+            const halfHeight = tbb.height / 2;
+            const lty = outerTop - tbb.top - halfHeight;
+            const clipId = 'clip' + fullLayout._uid + 'commonlabel' + ya._id;
+            let clipPath;
 
             if (lx < tbb.width + 2 * HOVERTEXTPAD + HOVERARROWSIZE) {
                 clipPath =
@@ -1136,16 +1136,16 @@ function createHoverText(hoverData: any[], opts: any): any {
                     (tbb.width - HOVERTEXTPAD) +
                     'Z';
 
-                var ltx = tbb.width - lx + HOVERTEXTPAD;
+                const ltx = tbb.width - lx + HOVERTEXTPAD;
                 svgTextUtils.positionText(ltext, ltx, lty);
 
                 // shift each line (except the longest) so that start-of-line
                 // is always visible
                 if (anchor === 'end') {
-                    ltext.selectAll('tspan').each(function () {
-                        var s = select(this);
-                        var dummy = tester.append('text').text(s.text()).call(drawingFont, commonLabelFont);
-                        var dummyBB = getBoundingClientRect(gd, dummy.node());
+                    ltext.selectAll('tspan').each(function (this: any) {
+                        const s = select(this);
+                        const dummy = tester.append('text').text(s.text()).call(drawingFont, commonLabelFont);
+                        const dummyBB = getBoundingClientRect(gd, dummy.node());
                         if (Math.round(dummyBB.width) < Math.round(tbb.width)) {
                             s.attr('x', ltx - dummyBB.width);
                         }
@@ -1157,11 +1157,13 @@ function createHoverText(hoverData: any[], opts: any): any {
                 clipPath = null;
             }
 
-            var textClip = fullLayout._topclips.selectAll('#' + clipId).data(clipPath ? [0] : []);
-            textClip.enter().append('clipPath').attr('id', clipId).append('path');
-            textClip.exit().remove();
+            const textClipJoin = fullLayout._topclips.selectAll('#' + clipId).data(clipPath ? [0] : []);
+            const textClipEnter = textClipJoin.enter().append('clipPath').attr('id', clipId);
+            textClipEnter.append('path');
+            textClipJoin.exit().remove();
+            const textClip = textClipJoin.merge(textClipEnter);
             textClip.select('path').attr('d', clipPath);
-            setClipUrl(ltext, clipPath ? clipId : null, gd);
+            setClipUrl(ltext, (clipPath ? clipId : null as any), gd);
         }
 
         label.attr('transform', strTranslate(lx, ly));
@@ -1176,14 +1178,14 @@ function createHoverText(hoverData: any[], opts: any): any {
         if (groupedHoverData.length === 0) return [];
 
         // mock legend
-        var hoverlabel = fullLayout.hoverlabel;
-        var font = hoverlabel.font;
+        const hoverlabel = fullLayout.hoverlabel;
+        const font = hoverlabel.font;
 
-        var item0 = groupedHoverData[0];
+        const item0 = groupedHoverData[0];
 
-        var unifiedhovertitleText = ((hovermode === 'x unified' ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
+        const unifiedhovertitleText = ((hovermode === 'x unified' ? item0.xa : item0.ya).unifiedhovertitle || {}).text;
 
-        var mainText = !unifiedhovertitleText
+        const mainText = !unifiedhovertitleText
             ? t0
             : hovertemplateString({
                   data:
@@ -1193,7 +1195,7 @@ function createHoverText(hoverData: any[], opts: any): any {
                   template: unifiedhovertitleText
               });
 
-        var mockLayoutIn = {
+        const mockLayoutIn = {
             showlegend: true,
             legend: {
                 title: { text: mainText, font: font },
@@ -1206,21 +1208,21 @@ function createHoverText(hoverData: any[], opts: any): any {
                 orientation: 'v'
             }
         };
-        var mockLayoutOut: any = {
+        const mockLayoutOut: any = {
             font: font
         };
         legendSupplyDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
-        var mockLegend = mockLayoutOut.legend;
+        const mockLegend = mockLayoutOut.legend;
 
         // prepare items for the legend
         mockLegend.entries = [];
-        for (var j = 0; j < groupedHoverData.length; j++) {
-            var pt = groupedHoverData[j];
+        for (let j = 0; j < groupedHoverData.length; j++) {
+            const pt = groupedHoverData[j];
             if (pt.hoverinfo === 'none') continue;
 
-            var texts = getHoverLabelText(pt, true, hovermode, fullLayout, t0);
-            var text = texts[0];
-            var name = texts[1];
+            const texts = getHoverLabelText(pt, true, hovermode, fullLayout, t0);
+            const text = texts[0];
+            const name = texts[1];
 
             pt.name = name;
             if (name !== '') {
@@ -1230,7 +1232,7 @@ function createHoverText(hoverData: any[], opts: any): any {
             }
 
             // pass through marker's calcdata to style legend items
-            var cd = pt.cd[pt.index];
+            const cd = pt.cd[pt.index];
             if (cd) {
                 if (cd.mc) pt.mc = cd.mc;
                 if (cd.mcc) pt.mc = cd.mcc;
@@ -1244,7 +1246,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        mockLegend.entries.sort(function (a, b) {
+        mockLegend.entries.sort(function (a: any, b: any) {
             return a[0].trace.index - b[0].trace.index;
         });
         mockLegend.layer = container;
@@ -1256,19 +1258,19 @@ function createHoverText(hoverData: any[], opts: any): any {
         legendDraw(gd, mockLegend);
 
         // Position the hover
-        var legendContainer = container.select('g.legend');
-        var tbb = getBoundingClientRect(gd, legendContainer.node());
-        var tWidth = tbb.width + 2 * HOVERTEXTPAD;
-        var tHeight = tbb.height + 2 * HOVERTEXTPAD;
-        var winningPoint = groupedHoverData[0];
-        var avgX = (winningPoint.x0 + winningPoint.x1) / 2;
-        var avgY = (winningPoint.y0 + winningPoint.y1) / 2;
+        const legendContainer = container.select('g.legend');
+        const tbb = getBoundingClientRect(gd, legendContainer.node());
+        const tWidth = tbb.width + 2 * HOVERTEXTPAD;
+        const tHeight = tbb.height + 2 * HOVERTEXTPAD;
+        const winningPoint = groupedHoverData[0];
+        const avgX = (winningPoint.x0 + winningPoint.x1) / 2;
+        const avgY = (winningPoint.y0 + winningPoint.y1) / 2;
         // When a scatter (or e.g. heatmap) point wins, it's OK for the hovelabel to occlude the bar and other points.
-        var pointWon = !(
+        const pointWon = !(
             Registry.traceIs(winningPoint.trace, 'bar-like') || Registry.traceIs(winningPoint.trace, 'box-violin')
         );
 
-        var lyBottom, lyTop;
+        let lyBottom, lyTop;
         if (axLetter === 'y') {
             if (pointWon) {
                 lyTop = avgY - HOVERTEXTPAD;
@@ -1297,7 +1299,7 @@ function createHoverText(hoverData: any[], opts: any): any {
                 tHeight / 2;
         }
 
-        var lxRight, lxLeft;
+        let lxRight, lxLeft;
         if (axLetter === 'x') {
             if (pointWon) {
                 lxRight = avgX + HOVERTEXTPAD;
@@ -1326,14 +1328,14 @@ function createHoverText(hoverData: any[], opts: any): any {
                 tWidth / 2;
         }
 
-        var xOffset = xa._offset;
-        var yOffset = ya._offset;
+        const xOffset = xa._offset;
+        const yOffset = ya._offset;
         lyBottom += yOffset;
         lxRight += xOffset;
         lxLeft += xOffset - tWidth;
         lyTop += yOffset - tHeight;
 
-        var lx, ly; // top and left positions of the hover box
+        let lx, ly; // top and left positions of the hover box
 
         // horizontal alignment to end up on screen
         if (lxRight + tWidth < outerWidth && lxRight >= 0) {
@@ -1376,17 +1378,17 @@ function createHoverText(hoverData: any[], opts: any): any {
     // show all the individual labels
 
     // first create the objects
-    var hoverLabels = container.selectAll('g.hovertext').data(hoverData, function (d) {
+    const hoverLabelsJoin = container.selectAll('g.hovertext').data(hoverData, function (d: any) {
         // N.B. when multiple items have the same result key-function value,
         // only the first of those items in hoverData gets rendered
         return hoverDataKey(d);
     });
-    hoverLabels
+    const hoverLabelsEnter = hoverLabelsJoin
         .enter()
         .append('g')
         .classed('hovertext', true)
-        .each(function () {
-            var g = select(this);
+        .each(function (this: any) {
+            const g = select(this);
             // trace name label (rect and text.name)
             g.append('rect').call(Color.fill, Color.addOpacity(bgColor, 0.8));
             g.append('text').classed('name', true);
@@ -1403,33 +1405,35 @@ function createHoverText(hoverData: any[], opts: any): any {
                 size: fontSize
             });
         });
-    hoverLabels.exit().remove();
+    hoverLabelsJoin.exit().remove();
+
+    const hoverLabels = hoverLabelsJoin.merge(hoverLabelsEnter);
 
     // then put the text in, position the pointer to the data,
     // and figure out sizes
-    hoverLabels.each(function (d) {
-        var g = select(this).attr('transform', '');
+    hoverLabels.each(function (this: any, d: any) {
+        const g = select(this).attr('transform', '');
 
-        var dColor = d.color;
+        let dColor = d.color;
         if (Array.isArray(dColor)) {
             dColor = dColor[d.eventData[0].pointNumber];
         }
 
         // combine possible non-opaque trace color with bgColor
-        var color0 = d.bgcolor || dColor;
+        const color0 = d.bgcolor || dColor;
         // color for 'nums' part of the label
-        var numsColor = Color.combine(Color.opacity(color0) ? color0 : Color.defaultLine, bgColor);
+        const numsColor = Color.combine(Color.opacity(color0) ? color0 : Color.defaultLine, bgColor);
         // color for 'name' part of the label
-        var nameColor = Color.combine(Color.opacity(dColor) ? dColor : Color.defaultLine, bgColor);
+        const nameColor = Color.combine(Color.opacity(dColor) ? dColor : Color.defaultLine, bgColor);
         // find a contrasting color for border and text
-        var contrastColor = d.borderColor || Color.contrast(numsColor);
+        const contrastColor = d.borderColor || Color.contrast(numsColor);
 
-        var texts = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g);
-        var text = texts[0];
-        var name = texts[1];
+        const texts = getHoverLabelText(d, showCommonLabel, hovermode, fullLayout, t0, g);
+        const text = texts[0];
+        const name = texts[1];
 
         // main label
-        var tx = g
+        const tx = g
             .select('text.nums')
             .call(drawingFont, {
                 family: d.fontFamily || fontFamily,
@@ -1447,9 +1451,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             .call(svgTextUtils.positionText, 0, 0)
             .call(svgTextUtils.convertToTspans, gd);
 
-        var tx2 = g.select('text.name');
-        var tx2width = 0;
-        var tx2height = 0;
+        const tx2 = g.select('text.name');
+        let tx2width = 0;
+        let tx2height = 0;
 
         // secondary label for non-empty 'name'
         if (name && name !== text) {
@@ -1469,7 +1473,7 @@ function createHoverText(hoverData: any[], opts: any): any {
                 .call(svgTextUtils.positionText, 0, 0)
                 .call(svgTextUtils.convertToTspans, gd);
 
-            var t2bb = getBoundingClientRect(gd, tx2.node());
+            const t2bb = getBoundingClientRect(gd, tx2.node());
             tx2width = t2bb.width + 2 * HOVERTEXTPAD;
             tx2height = t2bb.height + 2 * HOVERTEXTPAD;
         } else {
@@ -1477,19 +1481,18 @@ function createHoverText(hoverData: any[], opts: any): any {
             g.select('rect').remove();
         }
 
-        g.select('path').style({
-            fill: numsColor,
-            stroke: contrastColor
-        });
+        g.select('path')
+            .style('fill', numsColor)
+            .style('stroke', contrastColor);
 
-        var htx = d.xa._offset + (d.x0 + d.x1) / 2;
-        var hty = d.ya._offset + (d.y0 + d.y1) / 2;
-        var dx = Math.abs(d.x1 - d.x0);
-        var dy = Math.abs(d.y1 - d.y0);
+        let htx = d.xa._offset + (d.x0 + d.x1) / 2;
+        let hty = d.ya._offset + (d.y0 + d.y1) / 2;
+        const dx = Math.abs(d.x1 - d.x0);
+        const dy = Math.abs(d.y1 - d.y0);
 
-        var tbb = getBoundingClientRect(gd, tx.node());
-        var tbbWidth = tbb.width / fullLayout._invScaleX;
-        var tbbHeight = tbb.height / fullLayout._invScaleY;
+        const tbb = getBoundingClientRect(gd, tx.node());
+        const tbbWidth = tbb.width / fullLayout._invScaleX;
+        const tbbHeight = tbb.height / fullLayout._invScaleY;
 
         d.ty0 = (outerTop - tbb.top) / fullLayout._invScaleY;
         d.bx = tbbWidth + 2 * HOVERTEXTPAD;
@@ -1499,8 +1502,8 @@ function createHoverText(hoverData: any[], opts: any): any {
         d.tx2width = tx2width;
         d.offset = 0;
 
-        var txTotalWidth = (tbbWidth + HOVERARROWSIZE + HOVERTEXTPAD + tx2width) * fullLayout._invScaleX;
-        var anchorStartOK, anchorEndOK;
+        const txTotalWidth = (tbbWidth + HOVERARROWSIZE + HOVERTEXTPAD + tx2width) * fullLayout._invScaleX;
+        let anchorStartOK, anchorEndOK;
 
         if (rotateLabels) {
             d.pos = htx;
@@ -1530,9 +1533,9 @@ function createHoverText(hoverData: any[], opts: any): any {
             } else {
                 d.anchor = 'middle';
 
-                var txHalfWidth = txTotalWidth / 2;
-                var overflowR = htx + txHalfWidth - outerWidth;
-                var overflowL = htx - txHalfWidth;
+                const txHalfWidth = txTotalWidth / 2;
+                const overflowR = htx + txHalfWidth - outerWidth;
+                const overflowL = htx - txHalfWidth;
                 if (overflowR > 0) htx -= overflowR;
                 if (overflowL < 0) htx += -overflowL;
             }
@@ -1551,8 +1554,8 @@ function createHoverText(hoverData: any[], opts: any): any {
 }
 
 function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, fullLayout: FullLayout, t0: any, g?: any): [string, string] {
-    var name = '';
-    var text = '';
+    let name = '';
+    let text = '';
     // to get custom 'name' labels pass cleanPoint
     if (d.nameOverride !== undefined) d.name = d.nameOverride;
 
@@ -1561,8 +1564,8 @@ function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, ful
         name = plainText(d.name, d.nameLength);
     }
 
-    var h0 = hovermode.charAt(0);
-    var h1 = h0 === 'x' ? 'y' : 'x';
+    const h0 = hovermode.charAt(0);
+    const h1 = h0 === 'x' ? 'y' : 'x';
 
     if (d.zLabel !== undefined) {
         if (d.xLabel !== undefined) text += 'x: ' + d.xLabel + '<br>';
@@ -1644,48 +1647,48 @@ function getHoverLabelText(d: any, showCommonLabel: boolean, hovermode: any, ful
 // the other, though it hardly matters - there's just too much
 // information then.
 function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout: FullLayout, commonLabelBoundingBox: any): void {
-    var axKey = rotateLabels ? 'xa' : 'ya';
-    var crossAxKey = rotateLabels ? 'ya' : 'xa';
-    var nummoves = 0;
-    var axSign = 1;
-    var nLabels = hoverLabels.size();
+    const axKey = rotateLabels ? 'xa' : 'ya';
+    const crossAxKey = rotateLabels ? 'ya' : 'xa';
+    let nummoves = 0;
+    let axSign = 1;
+    const nLabels = hoverLabels.size();
 
     // make groups of touching points
-    var pointgroups = new Array(nLabels);
-    var k = 0;
+    const pointgroups = new Array(nLabels);
+    let k = 0;
 
     // get extent of axis hover label
-    var axisLabelMinX = commonLabelBoundingBox.minX;
-    var axisLabelMaxX = commonLabelBoundingBox.maxX;
-    var axisLabelMinY = commonLabelBoundingBox.minY;
-    var axisLabelMaxY = commonLabelBoundingBox.maxY;
+    const axisLabelMinX = commonLabelBoundingBox.minX;
+    const axisLabelMaxX = commonLabelBoundingBox.maxX;
+    const axisLabelMinY = commonLabelBoundingBox.minY;
+    const axisLabelMaxY = commonLabelBoundingBox.maxY;
 
-    var pX = function (x) {
+    const pX = function (x: any) {
         return x * fullLayout._invScaleX;
     };
-    var pY = function (y) {
+    const pY = function (y: any) {
         return y * fullLayout._invScaleY;
     };
 
-    hoverLabels.each(function (d) {
-        var ax = d[axKey];
-        var crossAx = d[crossAxKey];
-        var axIsX = ax._id.charAt(0) === 'x';
-        var rng = ax.range;
+    hoverLabels.each(function (d: any) {
+        const ax = d[axKey];
+        const crossAx = d[crossAxKey];
+        const axIsX = ax._id.charAt(0) === 'x';
+        const rng = ax.range;
 
         if (k === 0 && rng && rng[0] > rng[1] !== axIsX) {
             axSign = -1;
         }
-        var pmin = 0;
-        var pmax = axIsX ? fullLayout.width : fullLayout.height;
+        let pmin = 0;
+        let pmax = axIsX ? fullLayout.width : fullLayout.height;
         // in hovermode avoid overlap between hover labels and axis label
         if (fullLayout.hovermode === 'x' || fullLayout.hovermode === 'y') {
             // extent of rect behind hover label on cross axis:
-            var offsets = getHoverLabelOffsets(d, rotateLabels);
-            var anchor = d.anchor;
-            var horzSign = anchor === 'end' ? -1 : 1;
-            var labelMin;
-            var labelMax;
+            const offsets = getHoverLabelOffsets(d, rotateLabels);
+            const anchor = d.anchor;
+            const horzSign = anchor === 'end' ? -1 : 1;
+            let labelMin;
+            let labelMax;
             if (anchor === 'middle') {
                 // use extent of centered rect either on x or y axis depending on current axis
                 labelMin = d.crossPos + (axIsX ? pY(offsets.y - d.by / 2) : pX(d.bx / 2 + d.tx2width / 2));
@@ -1696,8 +1699,8 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
                     labelMin = d.crossPos + pY(HOVERARROWSIZE + offsets.y) - pY(d.by / 2 - HOVERARROWSIZE);
                     labelMax = labelMin + pY(d.by);
                 } else {
-                    var startX = pX(horzSign * HOVERARROWSIZE + offsets.x);
-                    var endX = startX + pX(horzSign * d.bx);
+                    const startX = pX(horzSign * HOVERARROWSIZE + offsets.x);
+                    const endX = startX + pX(horzSign * d.bx);
                     labelMin = d.crossPos + Math.min(startX, endX);
                     labelMax = d.crossPos + Math.max(startX, endX);
                 }
@@ -1759,11 +1762,11 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
         );
     });
 
-    var donepositioning, topOverlap, bottomOverlap, i, j, pti, sumdp;
+    let donepositioning: any, topOverlap, bottomOverlap, i, j, pti, sumdp;
 
     function constrainGroup(grp: any[]): void {
-        var minPt = grp[0];
-        var maxPt = grp[grp.length - 1];
+        const minPt = grp[0];
+        const maxPt = grp[grp.length - 1];
 
         // overlap with the top - positive vals are overlaps
         topOverlap = minPt.pmin - minPt.pos - minPt.dp + minPt.size;
@@ -1790,7 +1793,7 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
         // no room to fix positioning, delete off-screen points
 
         // first see how many points we need to delete
-        var deleteCount = 0;
+        let deleteCount = 0;
         for (i = 0; i < grp.length; i++) {
             pti = grp[i];
             if (pti.pos + pti.dp + pti.size > minPt.pmax) deleteCount++;
@@ -1847,13 +1850,13 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
         i = 0;
         while (i < pointgroups.length - 1) {
             // the higher (g0) and lower (g1) point group
-            var g0 = pointgroups[i];
-            var g1 = pointgroups[i + 1];
+            const g0 = pointgroups[i];
+            const g1 = pointgroups[i + 1];
 
             // the lowest point in the higher group (p0)
             // the highest point in the lower group (p1)
-            var p0 = g0[g0.length - 1];
-            var p1 = g1[0];
+            const p0 = g0[g0.length - 1];
+            const p1 = g1[0];
             topOverlap = p0.pos + p0.dp + p0.size - p1.pos - p1.dp + p1.size;
 
             if (topOverlap > 0.01) {
@@ -1879,10 +1882,10 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
 
     // now put these offsets into hoverData
     for (i = pointgroups.length - 1; i >= 0; i--) {
-        var grp = pointgroups[i];
+        const grp = pointgroups[i];
         for (j = grp.length - 1; j >= 0; j--) {
-            var pt = grp[j];
-            var hoverPt = pt.datum;
+            const pt = grp[j];
+            const hoverPt = pt.datum;
             hoverPt.offset = pt.dp;
             hoverPt.del = pt.del;
         }
@@ -1890,8 +1893,8 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
 }
 
 function getHoverLabelOffsets(hoverLabel: any, rotateLabels: boolean): { x: number; y: number } {
-    var offsetX = 0;
-    var offsetY = hoverLabel.offset;
+    let offsetX = 0;
+    let offsetY = hoverLabel.offset;
 
     if (rotateLabels) {
         offsetY *= -YSHIFTY;
@@ -1908,11 +1911,11 @@ function getHoverLabelOffsets(hoverLabel: any, rotateLabels: boolean): { x: numb
  * Calculate the shift in x for text and text2 elements
  */
 function getTextShiftX(hoverLabel: any): { alignShift: number; textShiftX: number; text2ShiftX: number } {
-    var alignShift = { start: 1, end: -1, middle: 0 }[hoverLabel.anchor];
-    var textShiftX = alignShift * (HOVERARROWSIZE + HOVERTEXTPAD);
-    var text2ShiftX = textShiftX + alignShift * (hoverLabel.txwidth + HOVERTEXTPAD);
+    const alignShift = ({ start: 1, end: -1, middle: 0 } as any)[hoverLabel.anchor];
+    let textShiftX = alignShift * (HOVERARROWSIZE + HOVERTEXTPAD);
+    let text2ShiftX = textShiftX + alignShift * (hoverLabel.txwidth + HOVERTEXTPAD);
 
-    var isMiddle = hoverLabel.anchor === 'middle';
+    const isMiddle = hoverLabel.anchor === 'middle';
     if (isMiddle) {
         textShiftX -= hoverLabel.tx2width / 2;
         text2ShiftX += hoverLabel.txwidth / 2 + HOVERTEXTPAD;
@@ -1926,33 +1929,33 @@ function getTextShiftX(hoverLabel: any): { alignShift: number; textShiftX: numbe
 }
 
 function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number, scaleY: number): void {
-    var pX = function (x) {
+    const pX = function (x: any) {
         return x * scaleX;
     };
-    var pY = function (y) {
+    const pY = function (y: any) {
         return y * scaleY;
     };
 
     // finally set the text positioning relative to the data and draw the
     // box around it
-    hoverLabels.each(function (d) {
-        var g = select(this);
+    hoverLabels.each(function (this: any, d: any) {
+        const g = select(this);
         if (d.del) return g.remove();
 
-        var tx = g.select('text.nums');
-        var anchor = d.anchor;
-        var horzSign = anchor === 'end' ? -1 : 1;
-        var shiftX = getTextShiftX(d);
-        var offsets = getHoverLabelOffsets(d, rotateLabels);
-        var offsetX = offsets.x;
-        var offsetY = offsets.y;
+        const tx = g.select('text.nums');
+        const anchor = d.anchor;
+        const horzSign = anchor === 'end' ? -1 : 1;
+        const shiftX = getTextShiftX(d);
+        const offsets = getHoverLabelOffsets(d, rotateLabels);
+        const offsetX = offsets.x;
+        const offsetY = offsets.y;
 
-        var isMiddle = anchor === 'middle';
+        const isMiddle = anchor === 'middle';
         // Get 'showarrow' attribute value from trace hoverlabel settings;
         // if trace has no hoverlabel settings, we should show the arrow by default
-        var showArrow = 'hoverlabel' in d.trace ? d.trace.hoverlabel.showarrow : true;
+        const showArrow = 'hoverlabel' in d.trace ? d.trace.hoverlabel.showarrow : true;
 
-        var pathStr;
+        let pathStr;
         if (isMiddle) {
             // middle aligned: rect centered on data
             pathStr =
@@ -2002,9 +2005,9 @@ function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number,
         }
         g.select('path').attr('d', pathStr);
 
-        var posX = offsetX + shiftX.textShiftX;
-        var posY = offsetY + d.ty0 - d.by / 2 + HOVERTEXTPAD;
-        var textAlign = d.textAlign || 'auto';
+        let posX = offsetX + shiftX.textShiftX;
+        const posY = offsetY + d.ty0 - d.by / 2 + HOVERTEXTPAD;
+        const textAlign = d.textAlign || 'auto';
 
         if (textAlign !== 'auto') {
             if (textAlign === 'left' && anchor !== 'start') {
@@ -2036,26 +2039,26 @@ function alignHoverText(hoverLabels: any, rotateLabels: boolean, scaleX: number,
 }
 
 function cleanPoint(d: any, hovermode: any): any {
-    var index = d.index;
-    var trace = d.trace || {};
-    var cd0 = d.cd[0];
-    var cd = d.cd[index] || {};
+    const index = d.index;
+    const trace = d.trace || {};
+    const cd0 = d.cd[0];
+    const cd = d.cd[index] || {};
 
     function pass(v: any): boolean {
         return v || (isNumeric(v) && v === 0);
     }
 
-    var getVal = Array.isArray(index)
-        ? function (calcKey, traceKey) {
-              var v = castOption(cd0, index, calcKey);
+    const getVal = Array.isArray(index)
+        ? function (calcKey: any, traceKey: any) {
+              const v = castOption(cd0, index, calcKey);
               return pass(v) ? v : extractOption({}, trace, '', traceKey);
           }
-        : function (calcKey, traceKey) {
+        : function (calcKey: any, traceKey: any) {
               return extractOption(cd, trace, calcKey, traceKey);
           };
 
     function fill(key: string, calcKey: string, traceKey: string): void {
-        var val = getVal(calcKey, traceKey);
+        const val = getVal(calcKey, traceKey);
         if (pass(val)) d[key] = val;
     }
 
@@ -2099,7 +2102,7 @@ function cleanPoint(d: any, hovermode: any): any {
 
     // for box means and error bars, add the range to the label
     if (!isNaN(d.xerr) && !(d.xa.type === 'log' && d.xerr <= 0)) {
-        var xeText = Axes.tickText(d.xa, d.xa.c2l(d.xerr), 'hover').text;
+        const xeText = Axes.tickText(d.xa, d.xa.c2l(d.xerr), 'hover').text;
         if (d.xerrneg !== undefined) {
             d.xLabel += ' +' + xeText + ' / -' + Axes.tickText(d.xa, d.xa.c2l(d.xerrneg), 'hover').text;
         } else d.xLabel += ' ± ' + xeText;
@@ -2110,7 +2113,7 @@ function cleanPoint(d: any, hovermode: any): any {
         if (hovermode === 'x') d.distance += 1;
     }
     if (!isNaN(d.yerr) && !(d.ya.type === 'log' && d.yerr <= 0)) {
-        var yeText = Axes.tickText(d.ya, d.ya.c2l(d.yerr), 'hover').text;
+        const yeText = Axes.tickText(d.ya, d.ya.c2l(d.yerr), 'hover').text;
         if (d.yerrneg !== undefined) {
             d.yLabel += ' +' + yeText + ' / -' + Axes.tickText(d.ya, d.ya.c2l(d.yerrneg), 'hover').text;
         } else d.yLabel += ' ± ' + yeText;
@@ -2118,7 +2121,7 @@ function cleanPoint(d: any, hovermode: any): any {
         if (hovermode === 'y') d.distance += 1;
     }
 
-    var infomode = d.hoverinfo || d.trace.hoverinfo;
+    let infomode = d.hoverinfo || d.trace.hoverinfo;
 
     if (infomode && infomode !== 'all') {
         infomode = Array.isArray(infomode) ? infomode : infomode.split('+');
@@ -2133,30 +2136,30 @@ function cleanPoint(d: any, hovermode: any): any {
 }
 
 function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
-    var container = opts.container;
-    var fullLayout = opts.fullLayout;
-    var gs = fullLayout._size;
-    var evt = opts.event;
-    var showY = !!closestPoints.hLinePoint;
-    var showX = !!closestPoints.vLinePoint;
+    const container = opts.container;
+    const fullLayout = opts.fullLayout;
+    const gs = fullLayout._size;
+    const evt = opts.event;
+    const showY = !!closestPoints.hLinePoint;
+    const showX = !!closestPoints.vLinePoint;
 
-    var xa, ya;
+    let xa, ya;
 
     // Remove old spikeline items
     container.selectAll('.spikeline').remove();
 
     if (!(showX || showY)) return;
 
-    var contrastColor = Color.combine(fullLayout.plot_bgcolor, fullLayout.paper_bgcolor);
+    const contrastColor = Color.combine(fullLayout.plot_bgcolor, fullLayout.paper_bgcolor);
 
     // Horizontal line (to y-axis)
     if (showY) {
-        var hLinePoint = closestPoints.hLinePoint;
-        var hLinePointX, hLinePointY;
+        const hLinePoint = closestPoints.hLinePoint;
+        let hLinePointX, hLinePointY;
 
         xa = hLinePoint && hLinePoint.xa;
         ya = hLinePoint && hLinePoint.ya;
-        var ySnap = ya.spikesnap;
+        const ySnap = ya.spikesnap;
 
         if (ySnap === 'cursor') {
             hLinePointX = evt.pointerX;
@@ -2165,15 +2168,15 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             hLinePointX = xa._offset + hLinePoint.x;
             hLinePointY = ya._offset + hLinePoint.y;
         }
-        var dfltHLineColor =
+        const dfltHLineColor =
             tinycolor.readability(hLinePoint.color, contrastColor) < 1.5
                 ? Color.contrast(contrastColor)
                 : hLinePoint.color;
-        var yMode = ya.spikemode;
-        var yThickness = ya.spikethickness;
-        var yColor = ya.spikecolor || dfltHLineColor;
-        var xEdge = Axes.getPxPosition(gd, ya);
-        var xBase, xEndSpike;
+        const yMode = ya.spikemode;
+        const yThickness = ya.spikethickness;
+        const yColor = ya.spikecolor || dfltHLineColor;
+        const xEdge = Axes.getPxPosition(gd, ya);
+        let xBase, xEndSpike;
 
         if (yMode.indexOf('toaxis') !== -1 || yMode.indexOf('across') !== -1) {
             if (yMode.indexOf('toaxis') !== -1) {
@@ -2181,8 +2184,8 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
                 xEndSpike = hLinePointX;
             }
             if (yMode.indexOf('across') !== -1) {
-                var xAcross0 = ya._counterDomainMin;
-                var xAcross1 = ya._counterDomainMax;
+                let xAcross0 = ya._counterDomainMin;
+                let xAcross1 = ya._counterDomainMax;
                 if (ya.anchor === 'free') {
                     xAcross0 = Math.min(xAcross0, ya.position);
                     xAcross1 = Math.max(xAcross1, ya.position);
@@ -2194,29 +2197,25 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             // Foreground horizontal line (to y-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: xBase,
-                    x2: xEndSpike,
-                    y1: hLinePointY,
-                    y2: hLinePointY,
-                    'stroke-width': yThickness,
-                    stroke: yColor,
-                    'stroke-dasharray': dashStyle(ya.spikedash, yThickness)
-                })
+                .attr('x1', xBase)
+                .attr('x2', xEndSpike)
+                .attr('y1', hLinePointY)
+                .attr('y2', hLinePointY)
+                .attr('stroke-width', yThickness)
+                .attr('stroke', yColor)
+                .attr('stroke-dasharray', dashStyle(ya.spikedash, yThickness))
                 .classed('spikeline', true)
                 .classed('crisp', true);
 
             // Background horizontal Line (to y-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: xBase,
-                    x2: xEndSpike,
-                    y1: hLinePointY,
-                    y2: hLinePointY,
-                    'stroke-width': yThickness + 2,
-                    stroke: contrastColor
-                })
+                .attr('x1', xBase)
+                .attr('x2', xEndSpike)
+                .attr('y1', hLinePointY)
+                .attr('y2', hLinePointY)
+                .attr('stroke-width', yThickness + 2)
+                .attr('stroke', contrastColor)
                 .classed('spikeline', true)
                 .classed('crisp', true);
         }
@@ -2224,23 +2223,21 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
         if (yMode.indexOf('marker') !== -1) {
             container
                 .insert('circle', ':first-child')
-                .attr({
-                    cx: xEdge + (ya.side !== 'right' ? yThickness : -yThickness),
-                    cy: hLinePointY,
-                    r: yThickness,
-                    fill: yColor
-                })
+                .attr('cx', xEdge + (ya.side !== 'right' ? yThickness : -yThickness))
+                .attr('cy', hLinePointY)
+                .attr('r', yThickness)
+                .attr('fill', yColor)
                 .classed('spikeline', true);
         }
     }
 
     if (showX) {
-        var vLinePoint = closestPoints.vLinePoint;
-        var vLinePointX, vLinePointY;
+        const vLinePoint = closestPoints.vLinePoint;
+        let vLinePointX, vLinePointY;
 
         xa = vLinePoint && vLinePoint.xa;
         ya = vLinePoint && vLinePoint.ya;
-        var xSnap = xa.spikesnap;
+        const xSnap = xa.spikesnap;
 
         if (xSnap === 'cursor') {
             vLinePointX = evt.pointerX;
@@ -2249,15 +2246,15 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             vLinePointX = xa._offset + vLinePoint.x;
             vLinePointY = ya._offset + vLinePoint.y;
         }
-        var dfltVLineColor =
+        const dfltVLineColor =
             tinycolor.readability(vLinePoint.color, contrastColor) < 1.5
                 ? Color.contrast(contrastColor)
                 : vLinePoint.color;
-        var xMode = xa.spikemode;
-        var xThickness = xa.spikethickness;
-        var xColor = xa.spikecolor || dfltVLineColor;
-        var yEdge = Axes.getPxPosition(gd, xa);
-        var yBase, yEndSpike;
+        const xMode = xa.spikemode;
+        const xThickness = xa.spikethickness;
+        const xColor = xa.spikecolor || dfltVLineColor;
+        const yEdge = Axes.getPxPosition(gd, xa);
+        let yBase, yEndSpike;
 
         if (xMode.indexOf('toaxis') !== -1 || xMode.indexOf('across') !== -1) {
             if (xMode.indexOf('toaxis') !== -1) {
@@ -2265,8 +2262,8 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
                 yEndSpike = vLinePointY;
             }
             if (xMode.indexOf('across') !== -1) {
-                var yAcross0 = xa._counterDomainMin;
-                var yAcross1 = xa._counterDomainMax;
+                let yAcross0 = xa._counterDomainMin;
+                let yAcross1 = xa._counterDomainMax;
                 if (xa.anchor === 'free') {
                     yAcross0 = Math.min(yAcross0, xa.position);
                     yAcross1 = Math.max(yAcross1, xa.position);
@@ -2278,29 +2275,25 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
             // Foreground vertical line (to x-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: vLinePointX,
-                    x2: vLinePointX,
-                    y1: yBase,
-                    y2: yEndSpike,
-                    'stroke-width': xThickness,
-                    stroke: xColor,
-                    'stroke-dasharray': dashStyle(xa.spikedash, xThickness)
-                })
+                .attr('x1', vLinePointX)
+                .attr('x2', vLinePointX)
+                .attr('y1', yBase)
+                .attr('y2', yEndSpike)
+                .attr('stroke-width', xThickness)
+                .attr('stroke', xColor)
+                .attr('stroke-dasharray', dashStyle(xa.spikedash, xThickness))
                 .classed('spikeline', true)
                 .classed('crisp', true);
 
             // Background vertical line (to x-axis)
             container
                 .insert('line', ':first-child')
-                .attr({
-                    x1: vLinePointX,
-                    x2: vLinePointX,
-                    y1: yBase,
-                    y2: yEndSpike,
-                    'stroke-width': xThickness + 2,
-                    stroke: contrastColor
-                })
+                .attr('x1', vLinePointX)
+                .attr('x2', vLinePointX)
+                .attr('y1', yBase)
+                .attr('y2', yEndSpike)
+                .attr('stroke-width', xThickness + 2)
+                .attr('stroke', contrastColor)
                 .classed('spikeline', true)
                 .classed('crisp', true);
         }
@@ -2309,12 +2302,10 @@ function createSpikelines(gd: GraphDiv, closestPoints: any, opts: any): void {
         if (xMode.indexOf('marker') !== -1) {
             container
                 .insert('circle', ':first-child')
-                .attr({
-                    cx: vLinePointX,
-                    cy: yEdge - (xa.side !== 'top' ? xThickness : -xThickness),
-                    r: xThickness,
-                    fill: xColor
-                })
+                .attr('cx', vLinePointX)
+                .attr('cy', yEdge - (xa.side !== 'top' ? xThickness : -xThickness))
+                .attr('r', xThickness)
+                .attr('fill', xColor)
                 .classed('spikeline', true);
         }
     }
@@ -2324,9 +2315,9 @@ function hoverChanged(gd: GraphDiv, evt: any, oldhoverdata: any): boolean {
     // don't emit any events if nothing changed
     if (!oldhoverdata || oldhoverdata.length !== gd._hoverdata.length) return true;
 
-    for (var i = oldhoverdata.length - 1; i >= 0; i--) {
-        var oldPt = oldhoverdata[i];
-        var newPt = gd._hoverdata[i];
+    for (let i = oldhoverdata.length - 1; i >= 0; i--) {
+        const oldPt = oldhoverdata[i];
+        const newPt = gd._hoverdata[i];
 
         if (
             oldPt.curveNumber !== newPt.curveNumber ||
@@ -2359,14 +2350,14 @@ function plainText(s: any, len: any): string {
 }
 
 function orderRangePoints(hoverData: any[], hovermode: any): any[] {
-    var axLetter = hovermode.charAt(0);
+    const axLetter = hovermode.charAt(0);
 
-    var first = [];
-    var second = [];
-    var last = [];
+    const first: any[] = [];
+    const second: any[] = [];
+    const last: any[] = [];
 
-    for (var i = 0; i < hoverData.length; i++) {
-        var d = hoverData[i];
+    for (let i = 0; i < hoverData.length; i++) {
+        const d = hoverData[i];
 
         if (Registry.traceIs(d.trace, 'bar-like') || Registry.traceIs(d.trace, 'box-violin')) {
             last.push(d);
@@ -2381,24 +2372,24 @@ function orderRangePoints(hoverData: any[], hovermode: any): any[] {
 }
 
 function getCoord(axLetter: string, winningPoint: any, fullLayout: FullLayout): any {
-    var ax = winningPoint[axLetter + 'a'];
-    var val = winningPoint[axLetter + 'Val'];
+    const ax = winningPoint[axLetter + 'a'];
+    let val = winningPoint[axLetter + 'Val'];
 
-    var cd0 = winningPoint.cd[0];
+    const cd0 = winningPoint.cd[0];
 
     if (ax.type === 'category' || ax.type === 'multicategory') val = ax._categoriesMap[val];
     else if (ax.type === 'date') {
-        var periodalignment = winningPoint.trace[axLetter + 'periodalignment'];
+        const periodalignment = winningPoint.trace[axLetter + 'periodalignment'];
         if (periodalignment) {
-            var d = winningPoint.cd[winningPoint.index];
+            const d = winningPoint.cd[winningPoint.index];
 
-            var start = d[axLetter + 'Start'];
+            let start = d[axLetter + 'Start'];
             if (start === undefined) start = d[axLetter];
 
-            var end = d[axLetter + 'End'];
+            let end = d[axLetter + 'End'];
             if (end === undefined) end = d[axLetter];
 
-            var diff = end - start;
+            const diff = end - start;
 
             if (periodalignment === 'end') {
                 val += diff;
@@ -2426,22 +2417,22 @@ const getTopOffset = (gd: GraphDiv): number => gd.offsetTop + gd.clientTop;
 const getLeftOffset = (gd: GraphDiv): number => gd.offsetLeft + gd.clientLeft;
 
 function getBoundingClientRect(gd: GraphDiv, node: any): any {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var rect = node.getBoundingClientRect();
+    const rect = node.getBoundingClientRect();
 
-    var x0 = rect.left;
-    var y0 = rect.top;
-    var x1 = x0 + rect.width;
-    var y1 = y0 + rect.height;
+    const x0 = rect.left;
+    const y0 = rect.top;
+    const x1 = x0 + rect.width;
+    const y1 = y0 + rect.height;
 
-    var A = apply3DTransform(fullLayout._invTransform)(x0, y0);
-    var B = apply3DTransform(fullLayout._invTransform)(x1, y1);
+    const A = apply3DTransform(fullLayout._invTransform)(x0, y0);
+    const B = apply3DTransform(fullLayout._invTransform)(x1, y1);
 
-    var Ax = A[0];
-    var Ay = A[1];
-    var Bx = B[0];
-    var By = B[1];
+    const Ax = A[0];
+    const Ay = A[1];
+    const Bx = B[0];
+    const By = B[1];
 
     return {
         x: Ax,

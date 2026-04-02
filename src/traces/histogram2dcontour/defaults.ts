@@ -11,7 +11,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    function coerce2(attr) {
+    function coerce2(attr: any) {
         return Lib.coerce2(traceIn, traceOut, attributes, attr);
     }
 

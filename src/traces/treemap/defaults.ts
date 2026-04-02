@@ -10,23 +10,23 @@ const { TEXTPAD } = _constants;
 import _defaults2 from '../pie/defaults.js';
 const { handleMarkerDefaults } = _defaults2;
 import Colorscale from '../../components/colorscale/index.js';
-var hasColorscale = Colorscale.hasColorscale;
-var colorscaleDefaults = Colorscale.handleDefaults;
+const hasColorscale = Colorscale.hasColorscale;
+const colorscaleDefaults = Colorscale.handleDefaults;
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout): void {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var labels = coerce('labels');
-    var parents = coerce('parents');
+    const labels = coerce('labels');
+    const parents = coerce('parents');
 
     if (!labels || !labels.length || !parents || !parents.length) {
         traceOut.visible = false;
         return;
     }
 
-    var vals = coerce('values');
+    const vals = coerce('values');
     if (vals && vals.length) {
         coerce('branchvalues');
     } else {
@@ -36,7 +36,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('level');
     coerce('maxdepth');
 
-    var packing = coerce('tiling.packing');
+    const packing = coerce('tiling.packing');
     if (packing === 'squarify') {
         coerce('tiling.squarifyratio');
     }
@@ -45,7 +45,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('tiling.transpose');
     coerce('tiling.pad');
 
-    var text = coerce('text');
+    const text = coerce('text');
     coerce('texttemplate');
     coerce('texttemplatefallback');
     if (!traceOut.texttemplate) coerce('textinfo', Lib.isArrayOrTypedArray(text) ? 'text+label' : 'label');
@@ -54,9 +54,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var hasPathbar = coerce('pathbar.visible');
+    const hasPathbar = coerce('pathbar.visible');
 
-    var textposition = 'auto';
+    const textposition = 'auto';
     handleText(traceIn, traceOut, layout, coerce, textposition, {
         hasPathbar: hasPathbar,
         moduleHasSelected: false,
@@ -67,11 +67,11 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         moduleHasInsideanchor: false
     });
     coerce('textposition');
-    var bottomText = traceOut.textposition.indexOf('bottom') !== -1;
+    const bottomText = traceOut.textposition.indexOf('bottom') !== -1;
 
     // @ts-expect-error pie handleMarkerDefaults accepts variable args
     handleMarkerDefaults(traceIn, traceOut, layout, coerce);
-    var withColorscale = (traceOut._hasColorscale =
+    const withColorscale = (traceOut._hasColorscale =
         hasColorscale(traceIn, 'marker', 'colors') || (traceIn.marker || {}).coloraxis); // N.B. special logic to consider "values" colorscales
     if (withColorscale) {
         colorscaleDefaults(traceIn, traceOut, layout, coerce, { prefix: 'marker.', cLetter: 'c' });
@@ -79,7 +79,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         coerce('marker.depthfade', !(traceOut.marker.colors || []).length);
     }
 
-    var headerSize = traceOut.textfont.size * 2;
+    const headerSize = traceOut.textfont.size * 2;
 
     coerce('marker.pad.t', bottomText ? headerSize / 4 : headerSize);
     coerce('marker.pad.l', headerSize / 4);

@@ -3,38 +3,38 @@ import constants from './constants.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 
-export var rangeToShapePosition = function(ax: FullAxis) {
+export const rangeToShapePosition = function(ax: FullAxis) {
     return (ax.type === 'log') ? ax.r2d : function(v: any) { return v; };
 };
 
-export var shapePositionToRange = function(ax: FullAxis) {
+export const shapePositionToRange = function(ax: FullAxis) {
     return (ax.type === 'log') ? ax.d2r : function(v: any, _clip?: any) { return v; };
 };
 
-export var decodeDate = function(convertToPx: any) {
+export const decodeDate = function(convertToPx: any) {
     return function(v: any) {
         if(v.replace) v = v.replace('_', ' ');
         return convertToPx(v);
     };
 };
 
-export var encodeDate = function(convertToDate: any) {
+export const encodeDate = function(convertToDate: any) {
     return function(v: any) { return convertToDate(v).replace(' ', '_'); };
 };
 
-export var extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any) {
-    var extractedCoordinates = [];
+export const extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any) {
+    const extractedCoordinates: any[] = [];
 
-    var segments = path.match(constants.segmentRE);
+    const segments = path.match(constants.segmentRE);
     segments.forEach(function(segment: any) {
-        var relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
+        const relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
         if(relevantParamIdx === undefined) return;
 
-        var params = segment.slice(1).match(constants.paramRE);
+        const params = segment.slice(1).match(constants.paramRE);
         if(!params || params.length < relevantParamIdx) return;
 
-        var str = params[relevantParamIdx];
-        var pos = isRaw ? str : Lib.cleanNumber(str);
+        const str = params[relevantParamIdx];
+        const pos = isRaw ? str : Lib.cleanNumber(str);
 
         extractedCoordinates.push(pos);
     });
@@ -42,9 +42,9 @@ export var extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any
     return extractedCoordinates;
 };
 
-export var getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, isVertical: any, refType: any) {
-    var gs = gd._fullLayout._size;
-    var dataToPixel;
+export const getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, isVertical: any, refType: any) {
+    const gs = gd._fullLayout._size;
+    let dataToPixel;
 
     if(axis) {
         if(refType === 'domain') {
@@ -52,10 +52,10 @@ export var getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, i
                 return axis._length * (isVertical ? (1 - v) : v) + axis._offset;
             };
         } else {
-            var d2r = shapePositionToRange(axis);
+            const d2r = shapePositionToRange(axis);
 
             dataToPixel = function(v: any) {
-                var shiftPixels = getPixelShift(axis, shift);
+                const shiftPixels = getPixelShift(axis, shift);
                 return axis._offset + axis.r2p(d2r(v, true)) + shiftPixels;
             };
 
@@ -70,18 +70,18 @@ export var getDataToPixel = function(gd: GraphDiv, axis: FullAxis, shift: any, i
     return dataToPixel;
 };
 
-export var getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical: any, opt: any) {
-    var gs = gd._fullLayout._size;
-    var pixelToData;
+export const getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical: any, opt: any) {
+    const gs = gd._fullLayout._size;
+    let pixelToData;
 
     if(axis) {
         if(opt === 'domain') {
             pixelToData = function(p: any) {
-                var q = (p - axis._offset) / axis._length;
+                const q = (p - axis._offset) / axis._length;
                 return isVertical ? 1 - q : q;
             };
         } else {
-            var r2d = rangeToShapePosition(axis);
+            const r2d = rangeToShapePosition(axis);
             pixelToData = function(p: any) { return r2d(axis.p2r(p - axis._offset)); };
         }
     } else if(isVertical) {
@@ -93,18 +93,18 @@ export var getPixelToData = function(gd: GraphDiv, axis: FullAxis, isVertical: a
     return pixelToData;
 };
 
-export var roundPositionForSharpStrokeRendering = function(pos: any, strokeWidth: any) {
-    var strokeWidthIsOdd = Math.round(strokeWidth % 2) === 1;
-    var posValAsInt = Math.round(pos);
+export const roundPositionForSharpStrokeRendering = function(pos: any, strokeWidth: any) {
+    const strokeWidthIsOdd = Math.round(strokeWidth % 2) === 1;
+    const posValAsInt = Math.round(pos);
 
     return strokeWidthIsOdd ? posValAsInt + 0.5 : posValAsInt;
 };
 
-export var makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
-    var options = gd._fullLayout.shapes[index] || {};
+export const makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
+    const options = gd._fullLayout.shapes![index] || {};
 
-    var plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
-    var hasPlotinfo = !!plotinfo;
+    let plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
+    const hasPlotinfo = !!plotinfo;
     if(hasPlotinfo) {
         plotinfo._hadPlotinfo = true;
     } else {
@@ -124,11 +124,11 @@ export var makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
     };
 };
 
-export var makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
-    var options = gd._fullLayout.selections[index] || {};
+export const makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
+    const options = gd._fullLayout.selections[index] || {};
 
-    var plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
-    var hasPlotinfo = !!plotinfo;
+    let plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
+    const hasPlotinfo = !!plotinfo;
     if(hasPlotinfo) {
         plotinfo._hadPlotinfo = true;
     } else {
@@ -143,19 +143,19 @@ export var makeSelectionsOptionsAndPlotinfo = function(gd: GraphDiv, index: any)
     };
 };
 
-export var getPathString = function(gd: GraphDiv, options: any) {
-    var type = options.type;
-    var xRefType = Axes.getRefType(options.xref);
-    var yRefType = Axes.getRefType(options.yref);
-    var xa = Axes.getFromId(gd, options.xref);
-    var ya = Axes.getFromId(gd, options.yref);
-    var gs = gd._fullLayout._size;
-    var x2r, x2p, y2r, y2p;
-    var xShiftStart = getPixelShift(xa, options.x0shift);
-    var xShiftEnd = getPixelShift(xa, options.x1shift);
-    var yShiftStart = getPixelShift(ya, options.y0shift);
-    var yShiftEnd = getPixelShift(ya, options.y1shift);
-    var x0, x1, y0, y1;
+export const getPathString = function(gd: GraphDiv, options: any) {
+    const type = options.type;
+    const xRefType = Axes.getRefType(options.xref);
+    const yRefType = Axes.getRefType(options.yref);
+    const xa = Axes.getFromId(gd, options.xref);
+    const ya = Axes.getFromId(gd, options.yref);
+    const gs = gd._fullLayout._size;
+    let x2r: any, x2p, y2r: any, y2p;
+    const xShiftStart = getPixelShift(xa, options.x0shift);
+    const xShiftEnd = getPixelShift(xa, options.x1shift);
+    const yShiftStart = getPixelShift(ya, options.y0shift);
+    const yShiftEnd = getPixelShift(ya, options.y1shift);
+    let x0, x1, y0, y1;
 
     if(xa) {
         if(xRefType === 'domain') {
@@ -185,7 +185,7 @@ export var getPathString = function(gd: GraphDiv, options: any) {
         return convertPath(options, x2p, y2p);
     }
     if(options.xsizemode === 'pixel') {
-        var xAnchorPos = x2p(options.xanchor);
+        const xAnchorPos = x2p(options.xanchor);
         x0 = xAnchorPos + options.x0 + xShiftStart;
         x1 = xAnchorPos + options.x1 + xShiftEnd;
     } else {
@@ -194,7 +194,7 @@ export var getPathString = function(gd: GraphDiv, options: any) {
     }
 
     if(options.ysizemode === 'pixel') {
-        var yAnchorPos = y2p(options.yanchor);
+        const yAnchorPos = y2p(options.yanchor);
         y0 = yAnchorPos - options.y0 + yShiftStart;
         y1 = yAnchorPos - options.y1 + yShiftEnd;
     } else {
@@ -206,32 +206,32 @@ export var getPathString = function(gd: GraphDiv, options: any) {
     if(type === 'rect') return 'M' + x0 + ',' + y0 + 'H' + x1 + 'V' + y1 + 'H' + x0 + 'Z';
 
     // circle
-    var cx = (x0 + x1) / 2;
-    var cy = (y0 + y1) / 2;
-    var rx = Math.abs(cx - x0);
-    var ry = Math.abs(cy - y0);
-    var rArc = 'A' + rx + ',' + ry;
-    var rightPt = (cx + rx) + ',' + cy;
-    var topPt = cx + ',' + (cy - ry);
+    const cx = (x0 + x1) / 2;
+    const cy = (y0 + y1) / 2;
+    const rx = Math.abs(cx - x0);
+    const ry = Math.abs(cy - y0);
+    const rArc = 'A' + rx + ',' + ry;
+    const rightPt = (cx + rx) + ',' + cy;
+    const topPt = cx + ',' + (cy - ry);
     return 'M' + rightPt + rArc + ' 0 1,1 ' + topPt +
         rArc + ' 0 0,1 ' + rightPt + 'Z';
 };
 
 function convertPath(options: any, x2p: any, y2p: any) {
-    var pathIn = options.path;
-    var xSizemode = options.xsizemode;
-    var ySizemode = options.ysizemode;
-    var xAnchor = options.xanchor;
-    var yAnchor = options.yanchor;
+    const pathIn = options.path;
+    const xSizemode = options.xsizemode;
+    const ySizemode = options.ysizemode;
+    const xAnchor = options.xanchor;
+    const yAnchor = options.yanchor;
 
     return pathIn.replace(constants.segmentRE, function(segment: any) {
-        var paramNumber = 0;
-        var segmentType = segment.charAt(0);
-        var xParams = constants.paramIsX[segmentType];
-        var yParams = constants.paramIsY[segmentType];
-        var nParams = constants.numParams[segmentType];
+        let paramNumber = 0;
+        const segmentType = segment.charAt(0);
+        const xParams = (constants.paramIsX as any)[segmentType];
+        const yParams = (constants.paramIsY as any)[segmentType];
+        const nParams = (constants.numParams as any)[segmentType];
 
-        var paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
+        let paramString = segment.slice(1).replace(constants.paramRE, function(param: any) {
             if(xParams[paramNumber]) {
                 if(xSizemode === 'pixel') param = x2p(xAnchor) + Number(param);
                 else param = x2p(param);
@@ -256,7 +256,7 @@ function convertPath(options: any, x2p: any, y2p: any) {
 
 function getPixelShift(axis: any, shift: any) {
     shift = shift || 0;
-    var shiftPixels = 0;
+    let shiftPixels = 0;
     if(shift && axis && (axis.type === 'category' || axis.type === 'multicategory')) {
         shiftPixels = (axis.r2p(1) - axis.r2p(0)) * shift;
     }

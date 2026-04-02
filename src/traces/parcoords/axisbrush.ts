@@ -9,38 +9,38 @@ const { keyFun, repeat } = _gup;
 import _index from '../../lib/index.js';
 const { sorterAsc: sortAsc, strTranslate } = _index;
 
-declare var event: any;
-declare var d: any;
+declare let event: any;
+declare let d: any;
 
-var snapRatio = c.bar.snapRatio;
-function snapOvershoot(v, vAdjacent) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }
+const snapRatio = c.bar.snapRatio;
+function snapOvershoot(v: any, vAdjacent: any) { return v * (1 - snapRatio) + vAdjacent * snapRatio; }
 
-var snapClose = c.bar.snapClose;
-function closeToCovering(v, vAdjacent) { return v * (1 - snapClose) + vAdjacent * snapClose; }
+const snapClose = c.bar.snapClose;
+function closeToCovering(v: any, vAdjacent: any) { return v * (1 - snapClose) + vAdjacent * snapClose; }
 
 // snap for the low end of a range on an ordinal scale
 // on an ordinal scale, always show some overshoot from the exact value,
 // so it's clear we're covering it
 // find the interval we're in, and snap to 1/4 the distance to the next
 // these two could be unified at a slight loss of readability / perf
-function ordinalScaleSnap(isHigh, a, v, existingRanges) {
+function ordinalScaleSnap(isHigh: any, a: any, v: any, existingRanges: any) {
     if(overlappingExisting(v, existingRanges)) return v;
 
-    var dir = isHigh ? -1 : 1;
+    const dir = isHigh ? -1 : 1;
 
-    var first = 0;
-    var last = a.length - 1;
+    let first = 0;
+    let last = a.length - 1;
     if(dir < 0) {
-        var tmp = first;
+        const tmp = first;
         first = last;
         last = tmp;
     }
 
-    var aHere = a[first];
-    var aPrev = aHere;
-    for(var i = first; dir * i < dir * last; i += dir) {
-        var nextI = i + dir;
-        var aNext = a[nextI];
+    let aHere = a[first];
+    let aPrev = aHere;
+    for(let i = first; dir * i < dir * last; i += dir) {
+        const nextI = i + dir;
+        const aNext = a[nextI];
 
         // very close to the previous - snap down to it
         if(dir * v < dir * closeToCovering(aHere, aNext)) return snapOvershoot(aHere, aPrev);
@@ -51,20 +51,20 @@ function ordinalScaleSnap(isHigh, a, v, existingRanges) {
     }
 }
 
-function overlappingExisting(v, existingRanges) {
-    for(var i = 0; i < existingRanges.length; i++) {
+function overlappingExisting(v: any, existingRanges: any) {
+    for(let i = 0; i < existingRanges.length; i++) {
         if(v >= existingRanges[i][0] && v <= existingRanges[i][1]) return true;
     }
     return false;
 }
 
-function barHorizontalSetup(selection) {
+function barHorizontalSetup(selection: any) {
     selection
         .attr('x', -c.bar.captureWidth / 2)
         .attr('width', c.bar.captureWidth);
 }
 
-function backgroundBarHorizontalSetup(selection) {
+function backgroundBarHorizontalSetup(selection: any) {
     selection
         .attr('visibility', 'visible')
         .style('visibility', 'visible')
@@ -72,16 +72,16 @@ function backgroundBarHorizontalSetup(selection) {
         .attr('opacity', 0);
 }
 
-function setHighlight(d) {
+function setHighlight(d: any) {
     if(!d.brush.filterSpecified) {
         return '0,' + d.height;
     }
 
-    var pixelRanges = unitToPx(d.brush.filter.getConsolidated(), d.height);
-    var dashArray = [0]; // we start with a 0 length selection as filter ranges are inclusive, not exclusive
-    var p, sectionHeight, iNext;
-    var currentGap = pixelRanges.length ? pixelRanges[0][0] : null;
-    for(var i = 0; i < pixelRanges.length; i++) {
+    const pixelRanges = unitToPx(d.brush.filter.getConsolidated(), d.height);
+    const dashArray = [0]; // we start with a 0 length selection as filter ranges are inclusive, not exclusive
+    let p, sectionHeight, iNext;
+    let currentGap = pixelRanges.length ? pixelRanges[0][0] : null;
+    for(let i = 0; i < pixelRanges.length; i++) {
         p = pixelRanges[i];
         sectionHeight = p[1] - p[0];
         dashArray.push(currentGap);
@@ -99,16 +99,16 @@ function setHighlight(d) {
     return dashArray;
 }
 
-function unitToPx(unitRanges, height) {
-    return unitRanges.map(function(pr) {
-        return pr.map(function(v) { return Math.max(0, v * height); }).sort(sortAsc);
+function unitToPx(unitRanges: any, height: any) {
+    return unitRanges.map(function(pr: any) {
+        return pr.map(function(v: any) { return Math.max(0, v * height); }).sort(sortAsc);
     });
 }
 
 // is the cursor over the north, middle, or south of a bar?
 // the end handles extend over the last 10% of the bar
-function getRegion(fPix, y) {
-    var pad = c.bar.handleHeight;
+function getRegion(fPix: any, y: any) {
+    const pad = c.bar.handleHeight;
     if(y > fPix[1] + pad || y < fPix[0] - pad) return;
     if(y >= 0.9 * fPix[1] + 0.1 * fPix[0]) return 'n';
     if(y <= 0.9 * fPix[0] + 0.1 * fPix[1]) return 's';
@@ -120,7 +120,7 @@ function clearCursor() {
         .style('cursor', null);
 }
 
-function styleHighlight(selection) {
+function styleHighlight(selection: any) {
     // stroke-dasharray is used to minimize the number of created DOM nodes, because the requirement calls for up to
     // 1000 individual selections on an axis, and there can be 60 axes per parcoords, and multiple parcoords per
     // dashboard. The technique is similar to https://codepen.io/monfera/pen/rLYqWR and using a `polyline` with
@@ -129,27 +129,27 @@ function styleHighlight(selection) {
 }
 
 function renderHighlight(root: any, tweenCallback?: any) {
-    var bar = select(root).selectAll('.highlight, .highlight-shadow');
-    var barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).on('end', tweenCallback) : bar;
+    const bar = select(root).selectAll('.highlight, .highlight-shadow');
+    const barToStyle = tweenCallback ? bar.transition().duration(c.bar.snapDuration).on('end', tweenCallback) : bar;
     styleHighlight(barToStyle);
 }
 
-function getInterval(d, y) {
-    var b = d.brush;
-    var active = b.filterSpecified;
-    var closestInterval = NaN;
-    var out: any = {};
-    var i;
+function getInterval(d: any, y: any) {
+    const b = d.brush;
+    const active = b.filterSpecified;
+    let closestInterval = NaN;
+    const out: any = {};
+    let i;
 
     if(active) {
-        var height = d.height;
-        var intervals = b.filter.getConsolidated();
-        var pixIntervals = unitToPx(intervals, height);
-        var hoveredInterval = NaN;
-        var previousInterval = NaN;
-        var nextInterval = NaN;
+        const height = d.height;
+        const intervals = b.filter.getConsolidated();
+        const pixIntervals = unitToPx(intervals, height);
+        let hoveredInterval = NaN;
+        let previousInterval = NaN;
+        let nextInterval = NaN;
         for(i = 0; i <= pixIntervals.length; i++) {
-            var p = pixIntervals[i];
+            const p = pixIntervals[i];
             if(p && p[0] <= y && y <= p[1]) {
                 // over a bar
                 hoveredInterval = i;
@@ -175,8 +175,8 @@ function getInterval(d, y) {
         }
 
         if(!isNaN(closestInterval)) {
-            var fPix = pixIntervals[closestInterval];
-            var region = getRegion(fPix, y);
+            const fPix = pixIntervals[closestInterval];
+            const region = getRegion(fPix, y);
 
             if(region) {
                 out.interval = intervals[closestInterval];
@@ -187,10 +187,10 @@ function getInterval(d, y) {
     }
 
     if(d.ordinal && !out.region) {
-        var a = d.unitTickvals;
-        var unitLocation = d.unitToPaddedPx.invert(y);
+        const a = d.unitTickvals;
+        const unitLocation = d.unitToPaddedPx.invert(y);
         for(i = 0; i < a.length; i++) {
-            var rangei = [
+            const rangei = [
                 a[Math.max(i - 1, 0)] * 0.25 + a[i] * 0.75,
                 a[Math.min(i + 1, a.length - 1)] * 0.25 + a[i] * 0.75
             ];
@@ -204,25 +204,25 @@ function getInterval(d, y) {
     return out;
 }
 
-function dragstart(lThis, d) {
+function dragstart(lThis: any, d: any) {
     event.sourceEvent.stopPropagation();
-    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
-    var unitLocation = d.unitToPaddedPx.invert(y);
-    var b = d.brush;
-    var interval = getInterval(d, y);
-    var unitRange = interval.interval;
-    var s = b.svgBrush;
+    const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
+    const unitLocation = d.unitToPaddedPx.invert(y);
+    const b = d.brush;
+    const interval = getInterval(d, y);
+    const unitRange = interval.interval;
+    const s = b.svgBrush;
     s.wasDragged = false; // we start assuming there won't be a drag - useful for reset
     s.grabbingBar = interval.region === 'ns';
     if(s.grabbingBar) {
-        var pixelRange = unitRange.map(d.unitToPaddedPx);
+        const pixelRange = unitRange.map(d.unitToPaddedPx);
         s.grabPoint = y - pixelRange[0] - c.verticalPadding;
         s.barLength = pixelRange[1] - pixelRange[0];
     }
     s.clickableOrdinalRange = interval.clickableOrdinalRange;
     s.stayingIntervals = (d.multiselect && b.filterSpecified) ? b.filter.getConsolidated() : [];
     if(unitRange) {
-        s.stayingIntervals = s.stayingIntervals.filter(function(int2) {
+        s.stayingIntervals = s.stayingIntervals.filter(function(int2: any) {
             return int2[0] !== unitRange[0] && int2[1] !== unitRange[1];
         });
     }
@@ -231,10 +231,10 @@ function dragstart(lThis, d) {
     s.brushStartCallback();
 }
 
-function drag(lThis, d) {
+function drag(lThis: any, d: any) {
     event.sourceEvent.stopPropagation();
-    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
-    var s = d.brush.svgBrush;
+    const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
+    const s = d.brush.svgBrush;
     s.wasDragged = true;
     s._dragging = true;
 
@@ -250,10 +250,10 @@ function drag(lThis, d) {
     renderHighlight(lThis.parentNode);
 }
 
-function dragend(lThis, d) {
-    var brush = d.brush;
-    var filter = brush.filter;
-    var s = brush.svgBrush;
+function dragend(lThis: any, d: any) {
+    const brush = d.brush;
+    const filter = brush.filter;
+    const s = brush.svgBrush;
 
     if(!s._dragging) { // i.e. click
         // mock zero drag
@@ -264,9 +264,9 @@ function dragend(lThis, d) {
     }
     s._dragging = false;
 
-    var e = event;
+    const e = event;
     e.sourceEvent.stopPropagation();
-    var grabbingBar = s.grabbingBar;
+    const grabbingBar = s.grabbingBar;
     s.grabbingBar = false;
     s.grabLocation = undefined;
     d.parent.inBrushDrag = false;
@@ -294,20 +294,20 @@ function dragend(lThis, d) {
         return; // no need to fuse intervals or snap to ordinals, so we can bail early
     }
 
-    var mergeIntervals = function() {
+    const mergeIntervals = function() {
         // Key piece of logic: once the button is released, possibly overlapping intervals will be fused:
         // Here it's done immediately on click release while on ordinal snap transition it's done at the end
         filter.set(filter.getConsolidated());
     };
 
     if(d.ordinal) {
-        var a = d.unitTickvals;
+        const a = d.unitTickvals;
         if(a[a.length - 1] < a[0]) a.reverse();
         s.newExtent = [
             ordinalScaleSnap(0, a, s.newExtent[0], s.stayingIntervals),
             ordinalScaleSnap(1, a, s.newExtent[1], s.stayingIntervals)
         ];
-        var hasNewExtent = s.newExtent[1] > s.newExtent[0];
+        const hasNewExtent = s.newExtent[1] > s.newExtent[0];
         s.extent = s.stayingIntervals.concat(hasNewExtent ? [s.newExtent] : []);
         if(!s.extent.length) {
             brushClear(brush);
@@ -327,23 +327,23 @@ function dragend(lThis, d) {
     s.brushEndCallback(brush.filterSpecified ? filter.getConsolidated() : []);
 }
 
-function mousemove(lThis, d) {
-    var y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
-    var interval = getInterval(d, y);
+function mousemove(lThis: any, d: any) {
+    const y = d.height - pointer(event, lThis)[1] - 2 * c.verticalPadding;
+    const interval = getInterval(d, y);
 
-    var cursor = 'crosshair';
+    let cursor = 'crosshair';
     if(interval.clickableOrdinalRange) cursor = 'pointer';
     else if(interval.region) cursor = interval.region + '-resize';
     select(document.body)
         .style('cursor', cursor);
 }
 
-function attachDragBehavior(selection) {
+function attachDragBehavior(selection: any) {
     // There's some fiddling with pointer cursor styling so that the cursor preserves its shape while dragging a brush
     // even if the cursor strays from the interacting bar, which is bound to happen as bars are thin and the user
     // will inevitably leave the hotspot strip. In this regard, it does something similar to what the D3 brush would do.
     selection
-        .on('mousemove', function(event: any) {
+        .on('mousemove', function(this: any, event: any) {
             event.preventDefault();
             if(!d.parent.inBrushDrag) mousemove(this, d);
         })
@@ -351,20 +351,20 @@ function attachDragBehavior(selection) {
             if(!d.parent.inBrushDrag) clearCursor();
         })
         .call(d3Drag()
-            .on('start', function(event: any) { dragstart(this, d); })
-            .on('drag', function(event: any) { drag(this, d); })
-            .on('end', function(event: any) { dragend(this, d); })
+            .on('start', function(this: any, event: any) { dragstart(this, d); })
+            .on('drag', function(this: any, event: any) { drag(this, d); })
+            .on('end', function(this: any, event: any) { dragend(this, d); })
         );
 }
 
-function startAsc(a, b) { return a[0] - b[0]; }
+function startAsc(a: any, b: any) { return a[0] - b[0]; }
 
-function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
-    var isStatic = gd._context.staticPlot;
+function renderAxisBrush(axisBrush: any, paperColor: any, gd: GraphDiv) {
+    const isStatic = gd._context.staticPlot;
 
-    var background = axisBrush.selectAll('.background').data(repeat);
+    const background = axisBrush.selectAll('.background').data(repeat);
 
-    background.enter()
+    const backgroundEnter = background.enter()
         .append('rect')
         .classed('background', true)
         .call(barHorizontalSetup)
@@ -372,15 +372,15 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
         .style('pointer-events', isStatic ? 'none' : 'auto') // parent pointer events are disabled; we must have it to register events
         .attr('transform', strTranslate(0, c.verticalPadding));
 
-    background
+    background.merge(backgroundEnter)
         .call(attachDragBehavior)
-        .attr('height', function(d) {
+        .attr('height', function(d: any) {
             return d.height - c.verticalPadding;
         });
 
-    var highlightShadow = axisBrush.selectAll('.highlight-shadow').data(repeat); // we have a set here, can't call it `extent`
+    const highlightShadow = axisBrush.selectAll('.highlight-shadow').data(repeat); // we have a set here, can't call it `extent`
 
-    highlightShadow.enter()
+    const highlightShadowEnter = highlightShadow.enter()
         .append('line')
         .classed('highlight-shadow', true)
         .attr('x', -c.bar.width / 2)
@@ -389,13 +389,13 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
         .attr('opacity', c.bar.strokeOpacity)
         .attr('stroke-linecap', 'butt');
 
-    highlightShadow
-        .attr('y1', function(d) { return d.height; })
+    highlightShadow.merge(highlightShadowEnter)
+        .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 
-    var highlight = axisBrush.selectAll('.highlight').data(repeat); // we have a set here, can't call it `extent`
+    const highlight = axisBrush.selectAll('.highlight').data(repeat); // we have a set here, can't call it `extent`
 
-    highlight.enter()
+    const highlightEnter = highlight.enter()
         .append('line')
         .classed('highlight', true)
         .attr('x', -c.bar.width / 2)
@@ -404,48 +404,48 @@ function renderAxisBrush(axisBrush, paperColor, gd: GraphDiv) {
         .attr('opacity', c.bar.fillOpacity)
         .attr('stroke-linecap', 'butt');
 
-    highlight
-        .attr('y1', function(d) { return d.height; })
+    highlight.merge(highlightEnter)
+        .attr('y1', function(d: any) { return d.height; })
         .call(styleHighlight);
 }
 
-function ensureAxisBrush(axisOverlays, paperColor, gd: GraphDiv) {
-    var axisBrush = axisOverlays.selectAll('.' + c.cn.axisBrush)
+function ensureAxisBrush(axisOverlays: any, paperColor: any, gd: GraphDiv) {
+    const axisBrush = axisOverlays.selectAll('.' + c.cn.axisBrush)
         .data(repeat, keyFun);
 
-    axisBrush.enter()
+    const axisBrushEnter = axisBrush.enter()
         .append('g')
         .classed(c.cn.axisBrush, true);
 
-    renderAxisBrush(axisBrush, paperColor, gd);
+    renderAxisBrush(axisBrush.merge(axisBrushEnter), paperColor, gd);
 }
 
-function getBrushExtent(brush) {
-    return brush.svgBrush.extent.map(function(e) {return e.slice();});
+function getBrushExtent(brush: any) {
+    return brush.svgBrush.extent.map(function(e: any) {return e.slice();});
 }
 
-function brushClear(brush) {
+function brushClear(brush: any) {
     brush.filterSpecified = false;
     brush.svgBrush.extent = [[-Infinity, Infinity]];
 }
 
-function axisBrushMoved(callback) {
-    return function axisBrushMoved(dimension) {
-        var brush = dimension.brush;
-        var extent = getBrushExtent(brush);
-        var newExtent = extent.slice();
+function axisBrushMoved(callback: any) {
+    return function axisBrushMoved(dimension: any) {
+        const brush = dimension.brush;
+        const extent = getBrushExtent(brush);
+        const newExtent = extent.slice();
         brush.filter.set(newExtent);
         callback();
     };
 }
 
-function dedupeRealRanges(intervals) {
+function dedupeRealRanges(intervals: any) {
     // Fuses elements of intervals if they overlap, yielding discontiguous intervals, results.length <= intervals.length
     // Currently uses closed intervals, ie. dedupeRealRanges([[400, 800], [300, 400]]) -> [300, 800]
-    var queue = intervals.slice();
-    var result = [];
-    var currentInterval;
-    var current = queue.shift();
+    const queue = intervals.slice();
+    let result: any[] = [];
+    let currentInterval;
+    let current = queue.shift();
     while(current) { // [].shift === undefined, so we don't descend into an empty array
         currentInterval = current.slice();
         while((current = queue.shift()) && current[0] <= /* right-open interval would need `<` */ currentInterval[1]) {
@@ -466,20 +466,20 @@ function dedupeRealRanges(intervals) {
 }
 
 function makeFilter() {
-    var filter = [];
-    var consolidated;
-    var bounds;
+    let filter: any[] = [];
+    let consolidated: any;
+    let bounds: any;
     return {
-        set: function(a) {
+        set: function(a: any) {
             filter = a
-                .map(function(d) { return d.slice().sort(sortAsc); })
+                .map(function(d: any) { return d.slice().sort(sortAsc); })
                 .sort(startAsc);
 
             // handle unselected case
             if(filter.length === 1 &&
                 filter[0][0] === -Infinity &&
                 filter[0][1] === Infinity) {
-                filter = [[0, -1]];
+                filter = ([[0, -1]] as any);
             }
 
             consolidated = dedupeRealRanges(filter);
@@ -493,8 +493,8 @@ function makeFilter() {
     };
 }
 
-function makeBrush(state, rangeSpecified, initialRange, brushStartCallback, brushCallback, brushEndCallback) {
-    var filter = makeFilter();
+function makeBrush(state: any, rangeSpecified: any, initialRange: any, brushStartCallback: any, brushCallback: any, brushEndCallback: any) {
+    const filter = makeFilter();
     filter.set(initialRange);
     return {
         filter: filter,
@@ -510,9 +510,9 @@ function makeBrush(state, rangeSpecified, initialRange, brushStartCallback, brus
 
 // for use by supplyDefaults, but it needed tons of pieces from here so
 // seemed to make more sense just to put the whole routine here
-function cleanRanges(ranges, dimension) {
+function cleanRanges(ranges: any, dimension: any) {
     if(Array.isArray(ranges[0])) {
-        ranges = ranges.map(function(ri) { return ri.sort(sortAsc); });
+        ranges = ranges.map(function(ri: any) { return ri.sort(sortAsc); });
 
         if(!dimension.multiselect) ranges = [ranges[0]];
         else ranges = dedupeRealRanges(ranges.sort(startAsc));
@@ -520,15 +520,15 @@ function cleanRanges(ranges, dimension) {
 
     // ordinal snapping
     if(dimension.tickvals) {
-        var sortedTickVals = dimension.tickvals.slice().sort(sortAsc);
-        ranges = ranges.map(function(ri) {
-            var rSnapped = [
+        const sortedTickVals = dimension.tickvals.slice().sort(sortAsc);
+        ranges = ranges.map(function(ri: any) {
+            const rSnapped = [
                 ordinalScaleSnap(0, sortedTickVals, ri[0], []),
                 ordinalScaleSnap(1, sortedTickVals, ri[1], [])
             ];
             if(rSnapped[1] > rSnapped[0]) return rSnapped;
         })
-        .filter(function(ri) { return ri; });
+        .filter(function(ri: any) { return ri; });
 
         if(!ranges.length) return;
     }

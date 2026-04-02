@@ -1,34 +1,34 @@
 import dragHelpers from '../../dragelement/helpers.js';
 import handleOutline from '../../shapes/handle_outline.js';
 import helpers from '../../shapes/draw_newshape/helpers.js';
-var selectMode = dragHelpers.selectMode;
+const selectMode = dragHelpers.selectMode;
 
-var clearOutline = handleOutline.clearOutline;
+const clearOutline = handleOutline.clearOutline;
 
-var readPaths = helpers.readPaths;
-var writePaths = helpers.writePaths;
-var fixDatesForPaths = helpers.fixDatesForPaths;
+const readPaths = helpers.readPaths;
+const writePaths = helpers.writePaths;
+const fixDatesForPaths = helpers.fixDatesForPaths;
 
 export default function newSelections(outlines: any, dragOptions: any) {
     if(!outlines.length) return;
-    var e = outlines[0][0]; // pick first
+    const e = outlines[0][0]; // pick first
     if(!e) return;
-    var d = e.getAttribute('d');
+    const d = e.getAttribute('d');
 
-    var gd = dragOptions.gd;
-    var newStyle = gd._fullLayout.newselection;
+    const gd = dragOptions.gd;
+    const newStyle = gd._fullLayout.newselection;
 
-    var plotinfo = dragOptions.plotinfo;
-    var xaxis = plotinfo.xaxis;
-    var yaxis = plotinfo.yaxis;
+    const plotinfo = dragOptions.plotinfo;
+    const xaxis = plotinfo.xaxis;
+    const yaxis = plotinfo.yaxis;
 
-    var isActiveSelection = dragOptions.isActiveSelection;
-    var dragmode = dragOptions.dragmode;
+    const isActiveSelection = dragOptions.isActiveSelection;
+    let dragmode = dragOptions.dragmode;
 
-    var selections = (gd.layout || {}).selections || [];
+    const selections = (gd.layout || {}).selections || [];
 
     if(!selectMode(dragmode) && isActiveSelection !== undefined) {
-        var id = gd._fullLayout._activeSelectionIndex;
+        const id = gd._fullLayout._activeSelectionIndex;
         if(id < selections.length) {
             switch(gd._fullLayout.selections[id].type) {
                 case 'rect':
@@ -41,9 +41,9 @@ export default function newSelections(outlines: any, dragOptions: any) {
         }
     }
 
-    var polygons = readPaths(d, gd, plotinfo, isActiveSelection);
+    const polygons = readPaths(d, gd, plotinfo, isActiveSelection);
 
-    var newSelection: any = {
+    const newSelection: any = {
         xref: xaxis._id,
         yref: yaxis._id,
 
@@ -55,7 +55,7 @@ export default function newSelections(outlines: any, dragOptions: any) {
         }
     };
 
-    var cell;
+    let cell;
     // rect can be in one cell
     // only define cell if there is single cell
     if(polygons.length === 1) cell = polygons[0];
@@ -79,12 +79,12 @@ export default function newSelections(outlines: any, dragOptions: any) {
 
     clearOutline(gd);
 
-    var editHelpers = dragOptions.editHelpers;
-    var modifyItem = (editHelpers || {}).modifyItem;
+    const editHelpers = dragOptions.editHelpers;
+    const modifyItem = (editHelpers || {}).modifyItem;
 
-    var allSelections = [];
-    for(var q = 0; q < selections.length; q++) {
-        var beforeEdit = gd._fullLayout.selections[q];
+    const allSelections: any[] = [];
+    for(let q = 0; q < selections.length; q++) {
+        const beforeEdit = gd._fullLayout.selections[q];
         if(!beforeEdit) {
             allSelections[q] = beforeEdit;
             continue;
@@ -96,7 +96,7 @@ export default function newSelections(outlines: any, dragOptions: any) {
             isActiveSelection !== undefined &&
             q === gd._fullLayout._activeSelectionIndex
         ) {
-            var afterEdit = newSelection;
+            const afterEdit = newSelection;
 
             switch(beforeEdit.type) {
                 case 'rect':

@@ -1,31 +1,31 @@
 import Axes from '../../plots/cartesian/axes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
-    var i, j, j0;
-    var eps, bounds, n1, n2, n, value, v;
-    var j1, v0, v1, d;
+export default function calcGridlines(trace: any, axisLetter: any, crossAxisLetter: any) {
+    let i, j, j0;
+    let eps, bounds, n1, n2, n: any, value, v;
+    let j1, v0, v1, d;
 
-    var data = trace['_' + axisLetter];
-    var axis = trace[axisLetter + 'axis'];
+    const data = trace['_' + axisLetter];
+    const axis = trace[axisLetter + 'axis'];
 
-    var gridlines = axis._gridlines = [];
-    var minorgridlines = axis._minorgridlines = [];
-    var boundarylines = axis._boundarylines = [];
+    const gridlines = axis._gridlines = [] as any[];
+    const minorgridlines = axis._minorgridlines = [] as any[];
+    const boundarylines = axis._boundarylines = [] as any[];
 
-    var crossData = trace['_' + crossAxisLetter];
-    var crossAxis = trace[crossAxisLetter + 'axis'];
+    const crossData = trace['_' + crossAxisLetter];
+    const crossAxis = trace[crossAxisLetter + 'axis'];
 
     if(axis.tickmode === 'array') {
         axis.tickvals = data.slice();
     }
 
-    var xcp = trace._xctrl;
-    var ycp = trace._yctrl;
-    var nea = xcp[0].length;
-    var neb = xcp.length;
-    var na = trace._a.length;
-    var nb = trace._b.length;
+    const xcp = trace._xctrl;
+    const ycp = trace._yctrl;
+    const nea = xcp[0].length;
+    const neb = xcp.length;
+    const na = trace._a.length;
+    const nb = trace._b.length;
 
     Axes.prepTicks(axis);
 
@@ -38,13 +38,13 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
 
     // If the cross axis uses bicubic interpolation, then the grid
     // lines fall once every three expanded grid row/cols:
-    var stride = axis.smoothing ? 3 : 1;
+    const stride = axis.smoothing ? 3 : 1;
 
-    function constructValueGridline(value) {
-        var i, j, j0, tj, pxy, i0, ti, xy, dxydi0, dxydi1, dxydj0, dxydj1;
-        var xpoints = [];
-        var ypoints = [];
-        var ret: any = {};
+    function constructValueGridline(value: any) {
+        let i: any, j: any, j0: any, tj: any, pxy, i0: any, ti: any, xy, dxydi0, dxydi1, dxydj0, dxydj1;
+        const xpoints: any[] = [];
+        const ypoints: any[] = [];
+        const ret: any = {};
         // Search for the fractional grid index giving this line:
         if(axisLetter === 'b') {
             // For the position we use just the i-j coordinates:
@@ -59,11 +59,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             ret.length = nb;
             ret.crossLength = na;
 
-            ret.xy = function(i) {
+            ret.xy = function(i: any) {
                 return trace.evalxy([], i, j);
             };
 
-            ret.dxy = function(i0, ti) {
+            ret.dxy = function(i0: any, ti: any) {
                 return trace.dxydi([], i0, j0, ti, tj);
             };
 
@@ -97,11 +97,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             ret.length = na;
             ret.crossLength = nb;
 
-            ret.xy = function(j) {
+            ret.xy = function(j: any) {
                 return trace.evalxy([], i, j);
             };
 
-            ret.dxy = function(j0, tj) {
+            ret.dxy = function(j0: any, tj: any) {
                 return trace.dxydj([], i0, j0, ti, tj);
             };
 
@@ -142,11 +142,11 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
         return ret;
     }
 
-    function constructArrayGridline(idx) {
-        var j, i0, j0, ti, tj;
-        var xpoints = [];
-        var ypoints = [];
-        var ret: any = {};
+    function constructArrayGridline(idx: any) {
+        let j, i0: any, j0: any, ti: any, tj: any;
+        const xpoints: any[] = [];
+        const ypoints: any[] = [];
+        const ret: any = {};
         ret.length = data.length;
         ret.crossLength = crossData.length;
 
@@ -154,37 +154,37 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             j0 = Math.max(0, Math.min(nb - 2, idx));
             tj = Math.min(1, Math.max(0, idx - j0));
 
-            ret.xy = function(i) {
+            ret.xy = function(i: any) {
                 return trace.evalxy([], i, idx);
             };
 
-            ret.dxy = function(i0, ti) {
+            ret.dxy = function(i0: any, ti: any) {
                 return trace.dxydi([], i0, j0, ti, tj);
             };
 
             // In the tickmode: array case, this operation is a simple
             // transfer of data:
             for(j = 0; j < nea; j++) {
-                xpoints[j] = xcp[idx * stride][j];
-                ypoints[j] = ycp[idx * stride][j];
+                xpoints[j] = (xcp[idx * stride][j] as any);
+                ypoints[j] = (ycp[idx * stride][j] as any);
             }
         } else {
             i0 = Math.max(0, Math.min(na - 2, idx));
             ti = Math.min(1, Math.max(0, idx - i0));
 
-            ret.xy = function(j) {
+            ret.xy = function(j: any) {
                 return trace.evalxy([], idx, j);
             };
 
-            ret.dxy = function(j0, tj) {
+            ret.dxy = function(j0: any, tj: any) {
                 return trace.dxydj([], i0, j0, ti, tj);
             };
 
             // In the tickmode: array case, this operation is a simple
             // transfer of data:
             for(j = 0; j < neb; j++) {
-                xpoints[j] = xcp[j][idx * stride];
-                ypoints[j] = ycp[j][idx * stride];
+                xpoints[j] = (xcp[j][idx * stride] as any);
+                ypoints[j] = (ycp[j][idx * stride] as any);
             }
         }
 
@@ -202,8 +202,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
     }
 
     if(axis.tickmode === 'array') {
-        // var j0 = axis.startline ? 1 : 0;
-        // var j1 = data.length - (axis.endline ? 1 : 0);
+        // const j0 = axis.startline ? 1 : 0;
+        // const j1 = data.length - (axis.endline ? 1 : 0);
 
         eps = 5e-15;
         bounds = [

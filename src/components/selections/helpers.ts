@@ -27,7 +27,7 @@ function r2p(ax: FullAxis, v: any) {
 }
 
 function axValue(ax: FullAxis) {
-    var index = (ax._id.charAt(0) === 'y') ? 1 : 0;
+    const index = (ax._id.charAt(0) === 'y') ? 1 : 0;
     return function(v: any) { return p2r(ax, v[index]); };
 }
 

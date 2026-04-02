@@ -5,14 +5,14 @@ const { hasColorscale, extractOpts } = _helpers;
 
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     function replace(cont: any, k: string): void {
-        var val = cont['_' + k];
+        const val = cont['_' + k];
         if(val !== undefined) {
             cont[k] = val;
         }
     }
 
     function relinkColorAttrs(outerCont: any, cbOpt: any): void {
-        var cont = cbOpt.container ?
+        const cont = cbOpt.container ?
             nestedProperty(outerCont, cbOpt.container).get() :
             outerCont;
 
@@ -20,8 +20,8 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
             if(cont.coloraxis) {
                 cont._colorAx = fullLayout[cont.coloraxis];
             } else {
-                var cOpts = extractOpts(cont);
-                var isAuto = cOpts.auto;
+                const cOpts = extractOpts(cont);
+                const isAuto = cOpts.auto;
 
                 if(isAuto || cOpts.min === undefined) {
                     replace(cont, cbOpt.min);
@@ -36,13 +36,13 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
         }
     }
 
-    for(var i = 0; i < fullData.length; i++) {
-        var trace = fullData[i];
-        var cbOpts = trace._module.colorbar;
+    for(let i = 0; i < fullData.length; i++) {
+        const trace = fullData[i];
+        const cbOpts = trace._module.colorbar;
 
         if(cbOpts) {
             if(Array.isArray(cbOpts)) {
-                for(var j = 0; j < cbOpts.length; j++) {
+                for(let j = 0; j < cbOpts.length; j++) {
                     relinkColorAttrs(trace, cbOpts[j]);
                 }
             } else {
@@ -59,7 +59,7 @@ export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: Fu
         }
     }
 
-    for(var k in fullLayout._colorAxes) {
+    for(const k in fullLayout._colorAxes) {
         relinkColorAttrs(fullLayout[k], {min: 'cmin', max: 'cmax'});
     }
 }

@@ -8,20 +8,20 @@ import mergeLength from '../parcoords/merge_length.js';
 import { isOpenSymbol } from '../scattergl/helpers.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
+    const dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
         name: 'dimensions',
         handleItemDefaults: dimensionDefaults
     });
 
-    var showDiag = coerce('diagonal.visible');
-    var showUpper = coerce('showupperhalf');
-    var showLower = coerce('showlowerhalf');
+    const showDiag = coerce('diagonal.visible');
+    const showUpper = coerce('showupperhalf');
+    const showLower = coerce('showlowerhalf');
 
-    var dimLength = mergeLength(traceOut, dimensions, 'values');
+    const dimLength = mergeLength(traceOut, dimensions, 'values');
 
     if (!dimLength || (!showDiag && !showUpper && !showLower)) {
         traceOut.visible = false;
@@ -37,8 +37,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     handleMarkerDefaults(traceIn, traceOut, defaultColor, layout, coerce, { noAngleRef: true, noStandOff: true });
 
-    var isOpen = isOpenSymbol(traceOut.marker.symbol);
-    var isBubble = subTypes.isBubble(traceOut);
+    const isOpen = isOpenSymbol(traceOut.marker.symbol);
+    const isBubble = subTypes.isBubble(traceOut);
     coerce('marker.line.width', isOpen || isBubble ? 1 : 0);
 
     handleAxisDefaults(traceIn, traceOut, layout, coerce);
@@ -46,13 +46,13 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function dimensionDefaults(dimIn, dimOut) {
-    function coerce(attr, dflt?) {
+function dimensionDefaults(dimIn: any, dimOut: any) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(dimIn, dimOut, attributes.dimensions, attr, dflt);
     }
 
     coerce('label');
-    var values = coerce('values');
+    const values = coerce('values');
 
     if (!(values && values.length)) dimOut.visible = false;
     else coerce('visible');
@@ -61,49 +61,49 @@ function dimensionDefaults(dimIn, dimOut) {
     coerce('axis.matches');
 }
 
-function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
-    var dimensions = traceOut.dimensions;
-    var dimLength = dimensions.length;
-    var showUpper = traceOut.showupperhalf;
-    var showLower = traceOut.showlowerhalf;
-    var showDiag = traceOut.diagonal.visible;
-    var i, j;
+function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
+    const dimensions = traceOut.dimensions;
+    const dimLength = dimensions.length;
+    const showUpper = traceOut.showupperhalf;
+    const showLower = traceOut.showlowerhalf;
+    const showDiag = traceOut.diagonal.visible;
+    let i, j;
 
-    var xAxesDflt = new Array(dimLength);
-    var yAxesDflt = new Array(dimLength);
+    const xAxesDflt = new Array(dimLength);
+    const yAxesDflt = new Array(dimLength);
 
     for (i = 0; i < dimLength; i++) {
-        var suffix = i ? i + 1 : '';
+        const suffix = i ? i + 1 : '';
         xAxesDflt[i] = 'x' + suffix;
         yAxesDflt[i] = 'y' + suffix;
     }
 
-    var xaxes = coerce('xaxes', xAxesDflt);
-    var yaxes = coerce('yaxes', yAxesDflt);
+    const xaxes = coerce('xaxes', xAxesDflt);
+    const yaxes = coerce('yaxes', yAxesDflt);
 
     // build list of [x,y] axis corresponding to each dimensions[i],
     // very useful for passing options to regl-splom
-    var diag = (traceOut._diag = new Array(dimLength));
+    const diag = (traceOut._diag = new Array(dimLength));
 
     // lookup for 'drawn' x|y axes, to avoid costly indexOf downstream
     traceOut._xaxes = {};
     traceOut._yaxes = {};
 
     // list of 'drawn' x|y axes, use to generate list of subplots
-    var xList = [];
-    var yList = [];
+    const xList: any[] = [];
+    const yList: any[] = [];
 
-    function fillAxisStashes(axId, counterAxId, dim, list) {
+    function fillAxisStashes(axId: any, counterAxId: any, dim: any, list: any) {
         if (!axId) return;
 
-        var axLetter = axId.charAt(0);
-        var stash = layout._splomAxes[axLetter];
+        const axLetter = axId.charAt(0);
+        const stash = layout._splomAxes[axLetter];
 
         traceOut['_' + axLetter + 'axes'][axId] = 1;
         list.push(axId);
 
         if (!(axId in stash)) {
-            var s: any = (stash[axId] = {});
+            const s: any = (stash[axId] = {});
             if (dim) {
                 s.label = dim.label || '';
                 if (dim.visible && dim.axis) {
@@ -117,18 +117,18 @@ function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: Fu
     // cases where showDiag and showLower or showUpper are false
     // no special treatment as the 'drawn' x-axes and y-axes no longer match
     // the dimensions items and xaxes|yaxes 1-to-1
-    var mustShiftX = !showDiag && !showLower;
-    var mustShiftY = !showDiag && !showUpper;
+    const mustShiftX = !showDiag && !showLower;
+    const mustShiftY = !showDiag && !showUpper;
 
     traceOut._axesDim = {};
     for (i = 0; i < dimLength; i++) {
-        var dim = dimensions[i];
-        var i0 = i === 0;
-        var iN = i === dimLength - 1;
+        const dim = dimensions[i];
+        const i0 = i === 0;
+        const iN = i === dimLength - 1;
 
-        var xaId = (i0 && mustShiftX) || (iN && mustShiftY) ? undefined : xaxes[i];
+        const xaId = (i0 && mustShiftX) || (iN && mustShiftY) ? undefined : xaxes[i];
 
-        var yaId = (i0 && mustShiftY) || (iN && mustShiftX) ? undefined : yaxes[i];
+        const yaId = (i0 && mustShiftY) || (iN && mustShiftX) ? undefined : yaxes[i];
 
         fillAxisStashes(xaId, yaId, dim, xList);
         fillAxisStashes(yaId, xaId, dim, yList);
@@ -140,7 +140,7 @@ function handleAxisDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: Fu
     // fill in splom subplot keys
     for (i = 0; i < xList.length; i++) {
         for (j = 0; j < yList.length; j++) {
-            var id = xList[i] + yList[j];
+            const id = xList[i] + yList[j];
 
             if (i > j && showUpper) {
                 layout._splomSubplots[id] = 1;

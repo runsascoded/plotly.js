@@ -16,9 +16,9 @@ import subTypes from '../../traces/scatter/subtypes.js';
 import makeBubbleSizeFn from '../../traces/scatter/make_bubble_size_func.js';
 import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import SYMBOLDEFS from './symbol_defs.js';
-export var tester: any;
-export var testref: any;
-var LINE_SPACING = alignment.LINE_SPACING;
+export let tester: any;
+export let testref: any;
+const LINE_SPACING = alignment.LINE_SPACING;
 
 
 // -----------------------------------------------------
@@ -26,15 +26,15 @@ var LINE_SPACING = alignment.LINE_SPACING;
 // -----------------------------------------------------
 
 export function font(s: any, font: any): void {
-    var variant = font.variant;
-    var style = font.style;
-    var weight = font.weight;
-    var color = font.color;
-    var size = font.size;
-    var family = font.family;
-    var shadow = font.shadow;
-    var lineposition = font.lineposition;
-    var textcase = font.textcase;
+    const variant = font.variant;
+    const style = font.style;
+    const weight = font.weight;
+    const color = font.color;
+    const size = font.size;
+    const family = font.family;
+    const shadow = font.shadow;
+    const lineposition = font.lineposition;
+    const textcase = font.textcase;
 
     if (family) s.style('font-family', family);
     if (size + 1) s.style('font-size', size + 'px');
@@ -57,7 +57,7 @@ function dropNone(a: string): string | undefined {
     return a === 'none' ? undefined : a;
 }
 
-var textcase2transformOptions: Record<string, string> = {
+const textcase2transformOptions: Record<string, string> = {
     normal: 'none',
     lower: 'lowercase',
     upper: 'uppercase',
@@ -88,8 +88,8 @@ export function setRect(s: any, x: number, y: number, w: number, h: number): voi
 }
 
 export function translatePoint(d: any, sel: any, xa: FullAxis, ya: FullAxis): boolean {
-    var x = xa.c2p(d.x);
-    var y = ya.c2p(d.y);
+    const x = xa.c2p(d.x);
+    const y = ya.c2p(d.y);
 
     if (isNumeric(x) && isNumeric(y) && sel.node()) {
         if (sel.node().nodeName === 'text') {
@@ -106,7 +106,7 @@ export function translatePoint(d: any, sel: any, xa: FullAxis, ya: FullAxis): bo
 
 export function translatePoints(s: any, xa: FullAxis, ya: FullAxis): void {
     s.each(function (this: any, d: any) {
-        var sel = select(this);
+        const sel = select(this);
         translatePoint(d, sel, xa, ya);
     });
 }
@@ -118,14 +118,14 @@ export function hideOutsideRangePoint(d: any, sel: any, xa: FullAxis, ya: FullAx
 export function hideOutsideRangePoints(traceGroups: any, subplot: any): void {
     if (!subplot._hasClipOnAxisFalse) return;
 
-    var xa = subplot.xaxis;
-    var ya = subplot.yaxis;
+    const xa = subplot.xaxis;
+    const ya = subplot.yaxis;
 
     traceGroups.each(function (this: any, d: any) {
-        var trace = d[0].trace;
-        var xcalendar = trace.xcalendar;
-        var ycalendar = trace.ycalendar;
-        var selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
+        const trace = d[0].trace;
+        const xcalendar = trace.xcalendar;
+        const ycalendar = trace.ycalendar;
+        const selector = Registry.traceIs(trace, 'bar-like') ? '.bartext' : '.point,.textpoint';
 
         traceGroups.selectAll(selector).each(function (this: any, d: any) {
             hideOutsideRangePoint(d, select(this), xa, ya, xcalendar, ycalendar);
@@ -144,9 +144,9 @@ export function crispRound(gd: GraphDiv, lineWidth: number, dflt?: number): numb
 
 export function singleLineStyle(d: any, s: any, lw?: number, lc?: string, ld?: string): void {
     s.style('fill', 'none');
-    var line = (((d || [])[0] || {}).trace || {}).line || {};
-    var lw1 = lw || line.width || 0;
-    var dash = ld || line.dash || '';
+    const line = (((d || [])[0] || {}).trace || {}).line || {};
+    const lw1 = lw || line.width || 0;
+    const dash = ld || line.dash || '';
 
     Color.stroke(s, lc || line.color);
     dashLine(s, dash, lw1);
@@ -154,9 +154,9 @@ export function singleLineStyle(d: any, s: any, lw?: number, lc?: string, ld?: s
 
 export function lineGroupStyle(s: any, lw?: number, lc?: string, ld?: string): void {
     s.style('fill', 'none').each(function (this: any, d: any) {
-        var line = (((d || [])[0] || {}).trace || {}).line || {};
-        var lw1 = lw || line.width || 0;
-        var dash = ld || line.dash || '';
+        const line = (((d || [])[0] || {}).trace || {}).line || {};
+        const lw1 = lw || line.width || 0;
+        const dash = ld || line.dash || '';
 
         select(this)
             .call(Color.stroke, lc || line.color)
@@ -169,15 +169,14 @@ export function dashLine(s: any, dash: string, lineWidth: number): void {
 
     dash = dashStyle(dash, lineWidth);
 
-    s.style({
-        'stroke-dasharray': dash,
-        'stroke-width': lineWidth + 'px'
-    });
+    s
+        .style('stroke-dasharray', dash)
+        .style('stroke-width', lineWidth + 'px');
 }
 
 export function dashStyle(dash: string, lineWidth: number): string {
     lineWidth = +lineWidth || 1;
-    var dlw = Math.max(lineWidth, 3);
+    const dlw = Math.max(lineWidth, 3);
 
     if (dash === 'solid') dash = '';
     else if (dash === 'dot') dash = dlw + 'px,' + dlw + 'px';
@@ -193,17 +192,17 @@ export function dashStyle(dash: string, lineWidth: number): string {
 }
 
 function setFillStyle(sel: any, trace: FullTrace, gd: GraphDiv, forLegend: boolean): void {
-    var markerPattern = trace.fillpattern;
-    var fillgradient = trace.fillgradient;
-    var pAttr = getPatternAttr;
-    var patternShape = markerPattern && (pAttr(markerPattern.shape, 0, '') || pAttr(markerPattern.path, 0, ''));
+    const markerPattern = trace.fillpattern;
+    const fillgradient = trace.fillgradient;
+    const pAttr = getPatternAttr;
+    const patternShape = markerPattern && (pAttr(markerPattern.shape, 0, '') || pAttr(markerPattern.path, 0, ''));
     if (patternShape) {
-        var patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
-        var patternFGColor = pAttr(markerPattern.fgcolor, 0, null);
-        var patternFGOpacity = markerPattern.fgopacity;
-        var patternSize = pAttr(markerPattern.size, 0, 8);
-        var patternSolidity = pAttr(markerPattern.solidity, 0, 0.3);
-        var patternID = trace.uid;
+        const patternBGColor = pAttr(markerPattern.bgcolor, 0, null);
+        const patternFGColor = pAttr(markerPattern.fgcolor, 0, null);
+        const patternFGOpacity = markerPattern.fgopacity;
+        const patternSize = pAttr(markerPattern.size, 0, 8);
+        const patternSolidity = pAttr(markerPattern.solidity, 0, 0.3);
+        const patternID = trace.uid;
         pattern(
             sel,
             'point',
@@ -219,14 +218,14 @@ function setFillStyle(sel: any, trace: FullTrace, gd: GraphDiv, forLegend: boole
             patternFGOpacity
         );
     } else if (fillgradient && fillgradient.type !== 'none') {
-        var direction = fillgradient.type;
-        var gradientID = 'scatterfill-' + trace.uid;
+        let direction = fillgradient.type;
+        let gradientID = 'scatterfill-' + trace.uid;
         if (forLegend) {
             gradientID = 'legendfill-' + trace.uid;
         }
 
         if (!forLegend && (fillgradient.start !== undefined || fillgradient.stop !== undefined)) {
-            var start: any, stop: any;
+            let start: any, stop: any;
             if (direction === 'horizontal') {
                 start = {
                     x: fillgradient.start,
@@ -276,32 +275,32 @@ function setFillStyle(sel: any, trace: FullTrace, gd: GraphDiv, forLegend: boole
 }
 
 export function singleFillStyle(sel: any, gd: GraphDiv): void {
-    var node = select(sel.node());
-    var data = node.data();
-    var trace = ((data[0] || [])[0] || {}).trace || {};
+    const node = select(sel.node());
+    const data = node.data();
+    const trace = ((data[0] || [])[0] || {}).trace || {};
     setFillStyle(sel, trace, gd, false);
 }
 
 export function fillGroupStyle(s: any, gd: GraphDiv, forLegend?: boolean): void {
     s.style('stroke-width', 0).each(function (this: any, d: any) {
-        var shape = select(this);
+        const shape = select(this);
         if (d[0].trace) {
             setFillStyle(shape, d[0].trace, gd, forLegend!);
         }
     });
 }
 
-export var symbolNames: string[] = [];
-export var symbolFuncs: any[] = [];
-export var symbolBackOffs: number[] = [];
-export var symbolNeedLines: Record<number, boolean> = {};
-export var symbolNoDot: Record<number, boolean> = {};
-export var symbolNoFill: Record<number, boolean> = {};
-export var symbolList: any[] = [];
+export const symbolNames: string[] = [];
+export const symbolFuncs: any[] = [];
+export const symbolBackOffs: number[] = [];
+export const symbolNeedLines: Record<number, boolean> = {};
+export const symbolNoDot: Record<number, boolean> = {};
+export const symbolNoFill: Record<number, boolean> = {};
+export const symbolList: any[] = [];
 
 Object.keys(SYMBOLDEFS).forEach(function (k: string) {
-    var symDef = SYMBOLDEFS[k];
-    var n = symDef.n;
+    const symDef = SYMBOLDEFS[k];
+    const n = symDef.n;
     symbolList.push(
         n,
         String(n),
@@ -336,14 +335,14 @@ Object.keys(SYMBOLDEFS).forEach(function (k: string) {
     }
 });
 
-var MAXSYMBOL = symbolNames.length;
-var DOTPATH = 'M0,0.5L0.5,0L0,-0.5L-0.5,0Z';
+const MAXSYMBOL = symbolNames.length;
+const DOTPATH = 'M0,0.5L0.5,0L0,-0.5L-0.5,0Z';
 
 export function symbolNumber(v: any): number {
     if (isNumeric(v)) {
         v = +v;
     } else if (typeof v === 'string') {
-        var vbase = 0;
+        let vbase = 0;
         if (v.indexOf('-open') > 0) {
             vbase = 100;
             v = v.replace('-open', '');
@@ -362,12 +361,12 @@ export function symbolNumber(v: any): number {
 }
 
 function makePointPath(symbolNumber: number, r: number, t: number, s: number): string {
-    var base = symbolNumber % 100;
+    const base = symbolNumber % 100;
     return symbolFuncs[base](r, t, s) + (symbolNumber >= 200 ? DOTPATH : '');
 }
 
-var stopFormatter = numberFormat('~f');
-var gradientInfo: Record<string, any> = {
+const stopFormatter = numberFormat('~f');
+const gradientInfo: Record<string, any> = {
     radial: { type: 'radial' },
     radialreversed: { type: 'radial', reversed: true },
     horizontal: { type: 'linear', start: { x: 1, y: 0 }, stop: { x: 0, y: 0 } },
@@ -377,7 +376,7 @@ var gradientInfo: Record<string, any> = {
 };
 
 export function gradient(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string): any {
-    var info = gradientInfo[type];
+    const info = gradientInfo[type];
     return gradientWithBounds(
         sel,
         gd,
@@ -393,9 +392,9 @@ export function gradient(sel: any, gd: GraphDiv, gradientID: string, type: strin
 }
 
 function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: string, colorscale: any[], prop: string, start: any, stop: any, inUserSpace: boolean, reversed: boolean): void {
-    var len = colorscale.length;
+    const len = colorscale.length;
 
-    var info: any;
+    let info: any;
     if (type === 'linear') {
         info = {
             node: 'linearGradient',
@@ -415,8 +414,8 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
         };
     }
 
-    var colorStops = new Array(len);
-    for (var i = 0; i < len; i++) {
+    const colorStops = new Array(len);
+    for (let i = 0; i < len; i++) {
         if (info.reversed) {
             colorStops[len - 1 - i] = [stopFormatter((1 - colorscale[i][0]) * 100), colorscale[i][1]];
         } else {
@@ -424,10 +423,10 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
         }
     }
 
-    var fullLayout = gd._fullLayout;
-    var fullID = 'g' + fullLayout._uid + '-' + gradientID;
+    const fullLayout = gd._fullLayout;
+    const fullID = 'g' + fullLayout._uid + '-' + gradientID;
 
-    var gradient = fullLayout._defs
+    const gradient = fullLayout._defs
         .select('.gradients')
         .selectAll('#' + fullID)
         .data([type + colorStops.join(';')], identity);
@@ -438,22 +437,23 @@ function gradientWithBounds(sel: any, gd: GraphDiv, gradientID: string, type: st
         .enter()
         .append(info.node)
         .each(function (this: any) {
-            var el = select(this);
-            if (info.attrs) el.attr(info.attrs);
+            const el = select(this);
+            if (info.attrs) {
+                for(const k in info.attrs) el.attr(k, info.attrs[k]);
+            }
 
             el.attr('id', fullID);
 
-            var stops = el.selectAll('stop').data(colorStops);
+            const stops = el.selectAll('stop').data(colorStops);
             stops.exit().remove();
-            stops.enter().append('stop');
+            const stopsEnter = stops.enter().append('stop');
 
-            stops.each(function (this: any, d: any) {
-                var tc = tinycolor(d[1]);
-                select(this).attr({
-                    offset: d[0] + '%',
-                    'stop-color': Color.tinyRGB(tc),
-                    'stop-opacity': tc.getAlpha()
-                });
+            stops.merge(stopsEnter).each(function (this: any, d: any) {
+                const tc = tinycolor(d[1]);
+                select(this)
+                    .attr('offset', d[0] + '%')
+                    .attr('stop-color', Color.tinyRGB(tc))
+                    .attr('stop-opacity', tc.getAlpha());
             });
         });
 
@@ -476,7 +476,7 @@ export function pattern(
     fgcolor: string,
     fgopacity: number
 ): void {
-    var isLegend = calledBy === 'legend';
+    const isLegend = calledBy === 'legend';
 
     if (mcc) {
         if (fillmode === 'overlay') {
@@ -488,22 +488,22 @@ export function pattern(
         }
     }
 
-    var fullLayout = gd._fullLayout;
-    var fullID = 'p' + fullLayout._uid + '-' + patternID;
-    var width: number, height: number;
+    const fullLayout = gd._fullLayout;
+    const fullID = 'p' + fullLayout._uid + '-' + patternID;
+    let width: number, height: number;
 
-    var linearFn = function (x: number, x0: number, x1: number, y0: number, y1: number): number {
+    const linearFn = function (x: number, x0: number, x1: number, y0: number, y1: number): number {
         return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
     };
 
-    var path: string, linewidth: number, radius: number;
-    var patternTag: string;
-    var patternAttrs: Record<string, any> = {};
+    let path: string, linewidth: number, radius: number;
+    let patternTag: string;
+    let patternAttrs: Record<string, any> = {};
 
-    var fgC = tinycolor(fgcolor);
-    var fgRGB = Color.tinyRGB(fgC);
-    var fgAlpha = fgC.getAlpha();
-    var opacity = fgopacity * fgAlpha;
+    const fgC = tinycolor(fgcolor);
+    const fgRGB = Color.tinyRGB(fgC);
+    const fgAlpha = fgC.getAlpha();
+    const opacity = fgopacity * fgAlpha;
 
     switch (shape) {
         case '/':
@@ -710,9 +710,9 @@ export function pattern(
             break;
     }
 
-    var str = [shape || 'noSh', bgcolor || 'noBg', fgcolor || 'noFg', size, solidity].join(';');
+    const str = [shape || 'noSh', bgcolor || 'noBg', fgcolor || 'noFg', size, solidity].join(';');
 
-    var pattern = fullLayout._defs
+    const pattern = fullLayout._defs
         .select('.patterns')
         .selectAll('#' + fullID)
         .data([str], identity);
@@ -723,37 +723,35 @@ export function pattern(
         .enter()
         .append('pattern')
         .each(function (this: any) {
-            var el = select(this);
+            const el = select(this);
 
-            el.attr({
-                id: fullID,
-                width: width + 'px',
-                height: height + 'px',
-                patternUnits: 'userSpaceOnUse',
-                patternTransform: isLegend ? 'scale(0.8)' : ''
-            });
+            el
+                .attr('id', fullID)
+                .attr('width', width + 'px')
+                .attr('height', height + 'px')
+                .attr('patternUnits', 'userSpaceOnUse')
+                .attr('patternTransform', isLegend ? 'scale(0.8)' : '');
 
             if (bgcolor) {
-                var bgC = tinycolor(bgcolor);
-                var bgRGB = Color.tinyRGB(bgC);
-                var bgAlpha = bgC.getAlpha();
+                const bgC = tinycolor(bgcolor);
+                const bgRGB = Color.tinyRGB(bgC);
+                const bgAlpha = bgC.getAlpha();
 
-                var rects = el.selectAll('rect').data([0]);
+                const rects = el.selectAll('rect').data([0]);
                 rects.exit().remove();
                 rects
                     .enter()
                     .append('rect')
-                    .attr({
-                        width: width + 'px',
-                        height: height + 'px',
-                        fill: bgRGB,
-                        'fill-opacity': bgAlpha
-                    });
+                    .attr('width', width + 'px')
+                    .attr('height', height + 'px')
+                    .attr('fill', bgRGB)
+                    .attr('fill-opacity', bgAlpha);
             }
 
-            var patterns = el.selectAll(patternTag).data([0]);
+            const patterns = el.selectAll(patternTag).data([0]);
             patterns.exit().remove();
-            patterns.enter().append(patternTag).attr(patternAttrs);
+            const patternEl = patterns.enter().append(patternTag);
+            for(const k in patternAttrs) patternEl.attr(k, (patternAttrs as any)[k]);
         });
 
     sel.style('fill', getFullUrl(fullID, gd)).style('fill-opacity', null);
@@ -762,18 +760,18 @@ export function pattern(
 }
 
 export function initGradients(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var gradientsGroup = ensureSingle(fullLayout._defs, 'g', 'gradients');
+    const gradientsGroup = ensureSingle(fullLayout._defs, 'g', 'gradients');
     gradientsGroup.selectAll('linearGradient,radialGradient').remove();
 
     select(gd).selectAll('.gradient_filled').classed('gradient_filled', false);
 }
 
 export function initPatterns(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var patternsGroup = ensureSingle(fullLayout._defs, 'g', 'patterns');
+    const patternsGroup = ensureSingle(fullLayout._defs, 'g', 'patterns');
     patternsGroup.selectAll('pattern').remove();
 
     select(gd).selectAll('.pattern_filled').classed('pattern_filled', false);
@@ -789,7 +787,7 @@ export function getPatternAttr(mp: any, i: number, dflt: any): any {
 export function pointStyle(s: any, trace: FullTrace, gd: GraphDiv, pt?: any): void {
     if (!s.size()) return;
 
-    var fns = makePointStyleFns(trace);
+    const fns = makePointStyleFns(trace);
 
     s.each(function (this: any, d: any) {
         singlePointStyle(d, select(this), trace, fns, gd, pt);
@@ -797,15 +795,15 @@ export function pointStyle(s: any, trace: FullTrace, gd: GraphDiv, pt?: any): vo
 }
 
 export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, gd: GraphDiv, pt?: any): void {
-    var marker = trace.marker;
-    var markerLine = marker.line;
+    const marker = trace.marker;
+    const markerLine = marker.line;
 
     if (pt && pt.i >= 0 && d.i === undefined) d.i = pt.i;
 
     sel.style('opacity', fns.selectedOpacityFn ? fns.selectedOpacityFn(d) : d.mo === undefined ? marker.opacity : d.mo);
 
     if (fns.ms2mrc) {
-        var r: number;
+        let r: number;
 
         if (d.ms === 'various' || marker.size === 'various') {
             r = 3;
@@ -819,25 +817,25 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
             r = d.mrc = fns.selectedSizeFn(d);
         }
 
-        var x = symbolNumber(d.mx || marker.symbol) || 0;
+        const x = symbolNumber(d.mx || marker.symbol) || 0;
 
         d.om = x % 200 >= 100;
 
-        var angle = getMarkerAngle(d, trace);
-        var standoff = getMarkerStandoff(d, trace);
+        const angle = getMarkerAngle(d, trace);
+        const standoff = getMarkerStandoff(d, trace);
 
-        sel.attr('d', makePointPath(x, r, angle, standoff));
+        sel.attr('d', makePointPath(x, r, (angle as any), standoff));
     }
 
-    var perPointGradient = false;
-    var fillColor: any, lineColor: any, lineWidth: number;
+    let perPointGradient = false;
+    let fillColor: any, lineColor: any, lineWidth: number;
 
     if (d.so) {
         lineWidth = markerLine.outlierwidth;
         lineColor = markerLine.outliercolor;
         fillColor = marker.outliercolor;
     } else {
-        var markerLineWidth = (markerLine || {}).width;
+        const markerLineWidth = (markerLine || {}).width;
 
         lineWidth =
             (d.mlw + 1 ||
@@ -865,16 +863,15 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
     }
 
     if (d.om) {
-        sel.call(Color.stroke, fillColor).style({
-            'stroke-width': (lineWidth || 1) + 'px',
-            fill: 'none'
-        });
+        sel.call(Color.stroke, fillColor)
+            .style('stroke-width', (lineWidth || 1) + 'px')
+            .style('fill', 'none');
     } else {
         sel.style('stroke-width', (d.isBlank ? 0 : lineWidth) + 'px');
 
-        var markerGradient = marker.gradient;
+        const markerGradient = marker.gradient;
 
-        var gradientType = d.mgt;
+        let gradientType = d.mgt;
         if (gradientType) perPointGradient = true;
         else gradientType = markerGradient && markerGradient.type;
 
@@ -883,16 +880,16 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
             if (!gradientInfo[gradientType]) gradientType = 0;
         }
 
-        var markerPattern = marker.pattern;
-        var pAttr = getPatternAttr;
-        var patternShape = markerPattern && (pAttr(markerPattern.shape, d.i, '') || pAttr(markerPattern.path, d.i, ''));
+        const markerPattern = marker.pattern;
+        const pAttr = getPatternAttr;
+        const patternShape = markerPattern && (pAttr(markerPattern.shape, d.i, '') || pAttr(markerPattern.path, d.i, ''));
 
         if (gradientType && gradientType !== 'none') {
-            var gradientColor = d.mgc;
+            let gradientColor = d.mgc;
             if (gradientColor) perPointGradient = true;
             else gradientColor = markerGradient.color;
 
-            var gradientID = trace.uid;
+            let gradientID = trace.uid;
             if (perPointGradient) gradientID += '-' + d.i;
 
             gradient(
@@ -907,18 +904,18 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
                 'fill'
             );
         } else if (patternShape) {
-            var perPointPattern = false;
-            var fgcolor = markerPattern.fgcolor;
+            let perPointPattern = false;
+            let fgcolor = markerPattern.fgcolor;
             if (!fgcolor && pt && pt.color) {
                 fgcolor = pt.color;
                 perPointPattern = true;
             }
-            var patternFGColor = pAttr(fgcolor, d.i, (pt && pt.color) || null);
+            const patternFGColor = pAttr(fgcolor, d.i, (pt && pt.color) || null);
 
-            var patternBGColor = pAttr(markerPattern.bgcolor, d.i, null);
-            var patternFGOpacity = markerPattern.fgopacity;
-            var patternSize = pAttr(markerPattern.size, d.i, 8);
-            var patternSolidity = pAttr(markerPattern.solidity, d.i, 0.3);
+            const patternBGColor = pAttr(markerPattern.bgcolor, d.i, null);
+            const patternFGOpacity = markerPattern.fgopacity;
+            const patternSize = pAttr(markerPattern.size, d.i, 8);
+            const patternSolidity = pAttr(markerPattern.solidity, d.i, 0.3);
             perPointPattern =
                 perPointPattern ||
                 d.mcc ||
@@ -929,7 +926,7 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
                 isArrayOrTypedArray(markerPattern.size) ||
                 isArrayOrTypedArray(markerPattern.solidity);
 
-            var patternID = trace.uid;
+            let patternID = trace.uid;
             if (perPointPattern) patternID += '-' + d.i;
 
             pattern(
@@ -957,8 +954,8 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
 }
 
 export function makePointStyleFns(trace: FullTrace): any {
-    var out: Record<string, any> = {};
-    var marker = trace.marker;
+    const out: Record<string, any> = {};
+    const marker = trace.marker;
 
     out.markerScale = tryColorscale(marker, '');
     out.lineScale = tryColorscale(marker, 'line');
@@ -979,24 +976,24 @@ export function makePointStyleFns(trace: FullTrace): any {
 }
 
 export function makeSelectedPointStyleFns(trace: FullTrace): any {
-    var out: Record<string, any> = {};
+    const out: Record<string, any> = {};
 
-    var selectedAttrs = trace.selected || {};
-    var unselectedAttrs = trace.unselected || {};
+    const selectedAttrs = trace.selected || {};
+    const unselectedAttrs = trace.unselected || {};
 
-    var marker = trace.marker || {};
-    var selectedMarker = selectedAttrs.marker || {};
-    var unselectedMarker = unselectedAttrs.marker || {};
+    const marker = trace.marker || {};
+    const selectedMarker = selectedAttrs.marker || {};
+    const unselectedMarker = unselectedAttrs.marker || {};
 
-    var mo = marker.opacity;
-    var smo = selectedMarker.opacity;
-    var usmo = unselectedMarker.opacity;
-    var smoIsDefined = smo !== undefined;
-    var usmoIsDefined = usmo !== undefined;
+    const mo = marker.opacity;
+    const smo = selectedMarker.opacity;
+    const usmo = unselectedMarker.opacity;
+    const smoIsDefined = smo !== undefined;
+    const usmoIsDefined = usmo !== undefined;
 
     if (isArrayOrTypedArray(mo) || smoIsDefined || usmoIsDefined) {
         out.selectedOpacityFn = function (d: any): number {
-            var base = d.mo === undefined ? marker.opacity : d.mo;
+            const base = d.mo === undefined ? marker.opacity : d.mo;
 
             if (d.selected) {
                 return smoIsDefined ? smo : base;
@@ -1006,13 +1003,13 @@ export function makeSelectedPointStyleFns(trace: FullTrace): any {
         };
     }
 
-    var mc = marker.color;
-    var smc = selectedMarker.color;
-    var usmc = unselectedMarker.color;
+    const mc = marker.color;
+    const smc = selectedMarker.color;
+    const usmc = unselectedMarker.color;
 
     if (smc || usmc) {
         out.selectedColorFn = function (d: any): string {
-            var base = d.mcc || mc;
+            const base = d.mcc || mc;
 
             if (d.selected) {
                 return smc || base;
@@ -1022,15 +1019,15 @@ export function makeSelectedPointStyleFns(trace: FullTrace): any {
         };
     }
 
-    var ms = marker.size;
-    var sms = selectedMarker.size;
-    var usms = unselectedMarker.size;
-    var smsIsDefined = sms !== undefined;
-    var usmsIsDefined = usms !== undefined;
+    const ms = marker.size;
+    const sms = selectedMarker.size;
+    const usms = unselectedMarker.size;
+    const smsIsDefined = sms !== undefined;
+    const usmsIsDefined = usms !== undefined;
 
     if (Registry.traceIs(trace, 'symbols') && (smsIsDefined || usmsIsDefined)) {
         out.selectedSizeFn = function (d: any): number {
-            var base = d.mrc || ms / 2;
+            const base = d.mrc || ms / 2;
 
             if (d.selected) {
                 return smsIsDefined ? sms / 2 : base;
@@ -1044,21 +1041,21 @@ export function makeSelectedPointStyleFns(trace: FullTrace): any {
 }
 
 export function makeSelectedTextStyleFns(trace: FullTrace): any {
-    var out: Record<string, any> = {};
+    const out: Record<string, any> = {};
 
-    var selectedAttrs = trace.selected || {};
-    var unselectedAttrs = trace.unselected || {};
+    const selectedAttrs = trace.selected || {};
+    const unselectedAttrs = trace.unselected || {};
 
-    var textFont = trace.textfont || {};
-    var selectedTextFont = selectedAttrs.textfont || {};
-    var unselectedTextFont = unselectedAttrs.textfont || {};
+    const textFont = trace.textfont || {};
+    const selectedTextFont = selectedAttrs.textfont || {};
+    const unselectedTextFont = unselectedAttrs.textfont || {};
 
-    var tc = textFont.color;
-    var stc = selectedTextFont.color;
-    var utc = unselectedTextFont.color;
+    const tc = textFont.color;
+    const stc = selectedTextFont.color;
+    const utc = unselectedTextFont.color;
 
     out.selectedTextColorFn = function (d: any): string {
-        var base = d.tc || tc;
+        const base = d.tc || tc;
 
         if (d.selected) {
             return stc || base;
@@ -1074,9 +1071,9 @@ export function makeSelectedTextStyleFns(trace: FullTrace): any {
 export function selectedPointStyle(s: any, trace: FullTrace): void {
     if (!s.size() || !trace.selectedpoints) return;
 
-    var fns = makeSelectedPointStyleFns(trace);
-    var marker = trace.marker || {};
-    var seq: any[] = [];
+    const fns = makeSelectedPointStyleFns(trace);
+    const marker = trace.marker || {};
+    const seq: any[] = [];
 
     if (fns.selectedOpacityFn) {
         seq.push(function (pt: any, d: any) {
@@ -1092,12 +1089,12 @@ export function selectedPointStyle(s: any, trace: FullTrace): void {
 
     if (fns.selectedSizeFn) {
         seq.push(function (pt: any, d: any) {
-            var mx = d.mx || marker.symbol || 0;
-            var mrc2 = fns.selectedSizeFn(d);
+            const mx = d.mx || marker.symbol || 0;
+            const mrc2 = fns.selectedSizeFn(d);
 
             pt.attr(
                 'd',
-                makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
+                makePointPath(symbolNumber(mx), mrc2, (getMarkerAngle(d, trace) as any), getMarkerStandoff(d, trace))
             );
 
             d.mrc2 = mrc2;
@@ -1106,8 +1103,8 @@ export function selectedPointStyle(s: any, trace: FullTrace): void {
 
     if (seq.length) {
         s.each(function (this: any, d: any) {
-            var pt = select(this);
-            for (var i = 0; i < seq.length; i++) {
+            const pt = select(this);
+            for (let i = 0; i < seq.length; i++) {
                 seq[i](pt, d);
             }
         });
@@ -1115,10 +1112,10 @@ export function selectedPointStyle(s: any, trace: FullTrace): void {
 }
 
 export function tryColorscale(marker: any, prefix?: string): any {
-    var cont = prefix ? nestedProperty(marker, prefix).get() : marker;
+    const cont = prefix ? nestedProperty(marker, prefix).get() : marker;
 
     if (cont) {
-        var colorArray = cont.color;
+        const colorArray = cont.color;
         if ((cont.colorscale || cont._colorAx) && isArrayOrTypedArray(colorArray)) {
             return Colorscale.makeColorScaleFuncFromTrace(cont);
         }
@@ -1126,7 +1123,7 @@ export function tryColorscale(marker: any, prefix?: string): any {
     return identity;
 }
 
-var TEXTOFFSETSIGN: Record<string, number> = {
+const TEXTOFFSETSIGN: Record<string, number> = {
     start: 1,
     end: -1,
     middle: 0,
@@ -1135,16 +1132,16 @@ var TEXTOFFSETSIGN: Record<string, number> = {
 };
 
 function textPointPosition(s: any, textPosition: string, fontSize: number, markerRadius: number, dontTouchParent?: boolean): void {
-    var group = select(s.node().parentNode);
+    const group = select(s.node().parentNode);
 
-    var v = textPosition.indexOf('top') !== -1 ? 'top' : textPosition.indexOf('bottom') !== -1 ? 'bottom' : 'middle';
-    var h = textPosition.indexOf('left') !== -1 ? 'end' : textPosition.indexOf('right') !== -1 ? 'start' : 'middle';
+    const v = textPosition.indexOf('top') !== -1 ? 'top' : textPosition.indexOf('bottom') !== -1 ? 'bottom' : 'middle';
+    const h = textPosition.indexOf('left') !== -1 ? 'end' : textPosition.indexOf('right') !== -1 ? 'start' : 'middle';
 
-    var r = markerRadius ? markerRadius / 0.8 + 1 : 0;
+    const r = markerRadius ? markerRadius / 0.8 + 1 : 0;
 
-    var numLines = (svgTextUtils.lineCount(s) - 1) * LINE_SPACING + 1;
-    var dx = TEXTOFFSETSIGN[h] * r;
-    var dy = fontSize * 0.75 + TEXTOFFSETSIGN[v] * r + ((TEXTOFFSETSIGN[v] - 1) * numLines * fontSize) / 2;
+    const numLines = (svgTextUtils.lineCount(s) - 1) * LINE_SPACING + 1;
+    const dx = TEXTOFFSETSIGN[h] * r;
+    const dy = fontSize * 0.75 + TEXTOFFSETSIGN[v] * r + ((TEXTOFFSETSIGN[v] - 1) * numLines * fontSize) / 2;
 
     s.attr('text-anchor', h);
     if (!dontTouchParent) {
@@ -1153,26 +1150,26 @@ function textPointPosition(s: any, textPosition: string, fontSize: number, marke
 }
 
 function extracTextFontSize(d: any, trace: FullTrace): number {
-    var fontSize = d.ts || trace.textfont.size;
+    const fontSize = d.ts || trace.textfont.size;
     return isNumeric(fontSize) && fontSize > 0 ? fontSize : 0;
 }
 
 export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): any {
     if (!s.size()) return;
 
-    var selectedTextColorFn: any;
+    let selectedTextColorFn: any;
     if (trace.selectedpoints) {
-        var fns = makeSelectedTextStyleFns(trace);
+        const fns = makeSelectedTextStyleFns(trace);
         selectedTextColorFn = fns.selectedTextColorFn;
     }
 
-    var texttemplate = trace.texttemplate;
-    var fullLayout = gd._fullLayout;
+    const texttemplate = trace.texttemplate;
+    const fullLayout = gd._fullLayout;
 
     s.each(function (this: any, d: any) {
-        var p = select(this);
+        const p = select(this);
 
-        var text = texttemplate
+        let text = texttemplate
             ? extractOption(d, trace, 'txt', 'texttemplate')
             : extractOption(d, trace, 'tx', 'text');
 
@@ -1182,9 +1179,9 @@ export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): any {
         }
 
         if (texttemplate) {
-            var fn = trace._module.formatLabels;
-            var labels = fn ? fn(d, trace, fullLayout) : {};
-            var pointValues: Record<string, any> = {};
+            const fn = trace._module.formatLabels;
+            const labels = fn ? fn(d, trace, fullLayout) : {};
+            const pointValues: Record<string, any> = {};
             appendArrayPointValue(pointValues, trace, d.i);
             text = texttemplateString({
                 data: [pointValues, d, trace._meta],
@@ -1195,9 +1192,9 @@ export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): any {
             });
         }
 
-        var pos = d.tp || trace.textposition;
-        var fontSize = extracTextFontSize(d, trace);
-        var fontColor = selectedTextColorFn ? selectedTextColorFn(d) : d.tc || trace.textfont.color;
+        const pos = d.tp || trace.textposition;
+        const fontSize = extracTextFontSize(d, trace);
+        const fontColor = selectedTextColorFn ? selectedTextColorFn(d) : d.tc || trace.textfont.color;
 
         p.call(font, {
             family: d.tf || trace.textfont.family,
@@ -1219,28 +1216,28 @@ export function textPointStyle(s: any, trace: FullTrace, gd: GraphDiv): any {
 export function selectedTextStyle(s: any, trace: FullTrace): void {
     if (!s.size() || !trace.selectedpoints) return;
 
-    var fns = makeSelectedTextStyleFns(trace);
+    const fns = makeSelectedTextStyleFns(trace);
 
     s.each(function (this: any, d: any) {
-        var tx = select(this);
-        var tc = fns.selectedTextColorFn(d);
-        var tp = d.tp || trace.textposition;
-        var fontSize = extracTextFontSize(d, trace);
+        const tx = select(this);
+        const tc = fns.selectedTextColorFn(d);
+        const tp = d.tp || trace.textposition;
+        const fontSize = extracTextFontSize(d, trace);
 
         Color.fill(tx, tc);
-        var dontTouchParent = Registry.traceIs(trace, 'bar-like');
+        const dontTouchParent = Registry.traceIs(trace, 'bar-like');
         textPointPosition(tx, tp, fontSize, d.mrc2 || d.mrc, dontTouchParent);
     });
 }
 
-var CatmullRomExp = 0.5;
+const CatmullRomExp = 0.5;
 export function smoothopen(pts: number[][], smoothness: number): string {
     if (pts.length < 3) {
         return 'M' + pts.join('L');
     }
-    var path = 'M' + pts[0];
-    var tangents: number[][][] = [];
-    var i: number;
+    let path = 'M' + pts[0];
+    const tangents: number[][][] = [];
+    let i: number;
     for (i = 1; i < pts.length - 1; i++) {
         tangents.push(makeTangent(pts[i - 1], pts[i], pts[i + 1], smoothness));
     }
@@ -1256,10 +1253,10 @@ export function smoothclosed(pts: number[][], smoothness: number): string {
     if (pts.length < 3) {
         return 'M' + pts.join('L') + 'Z';
     }
-    var path = 'M' + pts[0];
-    var pLast = pts.length - 1;
-    var tangents = [makeTangent(pts[pLast], pts[0], pts[1], smoothness)];
-    var i: number;
+    let path = 'M' + pts[0];
+    const pLast = pts.length - 1;
+    const tangents = [makeTangent(pts[pLast], pts[0], pts[1], smoothness)];
+    let i: number;
     for (i = 1; i < pLast; i++) {
         tangents.push(makeTangent(pts[i - 1], pts[i], pts[i + 1], smoothness));
     }
@@ -1272,7 +1269,7 @@ export function smoothclosed(pts: number[][], smoothness: number): string {
     return path;
 }
 
-var lastDrawnX: number, lastDrawnY: number;
+let lastDrawnX: number, lastDrawnY: number;
 
 function roundEnd(pt: any, isY: number, isLastPoint: boolean): number {
     if (isLastPoint) pt = applyBackoff(pt);
@@ -1281,35 +1278,35 @@ function roundEnd(pt: any, isY: number, isLastPoint: boolean): number {
 }
 
 function roundX(p: number): number {
-    var v = d3Round(p, 2);
+    const v = d3Round(p, 2);
     lastDrawnX = v;
     return v;
 }
 
 function roundY(p: number): number {
-    var v = d3Round(p, 2);
+    const v = d3Round(p, 2);
     lastDrawnY = v;
     return v;
 }
 
 function makeTangent(prevpt: number[], thispt: number[], nextpt: number[], smoothness: number): number[][] {
-    var d1x = prevpt[0] - thispt[0];
-    var d1y = prevpt[1] - thispt[1];
-    var d2x = nextpt[0] - thispt[0];
-    var d2y = nextpt[1] - thispt[1];
-    var d1a = Math.pow(d1x * d1x + d1y * d1y, CatmullRomExp / 2);
-    var d2a = Math.pow(d2x * d2x + d2y * d2y, CatmullRomExp / 2);
-    var numx = (d2a * d2a * d1x - d1a * d1a * d2x) * smoothness;
-    var numy = (d2a * d2a * d1y - d1a * d1a * d2y) * smoothness;
-    var denom1 = 3 * d2a * (d1a + d2a);
-    var denom2 = 3 * d1a * (d1a + d2a);
+    const d1x = prevpt[0] - thispt[0];
+    const d1y = prevpt[1] - thispt[1];
+    const d2x = nextpt[0] - thispt[0];
+    const d2y = nextpt[1] - thispt[1];
+    const d1a = Math.pow(d1x * d1x + d1y * d1y, CatmullRomExp / 2);
+    const d2a = Math.pow(d2x * d2x + d2y * d2y, CatmullRomExp / 2);
+    const numx = (d2a * d2a * d1x - d1a * d1a * d2x) * smoothness;
+    const numy = (d2a * d2a * d1y - d1a * d1a * d2y) * smoothness;
+    const denom1 = 3 * d2a * (d1a + d2a);
+    const denom2 = 3 * d1a * (d1a + d2a);
     return [
         [roundX(thispt[0] + (denom1 && numx / denom1)), roundY(thispt[1] + (denom1 && numy / denom1))],
         [roundX(thispt[0] - (denom2 && numx / denom2)), roundY(thispt[1] - (denom2 && numy / denom2))]
     ];
 }
 
-var STEPPATH: Record<string, (p0: number[], p1: any, isLastPoint: boolean) => string> = {
+const STEPPATH: Record<string, (p0: number[], p1: any, isLastPoint: boolean) => string> = {
     hv: function (p0: number[], p1: any, isLastPoint: boolean): string {
         return 'H' + roundX(p1[0]) + 'V' + roundEnd(p1, 1, isLastPoint);
     },
@@ -1323,15 +1320,15 @@ var STEPPATH: Record<string, (p0: number[], p1: any, isLastPoint: boolean) => st
         return 'V' + roundY((p0[1] + p1[1]) / 2) + 'H' + roundX(p1[0]) + 'V' + roundEnd(p1, 1, isLastPoint);
     }
 };
-var STEPLINEAR = function (p0: number[], p1: any, isLastPoint: boolean): string {
+const STEPLINEAR = function (p0: number[], p1: any, isLastPoint: boolean): string {
     return 'L' + roundEnd(p1, 0, isLastPoint) + ',' + roundEnd(p1, 1, isLastPoint);
 };
 export function steps(shape: string): (pts: number[][]) => string {
-    var onestep = STEPPATH[shape] || STEPLINEAR;
+    const onestep = STEPPATH[shape] || STEPLINEAR;
     return function (pts: number[][]): string {
-        var path = 'M' + roundX(pts[0][0]) + ',' + roundY(pts[0][1]);
-        var len = pts.length;
-        for (var i = 1; i < len; i++) {
+        let path = 'M' + roundX(pts[0][0]) + ',' + roundY(pts[0][1]);
+        const len = pts.length;
+        for (let i = 1; i < len; i++) {
             path += onestep(pts[i - 1], pts[i], i === len - 1);
         }
         return path;
@@ -1339,10 +1336,10 @@ export function steps(shape: string): (pts: number[][]) => string {
 }
 
 function applyBackoff(pt: any, start?: number[]): any {
-    var backoff = pt.backoff;
-    var trace = pt.trace;
-    var d = pt.d;
-    var i = pt.i;
+    const backoff = pt.backoff;
+    const trace = pt.trace;
+    const d = pt.d;
+    const i = pt.i;
 
     if (
         backoff &&
@@ -1352,39 +1349,39 @@ function applyBackoff(pt: any, start?: number[]): any {
         trace.line &&
         trace.line.shape !== 'spline'
     ) {
-        var arrayBackoff = isArrayOrTypedArray(backoff);
-        var end = pt;
+        const arrayBackoff = isArrayOrTypedArray(backoff);
+        const end = pt;
 
-        var x1 = start ? start[0] : lastDrawnX || 0;
-        var y1 = start ? start[1] : lastDrawnY || 0;
+        const x1 = start ? start[0] : lastDrawnX || 0;
+        const y1 = start ? start[1] : lastDrawnY || 0;
 
-        var x2 = end[0];
-        var y2 = end[1];
+        const x2 = end[0];
+        const y2 = end[1];
 
-        var dx = x2 - x1;
-        var dy = y2 - y1;
+        const dx = x2 - x1;
+        const dy = y2 - y1;
 
-        var t = Math.atan2(dy, dx);
+        const t = Math.atan2(dy, dx);
 
-        var b = arrayBackoff ? backoff[i] : backoff;
+        let b = arrayBackoff ? backoff[i] : backoff;
 
         if (b === 'auto') {
-            var endI = end.i;
+            let endI = end.i;
             if (trace.type === 'scatter') endI--;
 
-            var endMarker = end.marker;
-            var endMarkerSymbol = endMarker.symbol;
+            const endMarker = end.marker;
+            let endMarkerSymbol = endMarker.symbol;
             if (isArrayOrTypedArray(endMarkerSymbol)) endMarkerSymbol = endMarkerSymbol[endI];
 
-            var endMarkerSize = endMarker.size;
+            let endMarkerSize = endMarker.size;
             if (isArrayOrTypedArray(endMarkerSize)) endMarkerSize = endMarkerSize[endI];
 
             b = endMarker ? symbolBackOffs[symbolNumber(endMarkerSymbol)] * endMarkerSize : 0;
             b += getMarkerStandoff(d[endI], trace) || 0;
         }
 
-        var x = x2 - b * Math.cos(t);
-        var y = y2 - b * Math.sin(t);
+        const x = x2 - b * Math.cos(t);
+        const y = y2 - b * Math.sin(t);
 
         if (((x <= x2 && x >= x1) || (x >= x2 && x <= x1)) && ((y <= y2 && y >= y1) || (y >= y2 && y <= y1))) {
             pt = [x, y];
@@ -1397,49 +1394,48 @@ function applyBackoff(pt: any, start?: number[]): any {
 export { applyBackoff };
 
 export function makeTester(): void {
-    var _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s: any) {
-        s.attr(xmlnsNamespaces.svgAttrs).style({
-            position: 'absolute',
-            left: '-10000px',
-            top: '-10000px',
-            width: '9000px',
-            height: '9000px',
-            'z-index': '1'
-        });
+    const _tester = ensureSingleById(select('body'), 'svg', 'js-plotly-tester', function (s: any) {
+        s.attr('xmlns', xmlnsNamespaces.svg)
+            .attr('xmlns:xlink', xmlnsNamespaces.xlink)
+            .style('position', 'absolute')
+            .style('left', '-10000px')
+            .style('top', '-10000px')
+            .style('width', '9000px')
+            .style('height', '9000px')
+            .style('z-index', '1');
     });
 
-    var _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s: any) {
-        s.attr('d', 'M0,0H1V1H0Z').style({
-            'stroke-width': 0,
-            fill: 'black'
-        });
+    const _testref = ensureSingle(_tester, 'path', 'js-reference-point', function (s: any) {
+        s.attr('d', 'M0,0H1V1H0Z')
+            .style('stroke-width', 0)
+            .style('fill', 'black');
     });
 
     tester = _tester;
     testref = _testref;
 }
 
-export var savedBBoxes: Record<string, any> = {};
-var savedBBoxesCount = 0;
-var maxSavedBBoxes = 10000;
+export let savedBBoxes: Record<string, any> = {};
+let savedBBoxesCount = 0;
+const maxSavedBBoxes = 10000;
 
 export function bBox(node: any, inTester?: boolean, hash?: string): any {
     if (!hash) hash = nodeHash(node);
-    var out: any;
+    let out: any;
     if (hash) {
         out = savedBBoxes[hash];
         if (out) return extendFlat({}, out);
     } else if (node.childNodes.length === 1) {
-        var innerNode = node.childNodes[0];
+        const innerNode = node.childNodes[0];
 
         hash = nodeHash(innerNode);
         if (hash) {
-            var x = +innerNode.getAttribute('x') || 0;
-            var y = +innerNode.getAttribute('y') || 0;
-            var transform = innerNode.getAttribute('transform');
+            const x = +innerNode.getAttribute('x') || 0;
+            const y = +innerNode.getAttribute('y') || 0;
+            const transform = innerNode.getAttribute('transform');
 
             if (!transform) {
-                var innerBB = bBox(innerNode, false, hash);
+                const innerBB = bBox(innerNode, false, hash);
                 if (x) {
                     innerBB.left += x;
                     innerBB.right += x;
@@ -1456,7 +1452,7 @@ export function bBox(node: any, inTester?: boolean, hash?: string): any {
             if (out) return extendFlat({}, out);
         }
     }
-    var testNode: any, testerNode: any;
+    let testNode: any, testerNode: any;
     if (inTester) {
         testNode = node;
     } else {
@@ -1468,12 +1464,12 @@ export function bBox(node: any, inTester?: boolean, hash?: string): any {
 
     select(testNode).attr('transform', null).call(svgTextUtils.positionText, 0, 0);
 
-    var testRect = testNode.getBoundingClientRect();
-    var refRect = testref.node().getBoundingClientRect();
+    const testRect = testNode.getBoundingClientRect();
+    const refRect = testref.node().getBoundingClientRect();
 
     if (!inTester) testerNode.removeChild(testNode);
 
-    var bb = {
+    const bb = {
         height: testRect.height,
         width: testRect.width,
         left: testRect.left - refRect.left,
@@ -1494,7 +1490,7 @@ export function bBox(node: any, inTester?: boolean, hash?: string): any {
 }
 
 function nodeHash(node: any): string | undefined {
-    var inputText = node.getAttribute('data-unformatted');
+    const inputText = node.getAttribute('data-unformatted');
     if (inputText === null) return;
     return inputText + node.getAttribute('data-math') + node.getAttribute('text-anchor') + node.getAttribute('style');
 }
@@ -1506,17 +1502,17 @@ export function setClipUrl(s: any, localId: string, gd: GraphDiv): void {
 function getFullUrl(localId: string, gd: GraphDiv): string | null {
     if (!localId) return null;
 
-    var context = gd._context;
-    var baseUrl = context._exportedPlot ? '' : context._baseUrl || '';
+    const context = gd._context;
+    const baseUrl = context._exportedPlot ? '' : context._baseUrl || '';
     return baseUrl ? "url('" + baseUrl + '#' + localId + "')" : 'url(#' + localId + ')';
 }
 
 export function getTranslate(element: any): { x: number; y: number } {
-    var re = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
-    var getter = element.attr ? 'attr' : 'getAttribute';
-    var transform = element[getter]('transform') || '';
+    const re = /.*\btranslate\((-?\d*\.?\d*)[^-\d]*(-?\d*\.?\d*)[^\d].*/;
+    const getter = element.attr ? 'attr' : 'getAttribute';
+    const transform = element[getter]('transform') || '';
 
-    var translate = transform
+    const translate = transform
         .replace(re, function (match: string, p1: string, p2: string) {
             return [p1, p2].join(' ');
         })
@@ -1529,10 +1525,10 @@ export function getTranslate(element: any): { x: number; y: number } {
 }
 
 export function setTranslate(element: any, x: number, y: number): string {
-    var re = /(\btranslate\(.*?\);?)/;
-    var getter = element.attr ? 'attr' : 'getAttribute';
-    var setter = element.attr ? 'attr' : 'setAttribute';
-    var transform = element[getter]('transform') || '';
+    const re = /(\btranslate\(.*?\);?)/;
+    const getter = element.attr ? 'attr' : 'getAttribute';
+    const setter = element.attr ? 'attr' : 'setAttribute';
+    let transform = element[getter]('transform') || '';
 
     x = x || 0;
     y = y || 0;
@@ -1547,11 +1543,11 @@ export function setTranslate(element: any, x: number, y: number): string {
 }
 
 export function getScale(element: any): { x: number; y: number } {
-    var re = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
-    var getter = element.attr ? 'attr' : 'getAttribute';
-    var transform = element[getter]('transform') || '';
+    const re = /.*\bscale\((\d*\.?\d*)[^\d]*(\d*\.?\d*)[^\d].*/;
+    const getter = element.attr ? 'attr' : 'getAttribute';
+    const transform = element[getter]('transform') || '';
 
-    var translate = transform
+    const translate = transform
         .replace(re, function (match: string, p1: string, p2: string) {
             return [p1, p2].join(' ');
         })
@@ -1564,10 +1560,10 @@ export function getScale(element: any): { x: number; y: number } {
 }
 
 export function setScale(element: any, x: number, y: number): string {
-    var re = /(\bscale\(.*?\);?)/;
-    var getter = element.attr ? 'attr' : 'getAttribute';
-    var setter = element.attr ? 'attr' : 'setAttribute';
-    var transform = element[getter]('transform') || '';
+    const re = /(\bscale\(.*?\);?)/;
+    const getter = element.attr ? 'attr' : 'getAttribute';
+    const setter = element.attr ? 'attr' : 'setAttribute';
+    let transform = element[getter]('transform') || '';
 
     x = x || 1;
     y = y || 1;
@@ -1581,7 +1577,7 @@ export function setScale(element: any, x: number, y: number): string {
     return transform;
 }
 
-var SCALE_RE = /\s*sc.*/;
+const SCALE_RE = /\s*sc.*/;
 
 export function setPointGroupScale(selection: any, xScale: number, yScale: number): void {
     xScale = xScale || 1;
@@ -1589,32 +1585,32 @@ export function setPointGroupScale(selection: any, xScale: number, yScale: numbe
 
     if (!selection) return;
 
-    var scale = xScale === 1 && yScale === 1 ? '' : 'scale(' + xScale + ',' + yScale + ')';
+    const scale = xScale === 1 && yScale === 1 ? '' : 'scale(' + xScale + ',' + yScale + ')';
 
     selection.each(function (this: any) {
-        var t = (this.getAttribute('transform') || '').replace(SCALE_RE, '');
+        let t = (this.getAttribute('transform') || '').replace(SCALE_RE, '');
         t += scale;
         t = t.trim();
         this.setAttribute('transform', t);
     });
 }
 
-var TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
+const TEXT_POINT_LAST_TRANSLATION_RE = /translate\([^)]*\)\s*$/;
 
 export function setTextPointsScale(selection: any, xScale: number, yScale: number): void {
     if (!selection) return;
 
     selection.each(function (this: any) {
-        var transforms: any[];
-        var el = select(this);
-        var text = el.select('text');
+        let transforms: any[];
+        const el = select(this);
+        const text = el.select('text');
 
         if (!text.node()) return;
 
-        var x = parseFloat(text.attr('x') || 0);
-        var y = parseFloat(text.attr('y') || 0);
+        const x = parseFloat(text.attr('x') || 0);
+        const y = parseFloat(text.attr('y') || 0);
 
-        var existingTransform = (el.attr('transform') || '').match(TEXT_POINT_LAST_TRANSLATION_RE);
+        const existingTransform = (el.attr('transform') || '').match(TEXT_POINT_LAST_TRANSLATION_RE);
 
         if (xScale === 1 && yScale === 1) {
             transforms = [];
@@ -1631,11 +1627,11 @@ export function setTextPointsScale(selection: any, xScale: number, yScale: numbe
 }
 
 function getMarkerStandoff(d: any, trace: FullTrace): number {
-    var standoff: number;
+    let standoff: number;
 
     if (d) standoff = d.mf;
 
-    if (standoff === undefined) {
+    if (standoff! === undefined) {
         standoff = trace.marker ? trace.marker.standoff || 0 : 0;
     }
 
@@ -1648,25 +1644,25 @@ function getMarkerStandoff(d: any, trace: FullTrace): number {
 
 export { getMarkerStandoff };
 
-var atan2 = Math.atan2;
-var cos = Math.cos;
-var sin = Math.sin;
+const atan2 = Math.atan2;
+const cos = Math.cos;
+const sin = Math.sin;
 
 function rotate(t: number, xy: number[]): number[] {
-    var x = xy[0];
-    var y = xy[1];
+    const x = xy[0];
+    const y = xy[1];
     return [x * cos(t) - y * sin(t), x * sin(t) + y * cos(t)];
 }
 
-var previousLon: number;
-var previousLat: number;
-var previousX: number;
-var previousY: number;
-var previousI: number;
-var previousTraceUid: string;
+let previousLon: number;
+let previousLat: number;
+let previousX: number;
+let previousY: number;
+let previousI: number;
+let previousTraceUid: string;
 
 function getMarkerAngle(d: any, trace: FullTrace): number | null {
-    var angle: any = d.ma;
+    let angle: any = d.ma;
 
     if (angle === undefined) {
         angle = trace.marker.angle;
@@ -1675,16 +1671,16 @@ function getMarkerAngle(d: any, trace: FullTrace): number | null {
         }
     }
 
-    var x: number, y: number;
-    var ref = trace.marker.angleref;
+    let x: number, y: number;
+    const ref = trace.marker.angleref;
     if (ref === 'previous' || ref === 'north') {
         if (trace._geo) {
-            var p = trace._geo.project(d.lonlat);
+            const p = trace._geo.project(d.lonlat);
             x = p[0];
             y = p[1];
         } else {
-            var xa = trace._xA;
-            var ya = trace._yA;
+            const xa = trace._xA;
+            const ya = trace._yA;
             if (xa && ya) {
                 x = xa.c2p(d.x);
                 y = ya.c2p(d.y);
@@ -1694,36 +1690,36 @@ function getMarkerAngle(d: any, trace: FullTrace): number | null {
         }
 
         if (trace._geo) {
-            var lon = d.lonlat[0];
-            var lat = d.lonlat[1];
+            const lon = d.lonlat[0];
+            const lat = d.lonlat[1];
 
-            var north = trace._geo.project([
+            const north = trace._geo.project([
                 lon,
                 lat + 1e-5
             ]);
 
-            var east = trace._geo.project([
+            const east = trace._geo.project([
                 lon + 1e-5,
                 lat
             ]);
 
-            var u = atan2(east[1] - y, east[0] - x);
+            const u = atan2(east[1] - y, east[0] - x);
 
-            var v = atan2(north[1] - y, north[0] - x);
+            const v = atan2(north[1] - y, north[0] - x);
 
-            var t: number;
+            let t: number;
             if (ref === 'north') {
                 t = (angle / 180) * Math.PI;
             } else if (ref === 'previous') {
-                var lon1 = (lon / 180) * Math.PI;
-                var lat1 = (lat / 180) * Math.PI;
-                var lon2 = (previousLon / 180) * Math.PI;
-                var lat2 = (previousLat / 180) * Math.PI;
+                const lon1 = (lon / 180) * Math.PI;
+                const lat1 = (lat / 180) * Math.PI;
+                const lon2 = (previousLon / 180) * Math.PI;
+                const lat2 = (previousLat / 180) * Math.PI;
 
-                var dLon = lon2 - lon1;
+                const dLon = lon2 - lon1;
 
-                var deltaY = cos(lat2) * sin(dLon);
-                var deltaX = sin(lat2) * cos(lat1) - cos(lat2) * sin(lat1) * cos(dLon);
+                const deltaY = cos(lat2) * sin(dLon);
+                const deltaX = sin(lat2) * cos(lat1) - cos(lat2) * sin(lat1) * cos(dLon);
 
                 t = -atan2(deltaY, deltaX) - Math.PI;
 
@@ -1731,8 +1727,8 @@ function getMarkerAngle(d: any, trace: FullTrace): number | null {
                 previousLat = lat;
             }
 
-            var A = rotate(u, [cos(t!), 0]);
-            var B = rotate(v, [sin(t!), 0]);
+            const A = rotate(u, [cos(t!), 0]);
+            const B = rotate(v, [sin(t!), 0]);
 
             angle = (atan2(A[1] + B[1], A[0] + B[0]) / Math.PI) * 180;
 
@@ -1743,12 +1739,12 @@ function getMarkerAngle(d: any, trace: FullTrace): number | null {
 
         if (ref === 'previous' && !trace._geo) {
             if (previousTraceUid === trace.uid && d.i === previousI + 1 && isNumeric(x!) && isNumeric(y!)) {
-                var dX = x! - previousX;
-                var dY = y! - previousY;
+                let dX = x! - previousX;
+                let dY = y! - previousY;
 
-                var shape = trace.line ? trace.line.shape || '' : '';
+                const shape = trace.line ? trace.line.shape || '' : '';
 
-                var lastShapeChar = shape.slice(shape.length - 1);
+                const lastShapeChar = shape.slice(shape.length - 1);
                 if (lastShapeChar === 'h') dY = 0;
                 if (lastShapeChar === 'v') dX = 0;
 

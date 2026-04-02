@@ -23,15 +23,15 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._hasDelta = traceOut.mode.indexOf('delta') !== -1;
     traceOut._hasGauge = traceOut.mode.indexOf('gauge') !== -1;
 
-    var value = coerce('value');
+    const value = coerce('value');
     traceOut._range = [0, (typeof value === 'number' ? 1.5 * value : 1)];
 
     // Number attributes
-    var auto = new Array(2);
-    var bignumberFontSize;
+    const auto = new Array(2);
+    let bignumberFontSize;
     if(traceOut._hasNumber) {
         coerce('number.valueformat');
-        var numberFontDflt = Lib.extendFlat({}, layout.font);
+        const numberFontDflt = Lib.extendFlat({}, layout.font);
         numberFontDflt.size = undefined;
         Lib.coerceFont(coerce, 'number.font', numberFontDflt);
         if(traceOut.number.font.size === undefined) {
@@ -44,9 +44,9 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     }
 
     // delta attributes
-    var deltaFontSize;
+    let deltaFontSize;
     if(traceOut._hasDelta) {
-        var deltaFontDflt = Lib.extendFlat({}, layout.font);
+        const deltaFontDflt = Lib.extendFlat({}, layout.font);
         deltaFontDflt.size = undefined;
         Lib.coerceFont(coerce, 'delta.font', deltaFontDflt);
         if(traceOut.delta.font.size === undefined) {
@@ -68,13 +68,13 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._scaleNumbers = (!traceOut._hasNumber || auto[0]) && (!traceOut._hasDelta || auto[1]) || false;
 
     // Title attributes
-    var titleFontDflt = Lib.extendFlat({}, layout.font);
+    const titleFontDflt = Lib.extendFlat({}, layout.font);
     titleFontDflt.size = 0.25 * (bignumberFontSize || deltaFontSize || cn.defaultNumberFontSize);
     Lib.coerceFont(coerce, 'title.font', titleFontDflt);
     coerce('title.text');
 
     // Gauge attributes
-    var gaugeIn, gaugeOut, axisIn, axisOut;
+    let gaugeIn: any, gaugeOut: any, axisIn: any, axisOut: any;
     function coerceGauge(attr: string, dflt?: any) {
         return Lib.coerce(gaugeIn, gaugeOut, attributes.gauge, attr, dflt);
     }
@@ -87,11 +87,11 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         if(!gaugeIn) gaugeIn = {};
         gaugeOut = Template.newContainer(traceOut, 'gauge');
         coerceGauge('shape');
-        var isBullet = traceOut._isBullet = traceOut.gauge.shape === 'bullet';
+        const isBullet = traceOut._isBullet = traceOut.gauge.shape === 'bullet';
         if(!isBullet) {
             coerce('title.align', 'center');
         }
-        var isAngular = traceOut._isAngular = traceOut.gauge.shape === 'angular';
+        const isAngular = traceOut._isAngular = traceOut.gauge.shape === 'angular';
         if(!isAngular) {
             coerce('align', 'center');
         }
@@ -105,7 +105,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         coerceGauge('bar.color');
         coerceGauge('bar.line.color');
         coerceGauge('bar.line.width');
-        var defaultBarThickness = cn.valueThickness * (traceOut.gauge.shape === 'bullet' ? 0.5 : 1);
+        const defaultBarThickness = cn.valueThickness * (traceOut.gauge.shape === 'bullet' ? 0.5 : 1);
         coerceGauge('bar.thickness', defaultBarThickness);
 
         // Gauge steps
@@ -127,7 +127,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         coerceGaugeAxis('visible');
         traceOut._range = coerceGaugeAxis('range', traceOut._range);
 
-        var opts = {
+        const opts = {
             font: layout.font,
             noAutotickangles: true,
             outerTicks: true,
@@ -148,7 +148,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._length = null;
 }
 
-function stepDefaults(stepIn, stepOut) {
+function stepDefaults(stepIn: any, stepOut: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(stepIn, stepOut, attributes.gauge.steps, attr, dflt);
     }

@@ -4,11 +4,11 @@ import Lib from '../../lib/index.js';
 import layoutAttributes from './layout_attributes.js';
 
 function _supply(layoutIn: Layout, layoutOut: FullLayout, fullData: FullTrace[], coerce: Function, traceType: string): void {
-    var category = traceType + 'Layout';
-    var hasTraceType = false;
+    const category = traceType + 'Layout';
+    let hasTraceType = false;
 
-    for(var i = 0; i < fullData.length; i++) {
-        var trace = fullData[i];
+    for(let i = 0; i < fullData.length; i++) {
+        const trace = fullData[i];
 
         if(Registry.traceIs(trace, category)) {
             hasTraceType = true;

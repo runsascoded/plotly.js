@@ -9,48 +9,48 @@ const { makePullColorFn, generateExtendedColors } = _calc;
 import _numerical from '../../constants/numerical.js';
 const { ALMOST_EQUAL } = _numerical;
 
-var sunburstExtendedColorWays = {};
-var treemapExtendedColorWays = {};
-var icicleExtendedColorWays = {};
+const sunburstExtendedColorWays = {};
+const treemapExtendedColorWays = {};
+const icicleExtendedColorWays = {};
 
-export var calc = function(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var ids = trace.ids;
-    var hasIds = Lib.isArrayOrTypedArray(ids);
-    var labels = trace.labels;
-    var parents = trace.parents;
-    var values = trace.values;
-    var hasValues = Lib.isArrayOrTypedArray(values);
-    var cd = [];
+export const calc = function(gd: GraphDiv, trace: FullTrace) {
+    const fullLayout = gd._fullLayout;
+    const ids = trace.ids;
+    const hasIds = Lib.isArrayOrTypedArray(ids);
+    const labels = trace.labels;
+    const parents = trace.parents;
+    const values = trace.values;
+    const hasValues = Lib.isArrayOrTypedArray(values);
+    const cd: any[] = [];
 
-    var parent2children: any = {};
-    var refs: any = {};
-    var addToLookup = function(parent, v) {
+    const parent2children: any = {};
+    const refs: any = {};
+    const addToLookup = function(parent: any, v: any) {
         if(parent2children[parent]) parent2children[parent].push(v);
         else parent2children[parent] = [v];
         refs[v] = 1;
     };
 
     // treat number `0` as valid
-    var isValidKey = function(k) {
+    const isValidKey = function(k: any) {
         return k || typeof k === 'number';
     };
 
-    var isValidVal = function(i) {
+    const isValidVal = function(i: any) {
         return !hasValues || (isNumeric(values[i]) && values[i] >= 0);
     };
 
-    var len;
-    var isValid;
-    var getId;
+    let len;
+    let isValid;
+    let getId;
 
     if(hasIds) {
         len = Math.min(ids.length, parents.length);
-        isValid = function(i) { return isValidKey(ids[i]) && isValidVal(i); };
-        getId = function(i) { return String(ids[i]); };
+        isValid = function(i: any) { return isValidKey(ids[i]) && isValidVal(i); };
+        getId = function(i: any) { return String(ids[i]); };
     } else {
         len = Math.min(labels.length, parents.length);
-        isValid = function(i) { return isValidKey(labels[i]) && isValidVal(i); };
+        isValid = function(i: any) { return isValidKey(labels[i]) && isValidVal(i); };
         // TODO We could allow some label / parent duplication
         //
         // From AJ:
@@ -58,17 +58,17 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
         //  (multiple rows with the same name and different parents -
         //  or even the same parent) but if that name is then used as a parent
         //  which one is it?
-        getId = function(i) { return String(labels[i]); };
+        getId = function(i: any) { return String(labels[i]); };
     }
 
     if(hasValues) len = Math.min(len, values.length);
 
-    for(var i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         if(isValid(i)) {
-            var id = getId(i);
-            var pid = isValidKey(parents[i]) ? String(parents[i]) : '';
+            const id = getId(i);
+            const pid = isValidKey(parents[i]) ? String(parents[i]) : '';
 
-            var cdi: Record<string, any> = {
+            const cdi: Record<string, any> = {
                 i: i,
                 id: id,
                 pid: pid,
@@ -82,8 +82,8 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
     }
 
     if(!parent2children['']) {
-        var impliedRoots = [];
-        var k;
+        const impliedRoots: any[] = [];
+        let k;
         for(k in parent2children) {
             if(!refs[k]) {
                 impliedRoots.push(k);
@@ -108,14 +108,14 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
             ].join(' '));
         }
     } else if(parent2children[''].length > 1) {
-        var dummyId = Lib.randstr();
+        const dummyId = Lib.randstr();
 
         // if multiple rows linked to the root node,
         // add dummy "root of roots" node to make d3 build the hierarchy successfully
 
-        for(var j = 0; j < cd.length; j++) {
-            if(cd[j].pid === '') {
-                cd[j].pid = dummyId;
+        for(let j = 0; j < cd.length; j++) {
+            if((cd[j] as any).pid === '') {
+                (cd[j] as any).pid = dummyId;
             }
         }
 
@@ -128,33 +128,33 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
     }
 
     // TODO might be better to replace stratify() with our own algorithm
-    var root;
+    let root;
     try {
         root = d3Hierarchy.stratify()
-            .id(function(d) { return d.id; })
-            .parentId(function(d) { return d.pid; })(cd);
+            .id(function(d: any) { return d.id; })
+            .parentId(function(d: any) { return d.pid; })(cd);
     } catch(e) {
         return Lib.warn([
             'Failed to build', trace.type, 'hierarchy of', trace.name + '.',
-            'Error:', e.message
+            'Error:', (e as any).message
         ].join(' '));
     }
 
-    var hierarchy = d3Hierarchy.hierarchy(root);
-    var failed = false;
+    const hierarchy = d3Hierarchy.hierarchy(root);
+    let failed = false;
 
     if(hasValues) {
         switch(trace.branchvalues) {
             case 'remainder':
-                hierarchy.sum(function(d) { return d.data.v; });
+                hierarchy.sum(function(d: any) { return d.data.v; });
                 break;
             case 'total':
-                hierarchy.each(function(d) {
-                    var cdi = d.data.data;
-                    var v = cdi.v;
+                hierarchy.each(function(d: any) {
+                    const cdi = d.data.data;
+                    let v = cdi.v;
 
                     if(d.children) {
-                        var partialSum = d.children.reduce(function(a, c) {
+                        const partialSum = d.children.reduce(function(a: any, c: any) {
                             return a + c.data.data.v;
                         }, 0);
 
@@ -190,13 +190,13 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
 
     // TODO add way to sort by height also?
     if(trace.sort) {
-        hierarchy.sort(function(a, b) { return b.value - a.value; });
+        hierarchy.sort(function(a: any, b: any) { return b.value - a.value; });
     }
 
-    var pullColor;
-    var scaleColor;
-    var colors = trace.marker.colors || [];
-    var hasColors = !!colors.length;
+    let pullColor: any;
+    let scaleColor: any;
+    let colors = trace.marker.colors || [];
+    const hasColors = !!colors.length;
 
     if(trace._hasColorscale) {
         if(!hasColors) {
@@ -216,24 +216,24 @@ export var calc = function(gd: GraphDiv, trace: FullTrace) {
 
     // TODO keep track of 'root-children' (i.e. branch) for hover info etc.
 
-    hierarchy.each(function(d) {
-        var cdi = d.data.data;
+    hierarchy.each(function(d: any) {
+        const cdi = d.data.data;
         // N.B. this mutates items in `cd`
         cdi.color = trace._hasColorscale ?
             scaleColor(colors[cdi.i]) :
             pullColor(colors[cdi.i], cdi.id);
     });
 
-    cd[0].hierarchy = hierarchy;
+    (cd[0] as any).hierarchy = hierarchy;
 
     return cd;
 };
 
-export var _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcdata = gd.calcdata;
-    var colorWay = fullLayout[desiredType + 'colorway'];
-    var colorMap = fullLayout['_' + desiredType + 'colormap'];
+export const _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
+    const fullLayout = gd._fullLayout;
+    const calcdata = gd.calcdata;
+    let colorWay = fullLayout[desiredType + 'colorway'];
+    const colorMap = fullLayout['_' + desiredType + 'colormap'];
 
     if(fullLayout['extend' + desiredType + 'colors']) {
         colorWay = generateExtendedColors(colorWay,
@@ -242,12 +242,12 @@ export var _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
                 sunburstExtendedColorWays
         );
     }
-    var dfltColorCount = 0;
+    let dfltColorCount = 0;
 
-    var rootColor;
-    function pickColor(d) {
-        var cdi = d.data.data;
-        var id = cdi.id;
+    let rootColor: any;
+    function pickColor(d: any) {
+        const cdi = d.data.data;
+        const id = cdi.id;
 
         if(cdi.color === false) {
             if(colorMap[id]) {
@@ -269,9 +269,9 @@ export var _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
         }
     }
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
-        var cd0 = cd[0];
+    for(let i = 0; i < calcdata.length; i++) {
+        const cd = calcdata[i];
+        const cd0 = cd[0];
         if(cd0.trace.type === desiredType && cd0.hierarchy) {
             rootColor = cd0.trace.root.color;
             cd0.hierarchy.each(pickColor);
@@ -279,18 +279,18 @@ export var _runCrossTraceCalc = function(desiredType: string, gd: GraphDiv) {
     }
 };
 
-export var crossTraceCalc = function(gd: GraphDiv) {
+export const crossTraceCalc = function(gd: GraphDiv) {
     return _runCrossTraceCalc('sunburst', gd);
 };
 
 function countDescendants(node: any, trace: FullTrace, opts: { branches: boolean; leaves: boolean }) {
-    var nChild = 0;
+    let nChild = 0;
 
-    var children = node.children;
+    const children = node.children;
     if(children) {
-        var len = children.length;
+        const len = children.length;
 
-        for(var i = 0; i < len; i++) {
+        for(let i = 0; i < len; i++) {
             nChild += countDescendants(children[i], trace, opts);
         }
 

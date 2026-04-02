@@ -1,5 +1,5 @@
 import mouseOffset from 'mouse-event-offset';
-var hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
+const hasHover = typeof matchMedia === 'function' ? !matchMedia('(hover: none)').matches : typeof window !== 'undefined';
 import supportsPassive from 'has-passive-events';
 import { removeElement } from '../../lib/index.js';
 import constants from '../../plots/cartesian/constants.js';
@@ -7,7 +7,7 @@ import unhover from './unhover.js';
 import _req0 from './align.js';
 import _req1 from './cursor.js';
 
-var dragElement: any = {};
+const dragElement: any = {};
 
 dragElement.align = _req0;
 dragElement.getCursor = _req1;
@@ -70,12 +70,12 @@ dragElement.unhoverRaw = unhover.raw;
  *          independently.
  */
 dragElement.init = function init(options: any): void {
-    var gd = options.gd;
-    var numClicks = 1;
-    var doubleClickDelay = gd._context.doubleClickDelay;
-    var element = options.element;
+    const gd = options.gd;
+    let numClicks = 1;
+    const doubleClickDelay = gd._context.doubleClickDelay;
+    const element = options.element;
 
-    var startX: number,
+    let startX: number,
         startY: number,
         newMouseDownTime: number,
         cursor: string | null,
@@ -106,7 +106,7 @@ dragElement.init = function init(options: any): void {
         return [dx, dy];
     }
 
-    var clampFn = options.clampFn || _clampFn;
+    const clampFn = options.clampFn || _clampFn;
 
     function onStart(e: any): void {
         // On touch-only devices, ignore synthetic mouse events the browser
@@ -117,7 +117,7 @@ dragElement.init = function init(options: any): void {
         // so that others can look at and modify them
         gd._dragged = false;
         gd._dragging = true;
-        var offset = pointerOffset(e);
+        const offset = pointerOffset(e);
         startX = offset[0];
         startY = offset[1];
         initialTarget = e.target;
@@ -169,8 +169,8 @@ dragElement.init = function init(options: any): void {
     }
 
     function onScrollTrack(e: any): void {
-        var offset = pointerOffset(e);
-        var minDrag = options.minDrag || constants.MINDRAG;
+        const offset = pointerOffset(e);
+        const minDrag = options.minDrag || constants.MINDRAG;
         if(Math.abs(offset[0] - startX) > minDrag || Math.abs(offset[1] - startY) > minDrag) {
             gd._dragged = true;
         }
@@ -179,11 +179,11 @@ dragElement.init = function init(options: any): void {
     function onMove(e: any): void {
         e.preventDefault();
 
-        var offset = pointerOffset(e);
-        var minDrag = options.minDrag || constants.MINDRAG;
-        var dxdy = clampFn(offset[0] - startX, offset[1] - startY, minDrag);
-        var dx = dxdy[0];
-        var dy = dxdy[1];
+        const offset = pointerOffset(e);
+        const minDrag = options.minDrag || constants.MINDRAG;
+        const dxdy = clampFn(offset[0] - startX, offset[1] - startY, minDrag);
+        const dx = dxdy[0];
+        const dy = dxdy[1];
 
         if(dx || dy) {
             gd._dragged = true;
@@ -244,7 +244,7 @@ dragElement.init = function init(options: any): void {
             // since the shadow DOM puts restrictions on what can go in the event,
             // but copy as much as possible since it will be passed on to
             // plotly_click handlers
-            var clickEvent: any;
+            let clickEvent: any;
             if (initialEvent.target === initialTarget) {
                 clickEvent = initialEvent;
             } else {
@@ -256,7 +256,7 @@ dragElement.init = function init(options: any): void {
                 Object.keys(initialEvent)
                     .concat(Object.keys((initialEvent as any).__proto__))
                     .forEach((k: string) => {
-                        var v = initialEvent[k];
+                        const v = initialEvent[k];
                         if (!clickEvent[k] && (typeof v !== 'function')) {
                             clickEvent[k] = v;
                         }
@@ -283,10 +283,10 @@ dragElement.init = function init(options: any): void {
 };
 
 function coverSlip(): HTMLDivElement {
-    var cover = document.createElement('div');
+    const cover = document.createElement('div');
 
     cover.className = 'dragcover';
-    var cStyle = cover.style;
+    const cStyle = cover.style;
     cStyle.position = 'fixed';
     cStyle.left = '0';
     cStyle.right = '0';

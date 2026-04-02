@@ -4,7 +4,7 @@ export default function eventData(out: any, pt: any, trace: FullTrace, cd: any, 
     out.z = pt.z;
 
     // include feature properties from input geojson
-    var cdi = cd[pointNumber];
+    const cdi = cd[pointNumber];
     if(cdi.fIn && cdi.fIn.properties) {
         out.properties = cdi.fIn.properties;
     }

@@ -2,34 +2,34 @@ import subTypes from '../scatter/subtypes.js';
 import _edit_style from './edit_style.js';
 const { styleTextSelection } = _edit_style;
 
-export default function select(searchInfo, selectionTester) {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
-    var trace = cd[0].trace;
-    var stash = cd[0].t;
-    var len = trace._length;
-    var x = stash.x;
-    var y = stash.y;
-    var scene = stash._scene;
-    var index = stash.index;
+export default function select(searchInfo: any, selectionTester: any) {
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection: any[] = [];
+    const trace = cd[0].trace;
+    const stash = cd[0].t;
+    const len = trace._length;
+    const x = stash.x;
+    const y = stash.y;
+    const scene = stash._scene;
+    const index = stash.index;
 
     if(!scene) return selection;
 
-    var hasText = subTypes.hasText(trace);
-    var hasMarkers = subTypes.hasMarkers(trace);
-    var hasOnlyLines = !hasMarkers && !hasText;
+    const hasText = subTypes.hasText(trace);
+    const hasMarkers = subTypes.hasMarkers(trace);
+    const hasOnlyLines = !hasMarkers && !hasText;
 
     if(trace.visible !== true || hasOnlyLines) return selection;
 
-    var els = [];
-    var unels = [];
+    const els: any[] = [];
+    const unels: any[] = [];
 
     // degenerate polygon does not enable selection
     // filter out points by visible scatter ones
     if(selectionTester !== false && !selectionTester.degenerate) {
-        for(var i = 0; i < len; i++) {
+        for(let i = 0; i < len; i++) {
             if(selectionTester.contains([stash.xpx[i], stash.ypx[i]], false, i, searchInfo)) {
                 els.push(i);
                 selection.push({
@@ -44,16 +44,16 @@ export default function select(searchInfo, selectionTester) {
     }
 
     if(hasMarkers) {
-        var scatter2d = scene.scatter2d;
+        const scatter2d = scene.scatter2d;
 
         if(!els.length && !unels.length) {
             // reset to base styles when clearing
-            var baseOpts = new Array(scene.count);
+            const baseOpts = new Array(scene.count);
             baseOpts[index] = scene.markerOptions[index];
             scatter2d.update.apply(scatter2d, baseOpts);
         } else if(!scene.selectBatch[index].length && !scene.unselectBatch[index].length) {
             // set unselected styles on 'context' canvas (if not done already)
-            var unselOpts = new Array(scene.count);
+            const unselOpts = new Array(scene.count);
             unselOpts[index] = scene.markerUnselectedOptions[index];
             scatter2d.update.apply(scatter2d, unselOpts);
         }

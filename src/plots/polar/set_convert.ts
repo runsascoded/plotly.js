@@ -1,10 +1,10 @@
 import Lib from '../../lib/index.js';
 import setConvertCartesian from '../cartesian/set_convert.js';
 
-var deg2rad = Lib.deg2rad;
-var rad2deg = Lib.rad2deg;
+const deg2rad = Lib.deg2rad;
+const rad2deg = Lib.rad2deg;
 
-export default function setConvert(ax, polarLayout, fullLayout) {
+export default function setConvert(ax: any, polarLayout: any, fullLayout: any) {
     setConvertCartesian(ax, fullLayout);
 
     switch(ax._id) {
@@ -18,61 +18,61 @@ export default function setConvert(ax, polarLayout, fullLayout) {
     }
 }
 
-function setConvertRadial(ax, polarLayout) {
-    var subplot = polarLayout._subplot;
+function setConvertRadial(ax: any, polarLayout: any) {
+    const subplot = polarLayout._subplot;
 
     ax.setGeometry = function() {
-        var rl0 = ax._rl[0];
-        var rl1 = ax._rl[1];
+        const rl0 = ax._rl[0];
+        const rl1 = ax._rl[1];
 
-        var b = subplot.innerRadius;
-        var m = (subplot.radius - b) / (rl1 - rl0);
-        var b2 = b / m;
+        const b = subplot.innerRadius;
+        const m = (subplot.radius - b) / (rl1 - rl0);
+        const b2 = b / m;
 
-        var rFilter = rl0 > rl1 ?
-            function(v) { return v <= 0; } :
-            function(v) { return v >= 0; };
+        const rFilter = rl0 > rl1 ?
+            function(v: any) { return v <= 0; } :
+            function(v: any) { return v >= 0; };
 
-        ax.c2g = function(v) {
-            var r = ax.c2l(v) - rl0;
+        ax.c2g = function(v: any) {
+            const r = ax.c2l(v) - rl0;
             return (rFilter(r) ? r : 0) + b2;
         };
 
-        ax.g2c = function(v) {
+        ax.g2c = function(v: any) {
             return ax.l2c(v + rl0 - b2);
         };
 
-        ax.g2p = function(v) { return v * m; };
-        ax.c2p = function(v) { return ax.g2p(ax.c2g(v)); };
+        ax.g2p = function(v: any) { return v * m; };
+        ax.c2p = function(v: any) { return ax.g2p(ax.c2g(v)); };
     };
 }
 
-function toRadians(v, unit) {
+function toRadians(v: any, unit: any) {
     return unit === 'degrees' ? deg2rad(v) : v;
 }
 
-function fromRadians(v, unit) {
+function fromRadians(v: any, unit: any) {
     return unit === 'degrees' ? rad2deg(v) : v;
 }
 
-function setConvertAngular(ax, polarLayout) {
-    var axType = ax.type;
+function setConvertAngular(ax: any, polarLayout: any) {
+    const axType = ax.type;
 
     if(axType === 'linear') {
-        var _d2c = ax.d2c;
-        var _c2d = ax.c2d;
+        const _d2c = ax.d2c;
+        const _c2d = ax.c2d;
 
-        ax.d2c = function(v, unit) { return toRadians(_d2c(v), unit); };
-        ax.c2d = function(v, unit) { return _c2d(fromRadians(v, unit)); };
+        ax.d2c = function(v: any, unit: any) { return toRadians(_d2c(v), unit); };
+        ax.c2d = function(v: any, unit: any) { return _c2d(fromRadians(v, unit)); };
     }
 
     // override makeCalcdata to handle thetaunit and special theta0/dtheta logic
-    ax.makeCalcdata = function(trace, coord) {
-        var arrayIn = trace[coord];
-        var len = trace._length;
-        var arrayOut, i;
+    ax.makeCalcdata = function(trace: any, coord: any) {
+        const arrayIn = trace[coord];
+        const len = trace._length;
+        let arrayOut, i;
 
-        var _d2c = function(v) { return ax.d2c(v, trace.thetaunit); };
+        const _d2c = function(v: any) { return ax.d2c(v, trace.thetaunit); };
 
         if(arrayIn) {
             arrayOut = new Array(len);
@@ -80,10 +80,10 @@ function setConvertAngular(ax, polarLayout) {
                 arrayOut[i] = _d2c(arrayIn[i]);
             }
         } else {
-            var coord0 = coord + '0';
-            var dcoord = 'd' + coord;
-            var v0 = (coord0 in trace) ? _d2c(trace[coord0]) : 0;
-            var dv = (trace[dcoord]) ? _d2c(trace[dcoord]) : (ax.period || 2 * Math.PI) / len;
+            const coord0 = coord + '0';
+            const dcoord = 'd' + coord;
+            const v0 = (coord0 in trace) ? _d2c(trace[coord0]) : 0;
+            const dv = (trace[dcoord]) ? _d2c(trace[dcoord]) : (ax.period || 2 * Math.PI) / len;
 
             arrayOut = new Array(len);
             for(i = 0; i < len; i++) {
@@ -96,16 +96,16 @@ function setConvertAngular(ax, polarLayout) {
 
     // N.B. we mock the axis 'range' here
     ax.setGeometry = function() {
-        var sector = polarLayout.sector;
-        var sectorInRad = sector.map(deg2rad);
-        var dir = {clockwise: -1, counterclockwise: 1}[ax.direction];
-        var rot = deg2rad(ax.rotation);
+        const sector = polarLayout.sector;
+        const sectorInRad = sector.map(deg2rad);
+        const dir = ({clockwise: -1, counterclockwise: 1} as any)[ax.direction];
+        const rot = deg2rad(ax.rotation);
 
-        var rad2g = function(v) { return dir * v + rot; };
-        var g2rad = function(v) { return (v - rot) / dir; };
+        const rad2g = function(v: any) { return dir * v + rot; };
+        const g2rad = function(v: any) { return (v - rot) / dir; };
 
-        var rad2c, c2rad;
-        var rad2t, t2rad;
+        let rad2c: any, c2rad: any;
+        let rad2t: any, t2rad: any;
 
         switch(axType) {
             case 'linear':
@@ -121,23 +121,23 @@ function setConvertAngular(ax, polarLayout) {
                 break;
 
             case 'category':
-                var catLen = ax._categories.length;
-                var _period = ax.period ? Math.max(ax.period, catLen) : catLen;
+                const catLen = ax._categories.length;
+                let _period = ax.period ? Math.max(ax.period, catLen) : catLen;
 
                 // fallback in case all categories have been filtered out
                 if(_period === 0) _period = 1;
 
-                c2rad = t2rad = function(v) { return v * 2 * Math.PI / _period; };
-                rad2c = rad2t = function(v) { return v * _period / Math.PI / 2; };
+                c2rad = t2rad = function(v: any) { return v * 2 * Math.PI / _period; };
+                rad2c = rad2t = function(v: any) { return v * _period / Math.PI / 2; };
 
                 ax.range = [0, _period];
                 break;
         }
 
-        ax.c2g = function(v) { return rad2g(c2rad(v)); };
-        ax.g2c = function(v) { return rad2c(g2rad(v)); };
+        ax.c2g = function(v: any) { return rad2g(c2rad(v)); };
+        ax.g2c = function(v: any) { return rad2c(g2rad(v)); };
 
-        ax.t2g = function(v) { return rad2g(t2rad(v)); };
-        ax.g2t = function(v) { return rad2t(g2rad(v)); };
+        ax.t2g = function(v: any) { return rad2g(t2rad(v)); };
+        ax.g2t = function(v: any) { return rad2t(g2rad(v)); };
     };
 }

@@ -3,19 +3,19 @@ import _cross_trace_calc from '../bar/cross_trace_calc.js';
 const { setGroupPositions } = _cross_trace_calc;
 
 export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var calcdata = gd.calcdata;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var funnels = [];
-    var funnelsVert = [];
-    var funnelsHorz = [];
-    var cd, i;
+    const fullLayout = gd._fullLayout;
+    const fullData = gd._fullData;
+    const calcdata = gd.calcdata;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const funnels: any[] = [];
+    const funnelsVert: any[] = [];
+    const funnelsHorz: any[] = [];
+    let cd, i;
 
     for(i = 0; i < fullData.length; i++) {
-        var fullTrace = fullData[i];
-        var isHorizontal = (fullTrace.orientation === 'h');
+        const fullTrace = fullData[i];
+        const isHorizontal = (fullTrace.orientation === 'h');
 
         if(
             fullTrace.visible === true &&
@@ -35,7 +35,7 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
         }
     }
 
-    var opts = {
+    const opts = {
         mode: fullLayout.funnelmode,
         norm: fullLayout.funnelnorm,
         gap: fullLayout.funnelgap,
@@ -48,7 +48,7 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
     for(i = 0; i < funnels.length; i++) {
         cd = funnels[i];
 
-        for(var j = 0; j < cd.length; j++) {
+        for(let j = 0; j < cd.length; j++) {
             if(j + 1 < cd.length) {
                 cd[j].nextP0 = cd[j + 1].p0;
                 cd[j].nextS0 = cd[j + 1].s0;

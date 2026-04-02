@@ -15,24 +15,24 @@ import { appendArrayPointValue } from '../../components/fx/helpers.js';
 import { NEWLINES } from '../../lib/svg_text_utils.js';
 import { BR_TAG_ALL } from '../../lib/svg_text_utils.js';
 
-export default function convert(gd: GraphDiv, calcTrace) {
-    var trace = calcTrace[0].trace;
+export default function convert(gd: GraphDiv, calcTrace: any) {
+    const trace = calcTrace[0].trace;
 
-    var isVisible = trace.visible === true && trace._length !== 0;
-    var hasFill = trace.fill !== 'none';
-    var hasLines = subTypes.hasLines(trace);
-    var hasMarkers = subTypes.hasMarkers(trace);
-    var hasText = subTypes.hasText(trace);
-    var hasCircles = hasMarkers && trace.marker.symbol === 'circle';
-    var hasSymbols = hasMarkers && trace.marker.symbol !== 'circle';
-    var hasCluster = trace.cluster && trace.cluster.enabled;
+    const isVisible = trace.visible === true && trace._length !== 0;
+    const hasFill = trace.fill !== 'none';
+    const hasLines = subTypes.hasLines(trace);
+    const hasMarkers = subTypes.hasMarkers(trace);
+    const hasText = subTypes.hasText(trace);
+    const hasCircles = hasMarkers && trace.marker.symbol === 'circle';
+    const hasSymbols = hasMarkers && trace.marker.symbol !== 'circle';
+    const hasCluster = trace.cluster && trace.cluster.enabled;
 
-    var fill = initContainer('fill');
-    var line = initContainer('line');
-    var circle = initContainer('circle');
-    var symbol = initContainer('symbol');
+    const fill = initContainer('fill');
+    const line = initContainer('line');
+    const circle = initContainer('circle');
+    const symbol = initContainer('symbol');
 
-    var opts: any = {
+    const opts: any = {
         fill: fill,
         line: line,
         circle: circle,
@@ -43,13 +43,13 @@ export default function convert(gd: GraphDiv, calcTrace) {
     if (!isVisible) return opts;
 
     // fill layer and line layer use the same coords
-    var lineCoords;
+    let lineCoords;
     if (hasFill || hasLines) {
         lineCoords = geoJsonUtils.calcTraceToLineCoords(calcTrace);
     }
 
     if (hasFill) {
-        fill.geojson = geoJsonUtils.makePolygon(lineCoords);
+        fill.geojson = geoJsonUtils.makePolygon(lineCoords as any);
         fill.layout.visibility = 'visible';
 
         Lib.extendFlat(fill.paint, {
@@ -58,7 +58,7 @@ export default function convert(gd: GraphDiv, calcTrace) {
     }
 
     if (hasLines) {
-        line.geojson = geoJsonUtils.makeLine(lineCoords);
+        line.geojson = geoJsonUtils.makeLine(lineCoords as any);
         line.layout.visibility = 'visible';
 
         Lib.extendFlat(line.paint, {
@@ -71,7 +71,7 @@ export default function convert(gd: GraphDiv, calcTrace) {
     }
 
     if (hasCircles) {
-        var circleOpts = makeCircleOpts(calcTrace);
+        const circleOpts = makeCircleOpts(calcTrace);
         circle.geojson = circleOpts.geojson;
         circle.layout.visibility = 'visible';
         if (hasCluster) {
@@ -146,8 +146,8 @@ export default function convert(gd: GraphDiv, calcTrace) {
         }
 
         if (hasText) {
-            var iconSize = (trace.marker || {}).size;
-            var textOpts = convertTextOpts(trace.textposition, iconSize);
+            const iconSize = (trace.marker || {}).size;
+            const textOpts = convertTextOpts(trace.textposition, iconSize);
 
             // all data-driven below !!
 
@@ -178,24 +178,24 @@ function initContainer(type: any): any {
     };
 }
 
-function makeCircleOpts(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var marker = trace.marker;
-    var selectedpoints = trace.selectedpoints;
-    var arrayColor = Lib.isArrayOrTypedArray(marker.color);
-    var arraySize = Lib.isArrayOrTypedArray(marker.size);
-    var arrayOpacity = Lib.isArrayOrTypedArray(marker.opacity);
-    var i;
+function makeCircleOpts(calcTrace: any) {
+    const trace = calcTrace[0].trace;
+    const marker = trace.marker;
+    const selectedpoints = trace.selectedpoints;
+    const arrayColor = Lib.isArrayOrTypedArray(marker.color);
+    const arraySize = Lib.isArrayOrTypedArray(marker.size);
+    const arrayOpacity = Lib.isArrayOrTypedArray(marker.opacity);
+    let i;
 
-    function addTraceOpacity(o) {
+    function addTraceOpacity(o: any) {
         return trace.opacity * o;
     }
 
-    function size2radius(s) {
+    function size2radius(s: any) {
         return s / 2;
     }
 
-    var colorFn;
+    let colorFn;
     if (arrayColor) {
         if (Colorscale.hasColorscale(trace, 'marker')) {
             colorFn = Colorscale.makeColorScaleFuncFromTrace(marker);
@@ -204,27 +204,27 @@ function makeCircleOpts(calcTrace) {
         }
     }
 
-    var sizeFn;
+    let sizeFn;
     if (arraySize) {
         sizeFn = makeBubbleSizeFn(trace);
     }
 
-    var opacityFn;
+    let opacityFn;
     if (arrayOpacity) {
-        opacityFn = function (mo) {
-            var mo2 = isNumeric(mo) ? +Lib.constrain(mo, 0, 1) : 0;
+        opacityFn = function (mo: any) {
+            const mo2 = isNumeric(mo) ? +Lib.constrain(mo, 0, 1) : 0;
             return addTraceOpacity(mo2);
         };
     }
 
-    var features = [];
+    const features: any[] = [];
     for (i = 0; i < calcTrace.length; i++) {
-        var calcPt = calcTrace[i];
-        var lonlat = calcPt.lonlat;
+        const calcPt = calcTrace[i];
+        const lonlat = calcPt.lonlat;
 
         if (isBADNUM(lonlat)) continue;
 
-        var props: any = {};
+        const props: any = {};
         if (colorFn) props.mcc = calcPt.mcc = colorFn(calcPt.mc);
         if (sizeFn) props.mrc = calcPt.mrc = sizeFn(calcPt.ms);
         if (opacityFn) props.mo = opacityFn(calcPt.mo);
@@ -238,12 +238,12 @@ function makeCircleOpts(calcTrace) {
         });
     }
 
-    var fns;
+    let fns;
     if (selectedpoints) {
         fns = makeSelectedPointStyleFns(trace);
 
         for (i = 0; i < features.length; i++) {
-            var d = features[i].properties;
+            const d = (features[i] as any).properties;
 
             if (fns.selectedOpacityFn) {
                 d.mo = addTraceOpacity(fns.selectedOpacityFn(d));
@@ -269,34 +269,34 @@ function makeCircleOpts(calcTrace) {
     };
 }
 
-function makeSymbolGeoJSON(calcTrace, gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var trace = calcTrace[0].trace;
+function makeSymbolGeoJSON(calcTrace: any, gd: GraphDiv) {
+    const fullLayout = gd._fullLayout;
+    const trace = calcTrace[0].trace;
 
-    var marker = trace.marker || {};
-    var symbol = marker.symbol;
-    var angle = marker.angle;
+    const marker = trace.marker || {};
+    const symbol = marker.symbol;
+    const angle = marker.angle;
 
-    var fillSymbol = symbol !== 'circle' ? getFillFunc(symbol) : blankFillFunc;
+    const fillSymbol = symbol !== 'circle' ? getFillFunc(symbol) : blankFillFunc;
 
-    var fillAngle = angle !== 'auto' ? getFillFunc(angle, true) : blankFillFunc;
+    const fillAngle = angle !== 'auto' ? getFillFunc(angle, true) : blankFillFunc;
 
-    var fillText = subTypes.hasText(trace) ? getFillFunc(trace.text) : blankFillFunc;
+    const fillText = subTypes.hasText(trace) ? getFillFunc(trace.text) : blankFillFunc;
 
-    var features = [];
+    const features: any[] = [];
 
-    for (var i = 0; i < calcTrace.length; i++) {
-        var calcPt = calcTrace[i];
+    for (let i = 0; i < calcTrace.length; i++) {
+        const calcPt = calcTrace[i];
 
         if (isBADNUM(calcPt.lonlat)) continue;
 
-        var texttemplate = trace.texttemplate;
-        var text;
+        const texttemplate = trace.texttemplate;
+        let text;
 
         if (texttemplate) {
-            var tt = Array.isArray(texttemplate) ? texttemplate[i] || '' : texttemplate;
-            var labels = trace._module.formatLabels(calcPt, trace, fullLayout);
-            var pointValues: any = {};
+            const tt = Array.isArray(texttemplate) ? texttemplate[i] || '' : texttemplate;
+            const labels = trace._module.formatLabels(calcPt, trace, fullLayout);
+            const pointValues: any = {};
             appendArrayPointValue(pointValues, trace, calcPt.i);
             text = Lib.texttemplateString({
                 data: [pointValues, calcPt, trace._meta],
@@ -336,11 +336,11 @@ function makeSymbolGeoJSON(calcTrace, gd: GraphDiv) {
 function getFillFunc(attr: any, numeric?: any) {
     if (Lib.isArrayOrTypedArray(attr)) {
         if (numeric) {
-            return function (i) {
+            return function (i: any) {
                 return isNumeric(attr[i]) ? +attr[i] : 0;
             };
         }
-        return function (i) {
+        return function (i: any) {
             return attr[i];
         };
     } else if (attr) {
@@ -357,16 +357,16 @@ function blankFillFunc() {
 }
 
 // only need to check lon (OR lat)
-function isBADNUM(lonlat) {
+function isBADNUM(lonlat: any) {
     return lonlat[0] === BADNUM;
 }
 
-function arrayifyAttribute(values, step) {
-    var newAttribute;
+function arrayifyAttribute(values: any, step: any) {
+    let newAttribute;
     if (Lib.isArrayOrTypedArray(values) && Lib.isArrayOrTypedArray(step)) {
         newAttribute = ['step', ['get', 'point_count'], values[0]];
 
-        for (var idx = 1; idx < values.length; idx++) {
+        for (let idx = 1; idx < values.length; idx++) {
             newAttribute.push(step[idx - 1], values[idx]);
         }
     } else {
@@ -376,17 +376,17 @@ function arrayifyAttribute(values, step) {
 }
 
 function getTextFont(trace: FullTrace) {
-    var font = trace.textfont;
-    var family = font.family;
-    var style = font.style;
-    var weight = font.weight;
+    const font = trace.textfont;
+    const family = font.family;
+    const style = font.style;
+    const weight = font.weight;
 
-    var parts = family.split(' ');
-    var isItalic = parts[parts.length - 1] === 'Italic';
+    const parts = family.split(' ');
+    let isItalic = parts[parts.length - 1] === 'Italic';
     if (isItalic) parts.pop();
     isItalic = isItalic || style === 'italic';
 
-    var str = parts.join(' ');
+    let str = parts.join(' ');
     if (weight === 'bold' && parts.indexOf('Bold') === -1) {
         str += ' Bold';
     } else if (weight <= 1000) {
@@ -430,6 +430,6 @@ function getTextFont(trace: FullTrace) {
         str = family;
     }
 
-    var textFont = str.split(', ');
+    const textFont = str.split(', ');
     return textFont;
 }

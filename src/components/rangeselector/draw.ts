@@ -10,43 +10,46 @@ import axisIds from '../../plots/cartesian/axis_ids.js';
 import alignmentConstants from '../../constants/alignment.js';
 import constants from './constants.js';
 import getUpdateObject from './get_update_object.js';
-var strTranslate = Lib.strTranslate;
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var FROM_TL = alignmentConstants.FROM_TL;
-var FROM_BR = alignmentConstants.FROM_BR;
+const strTranslate = Lib.strTranslate;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
+const FROM_TL = alignmentConstants.FROM_TL;
+const FROM_BR = alignmentConstants.FROM_BR;
 
 export default function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var selectors = fullLayout._infolayer.selectAll('.rangeselector')
+    const selectors = fullLayout._infolayer.selectAll('.rangeselector')
         .data(makeSelectorData(gd), selectorKeyFunc);
 
-    selectors.enter().append('g')
+    const selectorsEnter = selectors.enter().append('g')
         .classed('rangeselector', true);
 
     selectors.exit().remove();
 
-    selectors.style({
-        cursor: 'pointer',
-        'pointer-events': 'all'
-    });
+    const selectorsMerged = selectors.merge(selectorsEnter);
 
-    selectors.each(function(d: any) {
-        var selector = select(this);
-        var axisLayout = d;
-        var selectorLayout = axisLayout.rangeselector;
+    selectorsMerged
+        .style('cursor', 'pointer')
+        .style('pointer-events', 'all');
 
-        var buttons = selector.selectAll('g.button')
+    selectorsMerged.each(function(this: any, d: any) {
+        const selector = select(this);
+        const axisLayout = d;
+        const selectorLayout = axisLayout.rangeselector;
+
+        const buttonsJoin = selector.selectAll('g.button')
             .data(Lib.filterVisible(selectorLayout.buttons));
 
-        buttons.enter().append('g')
+        const buttonsEnter = buttonsJoin.enter().append('g')
             .classed('button', true);
 
-        buttons.exit().remove();
+        buttonsJoin.exit().remove();
 
-        buttons.each(function(d: any) {
-            var button = select(this);
-            var update = getUpdateObject(axisLayout, d);
+        const buttons = buttonsJoin.merge(buttonsEnter);
+
+        buttons.each(function(this: any, d: any) {
+            const button = select(this);
+            const update = getUpdateObject(axisLayout, d);
 
             d._isActive = isActive(axisLayout, d, update);
 
@@ -75,11 +78,11 @@ export default function draw(gd: GraphDiv) {
 }
 
 function makeSelectorData(gd: GraphDiv) {
-    var axes = axisIds.list(gd, 'x', true);
-    var data = [];
+    const axes = axisIds.list(gd, 'x', true);
+    const data: any[] = [];
 
-    for(var i = 0; i < axes.length; i++) {
-        var axis = axes[i];
+    for(let i = 0; i < axes.length; i++) {
+        const axis = axes[i];
 
         if(axis.rangeselector && axis.rangeselector.visible) {
             data.push(axis);
@@ -97,7 +100,7 @@ function isActive(axisLayout: any, opts: any, update: any) {
     if(opts.step === 'all') {
         return axisLayout.autorange === true;
     } else {
-        var keys = Object.keys(update);
+        const keys = Object.keys(update);
 
         return (
             axisLayout.range[0] === update[keys[0]] &&
@@ -107,14 +110,13 @@ function isActive(axisLayout: any, opts: any, update: any) {
 }
 
 function drawButtonRect(button: any, selectorLayout: any, d: any) {
-    var rect = Lib.ensureSingle(button, 'rect', 'selector-rect', function(s: any) {
+    const rect = Lib.ensureSingle(button, 'rect', 'selector-rect', function(s: any) {
         s.attr('shape-rendering', 'crispEdges');
     });
 
-    rect.attr({
-        rx: constants.rx,
-        ry: constants.ry
-    });
+    rect
+        .attr('rx', constants.rx)
+        .attr('ry', constants.ry);
 
     rect.call(Color.stroke, selectorLayout.bordercolor)
         .call(Color.fill, getFillColor(selectorLayout, d))
@@ -132,7 +134,7 @@ function drawButtonText(button: any, selectorLayout: any, d: any, gd: GraphDiv) 
         svgTextUtils.convertToTspans(s, gd);
     }
 
-    var text = Lib.ensureSingle(button, 'text', 'selector-text', function(s: any) {
+    const text = Lib.ensureSingle(button, 'text', 'selector-text', function(s: any) {
         s.attr('text-anchor', 'middle');
     });
 
@@ -154,31 +156,31 @@ function getLabel(opts: any, _meta: any) {
 }
 
 function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector: any) {
-    var width = 0;
-    var height = 0;
+    let width = 0;
+    let height = 0;
 
-    var borderWidth = opts.borderwidth;
+    const borderWidth = opts.borderwidth;
 
-    buttons.each(function() {
-        var button = select(this);
-        var text = button.select('.selector-text');
+    buttons.each(function(this: any) {
+        const button = select(this);
+        const text = button.select('.selector-text');
 
-        var tHeight = opts.font.size * LINE_SPACING;
-        var hEff = Math.max(tHeight * svgTextUtils.lineCount(text), 16) + 3;
+        const tHeight = opts.font.size * LINE_SPACING;
+        const hEff = Math.max(tHeight * svgTextUtils.lineCount(text), 16) + 3;
 
         height = Math.max(height, hEff);
     });
 
-    buttons.each(function() {
-        var button = select(this);
-        var rect = button.select('.selector-rect');
-        var text = button.select('.selector-text');
+    buttons.each(function(this: any) {
+        const button = select(this);
+        const rect = button.select('.selector-rect');
+        const text = button.select('.selector-text');
 
-        var tWidth = text.node() && bBox(text.node()).width;
-        var tHeight = opts.font.size * LINE_SPACING;
-        var tLines = svgTextUtils.lineCount(text);
+        const tWidth = text.node() && bBox(text.node()).width;
+        const tHeight = opts.font.size * LINE_SPACING;
+        const tLines = svgTextUtils.lineCount(text);
 
-        var wEff = Math.max(tWidth + 10, constants.minButtonWidth);
+        const wEff = Math.max(tWidth + 10, constants.minButtonWidth);
 
         // TODO add MathJax support
 
@@ -186,12 +188,11 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
 
         button.attr('transform', strTranslate(borderWidth + width, borderWidth));
 
-        rect.attr({
-            x: 0,
-            y: 0,
-            width: wEff,
-            height: height
-        });
+        rect
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', wEff)
+            .attr('height', height);
 
         svgTextUtils.positionText(text, wEff / 2,
             height / 2 - ((tLines - 1) * tHeight / 2) + 3);
@@ -199,11 +200,11 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
         width += wEff + 5;
     });
 
-    var graphSize = gd._fullLayout._size;
-    var lx = graphSize.l + graphSize.w * opts.x;
-    var ly = graphSize.t + graphSize.h * (1 - opts.y);
+    const graphSize = gd._fullLayout._size;
+    let lx = graphSize.l + graphSize.w * opts.x;
+    let ly = graphSize.t + graphSize.h * (1 - opts.y);
 
-    var xanchor = 'left';
+    let xanchor = 'left';
     if(Lib.isRightAnchor(opts)) {
         lx -= width;
         xanchor = 'right';
@@ -213,7 +214,7 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
         xanchor = 'center';
     }
 
-    var yanchor = 'top';
+    let yanchor = 'top';
     if(Lib.isBottomAnchor(opts)) {
         ly -= height;
         yanchor = 'bottom';
@@ -231,10 +232,10 @@ function reposition(gd: GraphDiv, buttons: any, opts: any, axName: any, selector
     Plots.autoMargin(gd, axName + '-range-selector', {
         x: opts.x,
         y: opts.y,
-        l: width * FROM_TL[xanchor],
-        r: width * FROM_BR[xanchor],
-        b: height * FROM_BR[yanchor],
-        t: height * FROM_TL[yanchor]
+        l: width * (FROM_TL as any)[xanchor],
+        r: width * (FROM_BR as any)[xanchor],
+        b: height * (FROM_BR as any)[yanchor],
+        t: height * (FROM_TL as any)[yanchor]
     });
 
     selector.attr('transform', strTranslate(lx, ly));

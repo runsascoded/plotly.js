@@ -1,11 +1,11 @@
 import type { FullAxis } from '../../../types/core';
 
 export default function selectPoints(searchInfo: any, selectionTester: any): any[] {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
-    var i, j;
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection: any[] = [];
+    let i, j;
 
     if(selectionTester === false) {
         for(i = 0; i < cd.length; i++) {
@@ -17,9 +17,9 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
     } else {
         for(i = 0; i < cd.length; i++) {
             for(j = 0; j < (cd[i].pts || []).length; j++) {
-                var pt = cd[i].pts[j];
-                var x = xa.c2p(pt.x);
-                var y = ya.c2p(pt.y);
+                const pt = cd[i].pts[j];
+                const x = xa.c2p(pt.x);
+                const y = ya.c2p(pt.y);
 
                 if(selectionTester.contains([x, y], null, pt.i, searchInfo)) {
                     selection.push({

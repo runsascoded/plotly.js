@@ -1,9 +1,9 @@
 export default function filterVisible(container: any[]): any[] {
-    var filterFn = isCalcData(container) ? calcDataFilter : baseFilter;
-    var out: any[] = [];
+    const filterFn = isCalcData(container) ? calcDataFilter : baseFilter;
+    const out: any[] = [];
 
-    for(var i = 0; i < container.length; i++) {
-        var item = container[i];
+    for(let i = 0; i < container.length; i++) {
+        const item = container[i];
         if(filterFn(item)) out.push(item);
     }
 
@@ -15,7 +15,7 @@ function baseFilter(item: any): boolean {
 }
 
 function calcDataFilter(item: any): boolean {
-    var trace = item[0].trace;
+    const trace = item[0].trace;
     return trace.visible === true && trace._length !== 0;
 }
 

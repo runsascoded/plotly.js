@@ -1,15 +1,15 @@
 import handleAutorangeOptionsDefaults from './autorange_options_defaults.js';
 
 export default function handleRangeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {
-    var axTemplate = containerOut._template || {};
-    var axType = containerOut.type || axTemplate.type || '-';
+    const axTemplate = containerOut._template || {};
+    const axType = containerOut.type || axTemplate.type || '-';
 
     coerce('minallowed');
     coerce('maxallowed');
 
-    var range = coerce('range');
+    let range = coerce('range');
     if(!range) {
-        var insiderange;
+        let insiderange;
         if(!options.noInsiderange && axType !== 'log') {
             insiderange = coerce('insiderange');
 
@@ -27,10 +27,10 @@ export default function handleRangeDefaults(containerIn?: any, containerOut?: an
         }
     }
 
-    var autorangeDflt = containerOut.getAutorangeDflt(range, options);
-    var autorange = coerce('autorange', autorangeDflt);
+    let autorangeDflt = containerOut.getAutorangeDflt(range, options);
+    let autorange = coerce('autorange', autorangeDflt);
 
-    var shouldAutorange;
+    let shouldAutorange;
 
     // validate range and set autorange true for invalid partial ranges
     if(range && (

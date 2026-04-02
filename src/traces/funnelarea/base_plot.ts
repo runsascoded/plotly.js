@@ -1,12 +1,12 @@
 import type { GraphDiv } from '../../../types/core';
 import plots from '../../plots/plots.js';
-export var name = 'funnelarea';
+export const name = 'funnelarea';
 
-export var plot = function(gd: GraphDiv,  traces,  transitionOpts,  makeOnCompleteCallback) {
+export const plot = function(gd: GraphDiv,  traces: any,  transitionOpts: any,  makeOnCompleteCallback: any) {
     plots.plotBasePlot(name, gd, traces, transitionOpts, makeOnCompleteCallback);
 };
 
-export var clean = function(newFullData,  newFullLayout,  oldFullData,  oldFullLayout) {
+export const clean = function(newFullData: any,  newFullLayout: any,  oldFullData: any,  oldFullLayout: any) {
     plots.cleanBasePlot(name, newFullData, newFullLayout, oldFullData, oldFullLayout);
 };
 

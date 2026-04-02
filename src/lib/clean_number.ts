@@ -3,7 +3,7 @@ import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 // precompile for speed
-var JUNK = /^['"%,$#\s']+|[, ]|['"%,$#\s']+$/g;
+const JUNK = /^['"%,$#\s']+|[, ]|['"%,$#\s']+$/g;
 
 export default function cleanNumber(v: any): number {
     if(typeof v === 'string') {
@@ -12,5 +12,5 @@ export default function cleanNumber(v: any): number {
 
     if(isNumeric(v)) return Number(v);
 
-    return BADNUM;
+    return BADNUM as any;
 }

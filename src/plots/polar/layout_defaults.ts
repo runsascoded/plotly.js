@@ -15,46 +15,46 @@ import layoutAttributes from './layout_attributes.js';
 import setConvert from './set_convert.js';
 import constants from './constants.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
-var axisNames = constants.axisNames;
+const axisNames = constants.axisNames;
 
-function handleDefaults(contIn, contOut, coerce, opts) {
-    var bgColor = coerce('bgcolor');
+function handleDefaults(contIn: any, contOut: any, coerce: any, opts: any) {
+    const bgColor = coerce('bgcolor');
     opts.bgColor = Color.combine(bgColor, opts.paper_bgcolor);
 
-    var sector = coerce('sector');
+    const sector = coerce('sector');
     coerce('hole');
 
     // could optimize, subplotData is not always needed!
-    var subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
-    var layoutOut = opts.layoutOut;
-    var axName;
+    const subplotData = getSubplotData(opts.fullData, constants.name, opts.id);
+    const layoutOut = opts.layoutOut;
+    let axName: any;
 
     function coerceAxis(attr: string, dflt?: any) {
         return coerce(axName + '.' + attr, dflt);
     }
 
-    for(var i = 0; i < axisNames.length; i++) {
+    for(let i = 0; i < axisNames.length; i++) {
         axName = axisNames[i];
 
         if(!Lib.isPlainObject(contIn[axName])) {
             contIn[axName] = {};
         }
 
-        var axIn = contIn[axName];
-        var axOut = Template.newContainer(contOut, axName);
+        const axIn = contIn[axName];
+        const axOut = Template.newContainer(contOut, axName);
         axOut._id = axOut._name = axName;
         axOut._attr = opts.id + '.' + axName;
-        axOut._traceIndices = subplotData.map(function(t) { return t.index; });
+        axOut._traceIndices = subplotData.map(function(t: any) { return t.index; });
 
-        var dataAttr = constants.axisName2dataArray[axName];
-        var axType = handleAxisTypeDefaults(axIn, axOut, coerceAxis, subplotData, dataAttr, opts);
+        const dataAttr = (constants.axisName2dataArray as any)[axName];
+        let axType = handleAxisTypeDefaults(axIn, axOut, coerceAxis, subplotData, dataAttr, opts);
 
         handleCategoryOrderDefaults(axIn, axOut, coerceAxis, {
             axData: subplotData,
             dataAttr: dataAttr
         });
 
-        var visible = coerceAxis('visible');
+        const visible = coerceAxis('visible');
         setConvert(axOut, contOut, layoutOut);
 
         coerceAxis('uirevision', contOut.uirevision);
@@ -75,10 +75,10 @@ function handleDefaults(contIn, contOut, coerce, opts) {
             case 'radialaxis':
                 coerceAxis('minallowed');
                 coerceAxis('maxallowed');
-                var range = coerceAxis('range');
-                var autorangeDflt = axOut.getAutorangeDflt(range);
-                var autorange = coerceAxis('autorange', autorangeDflt);
-                var shouldAutorange;
+                let range = coerceAxis('range');
+                let autorangeDflt = axOut.getAutorangeDflt(range);
+                let autorange = coerceAxis('autorange', autorangeDflt);
+                let shouldAutorange;
 
                 // validate range and set autorange true for invalid partial ranges
                 if(range && (
@@ -121,7 +121,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                 if(axType === 'date') {
                     Lib.log('Polar plots do not support date angular axes yet.');
 
-                    for(var j = 0; j < subplotData.length; j++) {
+                    for(let j = 0; j < subplotData.length; j++) {
                         subplotData[j].visible = false;
                     }
 
@@ -136,8 +136,8 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                     coerceAxis('period');
                 }
 
-                var direction = coerceAxis('direction');
-                coerceAxis('rotation', {counterclockwise: 0, clockwise: 90}[direction]);
+                const direction = coerceAxis('direction');
+                coerceAxis('rotation', ({counterclockwise: 0, clockwise: 90} as any)[direction]);
                 break;
         }
 
@@ -146,17 +146,17 @@ function handleDefaults(contIn, contOut, coerce, opts) {
         });
 
         if(visible) {
-            var dfltColor;
-            var dfltFontColor;
-            var dfltFontSize;
-            var dfltFontFamily;
-            var dfltFontWeight;
-            var dfltFontStyle;
-            var dfltFontVariant;
-            var dfltFontTextcase;
-            var dfltFontLineposition;
-            var dfltFontShadow;
-            var font = opts.font || {};
+            let dfltColor;
+            let dfltFontColor;
+            let dfltFontSize;
+            let dfltFontFamily;
+            let dfltFontWeight;
+            let dfltFontStyle;
+            let dfltFontVariant;
+            let dfltFontTextcase;
+            let dfltFontLineposition;
+            let dfltFontShadow;
+            const font = opts.font || {};
 
             dfltColor = coerceAxis('color');
             dfltFontColor = (dfltColor === axIn.color) ? dfltColor : font.color;
@@ -198,7 +198,7 @@ function handleDefaults(contIn, contOut, coerce, opts) {
                 showLine: true,
                 showGrid: true,
                 noZeroLine: true,
-                attributes: layoutAttributes[axName]
+                attributes: (layoutAttributes as any)[axName]
             });
 
             coerceAxis('layer');
@@ -232,14 +232,14 @@ function handleDefaults(contIn, contOut, coerce, opts) {
     }
 }
 
-function handleAxisTypeDefaults(axIn, axOut, coerce, subplotData, dataAttr, options) {
-    var autotypenumbers = coerce('autotypenumbers', options.autotypenumbersDflt);
-    var axType = coerce('type');
+function handleAxisTypeDefaults(axIn: any, axOut: any, coerce: any, subplotData: any, dataAttr: any, options: any) {
+    const autotypenumbers = coerce('autotypenumbers', options.autotypenumbersDflt);
+    const axType = coerce('type');
 
     if(axType === '-') {
-        var trace;
+        let trace;
 
-        for(var i = 0; i < subplotData.length; i++) {
+        for(let i = 0; i < subplotData.length; i++) {
             if(subplotData[i].visible) {
                 trace = subplotData[i];
                 break;

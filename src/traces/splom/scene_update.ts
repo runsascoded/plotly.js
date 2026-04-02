@@ -2,28 +2,28 @@ import type { FullTrace, GraphDiv } from '../../../types/core';
 import Lib from '../../lib/index.js';
 
 export default function sceneUpdate(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var uid = trace.uid;
+    const fullLayout = gd._fullLayout;
+    const uid = trace.uid;
 
     // must place ref to 'scene' in fullLayout, so that:
     // - it can be relinked properly on updates
     // - it can be destroyed properly when needed
-    var splomScenes = fullLayout._splomScenes;
+    let splomScenes = fullLayout._splomScenes;
     if(!splomScenes) splomScenes = fullLayout._splomScenes = {};
 
-    var reset = {
+    const reset = {
         dirty: true,
         selectBatch: [],
         unselectBatch: []
     };
 
-    var first = {
+    const first = {
         matrix: false,
         selectBatch: [],
         unselectBatch: []
     };
 
-    var scene = splomScenes[trace.uid];
+    let scene = splomScenes[trace.uid];
 
     if(!scene) {
         scene = splomScenes[uid] = Lib.extendFlat({}, reset, first);

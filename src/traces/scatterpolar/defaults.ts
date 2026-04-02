@@ -11,11 +11,11 @@ const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -46,7 +46,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn: any[] = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');
@@ -69,9 +69,9 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
-    var r = coerce('r');
-    var theta = coerce('theta');
+function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
+    let r = coerce('r');
+    let theta = coerce('theta');
 
     // TODO: handle this case outside supply defaults step
     if (Lib.isTypedArray(r)) {
@@ -81,7 +81,7 @@ function handleRThetaDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: 
         traceOut.theta = theta = Array.from(theta);
     }
 
-    var len;
+    let len;
 
     if (r) {
         if (theta) {

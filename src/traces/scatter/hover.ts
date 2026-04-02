@@ -6,18 +6,18 @@ import getTraceColor from './get_trace_color.js';
 import Color from '../../components/color/index.js';
 
 export default function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any): any[] | undefined {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var xpx = xa.c2p(xval);
-    var ypx = ya.c2p(yval);
-    var pt = [xpx, ypx];
-    var hoveron = trace.hoveron || '';
-    var minRad = (trace.mode.indexOf('markers') !== -1) ? 3 : 0.5;
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const xpx = xa.c2p(xval);
+    const ypx = ya.c2p(yval);
+    const pt = [xpx, ypx];
+    const hoveron = trace.hoveron || '';
+    const minRad = (trace.mode.indexOf('markers') !== -1) ? 3 : 0.5;
 
-    var xPeriod = !!trace.xperiodalignment;
-    var yPeriod = !!trace.yperiodalignment;
+    const xPeriod = !!trace.xperiodalignment;
+    const yPeriod = !!trace.yperiodalignment;
 
     // look for points to hover on first, then take fills only if we
     // didn't find a point
@@ -26,10 +26,10 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // dx and dy are used in compare modes - here we want to always
         // prioritize the closest data point, at least as long as markers are
         // the same size or nonexistent, but still try to prioritize small markers too.
-        var dx = function(di) {
+        const dx = function(di: any) {
             if(xPeriod) {
-                var x0 = xa.c2p(di.xStart);
-                var x1 = xa.c2p(di.xEnd);
+                const x0 = xa.c2p(di.xStart);
+                const x1 = xa.c2p(di.xEnd);
 
                 return (
                     xpx >= Math.min(x0, x1) &&
@@ -37,15 +37,15 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 ) ? 0 : Infinity;
             }
 
-            var rad = Math.max(3, di.mrc || 0);
-            var kink = 1 - 1 / rad;
-            var dxRaw = Math.abs(xa.c2p(di.x) - xpx);
+            const rad = Math.max(3, di.mrc || 0);
+            const kink = 1 - 1 / rad;
+            const dxRaw = Math.abs(xa.c2p(di.x) - xpx);
             return (dxRaw < rad) ? (kink * dxRaw / rad) : (dxRaw - rad + kink);
         };
-        var dy = function(di) {
+        const dy = function(di: any) {
             if(yPeriod) {
-                var y0 = ya.c2p(di.yStart);
-                var y1 = ya.c2p(di.yEnd);
+                const y0 = ya.c2p(di.yStart);
+                const y1 = ya.c2p(di.yEnd);
 
                 return (
                     ypx >= Math.min(y0, y1) &&
@@ -53,9 +53,9 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
                 ) ? 0 : Infinity;
             }
 
-            var rad = Math.max(3, di.mrc || 0);
-            var kink = 1 - 1 / rad;
-            var dyRaw = Math.abs(ya.c2p(di.y) - ypx);
+            const rad = Math.max(3, di.mrc || 0);
+            const kink = 1 - 1 / rad;
+            const dyRaw = Math.abs(ya.c2p(di.y) - ypx);
             return (dyRaw < rad) ? (kink * dyRaw / rad) : (dyRaw - rad + kink);
         };
 
@@ -63,37 +63,37 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // adjust the distance so if you're inside the marker it
         // always will show up regardless of point size, but
         // prioritize smaller points
-        var dxy = function(di) {
-            var rad = Math.max(minRad, di.mrc || 0);
-            var dx = xa.c2p(di.x) - xpx;
-            var dy = ya.c2p(di.y) - ypx;
+        const dxy = function(di: any) {
+            const rad = Math.max(minRad, di.mrc || 0);
+            const dx = xa.c2p(di.x) - xpx;
+            const dy = ya.c2p(di.y) - ypx;
             return Math.max(Math.sqrt(dx * dx + dy * dy) - rad, 1 - minRad / rad);
         };
-        var distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
+        const distfn = Fx.getDistanceFunction(hovermode, dx, dy, dxy);
 
         Fx.getClosest(cd, distfn, pointData);
 
         // skip the rest (for this trace) if we didn't find a close point
         if(pointData.index !== false) {
             // the closest data point
-            var di = cd[pointData.index];
-            var xc = xa.c2p(di.x, true);
-            var yc = ya.c2p(di.y, true);
-            var rad = di.mrc || 1;
+            const di = cd[pointData.index];
+            const xc = xa.c2p(di.x, true);
+            const yc = ya.c2p(di.y, true);
+            const rad = di.mrc || 1;
 
             // now we're done using the whole `calcdata` array, replace the
             // index with the original index (in case of inserted point from
             // stacked area)
             pointData.index = di.i;
 
-            var orientation = cd[0].t.orientation;
+            const orientation = cd[0].t.orientation;
             // TODO: for scatter and bar, option to show (sub)totals and
             // raw data? Currently stacked and/or normalized bars just show
             // the normalized individual sizes, so that's what I'm doing here
             // for now.
-            var sizeVal = orientation && (di.sNorm || di.s);
-            var xLabelVal = (orientation === 'h') ? sizeVal : di.orig_x !== undefined ? di.orig_x : di.x;
-            var yLabelVal = (orientation === 'v') ? sizeVal : di.orig_y !== undefined ? di.orig_y : di.y;
+            const sizeVal = orientation && (di.sNorm || di.s);
+            const xLabelVal = (orientation === 'h') ? sizeVal : di.orig_x !== undefined ? di.orig_x : di.x;
+            const yLabelVal = (orientation === 'v') ? sizeVal : di.orig_y !== undefined ? di.orig_y : di.y;
 
             extendFlat(pointData, {
                 color: getTraceColor(trace, di),
@@ -117,7 +117,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         }
     }
 
-    function isHoverPointInFillElement(el) {
+    function isHoverPointInFillElement(el: any) {
         // Uses SVGElement.isPointInFill to accurately determine wether
         // the hover point / cursor is contained in the fill, taking
         // curved or jagged edges into account, which the Polygon-based
@@ -125,34 +125,34 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         if(!el) {
             return false;
         }
-        var svgElement = el.node();
+        const svgElement = el.node();
         try {
-            var domPoint = new DOMPoint(pt[0], pt[1]);
+            const domPoint = new DOMPoint(pt[0], pt[1]);
             return svgElement.isPointInFill(domPoint);
         } catch(TypeError) {
-            var svgPoint = svgElement.ownerSVGElement.createSVGPoint();
+            const svgPoint = svgElement.ownerSVGElement.createSVGPoint();
             svgPoint.x = pt[0];
             svgPoint.y = pt[1];
             return svgElement.isPointInFill(svgPoint);
         }
     }
 
-    function getHoverLabelPosition(polygons) {
+    function getHoverLabelPosition(polygons: any) {
         // Uses Polygon s to determine the left- and right-most x-coordinates
         // of the subshape of the fill that contains the hover point / cursor.
         // Doing this with the SVGElement directly is quite tricky, so this falls
         // back to the existing relatively simple code, accepting some small inaccuracies
         // of label positioning for curved/jagged edges.
-        var i;
-        var polygonsIn = [];
-        var xmin = Infinity;
-        var xmax = -Infinity;
-        var ymin = Infinity;
-        var ymax = -Infinity;
-        var yPos;
+        let i;
+        const polygonsIn: any[] = [];
+        let xmin = Infinity;
+        let xmax = -Infinity;
+        let ymin = Infinity;
+        let ymax = -Infinity;
+        let yPos;
 
         for(i = 0; i < polygons.length; i++) {
-            var polygon = polygons[i];
+            const polygon = polygons[i];
             // This is not going to work right for curved or jagged edges, it will
             // act as though they're straight.
             if(polygon.contains(pt)) {
@@ -181,9 +181,9 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // This is where we will draw the hover label.
         // Note that this might not be the vertical midpoint of the
         // whole trace, if it's disjoint.
-        var j, pts, xAtYPos, x0, x1, y0, y1;
+        let j, pts, xAtYPos, x0, x1, y0, y1;
         for(i = 0; i < polygonsIn.length; i++) {
-            pts = polygonsIn[i].pts;
+            pts = (polygonsIn[i] as any).pts;
             for(j = 1; j < pts.length; j++) {
                 y0 = pts[j - 1][1];
                 y1 = pts[j][1];
@@ -213,10 +213,10 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
 
     // even if hoveron is 'fills', only use it if we have a fill element too
     if(hoveron.indexOf('fills') !== -1 && trace._fillElement) {
-        var inside = isHoverPointInFillElement(trace._fillElement) && !isHoverPointInFillElement(trace._fillExclusionElement);
+        const inside = isHoverPointInFillElement(trace._fillElement) && !isHoverPointInFillElement(trace._fillExclusionElement);
 
         if(inside) {
-            var hoverLabelCoords = getHoverLabelPosition(trace._polygons);
+            let hoverLabelCoords = getHoverLabelPosition(trace._polygons);
 
             // getHoverLabelPosition may return null if the cursor / hover point is not contained
             // in any of the trace's polygons, which can happen close to curved edges. in that
@@ -231,7 +231,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
             }
 
             // get only fill or line color for the hover color
-            var color = Color.defaultLine;
+            let color = Color.defaultLine;
             if(Color.opacity(trace.fillcolor)) color = trace.fillcolor;
             else if(Color.opacity((trace.line || {}).color)) {
                 color = trace.line.color;

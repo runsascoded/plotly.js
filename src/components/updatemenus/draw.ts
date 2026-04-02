@@ -12,8 +12,8 @@ import constants from './constants.js';
 import ScrollBox from './scrollbox.js';
 
 export default function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var menuData = Lib.filterVisible(fullLayout[constants.name]);
+    const fullLayout = gd._fullLayout;
+    const menuData = Lib.filterVisible(fullLayout[constants.name]);
 
     /* Update menu data is bound to the header-group.
      * The items in the header group are always present.
@@ -47,15 +47,15 @@ export default function draw(gd: GraphDiv) {
     }
 
     // draw update menu container
-    var menus = fullLayout._menulayer
+    const menus = fullLayout._menulayer
         .selectAll('g.' + constants.containerClassName)
         .data(menuData.length > 0 ? [0] : []);
 
-    menus.enter().append('g')
+    const menusEnter = menus.enter().append('g')
         .classed(constants.containerClassName, true)
         .style('cursor', 'pointer');
 
-    menus.exit().each(function() {
+    menus.exit().each(function(this: any) {
         // Most components don't need to explicitly remove autoMargin, because
         // marginPushers does this - but updatemenu updates don't go through
         // a full replot so we need to explicitly remove it.
@@ -68,45 +68,50 @@ export default function draw(gd: GraphDiv) {
     // return early if no update menus are visible
     if(menuData.length === 0) return;
 
+    const menusMerged = menus.merge(menusEnter);
+
     // join header group
-    var headerGroups = menus.selectAll('g.' + constants.headerGroupClassName)
+    const headerGroupsJoin = menusMerged.selectAll('g.' + constants.headerGroupClassName)
         .data(menuData, keyFunction);
 
-    headerGroups.enter().append('g')
+    const headerGroupsEnter = headerGroupsJoin.enter().append('g')
         .classed(constants.headerGroupClassName, true);
 
     // draw dropdown button container
-    var gButton = Lib.ensureSingle(menus, 'g', constants.dropdownButtonGroupClassName, function(s: any) {
+    const gButton = Lib.ensureSingle(menusMerged, 'g', constants.dropdownButtonGroupClassName, function(s: any) {
         s.style('pointer-events', 'all');
     });
 
     // find dimensions before plotting anything (this mutates menuOpts)
-    for(var i = 0; i < menuData.length; i++) {
-        var menuOpts = menuData[i];
+    for(let i = 0; i < menuData.length; i++) {
+        const menuOpts = menuData[i];
         findDimensions(gd, menuOpts);
     }
 
     // setup scrollbox
-    var scrollBoxId = 'updatemenus' + fullLayout._uid;
-    var scrollBox = new ScrollBox(gd, gButton, scrollBoxId);
+    const scrollBoxId = 'updatemenus' + fullLayout._uid;
+    // @ts-ignore TS7009
+    const scrollBox: any = (new ScrollBox(gd, gButton, scrollBoxId) as any);
 
     // remove exiting header, remove dropped buttons and reset margins
-    if(headerGroups.enter().size()) {
+    if(headerGroupsEnter.size()) {
         // make sure gButton is on top of all headers
         gButton.node().parentNode.appendChild(gButton.node());
         gButton.call(removeAllButtons);
     }
 
-    headerGroups.exit().each(function(menuOpts: any) {
+    headerGroupsJoin.exit().each(function(menuOpts: any) {
         gButton.call(removeAllButtons);
         clearAutoMargin(menuOpts);
     }).remove();
 
-    // draw headers!
-    headerGroups.each(function(menuOpts: any) {
-        var gHeader = select(this);
+    const headerGroups = headerGroupsJoin.merge(headerGroupsEnter);
 
-        var _gButton = menuOpts.type === 'dropdown' ? gButton : null;
+    // draw headers!
+    headerGroups.each(function(this: any, menuOpts: any) {
+        const gHeader = select(this);
+
+        const _gButton = menuOpts.type === 'dropdown' ? gButton : null;
 
         Plots.manageCommandObserver(gd, menuOpts, menuOpts.buttons, function(data: any) {
             setActive(gd, menuOpts, menuOpts.buttons[data.index], gHeader, _gButton, scrollBox, data.index, true);
@@ -164,15 +169,15 @@ function setActive(gd: GraphDiv, menuOpts: any, buttonOpts: any, gHeader: any, g
 }
 
 function drawHeader(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, menuOpts: any) {
-    var header = Lib.ensureSingle(gHeader, 'g', constants.headerClassName, function(s: any) {
+    const header = Lib.ensureSingle(gHeader, 'g', constants.headerClassName, function(s: any) {
         s.style('pointer-events', 'all');
     });
 
-    var dims = menuOpts._dims;
-    var active = menuOpts.active;
-    var headerOpts = menuOpts.buttons[active] || constants.blankHeaderOpts;
-    var posOpts = { y: menuOpts.pad.t, yPad: 0, x: menuOpts.pad.l, xPad: 0, index: 0 };
-    var positionOverrides = {
+    const dims = menuOpts._dims;
+    const active = menuOpts.active;
+    const headerOpts = menuOpts.buttons[active] || constants.blankHeaderOpts;
+    const posOpts = { y: menuOpts.pad.t, yPad: 0, x: menuOpts.pad.l, xPad: 0, index: 0 };
+    const positionOverrides = {
         width: dims.headerWidth,
         height: dims.headerHeight
     };
@@ -182,16 +187,15 @@ function drawHeader(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, me
         .call(setItemPosition, menuOpts, posOpts, positionOverrides);
 
     // draw drop arrow at the right edge
-    var arrow = Lib.ensureSingle(gHeader, 'text', constants.headerArrowClassName, function(s: any) {
+    const arrow = Lib.ensureSingle(gHeader, 'text', constants.headerArrowClassName, function(s: any) {
         s.attr('text-anchor', 'end')
             .call(font, menuOpts.font)
-            .text(constants.arrowSymbol[menuOpts.direction]);
+            .text((constants.arrowSymbol as any)[menuOpts.direction]);
     });
 
-    arrow.attr({
-        x: dims.headerWidth - constants.arrowOffsetX + menuOpts.pad.l,
-        y: dims.headerHeight / 2 + constants.textOffsetY + menuOpts.pad.t
-    });
+    arrow
+        .attr('x', dims.headerWidth - constants.arrowOffsetX + menuOpts.pad.l)
+        .attr('y', dims.headerHeight / 2 + constants.textOffsetY + menuOpts.pad.t);
 
     header.on('click', function(event: any) {
         gButton.call(removeAllButtons,
@@ -222,22 +226,22 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
         gButton.attr('pointer-events', 'all');
     }
 
-    var buttonData = (!isFolded(gButton) || menuOpts.type === 'buttons') ?
+    const buttonData = (!isFolded(gButton) || menuOpts.type === 'buttons') ?
         menuOpts.buttons :
         [];
 
-    var klass = menuOpts.type === 'dropdown' ? constants.dropdownButtonClassName : constants.buttonClassName;
+    const klass = menuOpts.type === 'dropdown' ? constants.dropdownButtonClassName : constants.buttonClassName;
 
-    var buttons = gButton.selectAll('g.' + klass)
+    const buttonsJoin = gButton.selectAll('g.' + klass)
         .data(Lib.filterVisible(buttonData));
 
-    var enter = buttons.enter().append('g')
+    const buttonsEnter = buttonsJoin.enter().append('g')
         .classed(klass, true);
 
-    var exit = buttons.exit();
+    const exit = buttonsJoin.exit();
 
     if(menuOpts.type === 'dropdown') {
-        enter.attr('opacity', '0')
+        buttonsEnter.attr('opacity', '0')
             .transition()
             .attr('opacity', '1');
 
@@ -248,11 +252,13 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
         exit.remove();
     }
 
-    var x0 = 0;
-    var y0 = 0;
-    var dims = menuOpts._dims;
+    const buttons = buttonsJoin.merge(buttonsEnter);
 
-    var isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
+    let x0 = 0;
+    let y0 = 0;
+    const dims = menuOpts._dims;
+
+    const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
 
     if(menuOpts.type === 'dropdown') {
         if(isVertical) {
@@ -270,7 +276,7 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
         x0 = -constants.gapButtonHeader + constants.gapButton - dims.openWidth;
     }
 
-    var posOpts = {
+    const posOpts = {
         x: dims.lx + x0 + menuOpts.pad.l,
         y: dims.ly + y0 + menuOpts.pad.t,
         yPad: constants.gapButton,
@@ -278,13 +284,13 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
         index: 0,
     };
 
-    var scrollBoxPosition: any = {
+    const scrollBoxPosition: any = {
         l: posOpts.x + menuOpts.borderwidth,
         t: posOpts.y + menuOpts.borderwidth
     };
 
-    buttons.each(function(buttonOpts: any, buttonIndex: any) {
-        var button = select(this);
+    buttons.each(function(this: any, buttonOpts: any, buttonIndex: any) {
+        const button = select(this);
 
         button
             .call(drawItem, menuOpts, buttonOpts, gd)
@@ -340,13 +346,13 @@ function drawButtons(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, m
 
 function drawScrollBox(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any, menuOpts: any, position: any) {
     // enable the scrollbox
-    var direction = menuOpts.direction;
-    var isVertical = (direction === 'up' || direction === 'down');
-    var dims = menuOpts._dims;
+    const direction = menuOpts.direction;
+    const isVertical = (direction === 'up' || direction === 'down');
+    const dims = menuOpts._dims;
 
-    var active = menuOpts.active;
-    var translateX, translateY;
-    var i;
+    const active = menuOpts.active;
+    let translateX, translateY;
+    let i;
     if(isVertical) {
         translateY = 0;
         for(i = 0; i < active; i++) {
@@ -377,8 +383,8 @@ function drawScrollBox(gd: GraphDiv, gHeader: any, gButton: any, scrollBox: any,
 }
 
 function hideScrollBox(scrollBox: any) {
-    var hasHBar = !!scrollBox.hbar;
-    var hasVBar = !!scrollBox.vbar;
+    let hasHBar = !!scrollBox.hbar;
+    let hasVBar = !!scrollBox.vbar;
 
     if(hasHBar) {
         scrollBox.hbar
@@ -407,12 +413,11 @@ function drawItem(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
 }
 
 function drawItemRect(item: any, menuOpts: any) {
-    var rect = Lib.ensureSingle(item, 'rect', constants.itemRectClassName, function(s: any) {
-        s.attr({
-            rx: constants.rx,
-            ry: constants.ry,
-            'shape-rendering': 'crispEdges'
-        });
+    const rect = Lib.ensureSingle(item, 'rect', constants.itemRectClassName, function(s: any) {
+        s
+            .attr('rx', constants.rx)
+            .attr('ry', constants.ry)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     rect.call(Color.stroke, menuOpts.bordercolor)
@@ -421,15 +426,14 @@ function drawItemRect(item: any, menuOpts: any) {
 }
 
 function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
-    var text = Lib.ensureSingle(item, 'text', constants.itemTextClassName, function(s: any) {
-        s.attr({
-            'text-anchor': 'start',
-            'data-notex': 1
-        });
+    const text = Lib.ensureSingle(item, 'text', constants.itemTextClassName, function(s: any) {
+        s
+            .attr('text-anchor', 'start')
+            .attr('data-notex', 1);
     });
 
-    var tx = itemOpts.label;
-    var _meta = gd._fullLayout._meta;
+    let tx = itemOpts.label;
+    const _meta = gd._fullLayout._meta;
     if(_meta) tx = Lib.templateString(tx, _meta);
 
     text.call(font, menuOpts.font)
@@ -438,10 +442,10 @@ function drawItemText(item: any, menuOpts: any, itemOpts: any, gd: GraphDiv) {
 }
 
 function styleButtons(buttons: any, menuOpts: any) {
-    var active = menuOpts.active;
+    const active = menuOpts.active;
 
-    buttons.each(function(buttonOpts: any, i: any) {
-        var button = select(this);
+    buttons.each(function(this: any, buttonOpts: any, i: any) {
+        const button = select(this);
 
         if(i === active && menuOpts.showactive) {
             button.select('rect.' + constants.itemRectClassName)
@@ -462,7 +466,7 @@ function styleOnMouseOut(item: any, menuOpts: any) {
 
 // find item dimensions (this mutates menuOpts)
 function findDimensions(gd: GraphDiv, menuOpts: any) {
-    var dims: any = menuOpts._dims = {
+    const dims: any = menuOpts._dims = {
         width1: 0,
         height1: 0,
         heights: [],
@@ -475,30 +479,30 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
         ly: 0
     };
 
-    var fakeButtons = tester.selectAll('g.' + constants.dropdownButtonClassName)
+    const fakeButtonsJoin = tester.selectAll('g.' + constants.dropdownButtonClassName)
         .data(Lib.filterVisible(menuOpts.buttons));
 
-    fakeButtons.enter().append('g')
+    const fakeButtonsEnter = fakeButtonsJoin.enter().append('g')
         .classed(constants.dropdownButtonClassName, true);
 
-    var isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
+    const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
 
     // loop over fake buttons to find width / height
-    fakeButtons.each(function(buttonOpts: any, i: any) {
-        var button = select(this);
+    fakeButtonsJoin.merge(fakeButtonsEnter).each(function(this: any, buttonOpts: any, i: any) {
+        const button = select(this);
 
         button.call(drawItem, menuOpts, buttonOpts, gd);
 
-        var text = button.select('.' + constants.itemTextClassName);
+        const text = button.select('.' + constants.itemTextClassName);
 
         // width is given by max width of all buttons
-        var tWidth = text.node() && bBox(text.node()).width;
-        var wEff = Math.max(tWidth + constants.textPadX, constants.minWidth);
+        const tWidth = text.node() && bBox(text.node()).width;
+        let wEff = Math.max(tWidth + constants.textPadX, constants.minWidth);
 
         // height is determined by item text
-        var tHeight = menuOpts.font.size * LINE_SPACING;
-        var tLines = svgTextUtils.lineCount(text);
-        var hEff = Math.max(tHeight * tLines, constants.minHeight) + constants.textOffsetY;
+        const tHeight = menuOpts.font.size * LINE_SPACING;
+        const tLines = svgTextUtils.lineCount(text);
+        let hEff = Math.max(tHeight * tLines, constants.minHeight) + constants.textOffsetY;
 
         hEff = Math.ceil(hEff);
         wEff = Math.ceil(wEff);
@@ -544,16 +548,16 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
         dims.totalWidth += constants.arrowPadX;
     }
 
-    fakeButtons.remove();
+    fakeButtonsJoin.remove();
 
-    var paddedWidth = dims.totalWidth + menuOpts.pad.l + menuOpts.pad.r;
-    var paddedHeight = dims.totalHeight + menuOpts.pad.t + menuOpts.pad.b;
+    const paddedWidth = dims.totalWidth + menuOpts.pad.l + menuOpts.pad.r;
+    const paddedHeight = dims.totalHeight + menuOpts.pad.t + menuOpts.pad.b;
 
-    var graphSize = gd._fullLayout._size;
+    const graphSize = gd._fullLayout._size;
     dims.lx = graphSize.l + graphSize.w * menuOpts.x;
     dims.ly = graphSize.t + graphSize.h * (1 - menuOpts.y);
 
-    var xanchor = 'left';
+    let xanchor = 'left';
     if(Lib.isRightAnchor(menuOpts)) {
         dims.lx -= paddedWidth;
         xanchor = 'right';
@@ -563,7 +567,7 @@ function findDimensions(gd: GraphDiv, menuOpts: any) {
         xanchor = 'center';
     }
 
-    var yanchor = 'top';
+    let yanchor = 'top';
     if(Lib.isBottomAnchor(menuOpts)) {
         dims.ly -= paddedHeight;
         yanchor = 'bottom';
@@ -595,27 +599,26 @@ function autoMarginId(menuOpts: any) {
 // set item positions (mutates posOpts)
 function setItemPosition(item: any, menuOpts: any, posOpts: any, overrideOpts: any) {
     overrideOpts = overrideOpts || {};
-    var rect = item.select('.' + constants.itemRectClassName);
-    var text = item.select('.' + constants.itemTextClassName);
-    var borderWidth = menuOpts.borderwidth;
-    var index = posOpts.index;
-    var dims = menuOpts._dims;
+    const rect = item.select('.' + constants.itemRectClassName);
+    const text = item.select('.' + constants.itemTextClassName);
+    const borderWidth = menuOpts.borderwidth;
+    const index = posOpts.index;
+    const dims = menuOpts._dims;
 
     setTranslate(item, borderWidth + posOpts.x, borderWidth + posOpts.y);
 
-    var isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
-    var finalHeight = overrideOpts.height || (isVertical ? dims.heights[index] : dims.height1);
+    const isVertical = ['up', 'down'].indexOf(menuOpts.direction) !== -1;
+    const finalHeight = overrideOpts.height || (isVertical ? dims.heights[index] : dims.height1);
 
-    rect.attr({
-        x: 0,
-        y: 0,
-        width: overrideOpts.width || (isVertical ? dims.width1 : dims.widths[index]),
-        height: finalHeight
-    });
+    rect
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', overrideOpts.width || (isVertical ? dims.width1 : dims.widths[index]))
+        .attr('height', finalHeight);
 
-    var tHeight = menuOpts.font.size * LINE_SPACING;
-    var tLines = svgTextUtils.lineCount(text);
-    var spanOffset = ((tLines - 1) * tHeight / 2);
+    const tHeight = menuOpts.font.size * LINE_SPACING;
+    const tLines = svgTextUtils.lineCount(text);
+    const spanOffset = ((tLines - 1) * tHeight / 2);
 
     svgTextUtils.positionText(text, constants.textOffsetX,
         finalHeight / 2 - spanOffset + constants.textOffsetY);

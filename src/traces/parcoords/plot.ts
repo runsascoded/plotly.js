@@ -2,11 +2,11 @@ import parcoords from './parcoords.js';
 import prepareRegl from '../../lib/prepare_regl.js';
 import { isVisible } from './helpers.js';
 import type { GraphDiv } from '../../../types/core';
-var reglPrecompiled: any = {};
+const reglPrecompiled: any = {};
 
 function newIndex(visibleIndices: any, orig: any, dim: any) {
-    var origIndex = orig.indexOf(dim);
-    var currentIndex = visibleIndices.indexOf(origIndex);
+    const origIndex = orig.indexOf(dim);
+    let currentIndex = visibleIndices.indexOf(origIndex);
     if(currentIndex === -1) {
         currentIndex += orig.length;
     }
@@ -23,38 +23,38 @@ function sorter(visibleIndices: any, orig: any) {
 }
 
 function plot(gd: GraphDiv, cdModule: any) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var success = prepareRegl(gd, [], reglPrecompiled);
+    const success = prepareRegl(gd, [], reglPrecompiled);
     if(!success) return;
 
-    var currentDims: any = {};
-    var initialDims: any = {};
-    var fullIndices: any = {};
-    var inputIndices: any = {};
+    const currentDims: any = {};
+    const initialDims: any = {};
+    const fullIndices: any = {};
+    const inputIndices: any = {};
 
-    var size = fullLayout._size;
+    const size = fullLayout._size;
 
     cdModule.forEach(function(d: any, i: any) {
-        var trace = d[0].trace;
+        const trace = d[0].trace;
         fullIndices[i] = trace.index;
-        var iIn = inputIndices[i] = trace.index;
+        const iIn = inputIndices[i] = trace.index;
         currentDims[i] = gd.data[iIn].dimensions;
         initialDims[i] = gd.data[iIn].dimensions.slice();
     });
 
-    var filterChanged = function(i: any, initialDimIndex: any, newRanges: any) {
-        var dim = initialDims[i][initialDimIndex];
-        var newConstraints: any = newRanges.map(function(r: any) { return r.slice(); });
+    const filterChanged = function(i: any, initialDimIndex: any, newRanges: any) {
+        const dim = initialDims[i][initialDimIndex];
+        let newConstraints: any = newRanges.map(function(r: any) { return r.slice(); });
 
-        var aStr = 'dimensions[' + initialDimIndex + '].constraintrange';
-        var preGUI = fullLayout._tracePreGUI[gd._fullData[fullIndices[i]]._fullInput.uid];
+        const aStr = 'dimensions[' + initialDimIndex + '].constraintrange';
+        const preGUI = fullLayout._tracePreGUI[gd._fullData[fullIndices[i]]._fullInput.uid];
         if(preGUI[aStr] === undefined) {
-            var initialVal = dim.constraintrange;
+            const initialVal = dim.constraintrange;
             preGUI[aStr] = initialVal || null;
         }
 
-        var fullDimension = gd._fullData[fullIndices[i]].dimensions[initialDimIndex];
+        const fullDimension = gd._fullData[fullIndices[i]].dimensions[initialDimIndex];
 
         if(!newConstraints.length) {
             delete dim.constraintrange;
@@ -67,21 +67,21 @@ function plot(gd: GraphDiv, cdModule: any) {
             newConstraints = [newConstraints];
         }
 
-        var restyleData: any = {};
+        const restyleData: any = {};
         restyleData[aStr] = newConstraints;
         gd.emit('plotly_restyle', [restyleData, [inputIndices[i]]]);
     };
 
-    var hover = function(eventData: any) {
+    const hover = function(eventData: any) {
         gd.emit('plotly_hover', eventData);
     };
 
-    var unhover = function(eventData: any) {
+    const unhover = function(eventData: any) {
         gd.emit('plotly_unhover', eventData);
     };
 
-    var axesMoved = function(i: any, visibleIndices: any) {
-        var orig = sorter(visibleIndices, initialDims[i].filter(isVisible));
+    const axesMoved = function(i: any, visibleIndices: any) {
+        const orig = sorter(visibleIndices, initialDims[i].filter(isVisible));
         currentDims[i].sort(orig);
 
         initialDims[i].filter(function(d: any) {return !isVisible(d);})

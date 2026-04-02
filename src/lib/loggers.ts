@@ -2,7 +2,7 @@ import _plot_config from '../plot_api/plot_config.js';
 const { dfltConfig } = _plot_config;
 import notifier from './notifier.js';
 
-var loggers: {
+const loggers: {
     log: (...args: any[]) => void;
     warn: (...args: any[]) => void;
     error: (...args: any[]) => void;
@@ -15,10 +15,10 @@ var loggers: {
  */
 
 loggers.log = function(...args: any[]): void {
-    var i: number;
+    let i: number;
 
     if(dfltConfig.logging > 1) {
-        var messages: any[] = ['LOG:'];
+        const messages: any[] = ['LOG:'];
         for(i = 0; i < args.length; i++) {
             messages.push(args[i]);
         }
@@ -26,7 +26,7 @@ loggers.log = function(...args: any[]): void {
     }
 
     if(dfltConfig.notifyOnLogging > 1) {
-        var lines: any[] = [];
+        const lines: any[] = [];
         for(i = 0; i < args.length; i++) {
             lines.push(args[i]);
         }
@@ -35,10 +35,10 @@ loggers.log = function(...args: any[]): void {
 };
 
 loggers.warn = function(...args: any[]): void {
-    var i: number;
+    let i: number;
 
     if(dfltConfig.logging > 0) {
-        var messages: any[] = ['WARN:'];
+        const messages: any[] = ['WARN:'];
         for(i = 0; i < args.length; i++) {
             messages.push(args[i]);
         }
@@ -46,7 +46,7 @@ loggers.warn = function(...args: any[]): void {
     }
 
     if(dfltConfig.notifyOnLogging > 0) {
-        var lines: any[] = [];
+        const lines: any[] = [];
         for(i = 0; i < args.length; i++) {
             lines.push(args[i]);
         }
@@ -55,10 +55,10 @@ loggers.warn = function(...args: any[]): void {
 };
 
 loggers.error = function(...args: any[]): void {
-    var i: number;
+    let i: number;
 
     if(dfltConfig.logging > 0) {
-        var messages: any[] = ['ERROR:'];
+        const messages: any[] = ['ERROR:'];
         for(i = 0; i < args.length; i++) {
             messages.push(args[i]);
         }
@@ -66,7 +66,7 @@ loggers.error = function(...args: any[]): void {
     }
 
     if(dfltConfig.notifyOnLogging > 0) {
-        var lines: any[] = [];
+        const lines: any[] = [];
         for(i = 0; i < args.length; i++) {
             lines.push(args[i]);
         }
@@ -74,8 +74,8 @@ loggers.error = function(...args: any[]): void {
     }
 };
 
-export var log = loggers.log;
-export var warn = loggers.warn;
-export var error = loggers.error;
+export const log = loggers.log;
+export const warn = loggers.warn;
+export const error = loggers.error;
 
 export default loggers;

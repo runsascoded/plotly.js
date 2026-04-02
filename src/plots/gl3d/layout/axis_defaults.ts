@@ -1,26 +1,26 @@
 import tinycolor from 'tinycolor2';
-var colorMix = tinycolor.mix;
+const colorMix = tinycolor.mix;
 import Lib from '../../../lib/index.js';
 import Template from '../../../plot_api/plot_template.js';
 import layoutAttributes from './axis_attributes.js';
 import handleTypeDefaults from '../../cartesian/type_defaults.js';
 import handleAxisDefaults from '../../cartesian/axis_defaults.js';
 
-var axesNames = ['xaxis', 'yaxis', 'zaxis'];
+const axesNames = ['xaxis', 'yaxis', 'zaxis'];
 
 // TODO: hard-coded lightness fraction based on gridline default colors
 // that differ from other subplot types.
-var gridLightness = 100 * (204 - 0x44) / (255 - 0x44);
+const gridLightness = 100 * (204 - 0x44) / (255 - 0x44);
 
-export default function supplyLayoutDefaults(layoutIn, layoutOut, options) {
-    var containerIn, containerOut;
+export default function supplyLayoutDefaults(layoutIn: any, layoutOut: any, options: any) {
+    let containerIn: any, containerOut: any;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(containerIn, containerOut, layoutAttributes, attr, dflt);
     }
 
-    for(var j = 0; j < axesNames.length; j++) {
-        var axName = axesNames[j];
+    for(let j = 0; j < axesNames.length; j++) {
+        const axName = axesNames[j];
         containerIn = layoutIn[axName] || {};
 
         containerOut = Template.newContainer(layoutOut, axName);

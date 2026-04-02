@@ -1,4 +1,4 @@
-var CIRCLE_SIDES = 32;  // should be divisible by 4
+const CIRCLE_SIDES = 32;  // should be divisible by 4
 
 export default {
     CIRCLE_SIDES: CIRCLE_SIDES,

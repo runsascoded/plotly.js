@@ -16,12 +16,12 @@ import _index from '../../components/selections/index.js';
 const { prepSelect, selectOnClick, clearOutline, clearSelectionsCache } = _index;
 import constants from '../cartesian/constants.js';
 import type { FullLayout } from '../../../types/core';
-var strTranslate = Lib.strTranslate;
-var _ = Lib._;
-var freeMode = dragHelpers.freeMode;
-var rectMode = dragHelpers.rectMode;
+const strTranslate = Lib.strTranslate;
+const _ = Lib._;
+const freeMode = dragHelpers.freeMode;
+const rectMode = dragHelpers.rectMode;
 
-function Ternary(options: any, fullLayout: FullLayout) {
+function Ternary(this: any, options: any, fullLayout: FullLayout) {
     this.id = options.id;
     this.graphDiv = options.graphDiv;
     this.init(fullLayout);
@@ -37,9 +37,9 @@ function Ternary(options: any, fullLayout: FullLayout) {
 
 export default Ternary;
 
-var proto = Ternary.prototype;
+const proto = Ternary.prototype;
 
-proto.init = function(fullLayout) {
+proto.init = function(fullLayout: any) {
     this.container = fullLayout._ternarylayer;
     this.defs = fullLayout._defs;
     this.layoutId = fullLayout._uid;
@@ -47,14 +47,14 @@ proto.init = function(fullLayout) {
     this.layers = {};
 };
 
-proto.plot = function(ternaryCalcData, fullLayout) {
-    var _this = this;
-    var ternaryLayout = fullLayout[_this.id];
-    var graphSize = fullLayout._size;
+proto.plot = function(ternaryCalcData: any, fullLayout: any) {
+    const _this = this;
+    const ternaryLayout = fullLayout[_this.id];
+    const graphSize = fullLayout._size;
 
     _this._hasClipOnAxisFalse = false;
-    for(var i = 0; i < ternaryCalcData.length; i++) {
-        var trace = ternaryCalcData[i][0].trace;
+    for(let i = 0; i < ternaryCalcData.length; i++) {
+        const trace = ternaryCalcData[i][0].trace;
 
         if(trace.cliponaxis === false) {
             _this._hasClipOnAxisFalse = true;
@@ -68,21 +68,21 @@ proto.plot = function(ternaryCalcData, fullLayout) {
     _this.layers.plotbg.select('path').call(Color.fill, ternaryLayout.bgcolor);
 };
 
-proto.makeFramework = function(fullLayout) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var ternaryLayout = fullLayout[_this.id];
+proto.makeFramework = function(fullLayout: any) {
+    const _this = this;
+    const gd = _this.graphDiv;
+    const ternaryLayout = fullLayout[_this.id];
 
-    var clipId = _this.clipId = 'clip' + _this.layoutId + _this.id;
-    var clipIdRelative = _this.clipIdRelative = 'clip-relative' + _this.layoutId + _this.id;
+    const clipId = _this.clipId = 'clip' + _this.layoutId + _this.id;
+    const clipIdRelative = _this.clipIdRelative = 'clip-relative' + _this.layoutId + _this.id;
 
     // clippath for this ternary subplot
-    _this.clipDef = Lib.ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s) {
+    _this.clipDef = Lib.ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s: any) {
         s.append('path').attr('d', 'M0,0Z');
     });
 
     // 'relative' clippath (i.e. no translation) for this ternary subplot
-    _this.clipDefRelative = Lib.ensureSingleById(fullLayout._clips, 'clipPath', clipIdRelative, function(s) {
+    _this.clipDefRelative = Lib.ensureSingleById(fullLayout._clips, 'clipPath', clipIdRelative, function(s: any) {
         s.append('path').attr('d', 'M0,0Z');
     });
 
@@ -94,20 +94,20 @@ proto.makeFramework = function(fullLayout) {
     setClipUrl(_this.layers.grids, clipId, gd);
 };
 
-proto.updateFx = function(fullLayout) {
+proto.updateFx = function(fullLayout: any) {
     fullLayout._ternarylayer
         .selectAll('g.toplevel')
         .style('cursor', fullLayout.dragmode === 'pan' ? 'move' : 'crosshair');
 };
 
-proto.updateLayers = function(ternaryLayout) {
-    var _this = this;
-    var layers = _this.layers;
+proto.updateLayers = function(ternaryLayout: any) {
+    const _this = this;
+    const layers = _this.layers;
 
     // inside that container, we have one container for the data, and
     // one each for the three axes around it.
 
-    var plotLayers = ['draglayer', 'plotbg', 'backplot', 'grids'];
+    const plotLayers = ['draglayer', 'plotbg', 'backplot', 'grids'];
 
     if(ternaryLayout.aaxis.layer === 'below traces') {
         plotLayers.push('aaxis', 'aline');
@@ -131,15 +131,15 @@ proto.updateLayers = function(ternaryLayout) {
         plotLayers.push('caxis', 'cline');
     }
 
-    var toplevel = _this.plotContainer.selectAll('g.toplevel')
+    const toplevel = _this.plotContainer.selectAll('g.toplevel')
         .data(plotLayers, String);
 
-    var grids = ['agrid', 'bgrid', 'cgrid'];
+    const grids = ['agrid', 'bgrid', 'cgrid'];
 
-    toplevel.enter().append('g')
-        .attr('class', function(d) { return 'toplevel ' + d; })
-        .each(function(d) {
-            var s = select(this);
+    const toplevelEnter = toplevel.enter().append('g')
+        .attr('class', function(d: any) { return 'toplevel ' + d; })
+        .each(function(this: any, d: any) {
+            const s = select(this);
             layers[d] = s;
 
             // containers for different trace types.
@@ -162,26 +162,26 @@ proto.updateLayers = function(ternaryLayout) {
             }
         });
 
-    toplevel.order();
+    toplevel.merge(toplevelEnter).order();
 };
 
-var whRatio = Math.sqrt(4 / 3);
+const whRatio = Math.sqrt(4 / 3);
 
-proto.adjustLayout = function(ternaryLayout, graphSize) {
-    var _this = this;
-    var domain = ternaryLayout.domain;
-    var xDomainCenter = (domain.x[0] + domain.x[1]) / 2;
-    var yDomainCenter = (domain.y[0] + domain.y[1]) / 2;
-    var xDomain = domain.x[1] - domain.x[0];
-    var yDomain = domain.y[1] - domain.y[0];
-    var wmax = xDomain * graphSize.w;
-    var hmax = yDomain * graphSize.h;
-    var sum = ternaryLayout.sum;
-    var amin = ternaryLayout.aaxis.min;
-    var bmin = ternaryLayout.baxis.min;
-    var cmin = ternaryLayout.caxis.min;
+proto.adjustLayout = function(ternaryLayout: any, graphSize: any) {
+    const _this = this;
+    const domain = ternaryLayout.domain;
+    const xDomainCenter = (domain.x[0] + domain.x[1]) / 2;
+    const yDomainCenter = (domain.y[0] + domain.y[1]) / 2;
+    const xDomain = domain.x[1] - domain.x[0];
+    const yDomain = domain.y[1] - domain.y[0];
+    const wmax = xDomain * graphSize.w;
+    const hmax = yDomain * graphSize.h;
+    const sum = ternaryLayout.sum;
+    const amin = ternaryLayout.aaxis.min;
+    const bmin = ternaryLayout.baxis.min;
+    const cmin = ternaryLayout.caxis.min;
 
-    var x0, y0, w, h, xDomainFinal, yDomainFinal;
+    let x0, y0, w, h, xDomainFinal, yDomainFinal;
 
     if(wmax > whRatio * hmax) {
         h = hmax;
@@ -215,7 +215,7 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
     };
     setConvert(_this.xaxis, _this.graphDiv._fullLayout);
     _this.xaxis.setScale();
-    _this.xaxis.isPtWithinRange = function(d) {
+    _this.xaxis.isPtWithinRange = function(d: any) {
         return (
             d.a >= _this.aaxis.range[0] &&
             d.a <= _this.aaxis.range[1] &&
@@ -240,12 +240,12 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
     _this.yaxis.isPtWithinRange = function() { return true; };
 
     // set up the modified axes for tick drawing
-    var yDomain0 = _this.yaxis.domain[0];
+    const yDomain0 = _this.yaxis.domain[0];
 
     // aaxis goes up the left side. Set it up as a y axis, but with
     // fictitious angles and domain, but then rotate and translate
     // it into place at the end
-    var aaxis = _this.aaxis = extendFlat({}, ternaryLayout.aaxis, {
+    const aaxis = _this.aaxis = extendFlat({}, ternaryLayout.aaxis, {
         range: [amin, sum - bmin - cmin],
         side: 'left',
         // tickangle = 'auto' means 0 anyway for a y axis, need to coerce to 0 here
@@ -262,7 +262,7 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
 
     // baxis goes across the bottom (backward). We can set it up as an x axis
     // without any enclosing transformation.
-    var baxis = _this.baxis = extendFlat({}, ternaryLayout.baxis, {
+    const baxis = _this.baxis = extendFlat({}, ternaryLayout.baxis, {
         range: [sum - amin - cmin, bmin],
         side: 'bottom',
         domain: _this.xaxis.domain,
@@ -276,7 +276,7 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
 
     // caxis goes down the right side. Set it up as a y axis, with
     // post-transformation similar to aaxis
-    var caxis = _this.caxis = extendFlat({}, ternaryLayout.caxis, {
+    const caxis = _this.caxis = extendFlat({}, ternaryLayout.caxis, {
         range: [sum - amin - bmin, cmin],
         side: 'right',
         tickangle: (+ternaryLayout.caxis.tickangle || 0) + 30,
@@ -289,14 +289,14 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
     setConvert(caxis, _this.graphDiv._fullLayout);
     caxis.setScale();
 
-    var triangleClip = 'M' + x0 + ',' + (y0 + h) + 'h' + w + 'l-' + (w / 2) + ',-' + h + 'Z';
+    const triangleClip = 'M' + x0 + ',' + (y0 + h) + 'h' + w + 'l-' + (w / 2) + ',-' + h + 'Z';
     _this.clipDef.select('path').attr('d', triangleClip);
     _this.layers.plotbg.select('path').attr('d', triangleClip);
 
-    var triangleClipRelative = 'M0,' + h + 'h' + w + 'l-' + (w / 2) + ',-' + h + 'Z';
+    const triangleClipRelative = 'M0,' + h + 'h' + w + 'l-' + (w / 2) + ',-' + h + 'Z';
     _this.clipDefRelative.select('path').attr('d', triangleClipRelative);
 
-    var plotTransform = strTranslate(x0, y0);
+    const plotTransform = strTranslate(x0, y0);
     _this.plotContainer.selectAll('.scatterlayer,.maplayer')
         .attr('transform', plotTransform);
 
@@ -305,17 +305,17 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
     // TODO: shift axes to accommodate linewidth*sin(30) tick mark angle
 
     // TODO: there's probably an easier way to handle these translations/offsets now...
-    var bTransform = strTranslate(x0 - baxis._offset, y0 + h);
+    const bTransform = strTranslate(x0 - baxis._offset, y0 + h);
 
     _this.layers.baxis.attr('transform', bTransform);
     _this.layers.bgrid.attr('transform', bTransform);
 
-    var aTransform = strTranslate(x0 + w / 2, y0) +
+    const aTransform = strTranslate(x0 + w / 2, y0) +
         'rotate(30)' + strTranslate(0, -aaxis._offset);
     _this.layers.aaxis.attr('transform', aTransform);
     _this.layers.agrid.attr('transform', aTransform);
 
-    var cTransform = strTranslate(x0 + w / 2, y0) +
+    const cTransform = strTranslate(x0 + w / 2, y0) +
         'rotate(-30)' + strTranslate(0, -caxis._offset);
     _this.layers.caxis.attr('transform', cTransform);
     _this.layers.cgrid.attr('transform', cTransform);
@@ -349,24 +349,24 @@ proto.adjustLayout = function(ternaryLayout, graphSize) {
     );
 };
 
-proto.drawAxes = function(doTitles) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var titlesuffix = _this.id.slice(7) + 'title';
-    var layers = _this.layers;
-    var aaxis = _this.aaxis;
-    var baxis = _this.baxis;
-    var caxis = _this.caxis;
+proto.drawAxes = function(doTitles: any) {
+    const _this = this;
+    const gd = _this.graphDiv;
+    const titlesuffix = _this.id.slice(7) + 'title';
+    const layers = _this.layers;
+    const aaxis = _this.aaxis;
+    const baxis = _this.baxis;
+    const caxis = _this.caxis;
 
     _this.drawAx(aaxis);
     _this.drawAx(baxis);
     _this.drawAx(caxis);
 
     if(doTitles) {
-        var apad = Math.max(aaxis.showticklabels ? aaxis.tickfont.size / 2 : 0,
+        const apad = Math.max(aaxis.showticklabels ? aaxis.tickfont.size / 2 : 0,
             (caxis.showticklabels ? caxis.tickfont.size * 0.75 : 0) +
             (caxis.ticks === 'outside' ? caxis.ticklen * 0.87 : 0));
-        var bpad = (baxis.showticklabels ? baxis.tickfont.size : 0) +
+        const bpad = (baxis.showticklabels ? baxis.tickfont.size : 0) +
             (baxis.ticks === 'outside' ? baxis.ticklen : 0) + 3;
 
         layers['a-title'] = Titles.draw(gd, 'a' + titlesuffix, {
@@ -402,17 +402,17 @@ proto.drawAxes = function(doTitles) {
     }
 };
 
-proto.drawAx = function(ax) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var axName = ax._name;
-    var axLetter = axName.charAt(0);
-    var axId = ax._id;
-    var axLayer = _this.layers[axName];
-    var counterAngle = 30;
+proto.drawAx = function(ax: any) {
+    const _this = this;
+    const gd = _this.graphDiv;
+    const axName = ax._name;
+    const axLetter = axName.charAt(0);
+    const axId = ax._id;
+    const axLayer = _this.layers[axName];
+    const counterAngle = 30;
 
-    var stashKey = axLetter + 'tickLayout';
-    var newTickLayout = strTickLayout(ax);
+    const stashKey = axLetter + 'tickLayout';
+    const newTickLayout = strTickLayout(ax);
     if(_this[stashKey] !== newTickLayout) {
         axLayer.selectAll('.' + axId + 'tick').remove();
         _this[stashKey] = newTickLayout;
@@ -420,26 +420,26 @@ proto.drawAx = function(ax) {
 
     ax.setScale();
 
-    var vals = Axes.calcTicks(ax);
-    var valsClipped = Axes.clipEnds(ax, vals);
-    var transFn = Axes.makeTransTickFn(ax);
-    var tickSign = Axes.getTickSigns(ax)[2];
+    const vals = Axes.calcTicks(ax);
+    const valsClipped = Axes.clipEnds(ax, vals);
+    const transFn = Axes.makeTransTickFn(ax);
+    const tickSign = Axes.getTickSigns(ax)[2];
 
-    var caRad = Lib.deg2rad(counterAngle);
-    var pad = tickSign * (ax.linewidth || 1) / 2;
-    var len = tickSign * ax.ticklen;
-    var w = _this.w;
-    var h = _this.h;
+    const caRad = Lib.deg2rad(counterAngle);
+    const pad = tickSign * (ax.linewidth || 1) / 2;
+    const len = tickSign * ax.ticklen;
+    const w = _this.w;
+    const h = _this.h;
 
-    var tickPath = axLetter === 'b' ?
+    const tickPath = axLetter === 'b' ?
         'M0,' + pad + 'l' + (Math.sin(caRad) * len) + ',' + (Math.cos(caRad) * len) :
         'M' + pad + ',0l' + (Math.cos(caRad) * len) + ',' + (-Math.sin(caRad) * len);
 
-    var gridPath = {
+    const gridPath = ({
         a: 'M0,0l' + h + ',-' + (w / 2),
         b: 'M0,0l-' + (w / 2) + ',-' + h,
         c: 'M0,0l-' + h + ',' + (w / 2)
-    }[axLetter];
+    } as any)[axLetter];
 
     Axes.drawTicks(gd, ax, {
         vals: ax.ticks === 'inside' ? valsClipped : vals,
@@ -465,27 +465,27 @@ proto.drawAx = function(ax) {
     });
 };
 
-function strTickLayout(axLayout) {
+function strTickLayout(axLayout: any) {
     return axLayout.ticks + String(axLayout.ticklen) + String(axLayout.showticklabels);
 }
 
 // hard coded paths for zoom corners
 // uses the same sizing as cartesian, length is MINZOOM/2, width is 3px
-var CLEN = constants.MINZOOM / 2 + 0.87;
-var BLPATH = 'm-0.87,.5h' + CLEN + 'v3h-' + (CLEN + 5.2) +
+const CLEN = constants.MINZOOM / 2 + 0.87;
+const BLPATH = 'm-0.87,.5h' + CLEN + 'v3h-' + (CLEN + 5.2) +
     'l' + (CLEN / 2 + 2.6) + ',-' + (CLEN * 0.87 + 4.5) +
     'l2.6,1.5l-' + (CLEN / 2) + ',' + (CLEN * 0.87) + 'Z';
-var BRPATH = 'm0.87,.5h-' + CLEN + 'v3h' + (CLEN + 5.2) +
+const BRPATH = 'm0.87,.5h-' + CLEN + 'v3h' + (CLEN + 5.2) +
     'l-' + (CLEN / 2 + 2.6) + ',-' + (CLEN * 0.87 + 4.5) +
     'l-2.6,1.5l' + (CLEN / 2) + ',' + (CLEN * 0.87) + 'Z';
-var TOPPATH = 'm0,1l' + (CLEN / 2) + ',' + (CLEN * 0.87) +
+const TOPPATH = 'm0,1l' + (CLEN / 2) + ',' + (CLEN * 0.87) +
     'l2.6,-1.5l-' + (CLEN / 2 + 2.6) + ',-' + (CLEN * 0.87 + 4.5) +
     'l-' + (CLEN / 2 + 2.6) + ',' + (CLEN * 0.87 + 4.5) +
     'l2.6,1.5l' + (CLEN / 2) + ',-' + (CLEN * 0.87) + 'Z';
-var STARTMARKER = 'm0.5,0.5h5v-2h-5v-5h-2v5h-5v2h5v5h2Z';
+const STARTMARKER = 'm0.5,0.5h5v-2h-5v-5h-2v5h-5v2h5v5h2Z';
 
 // I guess this could be shared with cartesian... but for now it's separate.
-var SHOWZOOMOUTTIP = true;
+let SHOWZOOMOUTTIP = true;
 
 proto.clearOutline = function() {
     clearSelectionsCache(this.dragOptions);
@@ -493,12 +493,12 @@ proto.clearOutline = function() {
 };
 
 proto.initInteractions = function() {
-    var _this = this;
-    var dragger = _this.layers.plotbg.select('path').node();
-    var gd = _this.graphDiv;
-    var zoomLayer = gd._fullLayout._zoomlayer;
-    var scaleX;
-    var scaleY;
+    const _this = this;
+    const dragger = _this.layers.plotbg.select('path').node();
+    const gd = _this.graphDiv;
+    const zoomLayer = gd._fullLayout._zoomlayer;
+    let scaleX: any;
+    let scaleY: any;
 
     // use plotbg for the main interactions
     this.dragOptions = {
@@ -511,7 +511,7 @@ proto.initInteractions = function() {
             yaxis: _this.yaxis
         },
         subplot: _this.id,
-        prepFn: function(e, startX, startY) {
+        prepFn: function(e: any, startX: any, startY: any) {
             // these aren't available yet when initInteractions
             // is called
             _this.dragOptions.xaxes = [_this.xaxis];
@@ -520,7 +520,7 @@ proto.initInteractions = function() {
             scaleX = gd._fullLayout._invScaleX;
             scaleY = gd._fullLayout._invScaleY;
 
-            var dragModeNow = _this.dragOptions.dragmode = gd._fullLayout.dragmode;
+            const dragModeNow = _this.dragOptions.dragmode = gd._fullLayout.dragmode;
 
             if(freeMode(dragModeNow)) _this.dragOptions.minDrag = 1;
             else _this.dragOptions.minDrag = undefined;
@@ -542,18 +542,18 @@ proto.initInteractions = function() {
         }
     };
 
-    var x0, y0, mins0, span0, mins, lum, path0, dimmed, zb, corners;
+    let x0: any, y0: any, mins0: any, span0: any, mins: any, lum: any, path0: any, dimmed: any, zb: any, corners: any;
 
-    function makeUpdate(_mins) {
-        var attrs: any = {};
+    function makeUpdate(_mins: any) {
+        const attrs: any = {};
         attrs[_this.id + '.aaxis.min'] = _mins.a;
         attrs[_this.id + '.baxis.min'] = _mins.b;
         attrs[_this.id + '.caxis.min'] = _mins.c;
         return attrs;
     }
 
-    function clickZoomPan(numClicks, evt) {
-        var clickMode = gd._fullLayout.clickmode;
+    function clickZoomPan(numClicks: any, evt: any) {
+        const clickMode = gd._fullLayout.clickmode;
 
         removeZoombox(gd);
 
@@ -571,14 +571,14 @@ proto.initInteractions = function() {
         }
     }
 
-    function zoomPrep(e, startX, startY) {
-        var dragBBox = dragger.getBoundingClientRect();
+    function zoomPrep(e: any, startX: any, startY: any) {
+        const dragBBox = dragger.getBoundingClientRect();
         x0 = startX - dragBBox.left;
         y0 = startY - dragBBox.top;
 
         gd._fullLayout._calcInverseTransform(gd);
-        var inverse = gd._fullLayout._invTransform;
-        var transformedCoords = Lib.apply3DTransform(inverse)(x0, y0);
+        const inverse = gd._fullLayout._invTransform;
+        const transformedCoords = Lib.apply3DTransform(inverse)(x0, y0);
         x0 = transformedCoords[0];
         y0 = transformedCoords[1];
 
@@ -596,42 +596,38 @@ proto.initInteractions = function() {
         zb = zoomLayer.append('path')
             .attr('class', 'zoombox')
             .attr('transform', strTranslate(_this.x0, _this.y0))
-            .style({
-                fill: lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)',
-                'stroke-width': 0
-            })
+            .style('fill', lum > 0.2 ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)')
+            .style('stroke-width', 0)
             .attr('d', path0);
 
         corners = zoomLayer.append('path')
             .attr('class', 'zoombox-corners')
             .attr('transform', strTranslate(_this.x0, _this.y0))
-            .style({
-                fill: Color.background,
-                stroke: Color.defaultLine,
-                'stroke-width': 1,
-                opacity: 0
-            })
+            .style('fill', Color.background)
+            .style('stroke', Color.defaultLine)
+            .style('stroke-width', 1)
+            .style('opacity', 0)
             .attr('d', 'M0,0Z');
 
         _this.clearOutline(gd);
     }
 
-    function getAFrac(x, y) { return 1 - (y / _this.h); }
-    function getBFrac(x, y) { return 1 - ((x + (_this.h - y) / Math.sqrt(3)) / _this.w); }
-    function getCFrac(x, y) { return ((x - (_this.h - y) / Math.sqrt(3)) / _this.w); }
+    function getAFrac(x: any, y: any) { return 1 - (y / _this.h); }
+    function getBFrac(x: any, y: any) { return 1 - ((x + (_this.h - y) / Math.sqrt(3)) / _this.w); }
+    function getCFrac(x: any, y: any) { return ((x - (_this.h - y) / Math.sqrt(3)) / _this.w); }
 
-    function zoomMove(dx0, dy0) {
-        var x1 = x0 + dx0 * scaleX;
-        var y1 = y0 + dy0 * scaleY;
-        var afrac = Math.max(0, Math.min(1, getAFrac(x0, y0), getAFrac(x1, y1)));
-        var bfrac = Math.max(0, Math.min(1, getBFrac(x0, y0), getBFrac(x1, y1)));
-        var cfrac = Math.max(0, Math.min(1, getCFrac(x0, y0), getCFrac(x1, y1)));
-        var xLeft = ((afrac / 2) + cfrac) * _this.w;
-        var xRight = (1 - (afrac / 2) - bfrac) * _this.w;
-        var xCenter = (xLeft + xRight) / 2;
-        var xSpan = xRight - xLeft;
-        var yBottom = (1 - afrac) * _this.h;
-        var yTop = yBottom - xSpan / whRatio;
+    function zoomMove(dx0: any, dy0: any) {
+        const x1 = x0 + dx0 * scaleX;
+        const y1 = y0 + dy0 * scaleY;
+        const afrac = Math.max(0, Math.min(1, getAFrac(x0, y0), getAFrac(x1, y1)));
+        const bfrac = Math.max(0, Math.min(1, getBFrac(x0, y0), getBFrac(x1, y1)));
+        const cfrac = Math.max(0, Math.min(1, getCFrac(x0, y0), getCFrac(x1, y1)));
+        const xLeft = ((afrac / 2) + cfrac) * _this.w;
+        const xRight = (1 - (afrac / 2) - bfrac) * _this.w;
+        const xCenter = (xLeft + xRight) / 2;
+        const xSpan = xRight - xLeft;
+        const yBottom = (1 - afrac) * _this.h;
+        const yTop = yBottom - xSpan / whRatio;
 
         if(xSpan < constants.MINZOOM) {
             mins = mins0;
@@ -688,16 +684,16 @@ proto.initInteractions = function() {
         mins = mins0;
     }
 
-    function plotDrag(dx, dy) {
-        var dxScaled = dx / _this.xaxis._m;
-        var dyScaled = dy / _this.yaxis._m;
+    function plotDrag(dx: any, dy: any) {
+        const dxScaled = dx / _this.xaxis._m;
+        const dyScaled = dy / _this.yaxis._m;
         mins = {
             a: mins0.a - dyScaled,
             b: mins0.b + (dxScaled + dyScaled) / 2,
             c: mins0.c - (dxScaled - dyScaled) / 2
         };
-        var minsorted = [mins.a, mins.b, mins.c].sort(Lib.sorterAsc);
-        var minindices = {
+        const minsorted = [mins.a, mins.b, mins.c].sort(Lib.sorterAsc);
+        const minindices = {
             a: minsorted.indexOf(mins.a),
             b: minsorted.indexOf(mins.b),
             c: minsorted.indexOf(mins.c)
@@ -721,11 +717,11 @@ proto.initInteractions = function() {
         }
 
         // move the data (translate, don't redraw)
-        var plotTransform = strTranslate(_this.x0 + dx, _this.y0 + dy);
+        const plotTransform = strTranslate(_this.x0 + dx, _this.y0 + dy);
         _this.plotContainer.selectAll('.scatterlayer,.maplayer')
             .attr('transform', plotTransform);
 
-        var plotTransform2 = strTranslate(-dx, -dy);
+        const plotTransform2 = strTranslate(-dx, -dy);
         _this.clipDefRelative.select('path').attr('transform', plotTransform2);
 
         // move the ticks
@@ -751,13 +747,13 @@ proto.initInteractions = function() {
     // finally, set up hover and click
     // these event handlers must already be set before dragElement.init
     // so it can stash them and override them.
-    dragger.onmousemove = function(evt) {
+    dragger.onmousemove = function(evt: any) {
         Fx.hover(gd, evt, _this.id);
         gd._fullLayout._lasthover = dragger;
         gd._fullLayout._hoversubplot = _this.id;
     };
 
-    dragger.onmouseout = function(evt) {
+    dragger.onmouseout = function(evt: any) {
         if(gd._dragging) return;
 
         dragElement.unhover(gd, evt);
@@ -766,7 +762,7 @@ proto.initInteractions = function() {
     dragElement.init(this.dragOptions);
 };
 
-function removeZoombox(gd) {
+function removeZoombox(gd: any) {
     select(gd)
         .selectAll('.zoombox,.js-zoombox-backdrop,.js-zoombox-menu,.zoombox-corners')
         .remove();

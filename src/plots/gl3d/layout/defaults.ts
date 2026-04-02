@@ -7,17 +7,17 @@ import layoutAttributes from './layout_attributes.js';
 import { getSubplotData } from '../../get_data.js';
 import type { FullLayout, FullTrace } from '../../../../types/core';
 
-var GL3D = 'gl3d';
+const GL3D = 'gl3d';
 
 export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout, fullData: FullTrace[]) {
-    var hasNon3D = layoutOut._basePlotModules.length > 1;
+    const hasNon3D = layoutOut._basePlotModules.length > 1;
 
     // some layout-wide attribute are used in all scenes
     // if 3D is the only visible plot type
-    function getDfltFromLayout(attr) {
+    function getDfltFromLayout(attr: any) {
         if(hasNon3D) return;
 
-        var isValid = Lib.validate(layoutIn[attr], layoutAttributes[attr]);
+        const isValid = Lib.validate(layoutIn[attr], (layoutAttributes as any)[attr]);
         if(isValid) return layoutIn[attr];
     }
 
@@ -35,7 +35,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
+function handleGl3dDefaults(sceneLayoutIn: any, sceneLayoutOut: any, coerce: any, opts: any) {
     /*
      * Scene numbering proceeds as follows
      * scene
@@ -48,12 +48,12 @@ function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
      * attributes like aspectratio can be written back dynamically.
      */
 
-    var bgcolor = coerce('bgcolor');
-    var bgColorCombined = Color.combine(bgcolor, opts.paper_bgcolor);
+    const bgcolor = coerce('bgcolor');
+    const bgColorCombined = Color.combine(bgcolor, opts.paper_bgcolor);
 
-    var cameraKeys = ['up', 'center', 'eye'];
+    const cameraKeys = ['up', 'center', 'eye'];
 
-    for(var j = 0; j < cameraKeys.length; j++) {
+    for(let j = 0; j < cameraKeys.length; j++) {
         coerce('camera.' + cameraKeys[j] + '.x');
         coerce('camera.' + cameraKeys[j] + '.y');
         coerce('camera.' + cameraKeys[j] + '.z');
@@ -65,12 +65,12 @@ function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
      * coerce to positive number (min 0) but also do not accept 0 (>0 not >=0)
      * note that 0's go false with the !! call
      */
-    var hasAspect = !!coerce('aspectratio.x') &&
+    const hasAspect = !!coerce('aspectratio.x') &&
                     !!coerce('aspectratio.y') &&
                     !!coerce('aspectratio.z');
 
-    var defaultAspectMode = hasAspect ? 'manual' : 'auto';
-    var aspectMode = coerce('aspectmode', defaultAspectMode);
+    const defaultAspectMode = hasAspect ? 'manual' : 'auto';
+    const aspectMode = coerce('aspectmode', defaultAspectMode);
 
     /*
      * We need aspectratio object in all the Layouts as it is dynamically set
@@ -91,7 +91,7 @@ function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
         sceneLayoutIn.aspectmode = sceneLayoutOut.aspectmode;
     }
 
-    var fullGl3dData = getSubplotData(opts.fullData, GL3D, opts.id);
+    const fullGl3dData = getSubplotData(opts.fullData, GL3D, opts.id);
 
     supplyGl3dAxisLayoutDefaults(sceneLayoutIn, sceneLayoutOut, {
         font: opts.font,
@@ -107,7 +107,7 @@ function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
         sceneLayoutIn, sceneLayoutOut, opts
     );
 
-    var dragmode = opts.getDfltFromLayout('dragmode');
+    let dragmode = opts.getDfltFromLayout('dragmode');
 
     if(dragmode !== false) {
         if(!dragmode) {
@@ -115,9 +115,9 @@ function handleGl3dDefaults(sceneLayoutIn, sceneLayoutOut, coerce, opts) {
 
             if(sceneLayoutIn.camera &&
                 sceneLayoutIn.camera.up) {
-                var x = sceneLayoutIn.camera.up.x;
-                var y = sceneLayoutIn.camera.up.y;
-                var z = sceneLayoutIn.camera.up.z;
+                const x = sceneLayoutIn.camera.up.x;
+                const y = sceneLayoutIn.camera.up.y;
+                const z = sceneLayoutIn.camera.up.z;
 
                 if(z !== 0) {
                     if(!x || !y || !z) {

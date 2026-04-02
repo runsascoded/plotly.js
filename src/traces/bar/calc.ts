@@ -8,11 +8,11 @@ import arraysToCalcdata from './arrays_to_calcdata.js';
 import calcSelection from '../scatter/calc_selection.js';
 
 export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var xa = Axes.getFromId(gd, trace.xaxis || 'x');
-    var ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    const xa = Axes.getFromId(gd, trace.xaxis || 'x');
+    const ya = Axes.getFromId(gd, trace.yaxis || 'y');
+    let size, pos, origPos, pObj, hasPeriod, pLetter;
 
-    var sizeOpts = {
+    const sizeOpts = {
         msUTC: !!(trace.base || trace.base === 0)
     };
 
@@ -32,11 +32,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     pos = pObj.vals;
 
     // create the "calculated data" to plot
-    var serieslen = Math.min(pos.length, size.length);
-    var cd = new Array(serieslen);
+    const serieslen = Math.min(pos.length, size.length);
+    const cd = new Array(serieslen);
 
     // set position and size
-    for(var i = 0; i < serieslen; i++) {
+    for(let i = 0; i < serieslen; i++) {
         cd[i] = { p: pos[i], s: size[i] };
 
         if(hasPeriod) {

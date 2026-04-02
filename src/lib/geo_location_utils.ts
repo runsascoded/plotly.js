@@ -10,18 +10,18 @@ import nestedProperty from './nested_property.js';
 import polygon from './polygon.js';
 
 // make list of all country iso3 ids from at runtime
-var countryIds: string[] = Object.keys(countryRegex);
+const countryIds: string[] = Object.keys(countryRegex);
 
-var locationmodeToIdFinder: Record<string, (location: string) => string | false> = {
+const locationmodeToIdFinder: Record<string, (location: string) => string | false> = {
     'ISO-3': identity,
     'USA-states': identity,
     'country names': countryNameToISO3
 };
 
 function countryNameToISO3(countryName: string): string | false {
-    for(var i = 0; i < countryIds.length; i++) {
-        var iso3 = countryIds[i];
-        var regex = new RegExp(countryRegex[iso3]);
+    for(let i = 0; i < countryIds.length; i++) {
+        const iso3 = countryIds[i];
+        const regex = new RegExp(countryRegex[iso3]);
 
         if(regex.test(countryName.trim().toLowerCase())) return iso3;
     }
@@ -34,9 +34,9 @@ function countryNameToISO3(countryName: string): string | false {
 function locationToFeature(locationmode: string, location: any, features: any[]): boolean {
     if(!location || typeof location !== 'string') return false;
 
-    var locationId = locationmodeToIdFinder[locationmode](location);
-    var filteredFeatures: any[];
-    var f: any, i: number;
+    const locationId = locationmodeToIdFinder[locationmode](location);
+    let filteredFeatures: any[];
+    let f: any, i: number;
 
     if(locationId) {
         if(locationmode === 'USA-states') {
@@ -72,15 +72,15 @@ function locationToFeature(locationmode: string, location: any, features: any[])
 }
 
 function feature2polygons(feature: any): any[] {
-    var geometry = feature.geometry;
-    var coords = geometry.coordinates;
-    var loc = feature.id;
+    const geometry = feature.geometry;
+    const coords = geometry.coordinates;
+    const loc = feature.id;
 
-    var polygons: any[] = [];
-    var appendPolygon: (pts: any[]) => void, j: number, k: number, m: number;
+    const polygons: any[] = [];
+    let appendPolygon: (pts: any[]) => void, j: number, k: number, m: number;
 
     function doesCrossAntiMerdian(pts: number[][]): number | null {
-        for(var l = 0; l < pts.length - 1; l++) {
+        for(let l = 0; l < pts.length - 1; l++) {
             if(pts[l][0] > 0 && pts[l + 1][0] < 0) return l;
         }
         return null;
@@ -95,7 +95,7 @@ function feature2polygons(feature: any): any[] {
         // (e.g. some Aleutian island for the USA), but those don't confuse
         // the 'contains' method; these are skipped here.
         appendPolygon = function(_pts: number[][]) {
-            var pts: number[][];
+            let pts: number[][];
 
             if(doesCrossAntiMerdian(_pts) === null) {
                 pts = _pts;
@@ -116,7 +116,7 @@ function feature2polygons(feature: any): any[] {
         // Antarctica has a landmass that wraps around every longitudes which
         // confuses the 'contains' methods.
         appendPolygon = function(pts: number[][]) {
-            var crossAntiMeridianIndex = doesCrossAntiMerdian(pts);
+            const crossAntiMeridianIndex = doesCrossAntiMerdian(pts);
 
             // polygon that do not cross anti-meridian need no special handling
             if(crossAntiMeridianIndex === null) {
@@ -129,8 +129,8 @@ function feature2polygons(feature: any): any[] {
             // Note that the algorithm below only works for polygons that
             // start and end on longitude -180 (like the ones built by
             // https://github.com/etpinard/sane-topojson).
-            var stitch = new Array(pts.length + 1);
-            var si = 0;
+            const stitch = new Array(pts.length + 1);
+            let si = 0;
 
             for(m = 0; m < pts.length; m++) {
                 if(m > crossAntiMeridianIndex) {
@@ -146,7 +146,7 @@ function feature2polygons(feature: any): any[] {
             // polygon.tester by default appends pt[0] to the points list,
             // we must remove it here, to avoid a jump in longitude from 180 to -180,
             // that would confuse the 'contains' method
-            var tester = polygon.tester(stitch);
+            const tester = polygon.tester(stitch);
             tester.pts.pop();
             polygons.push(tester);
         };
@@ -176,9 +176,9 @@ function feature2polygons(feature: any): any[] {
 }
 
 function getTraceGeojson(trace: any): any {
-    var g = trace.geojson;
-    var PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
-    var geojsonIn = typeof g === 'string' ? PlotlyGeoAssets[g] : g;
+    const g = trace.geojson;
+    const PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
+    const geojsonIn = typeof g === 'string' ? PlotlyGeoAssets[g] : g;
 
     // This should not happen, but just in case something goes
     // really wrong when fetching the GeoJSON
@@ -191,31 +191,31 @@ function getTraceGeojson(trace: any): any {
 }
 
 function extractTraceFeature(calcTrace: any[]): any[] | false {
-    var trace = calcTrace[0].trace;
+    const trace = calcTrace[0].trace;
 
-    var geojsonIn = getTraceGeojson(trace);
+    const geojsonIn = getTraceGeojson(trace);
     if(!geojsonIn) return false;
 
-    var lookup: Record<string, any> = {};
-    var featuresOut: any[] = [];
-    var i: number;
+    const lookup: Record<string, any> = {};
+    const featuresOut: any[] = [];
+    let i: number;
 
     for(i = 0; i < trace._length; i++) {
-        var cdi = calcTrace[i];
+        const cdi = calcTrace[i];
         if(cdi.loc || cdi.loc === 0) {
             lookup[cdi.loc] = cdi;
         }
     }
 
     function appendFeature(fIn: any): void {
-        var id = nestedProperty(fIn, trace.featureidkey || 'id').get();
-        var cdi = lookup[id];
+        const id = nestedProperty(fIn, trace.featureidkey || 'id').get();
+        const cdi = lookup[id];
 
         if(cdi) {
-            var geometry = fIn.geometry;
+            const geometry = fIn.geometry;
 
             if(geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
-                var fOut: any = {
+                const fOut: any = {
                     type: 'Feature',
                     id: id,
                     geometry: geometry,
@@ -250,7 +250,7 @@ function extractTraceFeature(calcTrace: any[]): any[] | false {
 
     switch(geojsonIn.type) {
         case 'FeatureCollection':
-            var featuresIn = geojsonIn.features;
+            const featuresIn = geojsonIn.features;
             for(i = 0; i < featuresIn.length; i++) {
                 appendFeature(featuresIn[i]);
             }
@@ -267,7 +267,7 @@ function extractTraceFeature(calcTrace: any[]): any[] | false {
             return false;
     }
 
-    for(var loc in lookup) {
+    for(const loc in lookup) {
         loggers.log([
             'Location *' + loc + '*',
             'does not have a matching feature with id-key',
@@ -283,16 +283,16 @@ function extractTraceFeature(calcTrace: any[]): any[] | false {
 // maybe instead it would make more sense to compute the centroid
 // of each polygon and consider those on hover/select
 function findCentroid(feature: any): number[] {
-    var geometry = feature.geometry;
-    var poly: any;
+    const geometry = feature.geometry;
+    let poly: any;
 
     if(geometry.type === 'MultiPolygon') {
-        var coords = geometry.coordinates;
-        var maxArea = 0;
+        const coords = geometry.coordinates;
+        let maxArea = 0;
 
-        for(var i = 0; i < coords.length; i++) {
-            var polyi = {type: 'Polygon', coordinates: coords[i]};
-            var area = turfArea(polyi as any);
+        for(let i = 0; i < coords.length; i++) {
+            const polyi = {type: 'Polygon', coordinates: coords[i]};
+            const area = turfArea(polyi as any);
             if(area > maxArea) {
                 maxArea = area;
                 poly = polyi;
@@ -306,15 +306,15 @@ function findCentroid(feature: any): number[] {
 }
 
 function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
-    var PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
-    var promises: Promise<any>[] = [];
+    const PlotlyGeoAssets = (window as any).PlotlyGeoAssets || {};
+    const promises: Promise<any>[] = [];
 
     function fetch(url: string): Promise<any> {
         return new Promise(function(resolve, reject) {
             window.fetch(url).then(function(r) {
                 if(!r.ok) {
                     delete PlotlyGeoAssets[url];
-                    var msg = r.status === 404 ?
+                    const msg = r.status === 404 ?
                         ('GeoJSON at URL "' + url + '" does not exist.') :
                         ('Unexpected error while fetching from ' + url);
                     throw new Error(msg);
@@ -329,8 +329,8 @@ function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
 
     function wait(url: string): Promise<any> {
         return new Promise(function(resolve, reject) {
-            var cnt = 0;
-            var interval = setInterval(function() {
+            let cnt = 0;
+            const interval = setInterval(function() {
                 if(PlotlyGeoAssets[url] && PlotlyGeoAssets[url] !== 'pending') {
                     clearInterval(interval);
                     return resolve(PlotlyGeoAssets[url]);
@@ -344,9 +344,9 @@ function fetchTraceGeoData(calcData: any[]): Promise<any>[] {
         });
     }
 
-    for(var i = 0; i < calcData.length; i++) {
-        var trace = calcData[i][0].trace;
-        var url = trace.geojson;
+    for(let i = 0; i < calcData.length; i++) {
+        const trace = calcData[i][0].trace;
+        const url = trace.geojson;
 
         if(typeof url === 'string') {
             if(!PlotlyGeoAssets[url]) {

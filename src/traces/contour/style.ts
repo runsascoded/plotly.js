@@ -5,28 +5,28 @@ import heatmapStyle from '../heatmap/style.js';
 import makeColorMap from './make_color_map.js';
 
 export default function style(gd: GraphDiv) {
-    var contours = select(gd).selectAll('g.contour');
+    const contours = select(gd).selectAll('g.contour');
 
-    contours.style('opacity', function(d) {
+    contours.style('opacity', function(d: any) {
         return d[0].trace.opacity;
     });
 
-    contours.each(function(d) {
-        var c = select(this);
-        var trace = d[0].trace;
-        var contours = trace.contours;
-        var line = trace.line;
-        var cs = contours.size || 1;
-        var start = contours.start;
+    contours.each(function(this: any, d: any) {
+        const c = select(this);
+        const trace = d[0].trace;
+        const contours = trace.contours;
+        const line = trace.line;
+        const cs = contours.size || 1;
+        const start = contours.start;
 
         // for contourcarpet only - is this a constraint-type contour trace?
-        var isConstraintType = contours.type === 'constraint';
-        var colorLines = !isConstraintType && contours.coloring === 'lines';
-        var colorFills = !isConstraintType && contours.coloring === 'fill';
+        const isConstraintType = contours.type === 'constraint';
+        const colorLines = !isConstraintType && contours.coloring === 'lines';
+        const colorFills = !isConstraintType && contours.coloring === 'fill';
 
-        var colorMap = (colorLines || colorFills) ? makeColorMap(trace) : null;
+        const colorMap = (colorLines || colorFills) ? makeColorMap(trace) : null;
 
-        c.selectAll('g.contourlevel').each(function(d) {
+        c.selectAll('g.contourlevel').each(function(this: any, d: any) {
             select(this).selectAll('path')
                 .call(lineGroupStyle,
                     line.width,
@@ -34,8 +34,8 @@ export default function style(gd: GraphDiv) {
                     line.dash);
         });
 
-        var labelFont = contours.labelfont;
-        c.selectAll('g.contourlabels text').each(function(d) {
+        const labelFont = contours.labelfont;
+        c.selectAll('g.contourlabels text').each(function(this: any, d: any) {
             font(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,
@@ -53,10 +53,10 @@ export default function style(gd: GraphDiv) {
             c.selectAll('g.contourfill path')
                 .style('fill', trace.fillcolor);
         } else if(colorFills) {
-            var firstFill;
+            let firstFill: any;
 
             c.selectAll('g.contourfill path')
-                .style('fill', function(d) {
+                .style('fill', function(d: any) {
                     if(firstFill === undefined) firstFill = d.level;
                     return colorMap(d.level + 0.5 * cs);
                 });

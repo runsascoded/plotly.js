@@ -5,9 +5,9 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAxis,  ya?: FullAxis) {
-    var rowlen, collen, getCollen, old2new, i, j;
+    let rowlen, collen, getCollen, old2new, i, j;
 
-    function cleanZvalue(v) {
+    function cleanZvalue(v: any) {
         if(!isNumeric(v)) return undefined;
         return +v;
     }
@@ -16,15 +16,15 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         rowlen = 0;
         for(i = 0; i < zOld.length; i++) rowlen = Math.max(rowlen, zOld[i].length);
         if(rowlen === 0) return false;
-        getCollen = function(zOld) { return zOld.length; };
-        old2new = function(zOld, i, j) { return (zOld[j] || [])[i]; };
+        getCollen = function(zOld: any) { return zOld.length; };
+        old2new = function(zOld: any, i: any, j: any) { return (zOld[j] || [])[i]; };
     } else {
         rowlen = zOld.length;
-        getCollen = function(zOld, i) { return zOld[i].length; };
-        old2new = function(zOld, i, j) { return (zOld[i] || [])[j]; };
+        getCollen = function(zOld: any, i: any) { return zOld[i].length; };
+        old2new = function(zOld: any, i: any, j: any) { return (zOld[i] || [])[j]; };
     }
 
-    var padOld2new = function(zOld,  i,  j) {
+    const padOld2new = function(zOld: any,  i: any,  j: any) {
         if(i === BADNUM || j === BADNUM) return BADNUM;
         return old2new(zOld, i, j);
     };
@@ -32,14 +32,14 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
     function axisMapping(ax: FullAxis) {
         if(trace && trace.type !== 'carpet' && trace.type !== 'contourcarpet' &&
             ax && ax.type === 'category' && trace['_' + ax._id.charAt(0)].length) {
-            var axLetter = ax._id.charAt(0);
-            var axMapping: any = {};
-            var traceCategories = trace['_' + axLetter + 'CategoryMap'] || trace[axLetter];
+            const axLetter = ax._id.charAt(0);
+            const axMapping: any = {};
+            const traceCategories = trace['_' + axLetter + 'CategoryMap'] || trace[axLetter];
             for(i = 0; i < traceCategories.length; i++) {
                 axMapping[traceCategories[i]] = i;
             }
-            return function(i) {
-                var ind = axMapping[ax._categories[i]];
+            return function(i: any) {
+                const ind = axMapping[ax._categories[i]];
                 return ind + 1 ? ind : BADNUM;
             };
         } else {
@@ -47,11 +47,11 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         }
     }
 
-    var xMap = axisMapping(xa);
-    var yMap = axisMapping(ya);
+    const xMap = axisMapping((xa as any));
+    const yMap = axisMapping((ya as any));
 
     if(ya && ya.type === 'category') rowlen = ya._categories.length;
-    var zNew = new Array(rowlen);
+    const zNew = new Array(rowlen);
 
     for(i = 0; i < rowlen; i++) {
         if(xa && xa.type === 'category') {

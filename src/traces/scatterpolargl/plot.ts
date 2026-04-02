@@ -8,28 +8,28 @@ import Lib from '../../lib/index.js';
 import _constants from '../scattergl/constants.js';
 const { TOO_MANY_POINTS } = _constants;
 
-var reglPrecompiled: any = {};
+const reglPrecompiled: any = {};
 
-export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata) {
+export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata: any) {
     if(!cdata.length) return;
 
-    var radialAxis = subplot.radialAxis;
-    var angularAxis = subplot.angularAxis;
-    var scene = sceneUpdate(gd, subplot);
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
+    const scene = sceneUpdate(gd, subplot);
 
-    cdata.forEach(function(cdscatter) {
+    cdata.forEach(function(cdscatter: any) {
         if(!cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
-        var cd = cdscatter[0];
-        var trace = cd.trace;
-        var stash = cd.t;
-        var len = trace._length;
-        var rArray = stash.r;
-        var thetaArray = stash.theta;
-        var opts = stash.opts;
-        var i;
+        const cd = cdscatter[0];
+        const trace = cd.trace;
+        const stash = cd.t;
+        const len = trace._length;
+        const rArray = stash.r;
+        const thetaArray = stash.theta;
+        const opts = stash.opts;
+        let i;
 
-        var subRArray = rArray.slice();
-        var subThetaArray = thetaArray.slice();
+        const subRArray = rArray.slice();
+        const subThetaArray = thetaArray.slice();
 
         // filter out by range
         for(i = 0; i < rArray.length; i++) {
@@ -39,17 +39,17 @@ export default function plot(gd: GraphDiv, subplot: PlotInfo, cdata) {
             }
         }
 
-        var positions = new Array(len * 2);
-        var x = Array(len);
-        var y = Array(len);
+        const positions = new Array(len * 2);
+        const x = Array(len);
+        const y = Array(len);
 
         for(i = 0; i < len; i++) {
-            var r = subRArray[i];
-            var xx, yy;
+            const r = subRArray[i];
+            let xx, yy;
 
             if(isNumeric(r)) {
-                var rg = radialAxis.c2g(r);
-                var thetag = angularAxis.c2g(subThetaArray[i], trace.thetaunit);
+                const rg = radialAxis.c2g(r);
+                const thetag = angularAxis.c2g(subThetaArray[i], trace.thetaunit);
                 xx = rg * Math.cos(thetag);
                 yy = rg * Math.sin(thetag);
             } else {

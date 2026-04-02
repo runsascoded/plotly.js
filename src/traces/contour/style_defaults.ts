@@ -3,10 +3,10 @@ import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import handleLabelDefaults from './label_defaults.js';
 
 export default function handleStyleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout, opts?: any) {
-    var coloring = coerce('contours.coloring');
+    const coloring = coerce('contours.coloring');
 
-    var showLines;
-    var lineColor = '';
+    let showLines;
+    let lineColor = '';
     if(coloring === 'fill') showLines = coerce('contours.showlines');
 
     if(showLines !== false) {

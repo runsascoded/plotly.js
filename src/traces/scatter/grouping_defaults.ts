@@ -2,18 +2,18 @@ import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
 export default function handleGroupingDefaults(traceIn: InputTrace, traceOut: FullTrace, fullLayout: FullLayout, coerce: any, barmode: any): void {
-    var orientation = traceOut.orientation;
+    const orientation = traceOut.orientation;
     // N.B. grouping is done across all trace types that support it
-    var posAxId = traceOut[{v: 'x', h: 'y'}[orientation] + 'axis'];
-    var groupId = getAxisGroup(fullLayout, posAxId) + orientation;
+    const posAxId = traceOut[({v: 'x', h: 'y'} as any)[orientation] + 'axis'];
+    const groupId = getAxisGroup(fullLayout, posAxId) + orientation;
 
-    var alignmentOpts = fullLayout._alignmentOpts || {};
-    var alignmentgroup = coerce('alignmentgroup');
+    const alignmentOpts = fullLayout._alignmentOpts || {};
+    const alignmentgroup = coerce('alignmentgroup');
 
-    var alignmentGroups = alignmentOpts[groupId];
+    let alignmentGroups = alignmentOpts[groupId];
     if(!alignmentGroups) alignmentGroups = alignmentOpts[groupId] = {};
 
-    var alignmentGroupOpts = alignmentGroups[alignmentgroup];
+    let alignmentGroupOpts = alignmentGroups[alignmentgroup];
 
     if(alignmentGroupOpts) {
         alignmentGroupOpts.traces.push(traceOut);
@@ -25,9 +25,9 @@ export default function handleGroupingDefaults(traceIn: InputTrace, traceOut: Fu
         };
     }
 
-    var offsetgroup = coerce('offsetgroup') || '';
-    var offsetGroups = alignmentGroupOpts.offsetGroups;
-    var offsetGroupOpts = offsetGroups[offsetgroup];
+    const offsetgroup = coerce('offsetgroup') || '';
+    const offsetGroups = alignmentGroupOpts.offsetGroups;
+    let offsetGroupOpts = offsetGroups[offsetgroup];
     // in barmode 'group', traces without offsetgroup receive their own offsetgroup
     // in other barmodes, traces without offsetgroup are assigned to the same offset group
     traceOut._offsetIndex = 0;

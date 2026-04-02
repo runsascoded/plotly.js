@@ -19,7 +19,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('xhoverformat');
     coerce('yhoverformat');
 
-    var hasPreCompStats = traceOut._hasPreCompStats;
+    const hasPreCompStats = traceOut._hasPreCompStats;
 
     if (hasPreCompStats) {
         coerce('lowerfence');
@@ -30,10 +30,10 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('line.width');
     coerce('fillcolor', Color.addOpacity(traceOut.line.color, 0.5));
 
-    var boxmeanDflt: boolean | string = false;
+    let boxmeanDflt: boolean | string = false;
     if (hasPreCompStats) {
-        var mean = coerce('mean');
-        var sd = coerce('sd');
+        const mean = coerce('mean');
+        const sd = coerce('sd');
         if (mean && mean.length) {
             boxmeanDflt = true;
             if (sd && sd.length) boxmeanDflt = 'sd';
@@ -41,8 +41,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     }
 
     coerce('whiskerwidth');
-    var sizemode = coerce('sizemode');
-    var boxmean;
+    const sizemode = coerce('sizemode');
+    let boxmean;
     if (sizemode === 'quartiles') {
         boxmean = coerce('boxmean', boxmeanDflt);
     }
@@ -53,16 +53,16 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('width');
     coerce('quartilemethod');
 
-    var notchedDflt = false;
+    let notchedDflt = false;
     if (hasPreCompStats) {
-        var notchspan = coerce('notchspan');
+        const notchspan = coerce('notchspan');
         if (notchspan && notchspan.length) {
             notchedDflt = true;
         }
     } else if (Lib.validate(traceIn.notchwidth, attributes.notchwidth)) {
         notchedDflt = true;
     }
-    var notched = coerce('notched', notchedDflt);
+    const notched = coerce('notched', notchedDflt);
     if (notched) coerce('notchwidth');
 
     handlePointsDefaults(traceIn, traceOut, coerce, { prefix: 'box' });
@@ -70,8 +70,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 }
 
 function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: Function, layout: FullLayout): void {
-    function getDims(arr) {
-        var dims = 0;
+    function getDims(arr: any) {
+        let dims = 0;
         if (arr && arr.length) {
             dims += 1;
             if (Lib.isArrayOrTypedArray(arr[0]) && arr[0].length) {
@@ -81,40 +81,40 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
         return dims;
     }
 
-    function valid(astr) {
-        return Lib.validate(traceIn[astr], attributes[astr]);
+    function valid(astr: any) {
+        return Lib.validate(traceIn[astr], (attributes as any)[astr]);
     }
 
-    var y = coerce('y');
-    var x = coerce('x');
+    const y = coerce('y');
+    const x = coerce('x');
 
-    var sLen;
+    let sLen;
     if (traceOut.type === 'box') {
-        var q1 = coerce('q1');
-        var median = coerce('median');
-        var q3 = coerce('q3');
+        const q1 = coerce('q1');
+        const median = coerce('median');
+        const q3 = coerce('q3');
 
         traceOut._hasPreCompStats = q1 && q1.length && median && median.length && q3 && q3.length;
         sLen = Math.min(Lib.minRowLength(q1), Lib.minRowLength(median), Lib.minRowLength(q3));
     }
 
-    var yDims = getDims(y);
-    var xDims = getDims(x);
-    var yLen = yDims && Lib.minRowLength(y);
-    var xLen = xDims && Lib.minRowLength(x);
+    const yDims = getDims(y);
+    const xDims = getDims(x);
+    const yLen = yDims && Lib.minRowLength(y);
+    const xLen = xDims && Lib.minRowLength(x);
 
-    var calendar = layout.calendar;
-    var opts = {
+    const calendar = layout.calendar;
+    const opts = {
         autotypenumbers: layout.autotypenumbers
     };
 
-    var defaultOrientation, len;
+    let defaultOrientation, len;
     if (traceOut._hasPreCompStats) {
         switch (String(xDims) + String(yDims)) {
             // no x / no y
             case '00':
-                var setInX = valid('x0') || valid('dx');
-                var setInY = valid('y0') || valid('dy');
+                const setInX = valid('x0') || valid('dx');
+                const setInY = valid('y0') || valid('dy');
 
                 if (setInY && !setInX) {
                     defaultOrientation = 'h';
@@ -127,37 +127,37 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
             // just x
             case '10':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, xLen);
+                len = Math.min(sLen as any, xLen);
                 break;
             case '20':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, x.length);
+                len = Math.min(sLen as any, x.length);
                 break;
             // just y
             case '01':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, yLen);
+                len = Math.min(sLen as any, yLen);
                 break;
             case '02':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, y.length);
+                len = Math.min(sLen as any, y.length);
                 break;
             // both
             case '12':
                 defaultOrientation = 'v';
-                len = Math.min(sLen, xLen, y.length);
+                len = Math.min(sLen as any, xLen, y.length);
                 break;
             case '21':
                 defaultOrientation = 'h';
-                len = Math.min(sLen, x.length, yLen);
+                len = Math.min(sLen as any, x.length, yLen);
                 break;
             case '11':
                 // this one is ill-defined
                 len = 0;
                 break;
             case '22':
-                var hasCategories = false;
-                var i;
+                let hasCategories = false;
+                let i;
                 for (i = 0; i < x.length; i++) {
                     if (autoType(x[i], calendar, opts) === 'category') {
                         hasCategories = true;
@@ -167,7 +167,7 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 
                 if (hasCategories) {
                     defaultOrientation = 'v';
-                    len = Math.min(sLen, xLen, y.length);
+                    len = Math.min(sLen as any, xLen, y.length);
                 } else {
                     for (i = 0; i < y.length; i++) {
                         if (autoType(y[i], calendar, opts) === 'category') {
@@ -178,10 +178,10 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 
                     if (hasCategories) {
                         defaultOrientation = 'h';
-                        len = Math.min(sLen, x.length, yLen);
+                        len = Math.min(sLen as any, x.length, yLen);
                     } else {
                         defaultOrientation = 'v';
-                        len = Math.min(sLen, xLen, y.length);
+                        len = Math.min(sLen as any, xLen, y.length);
                     }
                 }
                 break;
@@ -206,7 +206,7 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
     }
     traceOut._length = len;
 
-    var orientation = coerce('orientation', defaultOrientation);
+    const orientation = coerce('orientation', defaultOrientation);
 
     // these are just used for positioning, they never define the sample
     if (traceOut._hasPreCompStats) {
@@ -225,24 +225,24 @@ function handleSampleDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
         }
     }
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
 }
 
 function handlePointsDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: Function, opts: { prefix: string }): void {
-    var prefix = opts.prefix;
+    const prefix = opts.prefix;
 
-    var outlierColorDflt = Lib.coerce2(traceIn, traceOut, attributes, 'marker.outliercolor');
-    var lineoutliercolor = coerce('marker.line.outliercolor');
+    const outlierColorDflt = Lib.coerce2(traceIn, traceOut, attributes, 'marker.outliercolor');
+    const lineoutliercolor = coerce('marker.line.outliercolor');
 
-    var modeDflt = 'outliers';
+    let modeDflt = 'outliers';
     if (traceOut._hasPreCompStats) {
         modeDflt = 'all';
     } else if (outlierColorDflt || lineoutliercolor) {
         modeDflt = 'suspectedoutliers';
     }
 
-    var mode = coerce(prefix + 'points', modeDflt);
+    const mode = coerce(prefix + 'points', modeDflt);
 
     if (mode) {
         coerce('jitter', mode === 'all' ? 0.3 : 0);
@@ -273,7 +273,7 @@ function handlePointsDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
         delete traceOut.marker;
     }
 
-    var hoveron = coerce('hoveron');
+    const hoveron = coerce('hoveron');
     if (hoveron === 'all' || hoveron.indexOf('points') !== -1) {
         coerce('hovertemplate');
         coerce('hovertemplatefallback');
@@ -283,19 +283,19 @@ function handlePointsDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: 
 }
 
 function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
-    var traceIn, traceOut;
+    let traceIn, traceOut: any;
 
-    function coerce(attr) {
+    function coerce(attr: any) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
     }
 
-    for (var i = 0; i < fullData.length; i++) {
+    for (let i = 0; i < fullData.length; i++) {
         traceOut = fullData[i];
-        var traceType = traceOut.type;
+        const traceType = traceOut.type;
 
         if (traceType === 'box' || traceType === 'violin') {
             traceIn = traceOut._input;
-            var mode = fullLayout[traceType + 'mode'];
+            const mode = fullLayout[traceType + 'mode'];
             if (mode === 'group') {
                 handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce, mode);
             }

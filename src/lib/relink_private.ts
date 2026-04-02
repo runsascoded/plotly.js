@@ -2,9 +2,9 @@ import { isArrayOrTypedArray } from './array.js';
 import isPlainObject from './is_plain_object.js';
 
 export default function relinkPrivateKeys(toContainer: any, fromContainer: any): void {
-    for(var k in fromContainer) {
-        var fromVal = fromContainer[k];
-        var toVal = toContainer[k];
+    for(const k in fromContainer) {
+        const fromVal = fromContainer[k];
+        const toVal = toContainer[k];
 
         if(toVal === fromVal) continue;
 
@@ -21,8 +21,8 @@ export default function relinkPrivateKeys(toContainer: any, fromContainer: any):
             if(k === 'customdata' || k === 'ids') continue;
 
             // recurse into arrays containers
-            var minLen = Math.min(fromVal.length, toVal.length);
-            for(var j = 0; j < minLen; j++) {
+            const minLen = Math.min(fromVal.length, toVal.length);
+            for(let j = 0; j < minLen; j++) {
                 if((toVal[j] !== fromVal[j]) && isPlainObject(fromVal[j]) && isPlainObject(toVal[j])) {
                     relinkPrivateKeys(toVal[j], fromVal[j]);
                 }

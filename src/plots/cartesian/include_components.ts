@@ -4,32 +4,32 @@ import axisIds from './axis_ids.js';
 
 export default function makeIncludeComponents(containerArrayName?: any): any {
     return function includeComponents(layoutIn?: any, layoutOut?: any) {
-        var array = layoutIn[containerArrayName];
+        const array = layoutIn[containerArrayName];
         if(!Array.isArray(array)) return;
 
-        var Cartesian = Registry.subplotsRegistry.cartesian;
-        var idRegex = Cartesian.idRegex;
-        var subplots = layoutOut._subplots;
-        var xaList = subplots.xaxis;
-        var yaList = subplots.yaxis;
-        var cartesianList = subplots.cartesian;
-        var hasCartesian = layoutOut._has('cartesian');
+        const Cartesian = Registry.subplotsRegistry.cartesian;
+        const idRegex = Cartesian.idRegex;
+        const subplots = layoutOut._subplots;
+        const xaList = subplots.xaxis;
+        const yaList = subplots.yaxis;
+        const cartesianList = subplots.cartesian;
+        const hasCartesian = layoutOut._has('cartesian');
 
-        for(var i = 0; i < array.length; i++) {
-            var itemi = array[i];
+        for(let i = 0; i < array.length; i++) {
+            const itemi = array[i];
             if(!Lib.isPlainObject(itemi)) continue;
 
             // call cleanId because if xref, or yref has something appended
             // (e.g., ' domain') this will get removed.
-            var xref = axisIds.cleanId(itemi.xref, 'x', false);
-            var yref = axisIds.cleanId(itemi.yref, 'y', false);
+            const xref = axisIds.cleanId(itemi.xref, 'x', false);
+            const yref = axisIds.cleanId(itemi.yref, 'y', false);
 
-            var hasXref = idRegex.x.test(xref);
-            var hasYref = idRegex.y.test(yref);
+            const hasXref = idRegex.x.test(xref);
+            const hasYref = idRegex.y.test(yref);
             if(hasXref || hasYref) {
                 if(!hasCartesian) Lib.pushUnique(layoutOut._basePlotModules, Cartesian);
 
-                var newAxis = false;
+                let newAxis = false;
                 if(hasXref && xaList.indexOf(xref) === -1) {
                     xaList.push(xref);
                     newAxis = true;

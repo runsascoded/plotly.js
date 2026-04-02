@@ -16,21 +16,21 @@ import geoUtils from '../../lib/geo_location_utils.js';
  * https://github.com/mapbox/mapbox-gl-js/issues/8088).
  */
 
-function convert(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var isVisible = trace.visible === true && trace._length !== 0;
+function convert(calcTrace: any) {
+    const trace = calcTrace[0].trace;
+    const isVisible = trace.visible === true && trace._length !== 0;
 
-    var fill = {
+    const fill = {
         layout: {visibility: 'none'},
         paint: {}
     };
 
-    var line = {
+    const line = {
         layout: {visibility: 'none'},
         paint: {}
     };
 
-    var opts = trace._opts = {
+    const opts = trace._opts = {
         fill: fill,
         line: line,
         geojson: makeBlank()
@@ -38,38 +38,38 @@ function convert(calcTrace) {
 
     if(!isVisible) return opts;
 
-    var features = geoUtils.extractTraceFeature(calcTrace);
+    const features = geoUtils.extractTraceFeature(calcTrace);
 
     if(!features) return opts;
 
-    var sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
-    var marker = trace.marker;
-    var markerLine = marker.line || {};
+    const sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
+    const marker = trace.marker;
+    const markerLine = marker.line || {};
 
-    var opacityFn;
+    let opacityFn;
     if(Lib.isArrayOrTypedArray(marker.opacity)) {
-        opacityFn = function(d) {
-            var mo = d.mo;
+        opacityFn = function(d: any) {
+            const mo = d.mo;
             return isNumeric(mo) ? +Lib.constrain(mo, 0, 1) : 0;
         };
     }
 
-    var lineColorFn;
+    let lineColorFn;
     if(Lib.isArrayOrTypedArray(markerLine.color)) {
-        lineColorFn = function(d) { return d.mlc; };
+        lineColorFn = function(d: any) { return d.mlc; };
     }
 
-    var lineWidthFn;
+    let lineWidthFn;
     if(Lib.isArrayOrTypedArray(markerLine.width)) {
-        lineWidthFn = function(d) { return d.mlw; };
+        lineWidthFn = function(d: any) { return d.mlw; };
     }
 
-    for(var i = 0; i < calcTrace.length; i++) {
-        var cdi = calcTrace[i];
-        var fOut = cdi.fOut;
+    for(let i = 0; i < calcTrace.length; i++) {
+        const cdi = calcTrace[i];
+        const fOut = cdi.fOut;
 
         if(fOut) {
-            var props = fOut.properties;
+            const props = fOut.properties;
             props.fc = sclFunc(cdi.z);
             if(opacityFn) props.mo = opacityFn(cdi);
             if(lineColorFn) props.mlc = lineColorFn(cdi);
@@ -79,7 +79,7 @@ function convert(calcTrace) {
         }
     }
 
-    var opacitySetting = opacityFn ?
+    const opacitySetting = opacityFn ?
         {type: 'identity', property: 'mo'} :
         marker.opacity;
 
@@ -108,16 +108,16 @@ function convert(calcTrace) {
     return opts;
 }
 
-function convertOnSelect(calcTrace) {
-    var trace = calcTrace[0].trace;
-    var opts = trace._opts;
-    var opacitySetting;
+function convertOnSelect(calcTrace: any) {
+    const trace = calcTrace[0].trace;
+    const opts = trace._opts;
+    let opacitySetting;
 
     if(trace.selectedpoints) {
-        var fns = makeSelectedPointStyleFns(trace);
+        const fns = makeSelectedPointStyleFns(trace);
 
-        for(var i = 0; i < calcTrace.length; i++) {
-            var cdi = calcTrace[i];
+        for(let i = 0; i < calcTrace.length; i++) {
+            const cdi = calcTrace[i];
             if(cdi.fOut) {
                 cdi.fOut.properties.mo2 = fns.selectedOpacityFn(cdi);
             }

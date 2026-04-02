@@ -12,7 +12,7 @@ import { extendFlat } from '../../lib/extend.js';
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-var attrs = overrideAll(
+const attrs = overrideAll(
     {
         hoverinfo: extendFlat({}, baseAttrs.hoverinfo, {
             flags: [],

@@ -1,8 +1,8 @@
 import type { FullLayout, FullTrace } from '../../../types/core';
 import scatterFormatLabels from '../scatter/format_labels.js';
 
-export default function formatLabels(cdi, trace: FullTrace, fullLayout: FullLayout) {
-    var i = cdi.i;
+export default function formatLabels(cdi: any, trace: FullTrace, fullLayout: FullLayout) {
+    const i = cdi.i;
     if(!('x' in cdi)) cdi.x = trace._x[i];
     if(!('y' in cdi)) cdi.y = trace._y[i];
     return scatterFormatLabels(cdi, trace, fullLayout);

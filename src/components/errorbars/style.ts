@@ -3,11 +3,11 @@ import Color from '../color/index.js';
 
 export default function style(traces: any): void {
     traces.each(function(this: any, d: any) {
-        var trace = d[0].trace;
-        var yObj = trace.error_y || {};
-        var xObj = trace.error_x || {};
+        const trace = d[0].trace;
+        const yObj = trace.error_y || {};
+        let xObj = trace.error_x || {};
 
-        var s = select(this);
+        const s = select(this);
 
         s.selectAll('path.yerror')
             .style('stroke-width', yObj.thickness + 'px')

@@ -13,11 +13,11 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var hoverlabelDefault = Lib.extendDeep(layout.hoverlabel, traceIn.hoverlabel);
+    const hoverlabelDefault = Lib.extendDeep(layout.hoverlabel, traceIn.hoverlabel);
 
     // node attributes
-    var nodeIn = traceIn.node;
-    var nodeOut = Template.newContainer(traceOut, 'node');
+    const nodeIn = traceIn.node;
+    const nodeOut = Template.newContainer(traceOut, 'node');
 
     function coerceNode(attr: string, dflt?: any) {
         return Lib.coerce(nodeIn, nodeOut, attributes.node, attr, dflt);
@@ -35,18 +35,18 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerceNode('hovertemplate');
     coerceNode('align');
 
-    var colors = layout.colorway;
+    const colors = layout.colorway;
 
-    var defaultNodePalette = function(i) {return colors[i % colors.length];};
+    const defaultNodePalette = function(i: any) {return colors[i % colors.length];};
 
-    coerceNode('color', nodeOut.label.map(function(d, i) {
+    coerceNode('color', nodeOut.label.map(function(d: any, i: any) {
         return Color.addOpacity(defaultNodePalette(i), 0.8);
     }));
     coerceNode('customdata');
 
     // link attributes
-    var linkIn = traceIn.link || {};
-    var linkOut = Template.newContainer(traceOut, 'link');
+    const linkIn = traceIn.link || {};
+    const linkOut = Template.newContainer(traceOut, 'link');
 
     function coerceLink(attr: string, dflt?: any) {
         return Lib.coerce(linkIn, linkOut, attributes.link, attr, dflt);
@@ -62,17 +62,17 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     handleHoverLabelDefaults(linkIn, linkOut, coerceLink, hoverlabelDefault);
     coerceLink('hovertemplate');
 
-    var darkBG = tinycolor(layout.paper_bgcolor).getLuminance() < 0.333;
-    var defaultLinkColor = darkBG ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.2)';
-    var linkColor = coerceLink('color', defaultLinkColor);
+    const darkBG = tinycolor(layout.paper_bgcolor).getLuminance() < 0.333;
+    const defaultLinkColor = darkBG ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.2)';
+    const linkColor = coerceLink('color', defaultLinkColor);
 
-    function makeDefaultHoverColor(_linkColor) {
-        var tc = tinycolor(_linkColor);
+    function makeDefaultHoverColor(_linkColor: any) {
+        let tc = tinycolor(_linkColor);
         if(!tc.isValid()) {
             // hopefully the user-specified color is valid, but if not that can be caught elsewhere
             return _linkColor;
         }
-        var alpha = tc.getAlpha();
+        const alpha = tc.getAlpha();
         if(alpha <= 0.8) {
             tc.setAlpha(alpha + 0.2);
         } else {
@@ -99,7 +99,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('valueformat');
     coerce('valuesuffix');
 
-    var dfltArrangement;
+    let dfltArrangement;
     if(nodeOut.x.length && nodeOut.y.length) {
         dfltArrangement = 'freeform';
     }
@@ -112,7 +112,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     traceOut._length = null;
 }
 
-function concentrationscalesDefaults(In, Out) {
+function concentrationscalesDefaults(In: any, Out: any) {
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(In, Out, attributes.link.colorscales, attr, dflt);
     }

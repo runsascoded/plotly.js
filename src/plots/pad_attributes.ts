@@ -1,5 +1,5 @@
 export default function(opts?: any): any {
-    var editType = opts.editType;
+    const editType = opts.editType;
     return {
         t: {
             valType: 'number',

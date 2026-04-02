@@ -1,6 +1,6 @@
 import docs from '../../constants/docs.js';
-var FORMAT_LINK = docs.FORMAT_LINK;
-var DATE_FORMAT_LINK = docs.DATE_FORMAT_LINK;
+const FORMAT_LINK = docs.FORMAT_LINK;
+const DATE_FORMAT_LINK = docs.DATE_FORMAT_LINK;
 
 function axisHoverFormat(x?: any, noDates?: any): any {
     return {

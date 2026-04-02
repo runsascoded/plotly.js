@@ -1,4 +1,4 @@
-var SYMBOL_SIZE = 20;
+const SYMBOL_SIZE = 20;
 
 export default {
     TOO_MANY_POINTS: 1e5,

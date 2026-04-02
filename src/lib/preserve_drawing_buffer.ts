@@ -6,7 +6,7 @@ interface PreserveDrawingBufferOpts {
 }
 
 export default function preserveDrawingBuffer(opts?: PreserveDrawingBufferOpts): boolean {
-    var ua: any;
+    let ua: any;
 
     if(opts && opts.hasOwnProperty('userAgent')) {
         ua = opts.userAgent;
@@ -16,22 +16,22 @@ export default function preserveDrawingBuffer(opts?: PreserveDrawingBufferOpts):
 
     if(typeof ua !== 'string') return true;
 
-    var enable = isMobileOrTablet({
+    const enable = isMobileOrTablet({
         ua: { headers: {'user-agent': ua }} as any,
         tablet: true,
         featureDetect: false
     });
 
     if(!enable) {
-        var allParts = ua.split(' ');
-        for(var i = 1; i < allParts.length; i++) {
-            var part = allParts[i];
+        const allParts = ua.split(' ');
+        for(let i = 1; i < allParts.length; i++) {
+            const part = allParts[i];
             if(part.indexOf('Safari') !== -1) {
                 // find Safari version
-                for(var k = i - 1; k > -1; k--) {
-                    var prevPart = allParts[k];
+                for(let k = i - 1; k > -1; k--) {
+                    const prevPart = allParts[k];
                     if(prevPart.slice(0, 8) === 'Version/') {
-                        var v: any = prevPart.slice(8).split('.')[0];
+                        let v: any = prevPart.slice(8).split('.')[0];
                         if(isNumeric(v)) v = +v;
                         if(v >= 13) return true;
                     }
@@ -45,7 +45,7 @@ export default function preserveDrawingBuffer(opts?: PreserveDrawingBufferOpts):
 
 function getUserAgent(): string {
     // similar to https://github.com/juliangruber/is-mobile/blob/91ca39ccdd4cfc5edfb5391e2515b923a730fbea/index.js#L14-L17
-    var ua: any;
+    let ua: any;
     if(typeof navigator !== 'undefined') {
         ua = navigator.userAgent;
     }

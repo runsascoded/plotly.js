@@ -1,16 +1,16 @@
 import _numerical from '../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export var calcTraceToLineCoords = function(calcTrace: any[]): number[][][] {
-    var trace = calcTrace[0].trace;
-    var connectgaps = trace.connectgaps;
+export const calcTraceToLineCoords = function(calcTrace: any[]): number[][][] {
+    const trace = calcTrace[0].trace;
+    const connectgaps = trace.connectgaps;
 
-    var coords: number[][][] = [];
-    var lineString: number[][] = [];
+    const coords: number[][][] = [];
+    let lineString: number[][] = [];
 
-    for(var i = 0; i < calcTrace.length; i++) {
-        var calcPt = calcTrace[i];
-        var lonlat = calcPt.lonlat;
+    for(let i = 0; i < calcTrace.length; i++) {
+        const calcPt = calcTrace[i];
+        const lonlat = calcPt.lonlat;
 
         if(lonlat[0] !== BADNUM) {
             lineString.push(lonlat);
@@ -32,7 +32,7 @@ interface GeoJSONGeometry {
     coordinates: any;
 }
 
-export var makeLine = function(coords: number[][][]): GeoJSONGeometry {
+export const makeLine = function(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'LineString',
@@ -46,16 +46,16 @@ export var makeLine = function(coords: number[][][]): GeoJSONGeometry {
     }
 };
 
-export var makePolygon = function(coords: number[][][]): GeoJSONGeometry {
+export const makePolygon = function(coords: number[][][]): GeoJSONGeometry {
     if(coords.length === 1) {
         return {
             type: 'Polygon',
             coordinates: coords
         };
     } else {
-        var _coords = new Array(coords.length);
+        const _coords = new Array(coords.length);
 
-        for(var i = 0; i < coords.length; i++) {
+        for(let i = 0; i < coords.length; i++) {
             _coords[i] = [coords[i]];
         }
 
@@ -66,7 +66,7 @@ export var makePolygon = function(coords: number[][][]): GeoJSONGeometry {
     }
 };
 
-export var makeBlank = function(): GeoJSONGeometry {
+export const makeBlank = function(): GeoJSONGeometry {
     return {
         type: 'Point',
         coordinates: []

@@ -10,7 +10,7 @@ import _req7 from './event_data.js';
 import _req8 from './select.js';
 import _req9 from '../../plots/mapbox/index.js';
 
-var deprecationWarning = [
+const deprecationWarning = [
     '*scattermapbox* trace is deprecated!',
     'Please consider switching to the *scattermap* trace type and `map` subplots.',
     'Learn more at: https://plotly.com/python/maplibre-migration/',
@@ -28,9 +28,9 @@ export default {
     eventData: _req7,
     selectPoints: _req8,
 
-    styleOnSelect: function(_, cd) {
+    styleOnSelect: function(_: any, cd: any) {
         if(cd) {
-            var trace = cd[0].trace;
+            const trace = cd[0].trace;
             trace._glTrace.update(cd);
         }
     },

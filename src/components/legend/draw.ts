@@ -16,37 +16,37 @@ import getLegendData from './get_legend_data.js';
 import style from './style.js';
 import helpers from './helpers.js';
 import type { GraphDiv, FullLayout } from '../../../types/core';
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var FROM_TL = alignmentConstants.FROM_TL;
-var FROM_BR = alignmentConstants.FROM_BR;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
+const FROM_TL = alignmentConstants.FROM_TL;
+const FROM_BR = alignmentConstants.FROM_BR;
 
-var MAIN_TITLE = 1;
+const MAIN_TITLE = 1;
 
-var LEGEND_PATTERN = /^legend[0-9]*$/;
+const LEGEND_PATTERN = /^legend[0-9]*$/;
 
 export default function draw(gd: GraphDiv, opts?: any): void {
     if(opts) {
         drawOne(gd, opts);
     } else {
-        var fullLayout = gd._fullLayout;
-        var newLegends = fullLayout._legends;
+        const fullLayout = gd._fullLayout;
+        const newLegends = fullLayout._legends;
 
         // remove old legends that won't stay on the graph
-        var oldLegends = fullLayout._infolayer.selectAll('[class^="legend"]');
+        const oldLegends = fullLayout._infolayer.selectAll('[class^="legend"]');
 
         oldLegends.each(function(this: any) {
-            var el = select(this);
-            var classes = el.attr('class');
-            var cls = classes.split(' ')[0];
+            const el = select(this);
+            const classes = el.attr('class');
+            const cls = classes.split(' ')[0];
             if(cls.match(LEGEND_PATTERN) && newLegends.indexOf(cls) === -1) {
                 el.remove();
             }
         });
 
         // draw/update new legends
-        for(var i = 0; i < newLegends.length; i++) {
-            var legendId = newLegends[i];
-            var legendObj = gd._fullLayout[legendId];
+        for(let i = 0; i < newLegends.length; i++) {
+            const legendId = newLegends[i];
+            const legendObj = gd._fullLayout[legendId];
             drawOne(gd, legendObj);
         }
     }
@@ -56,12 +56,12 @@ export default function draw(gd: GraphDiv, opts?: any): void {
 function horizontalAlignTitle(titleEl: any, legendObj: any, bw: number): void {
     if((legendObj.title.side !== 'top center') && (legendObj.title.side !== 'top right')) return;
 
-    var titleFont = legendObj.title.font;
-    var lineHeight = titleFont.size * LINE_SPACING;
-    var titleOffset = 0;
-    var textNode = titleEl.node();
+    const titleFont = legendObj.title.font;
+    const lineHeight = titleFont.size * LINE_SPACING;
+    let titleOffset = 0;
+    const textNode = titleEl.node();
 
-    var width = bBox(textNode).width;  // width of the title text
+    const width = bBox(textNode).width;  // width of the title text
 
     if(legendObj.title.side === 'top center') {
         titleOffset = 0.5 * (legendObj._width - 2 * bw - 2 * constants.titlePad - width);
@@ -76,14 +76,14 @@ function horizontalAlignTitle(titleEl: any, legendObj: any, bw: number): void {
 }
 
 function drawOne(gd: GraphDiv, opts: any): any {
-    var legendObj = opts || {};
+    const legendObj = opts || {};
 
-    var fullLayout = gd._fullLayout;
-    var legendId = getId(legendObj);
+    const fullLayout = gd._fullLayout;
+    const legendId = getId(legendObj);
 
-    var clipId, layer;
+    let clipId, layer;
 
-    var inHover = legendObj._inHover;
+    const inHover = legendObj._inHover;
     if(inHover) {
         layer = legendObj.layer;
         clipId = 'hover';
@@ -96,16 +96,16 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
     if(!gd._legendMouseDownTime) gd._legendMouseDownTime = 0;
 
-    var legendData;
+    let legendData: any;
     if(!inHover) {
-        var calcdata = (gd.calcdata || []).slice();
+        const calcdata = (gd.calcdata || []).slice();
 
-        var shapes = fullLayout.shapes || [];
-        for(var i = 0; i < shapes.length; i++) {
-            var shape = shapes[i];
+        const shapes = fullLayout.shapes || [];
+        for(let i = 0; i < shapes.length; i++) {
+            const shape = shapes[i];
             if(!shape.showlegend) continue;
 
-            var shapeLegend = {
+            const shapeLegend = {
                 _isShape: true,
                 _fullInput: shape,
                 index: shape._index,
@@ -141,7 +141,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
         legendData = getLegendData(legendObj.entries, legendObj);
     }
 
-    var hiddenSlices = fullLayout.hiddenlabels || [];
+    const hiddenSlices = fullLayout.hiddenlabels || [];
 
     if(!inHover && (!fullLayout.showlegend || !legendData.length)) {
         layer.selectAll('.' + legendId).remove();
@@ -149,27 +149,27 @@ function drawOne(gd: GraphDiv, opts: any): any {
         return (autoMargin as any)(gd, legendId);
     }
 
-    var legend = ensureSingle(layer, 'g', legendId, function(s) {
+    const legend = ensureSingle(layer, 'g', legendId, function(s: any) {
         if(!inHover) s.attr('pointer-events', 'all');
     });
 
-    var clipPath = ensureSingleById(fullLayout._topdefs, 'clipPath', clipId, function(s) {
+    const clipPath = ensureSingleById(fullLayout._topdefs, 'clipPath', clipId, function(s: any) {
         s.append('rect');
     });
 
-    var bg = ensureSingle(legend, 'rect', 'bg', function(s) {
+    const bg = ensureSingle(legend, 'rect', 'bg', function(s: any) {
         s.attr('shape-rendering', 'crispEdges');
     });
     bg.call(Color.stroke, legendObj.bordercolor)
         .call(Color.fill, legendObj.bgcolor)
         .style('stroke-width', legendObj.borderwidth + 'px');
 
-    var scrollBox = ensureSingle(legend, 'g', 'scrollbox');
+    const scrollBox = ensureSingle(legend, 'g', 'scrollbox');
 
-    var title = legendObj.title;
+    const title = legendObj.title;
     legendObj._titleWidth = 0;
     legendObj._titleHeight = 0;
-    var titleEl;
+    let titleEl: any;
     if(title.text) {
         titleEl = ensureSingle(scrollBox, 'text', legendId + 'titletext');
         titleEl.attr('text-anchor', 'start')
@@ -181,21 +181,24 @@ function drawOne(gd: GraphDiv, opts: any): any {
         scrollBox.selectAll('.' + legendId + 'titletext').remove();
     }
 
-    var scrollBar = ensureSingle(legend, 'rect', 'scrollbar', function(s) {
-        s.attr(constants.scrollBarEnterAttrs)
+    const scrollBar = ensureSingle(legend, 'rect', 'scrollbar', function(s: any) {
+        s.attr('rx', constants.scrollBarEnterAttrs.rx)
+         .attr('ry', constants.scrollBarEnterAttrs.ry)
+         .attr('width', constants.scrollBarEnterAttrs.width)
+         .attr('height', constants.scrollBarEnterAttrs.height)
          .call(Color.fill, constants.scrollBarColor);
     });
 
-    var groups = scrollBox.selectAll('g.groups').data(legendData);
-    groups.enter().append('g').attr('class', 'groups');
-    groups.exit().remove();
+    const groupsJoin = scrollBox.selectAll('g.groups').data(legendData);
+    groupsJoin.exit().remove();
+    const groups = groupsJoin.enter().append('g').attr('class', 'groups').merge(groupsJoin);
 
-    var traces = groups.selectAll('g.traces').data(identity);
-    traces.enter().append('g').attr('class', 'traces');
-    traces.exit().remove();
+    const tracesJoin = groups.selectAll('g.traces').data(identity);
+    tracesJoin.exit().remove();
+    const traces = tracesJoin.enter().append('g').attr('class', 'traces').merge(tracesJoin);
 
-    traces.style('opacity', function(d) {
-        var trace = d[0].trace;
+    traces.style('opacity', function(d: any) {
+        const trace = d[0].trace;
         if(Registry.traceIs(trace, 'pie-like')) {
             return hiddenSlices.indexOf(d[0].label) !== -1 ? 0.5 : 1;
         } else {
@@ -210,10 +213,10 @@ function drawOne(gd: GraphDiv, opts: any): any {
         previousPromises,
         function() { return computeLegendDimensions(gd, groups, traces, legendObj); },
         function() {
-            var gs = fullLayout._size;
-            var bw = legendObj.borderwidth;
-            var isPaperX = legendObj.xref === 'paper';
-            var isPaperY = legendObj.yref === 'paper';
+            const gs = fullLayout._size;
+            const bw = legendObj.borderwidth;
+            const isPaperX = legendObj.xref === 'paper';
+            const isPaperY = legendObj.yref === 'paper';
 
             // re-calculate title position after legend width is derived. To allow for horizontal alignment
             if(title.text) {
@@ -221,33 +224,33 @@ function drawOne(gd: GraphDiv, opts: any): any {
             }
 
             if(!inHover) {
-                var lx, ly;
+                let lx, ly;
 
                 if(isPaperX) {
-                    lx = gs.l + gs.w * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
+                    lx = gs.l + gs.w * legendObj.x - (FROM_TL as any)[getXanchor(legendObj)] * legendObj._width;
                 } else {
-                    lx = fullLayout.width * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
+                    lx = fullLayout.width! * legendObj.x - (FROM_TL as any)[getXanchor(legendObj)] * legendObj._width;
                 }
 
                 if(isPaperY) {
-                    ly = gs.t + gs.h * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
+                    ly = gs.t + gs.h * (1 - legendObj.y) - (FROM_TL as any)[getYanchor(legendObj)] * legendObj._effHeight;
                 } else {
-                    ly = fullLayout.height * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
+                    ly = fullLayout.height! * (1 - legendObj.y) - (FROM_TL as any)[getYanchor(legendObj)] * legendObj._effHeight;
                 }
 
-                var expMargin = expandMargin(gd, legendId, lx, ly);
+                const expMargin = expandMargin(gd, legendId, lx, ly);
 
                 // IF expandMargin return a Promise (which is truthy),
                 // we're under a doAutoMargin redraw, so we don't have to
                 // draw the remaining pieces below
                 if(expMargin) return;
 
-                if(fullLayout.margin.autoexpand) {
-                    var lx0 = lx;
-                    var ly0 = ly;
+                if(fullLayout.margin!.autoexpand) {
+                    const lx0 = lx;
+                    const ly0 = ly;
 
-                    lx = isPaperX ? constrain(lx, 0, fullLayout.width - legendObj._width) : lx0;
-                    ly = isPaperY ? constrain(ly, 0, fullLayout.height - legendObj._effHeight) : ly0;
+                    lx = isPaperX ? constrain(lx, 0, fullLayout.width! - legendObj._width) : lx0;
+                    ly = isPaperY ? constrain(ly, 0, fullLayout.height! - legendObj._effHeight) : ly0;
 
                     if(lx !== lx0) {
                         log('Constrain ' + legendId + '.x to make legend fit inside graph');
@@ -268,70 +271,66 @@ function drawOne(gd: GraphDiv, opts: any): any {
 
             if(inHover || legendObj._height <= legendObj._maxHeight || gd._context.staticPlot) {
                 // if scrollbar should not be shown.
-                var height = legendObj._effHeight;
+                let height = legendObj._effHeight;
 
                 // if unified hover, let it be its full size
                 if(inHover) height = legendObj._height;
 
-                bg.attr({
-                    width: legendObj._width - bw,
-                    height: height - bw,
-                    x: bw / 2,
-                    y: bw / 2
-                });
+                bg
+                    .attr('width', legendObj._width - bw)
+                    .attr('height', height - bw)
+                    .attr('x', bw / 2)
+                    .attr('y', bw / 2);
 
                 setTranslate(scrollBox, 0, 0);
 
-                clipPath.select('rect').attr({
-                    width: legendObj._width - 2 * bw,
-                    height: height - 2 * bw,
-                    x: bw,
-                    y: bw
-                });
+                clipPath.select('rect')
+                    .attr('width', legendObj._width - 2 * bw)
+                    .attr('height', height - 2 * bw)
+                    .attr('x', bw)
+                    .attr('y', bw);
 
                 setClipUrl(scrollBox, clipId, gd);
 
                 setRect(scrollBar, 0, 0, 0, 0);
                 delete legendObj._scrollY;
             } else {
-                var scrollBarHeight = Math.max(constants.scrollBarMinHeight,
+                const scrollBarHeight = Math.max(constants.scrollBarMinHeight,
                     legendObj._effHeight * legendObj._effHeight / legendObj._height);
-                var scrollBarYMax = legendObj._effHeight -
+                const scrollBarYMax = legendObj._effHeight -
                     scrollBarHeight -
                     2 * constants.scrollBarMargin;
-                var scrollBoxYMax = legendObj._height - legendObj._effHeight;
-                var scrollRatio = scrollBarYMax / scrollBoxYMax;
+                const scrollBoxYMax = legendObj._height - legendObj._effHeight;
+                const scrollRatio = scrollBarYMax / scrollBoxYMax;
 
-                var scrollBoxY = Math.min(legendObj._scrollY || 0, scrollBoxYMax);
+                let scrollBoxY = Math.min(legendObj._scrollY || 0, scrollBoxYMax);
 
                 // increase the background and clip-path width
                 // by the scrollbar width and margin
-                bg.attr({
-                    width: legendObj._width -
+                bg
+                    .attr('width', legendObj._width -
                         2 * bw +
                         constants.scrollBarWidth +
-                        constants.scrollBarMargin,
-                    height: legendObj._effHeight - bw,
-                    x: bw / 2,
-                    y: bw / 2
-                });
+                        constants.scrollBarMargin)
+                    .attr('height', legendObj._effHeight - bw)
+                    .attr('x', bw / 2)
+                    .attr('y', bw / 2);
 
-                clipPath.select('rect').attr({
-                    width: legendObj._width -
+                clipPath.select('rect')
+                    .attr('width', legendObj._width -
                         2 * bw +
                         constants.scrollBarWidth +
-                        constants.scrollBarMargin,
-                    height: legendObj._effHeight - 2 * bw,
-                    x: bw,
-                    y: bw + scrollBoxY
-                });
+                        constants.scrollBarMargin)
+                    .attr('height', legendObj._effHeight - 2 * bw)
+                    .attr('x', bw)
+                    .attr('y', bw + scrollBoxY);
 
                 setClipUrl(scrollBox, clipId, gd);
 
                 scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio);
 
                 // scroll legend by mousewheel or touchpad swipe up/down
-                legend.on('wheel', function(event) {
+                legend.on('wheel', function(event: any) {
                     scrollBoxY = constrain(
                         legendObj._scrollY +
                             ((event.deltaY / scrollBoxYMax) * scrollBarYMax),
@@ -342,22 +341,22 @@ function drawOne(gd: GraphDiv, opts: any): any {
                     }
                 });
 
-                var eventY0, eventY1, scrollBoxY0;
+                let eventY0: any, eventY1, scrollBoxY0: any;
 
-                var getScrollBarDragY = function(scrollBoxY0, eventY0, eventY1) {
-                    var y = ((eventY1 - eventY0) / scrollRatio) + scrollBoxY0;
+                const getScrollBarDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
+                    const y = ((eventY1 - eventY0) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };
 
-                var getNaturalDragY = function(scrollBoxY0, eventY0, eventY1) {
-                    var y = ((eventY0 - eventY1) / scrollRatio) + scrollBoxY0;
+                const getNaturalDragY = function(scrollBoxY0: any, eventY0: any, eventY1: any) {
+                    const y = ((eventY0 - eventY1) / scrollRatio) + scrollBoxY0;
                     return constrain(y, 0, scrollBoxYMax);
                 };
 
                 // scroll legend by dragging scrollBAR
-                var scrollBarDrag = d3Drag()
-                .on('start', function(event) {
-                    var e = event.sourceEvent;
+                const scrollBarDrag = d3Drag()
+                .on('start', function(event: any) {
+                    const e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
                     } else {
@@ -365,8 +364,8 @@ function drawOne(gd: GraphDiv, opts: any): any {
                     }
                     scrollBoxY0 = scrollBoxY;
                 })
-                .on('drag', function(event) {
-                    var e = event.sourceEvent;
+                .on('drag', function(event: any) {
+                    const e = event.sourceEvent;
                     if(e.buttons === 2 || e.ctrlKey) return;
                     if(e.type === 'touchmove') {
                         eventY1 = e.changedTouches[0].clientY;
@@ -379,16 +378,16 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 scrollBar.call(scrollBarDrag);
 
                 // scroll legend by touch-dragging scrollBOX
-                var scrollBoxTouchDrag = d3Drag()
-                .on('start', function(event) {
-                    var e = event.sourceEvent;
+                const scrollBoxTouchDrag = d3Drag()
+                .on('start', function(event: any) {
+                    const e = event.sourceEvent;
                     if(e.type === 'touchstart') {
                         eventY0 = e.changedTouches[0].clientY;
                         scrollBoxY0 = scrollBoxY;
                     }
                 })
-                .on('drag', function(event) {
-                    var e = event.sourceEvent;
+                .on('drag', function(event: any) {
+                    const e = event.sourceEvent;
                     if(e.type === 'touchmove') {
                         eventY1 = e.changedTouches[0].clientY;
                         scrollBoxY = getNaturalDragY(scrollBoxY0, eventY0, eventY1);
@@ -398,7 +397,7 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 scrollBox.call(scrollBoxTouchDrag);
             }
 
-            function scrollHandler(scrollBoxY, scrollBarHeight, scrollRatio) {
+            function scrollHandler(scrollBoxY: any, scrollBarHeight: any, scrollRatio: any) {
                 legendObj._scrollY = gd._fullLayout[legendId]._scrollY = scrollBoxY;
                 setTranslate(scrollBox, 0, -scrollBoxY);
 
@@ -413,25 +412,25 @@ function drawOne(gd: GraphDiv, opts: any): any {
             }
 
             if(gd._context.edits.legendPosition) {
-                var xf, yf, x0, y0;
+                let xf: any, yf: any, x0: any, y0: any;
 
                 legend.classed('cursor-move', true);
 
                 dragElement.init({
                     element: legend.node(),
                     gd: gd,
-                    prepFn: function(e) {
+                    prepFn: function(e: any) {
                         if(e.target === scrollBar.node()) {
                             return;
                         }
-                        var transform = getTranslate(legend);
+                        const transform = getTranslate(legend);
                         x0 = transform.x;
                         y0 = transform.y;
                     },
-                    moveFn: function(dx, dy) {
+                    moveFn: function(dx: any, dy: any) {
                         if(x0 !== undefined && y0 !== undefined) {
-                            var newX = x0 + dx;
-                            var newY = y0 + dy;
+                            const newX = x0 + dx;
+                            const newY = y0 + dy;
 
                             setTranslate(legend, newX, newY);
                             xf = dragElement.align(newX, legendObj._width, gs.l, gs.l + gs.w, legendObj.xanchor);
@@ -440,15 +439,15 @@ function drawOne(gd: GraphDiv, opts: any): any {
                     },
                     doneFn: function() {
                         if(xf !== undefined && yf !== undefined) {
-                            var obj: any = {};
+                            const obj: any = {};
                             obj[legendId + '.x'] = xf;
                             obj[legendId + '.y'] = yf;
                             Registry.call('_guiRelayout', gd, obj);
                         }
                     },
                     clickFn: function(numClicks: number, e: any) {
-                        var clickedTrace = layer.selectAll('g.traces').filter(function(this: any) {
-                            var bbox = this.getBoundingClientRect();
+                        const clickedTrace = layer.selectAll('g.traces').filter(function(this: any) {
+                            const bbox = this.getBoundingClientRect();
                             return (
                                 e.clientX >= bbox.left && e.clientX <= bbox.right &&
                                 e.clientY >= bbox.top && e.clientY <= bbox.bottom
@@ -464,11 +463,11 @@ function drawOne(gd: GraphDiv, opts: any): any {
 }
 
 function getTraceWidth(d: any, legendObj: any, textGap: number, isGrouped?: boolean): number {
-    var legendItem = d[0];
-    var legendWidth = legendItem.width;
-    var mode = legendObj.entrywidthmode;
+    const legendItem = d[0];
+    const legendWidth = legendItem.width;
+    const mode = legendObj.entrywidthmode;
 
-    var traceLegendWidth = legendItem.trace.legendwidth || legendObj.entrywidth;
+    const traceLegendWidth = legendItem.trace.legendwidth || legendObj.entrywidth;
 
     if(mode === 'fraction') return legendObj._maxWidth * traceLegendWidth;
 
@@ -476,15 +475,15 @@ function getTraceWidth(d: any, legendObj: any, textGap: number, isGrouped?: bool
 }
 
 function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClicks: number, evt: any): void {
-    var trace = legendItem.data()[0][0].trace;
-    var evtData: any = {
+    const trace = legendItem.data()[0][0].trace;
+    const evtData: any = {
         event: evt,
         node: legendItem.node(),
         curveNumber: trace.index,
         expandedIndex: trace.index,
         data: gd.data,
         layout: gd.layout,
-        frames: gd._transitionData._frames,
+        frames: gd._transitionData!._frames,
         config: gd._context,
         fullData: gd._fullData,
         fullLayout: gd._fullLayout
@@ -496,7 +495,7 @@ function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClick
     if(Registry.traceIs(trace, 'pie-like')) {
         evtData.label = legendItem.datum()[0].label;
     }
-    var clickVal = Events.triggerHandler(gd, 'plotly_legendclick', evtData);
+    const clickVal = Events.triggerHandler(gd, 'plotly_legendclick', evtData);
     if(numClicks === 1) {
         if(clickVal === false) return;
         legend._clickTimeout = setTimeout(function() {
@@ -507,21 +506,21 @@ function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClick
         if(legend._clickTimeout) clearTimeout(legend._clickTimeout);
         gd._legendMouseDownTime = 0;
 
-        var dblClickVal = Events.triggerHandler(gd, 'plotly_legenddoubleclick', evtData);
+        const dblClickVal = Events.triggerHandler(gd, 'plotly_legenddoubleclick', evtData);
         // Activate default double click behaviour only when both single click and double click values are not false
         if(dblClickVal !== false && clickVal !== false) handleClick(legendItem, gd, numClicks);
     }
 }
 
 function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
-    var legendId = getId(legendObj);
-    var legendItem = g.data()[0][0];
-    var trace = legendItem.trace;
-    var isPieLike = Registry.traceIs(trace, 'pie-like');
-    var isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
-    var maxNameLength = legendObj._maxNameLength;
+    const legendId = getId(legendObj);
+    const legendItem = g.data()[0][0];
+    const trace = legendItem.trace;
+    const isPieLike = Registry.traceIs(trace, 'pie-like');
+    const isEditable = !legendObj._inHover && gd._context.edits.legendText && !isPieLike;
+    const maxNameLength = legendObj._maxNameLength;
 
-    var name, textFont;
+    let name, textFont;
     if(legendItem.groupTitle) {
         name = legendItem.groupTitle.text;
         textFont = legendItem.groupTitle.font;
@@ -537,25 +536,25 @@ function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
         }
     }
 
-    var textEl = ensureSingle(g, 'text', legendId + 'text');
+    const textEl = ensureSingle(g, 'text', legendId + 'text');
 
     textEl.attr('text-anchor', 'start')
         .call(font, textFont)
         .text(isEditable ? ensureLength(name, maxNameLength) : name);
 
-    var textGap = legendObj.indentation + legendObj.itemwidth + constants.itemGap * 2;
+    const textGap = legendObj.indentation + legendObj.itemwidth + constants.itemGap * 2;
     svgTextUtils.positionText(textEl, textGap, 0);
 
     if(isEditable) {
         textEl.call(svgTextUtils.makeEditable, {gd: gd, text: name})
             .call(textLayout, g, gd, legendObj)
             .on('edit', function(this: any, event: any) {
-                var newName = event;
+                const newName = event;
                 this.text(ensureLength(newName, maxNameLength))
                     .call(textLayout, g, gd, legendObj);
 
-                var fullInput = legendItem.trace._fullInput || {};
-                var update: any = {};
+                const fullInput = legendItem.trace._fullInput || {};
+                const update: any = {};
 
                 update.name = newName;
 
@@ -578,19 +577,19 @@ function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
  * no wider than the real labels.
  */
 function ensureLength(str: string, maxLength: number): string {
-    var targetLength = Math.max(4, maxLength);
+    const targetLength = Math.max(4, maxLength);
     if(str && str.trim().length >= targetLength / 2) return str;
     str = str || '';
-    for(var i = targetLength - str.length; i > 0; i--) str += ' ';
+    for(let i = targetLength - str.length; i > 0; i--) str += ' ';
     return str;
 }
 
 function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
-    var doubleClickDelay = gd._context.doubleClickDelay;
-    var newMouseDownTime;
-    var numClicks = 1;
+    const doubleClickDelay = gd._context.doubleClickDelay;
+    let newMouseDownTime;
+    let numClicks = 1;
 
-    var traceToggle = ensureSingle(g, 'rect', legendId + 'toggle', function(s) {
+    const traceToggle = ensureSingle(g, 'rect', legendId + 'toggle', function(s: any) {
         if(!gd._context.staticPlot) {
             s.style('cursor', 'pointer').attr('pointer-events', 'all');
         }
@@ -599,9 +598,9 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
 
     if(gd._context.staticPlot) return;
 
-    traceToggle.on('mousedown', function(event) {
+    traceToggle.on('mousedown', function(event: any) {
         newMouseDownTime = (new Date()).getTime();
-        if(newMouseDownTime - gd._legendMouseDownTime < doubleClickDelay) {
+        if(newMouseDownTime - gd._legendMouseDownTime! < doubleClickDelay) {
             // in a click train
             numClicks += 1;
         } else {
@@ -610,11 +609,11 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
             gd._legendMouseDownTime = newMouseDownTime;
         }
     });
-    traceToggle.on('mouseup', function(event) {
+    traceToggle.on('mouseup', function(event: any) {
         if(gd._dragged || gd._editing) return;
-        var legend = gd._fullLayout[legendId];
+        const legend = gd._fullLayout[legendId];
 
-        if((new Date()).getTime() - gd._legendMouseDownTime > doubleClickDelay) {
+        if((new Date()).getTime() - gd._legendMouseDownTime! > doubleClickDelay) {
             numClicks = Math.max(numClicks - 1, 1);
         }
 
@@ -630,8 +629,8 @@ function textLayout(s: any, g: any, gd: GraphDiv, legendObj: any, aTitle?: numbe
 }
 
 function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: number): void {
-    var legendItem = g.data()[0][0];
-    var showlegend = legendItem && legendItem.trace.showlegend;
+    const legendItem = g.data()[0][0];
+    let showlegend = legendItem && legendItem.trace.showlegend;
     if (Array.isArray(showlegend)) {
         showlegend = showlegend[legendItem.i] !== false;
     }
@@ -640,15 +639,15 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
         return;
     }
 
-    var mathjaxGroup = g.select('g[class*=math-group]');
-    var mathjaxNode = mathjaxGroup.node();
+    const mathjaxGroup = g.select('g[class*=math-group]');
+    const mathjaxNode = mathjaxGroup.node();
 
-    var legendId = getId(legendObj);
+    const legendId = getId(legendObj);
     if(!legendObj) {
         legendObj = gd._fullLayout[legendId];
     }
-    var bw = legendObj.borderwidth;
-    var itemFont;
+    const bw = legendObj.borderwidth;
+    let itemFont;
     if(aTitle === MAIN_TITLE) {
         itemFont = legendObj.title.font;
     } else if(legendItem.groupTitle) {
@@ -656,11 +655,11 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
     } else {
         itemFont = legendObj.font;
     }
-    var lineHeight = itemFont.size * LINE_SPACING;
-    var height, width;
+    const lineHeight = itemFont.size * LINE_SPACING;
+    let height, width;
 
     if(mathjaxNode) {
-        var mathjaxBB = bBox(mathjaxNode);
+        const mathjaxBB = bBox(mathjaxNode);
 
         height = mathjaxBB.height;
         width = mathjaxBB.width;
@@ -671,14 +670,14 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
             setTranslate(mathjaxGroup, 0, height * 0.25);
         }
     } else {
-        var cls = '.' + legendId + (
+        const cls = '.' + legendId + (
             aTitle === MAIN_TITLE ? 'title' : ''
         ) + 'text';
 
-        var textEl = g.select(cls);
+        const textEl = g.select(cls);
 
-        var textLines = svgTextUtils.lineCount(textEl);
-        var textNode = textEl.node();
+        const textLines = svgTextUtils.lineCount(textEl);
+        const textNode = textEl.node();
 
         height = lineHeight * textLines;
         width = textNode ? bBox(textNode).width : 0;
@@ -696,7 +695,7 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
                 bw + lineHeight
             );
         } else { // legend item
-            var x = constants.itemGap * 2 + legendObj.indentation + legendObj.itemwidth;
+            let x = constants.itemGap * 2 + legendObj.indentation + legendObj.itemwidth;
             if(legendItem.groupTitle) {
                 x = constants.itemGap;
                 width -= legendObj.indentation + legendObj.itemwidth;
@@ -720,10 +719,10 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
 }
 
 function getTitleSize(legendObj: any): [number, number] {
-    var w = 0;
-    var h = 0;
+    let w = 0;
+    let h = 0;
 
-    var side = legendObj.title.side;
+    const side = legendObj.title.side;
     if(side) {
         if(side.indexOf('left') !== -1) {
             w = legendObj._titleWidth;
@@ -747,29 +746,29 @@ function getTitleSize(legendObj: any): [number, number] {
  *  - _maxWidth (for orientation:h only): maximum width before starting new row
  */
 function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendObj: any): void {
-    var fullLayout = gd._fullLayout;
-    var legendId = getId(legendObj);
+    const fullLayout = gd._fullLayout;
+    const legendId = getId(legendObj);
     if(!legendObj) {
         legendObj = fullLayout[legendId];
     }
-    var gs = fullLayout._size;
+    const gs = fullLayout._size;
 
-    var isVertical = helpers.isVertical(legendObj);
-    var isGrouped = helpers.isGrouped(legendObj);
-    var isFraction = legendObj.entrywidthmode === 'fraction';
+    const isVertical = helpers.isVertical(legendObj);
+    const isGrouped = helpers.isGrouped(legendObj);
+    const isFraction = legendObj.entrywidthmode === 'fraction';
 
-    var bw = legendObj.borderwidth;
-    var bw2 = 2 * bw;
-    var itemGap = constants.itemGap;
-    var textGap = legendObj.indentation + legendObj.itemwidth + itemGap * 2;
-    var endPad = 2 * (bw + itemGap);
+    const bw = legendObj.borderwidth;
+    const bw2 = 2 * bw;
+    const itemGap = constants.itemGap;
+    const textGap = legendObj.indentation + legendObj.itemwidth + itemGap * 2;
+    const endPad = 2 * (bw + itemGap);
 
-    var yanchor = getYanchor(legendObj);
-    var isBelowPlotArea = legendObj.y < 0 || (legendObj.y === 0 && yanchor === 'top');
-    var isAbovePlotArea = legendObj.y > 1 || (legendObj.y === 1 && yanchor === 'bottom');
+    const yanchor = getYanchor(legendObj);
+    const isBelowPlotArea = legendObj.y < 0 || (legendObj.y === 0 && yanchor === 'top');
+    const isAbovePlotArea = legendObj.y > 1 || (legendObj.y === 1 && yanchor === 'bottom');
 
-    var traceGroupGap = legendObj.tracegroupgap;
-    var legendGroupWidths: any = {};
+    const traceGroupGap = legendObj.tracegroupgap;
+    const legendGroupWidths: any = {};
 
     const { orientation, yref } = legendObj;
     let { maxheight } = legendObj;
@@ -777,16 +776,16 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
     // Set default maxheight here since it depends on values passed in by user
     maxheight ||= useFullLayoutHeight ? 0.5 : 1;
     const heightToBeScaled = useFullLayoutHeight ? fullLayout.height : gs.h;
-    legendObj._maxHeight = Math.max(maxheight > 1 ? maxheight : maxheight * heightToBeScaled, 30);
+    legendObj._maxHeight = Math.max(maxheight > 1 ? maxheight : maxheight * heightToBeScaled!, 30);
 
-    var toggleRectWidth = 0;
+    let toggleRectWidth = 0;
     legendObj._width = 0;
     legendObj._height = 0;
-    var titleSize = getTitleSize(legendObj);
+    const titleSize = getTitleSize(legendObj);
 
     if(isVertical) {
         traces.each(function(this: any, d: any) {
-            var h = d[0].height;
+            const h = d[0].height;
             setTranslate(this,
                 bw + titleSize[0],
                 bw + titleSize[1] + legendObj._height + h / 2 + itemGap
@@ -806,11 +805,11 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
             legendObj._height += (legendObj._lgroupsLength - 1) * legendObj.tracegroupgap;
         }
     } else {
-        var xanchor = getXanchor(legendObj);
-        var isLeftOfPlotArea = legendObj.x < 0 || (legendObj.x === 0 && xanchor === 'right');
-        var isRightOfPlotArea = legendObj.x > 1 || (legendObj.x === 1 && xanchor === 'left');
-        var isBeyondPlotAreaY = isAbovePlotArea || isBelowPlotArea;
-        var hw = fullLayout.width / 2;
+        const xanchor = getXanchor(legendObj);
+        const isLeftOfPlotArea = legendObj.x < 0 || (legendObj.x === 0 && xanchor === 'right');
+        const isRightOfPlotArea = legendObj.x > 1 || (legendObj.x === 1 && xanchor === 'left');
+        const isBeyondPlotAreaY = isAbovePlotArea || isBelowPlotArea;
+        const hw = fullLayout.width! / 2;
 
         // - if placed within x-margins, extend the width of the plot area
         // - else if below/above plot area and anchored in the margin, extend to opposite margin,
@@ -820,27 +819,27 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
             isRightOfPlotArea ? ((isBeyondPlotAreaY && xanchor === 'right') ? gs.r + gs.w : hw) :
             gs.w,
         2 * textGap);
-        var maxItemWidth = 0;
-        var combinedItemWidth = 0;
+        let maxItemWidth = 0;
+        let combinedItemWidth = 0;
         traces.each(function(this: any, d: any) {
-            var w = getTraceWidth(d, legendObj, textGap);
+            const w = getTraceWidth(d, legendObj, textGap);
             maxItemWidth = Math.max(maxItemWidth, w);
             combinedItemWidth += w;
         });
 
-        toggleRectWidth = null;
-        var maxRowWidth = 0;
+        toggleRectWidth = (null as any);
+        let maxRowWidth = 0;
 
         if(isGrouped) {
-            var maxGroupHeightInRow = 0;
-            var groupOffsetX = 0;
-            var groupOffsetY = 0;
+            let maxGroupHeightInRow = 0;
+            let groupOffsetX = 0;
+            let groupOffsetY = 0;
             groups.each(function(this: any) {
-                var maxWidthInGroup = 0;
-                var offsetY = 0;
+                let maxWidthInGroup = 0;
+                let offsetY = 0;
                 select(this).selectAll('g.traces').each(function(this: any, d: any) {
-                    var w = getTraceWidth(d, legendObj, textGap);
-                    var h = d[0].height;
+                    const w = getTraceWidth(d, legendObj, textGap);
+                    const h = d[0].height;
 
                     setTranslate(this,
                         titleSize[0],
@@ -851,7 +850,7 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
                     legendGroupWidths[d[0].trace.legendgroup] = maxWidthInGroup;
                 });
 
-                var next = maxWidthInGroup + itemGap;
+                const next = maxWidthInGroup + itemGap;
 
                 // horizontal_wrapping
                 if(
@@ -877,17 +876,17 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
             legendObj._width = Math.max(maxRowWidth, groupOffsetX) + bw;
             legendObj._height = groupOffsetY + maxGroupHeightInRow + endPad;
         } else {
-            var nTraces = traces.size();
-            var oneRowLegend = (combinedItemWidth + bw2 + (nTraces - 1) * itemGap) < legendObj._maxWidth;
+            const nTraces = traces.size();
+            const oneRowLegend = (combinedItemWidth + bw2 + (nTraces - 1) * itemGap) < legendObj._maxWidth;
 
-            var maxItemHeightInRow = 0;
-            var offsetX = 0;
-            var offsetY = 0;
-            var rowWidth = 0;
+            let maxItemHeightInRow = 0;
+            let offsetX = 0;
+            let offsetY = 0;
+            let rowWidth = 0;
             traces.each(function(this: any, d: any) {
-                var h = d[0].height;
-                var w = getTraceWidth(d, legendObj, textGap, isGrouped);
-                var next = (oneRowLegend ? w : maxItemWidth);
+                const h = d[0].height;
+                const w = getTraceWidth(d, legendObj, textGap, isGrouped);
+                let next = (oneRowLegend ? w : maxItemWidth);
 
                 if(!isFraction) {
                     next += itemGap;
@@ -937,17 +936,17 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
 
     legendObj._effHeight = Math.min(legendObj._height, legendObj._maxHeight);
 
-    var edits = gd._context.edits;
-    var isEditable = edits.legendText || edits.legendPosition;
+    const edits = gd._context.edits;
+    const isEditable = edits.legendText || edits.legendPosition;
     traces.each(function(this: any, d: any) {
-        var traceToggle = select(this).select('.' + legendId + 'toggle');
-        var h = d[0].height;
-        var legendgroup = d[0].trace.legendgroup;
-        var traceWidth = getTraceWidth(d, legendObj, textGap);
+        const traceToggle = select(this).select('.' + legendId + 'toggle');
+        const h = d[0].height;
+        const legendgroup = d[0].trace.legendgroup;
+        let traceWidth = getTraceWidth(d, legendObj, textGap);
         if(isGrouped && legendgroup !== '') {
             traceWidth = legendGroupWidths[legendgroup];
         }
-        var w = isEditable ? textGap : (toggleRectWidth || traceWidth);
+        let w = isEditable ? textGap : (toggleRectWidth || traceWidth);
         if(!isVertical && !isFraction) {
             w += itemGap;
         }
@@ -956,21 +955,21 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
 }
 
 function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): any {
-    var fullLayout = gd._fullLayout;
-    var legendObj = fullLayout[legendId];
-    var xanchor = getXanchor(legendObj);
-    var yanchor = getYanchor(legendObj);
+    const fullLayout = gd._fullLayout;
+    const legendObj = fullLayout[legendId];
+    const xanchor = getXanchor(legendObj);
+    const yanchor = getYanchor(legendObj);
 
-    var isPaperX = legendObj.xref === 'paper';
-    var isPaperY = legendObj.yref === 'paper';
+    const isPaperX = legendObj.xref === 'paper';
+    const isPaperY = legendObj.yref === 'paper';
 
     gd._fullLayout._reservedMargin[legendId] = {};
-    var sideY = legendObj.y < 0.5 ? 'b' : 't';
-    var sideX = legendObj.x < 0.5 ? 'l' : 'r';
-    var possibleReservedMargins: any = {
-        r: (fullLayout.width - lx),
+    const sideY = legendObj.y < 0.5 ? 'b' : 't';
+    const sideX = legendObj.x < 0.5 ? 'l' : 'r';
+    const possibleReservedMargins: any = {
+        r: (fullLayout.width! - lx),
         l: lx + legendObj._width,
-        b: (fullLayout.height - ly),
+        b: (fullLayout.height! - ly),
         t: ly + legendObj._effHeight
     };
 
@@ -978,10 +977,10 @@ function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): a
         return autoMargin(gd, legendId, {
             x: legendObj.x,
             y: legendObj.y,
-            l: legendObj._width * (FROM_TL[xanchor]),
-            r: legendObj._width * (FROM_BR[xanchor]),
-            b: legendObj._effHeight * (FROM_BR[yanchor]),
-            t: legendObj._effHeight * (FROM_TL[yanchor])
+            l: legendObj._width * ((FROM_TL as any)[xanchor]),
+            r: legendObj._width * ((FROM_BR as any)[xanchor]),
+            b: legendObj._effHeight * ((FROM_BR as any)[yanchor]),
+            t: legendObj._effHeight * ((FROM_TL as any)[yanchor])
         });
     } else if(isPaperX) {
         gd._fullLayout._reservedMargin[legendId][sideY] = possibleReservedMargins[sideY];

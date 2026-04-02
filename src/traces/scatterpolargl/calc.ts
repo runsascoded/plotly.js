@@ -8,14 +8,14 @@ import _constants from '../scattergl/constants.js';
 const { TOO_MANY_POINTS } = _constants;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var subplotId = trace.subplot;
-    var radialAxis = fullLayout[subplotId].radialaxis;
-    var angularAxis = fullLayout[subplotId].angularaxis;
-    var rArray = trace._r = radialAxis.makeCalcdata(trace, 'r');
-    var thetaArray = trace._theta = angularAxis.makeCalcdata(trace, 'theta');
-    var len = trace._length;
-    var stash: any = {};
+    const fullLayout = gd._fullLayout;
+    const subplotId = trace.subplot;
+    const radialAxis = fullLayout[subplotId].radialaxis;
+    const angularAxis = fullLayout[subplotId].angularaxis;
+    let rArray = trace._r = radialAxis.makeCalcdata(trace, 'r');
+    let thetaArray = trace._theta = angularAxis.makeCalcdata(trace, 'theta');
+    const len = trace._length;
+    const stash: any = {};
 
     if(len < rArray.length) rArray = rArray.slice(0, len);
     if(len < thetaArray.length) thetaArray = thetaArray.slice(0, len);
@@ -27,11 +27,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     // only compute 'style' options in calc, as position options
     // depend on the radial range and must be set in plot
-    var opts = stash.opts = convert.style(gd, trace);
+    const opts = stash.opts = convert.style(gd, trace);
 
     // For graphs with very large number of points and array marker.size,
     // use average marker size instead to speed things up.
-    var ppad;
+    let ppad;
     if(len < TOO_MANY_POINTS) {
         ppad = calcMarkerSize(trace, len);
     } else if(opts.marker) {

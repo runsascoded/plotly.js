@@ -13,29 +13,29 @@ import _constants from '../scattergl/constants.js';
 const { TOO_MANY_POINTS } = _constants;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var dimensions = trace.dimensions;
-    var commonLength = trace._length;
-    var opts: any = {};
+    const dimensions = trace.dimensions;
+    const commonLength = trace._length;
+    const opts: any = {};
     // 'c' for calculated, 'l' for linear,
     // only differ here for log axes, pass ldata to createMatrix as 'data'
-    var cdata = opts.cdata = [];
-    var ldata = opts.data = [];
+    const cdata = opts.cdata = [] as any[];
+    const ldata = opts.data = [] as any[];
     // keep track of visible dimensions
-    var visibleDims = trace._visibleDims = [];
-    var i, k, dim, xa, ya;
+    const visibleDims = trace._visibleDims = [] as any[];
+    let i, k, dim, xa, ya;
 
-    function makeCalcdata(ax: FullAxis, dim) {
+    function makeCalcdata(ax: FullAxis, dim: any) {
         // call makeCalcdata with fake input
-        var ccol = ax.makeCalcdata({
+        const ccol = ax.makeCalcdata({
             v: dim.values,
             vcalendar: trace.calendar
         }, 'v');
 
-        for(var j = 0; j < ccol.length; j++) {
+        for(let j = 0; j < ccol.length; j++) {
             ccol[j] = ccol[j] === BADNUM ? NaN : ccol[j];
         }
         cdata.push(ccol);
-        ldata.push(ax.type === 'log' ? Lib.simpleMap(ccol, ax.c2l) : ccol);
+        ldata.push((ax.type === 'log' ? Lib.simpleMap(ccol, ax.c2l) : ccol as any));
     }
 
     for(i = 0; i < dimensions.length; i++) {
@@ -68,13 +68,13 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     calcColorscale(gd, trace);
     Lib.extendFlat(opts, convertMarkerStyle(gd, trace));
 
-    var visibleLength = cdata.length;
-    var hasTooManyPoints = (visibleLength * commonLength) > TOO_MANY_POINTS;
+    const visibleLength = cdata.length;
+    const hasTooManyPoints = (visibleLength * commonLength) > TOO_MANY_POINTS;
 
     // Reuse SVG scatter axis expansion routine.
     // For graphs with very large number of points and array marker.size,
     // use average marker size instead to speed things up.
-    var ppad;
+    let ppad;
     if(hasTooManyPoints) {
         ppad = opts.sizeAvg || Math.max(opts.size, 3);
     } else {
@@ -89,7 +89,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         calcAxisExpansion(gd, trace, xa, ya, cdata[k], cdata[k], ppad);
     }
 
-    var scene = sceneUpdate(gd, trace);
+    const scene = sceneUpdate(gd, trace);
     if(!scene.matrix) scene.matrix = true;
     scene.matrixOptions = opts;
 

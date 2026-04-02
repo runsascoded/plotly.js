@@ -3,19 +3,19 @@ import isNumeric from 'fast-isnumeric';
 import { isTypedArray } from '../../lib/array.js';
 import colorAttrs from './attributes.js';
 
-var color: any = {};
+const color: any = {};
 
 color.defaults = colorAttrs.defaults;
-var defaultLine = color.defaultLine = colorAttrs.defaultLine;
+const defaultLine = color.defaultLine = colorAttrs.defaultLine;
 color.lightLine = colorAttrs.lightLine;
-var background = color.background = colorAttrs.background;
+const background = color.background = colorAttrs.background;
 
 /*
  * tinyRGB: turn a tinycolor into an rgb string, but
  * unlike the built-in tinycolor.toRgbString this never includes alpha
  */
 color.tinyRGB = function(tc: any): string {
-    var c = tc.toRgb();
+    const c = tc.toRgb();
     return 'rgb(' + Math.round(c.r) + ', ' +
         Math.round(c.g) + ', ' + Math.round(c.b) + ')';
 };
@@ -25,7 +25,7 @@ color.rgb = function(cstr: string): string { return color.tinyRGB(tinycolor(cstr
 color.opacity = function(cstr: string): number { return cstr ? tinycolor(cstr).getAlpha() : 0; };
 
 color.addOpacity = function(cstr: string, op: number): string {
-    var c = tinycolor(cstr).toRgb();
+    const c = tinycolor(cstr).toRgb();
     return 'rgba(' + Math.round(c.r) + ', ' +
         Math.round(c.g) + ', ' + Math.round(c.b) + ', ' + op + ')';
 };
@@ -34,16 +34,16 @@ color.addOpacity = function(cstr: string, op: number): string {
 // if back has transparency or is missing,
 // color.background is assumed behind it
 color.combine = function(front: string, back?: string): string {
-    var fc = tinycolor(front).toRgb();
+    const fc = tinycolor(front).toRgb();
     if(fc.a === 1) return tinycolor(front).toRgbString();
 
-    var bc = tinycolor(back || background).toRgb();
-    var bcflat = bc.a === 1 ? bc : {
+    const bc = tinycolor(back || background).toRgb();
+    const bcflat = bc.a === 1 ? bc : {
         r: 255 * (1 - bc.a) + bc.r * bc.a,
         g: 255 * (1 - bc.a) + bc.g * bc.a,
         b: 255 * (1 - bc.a) + bc.b * bc.a
     };
-    var fcflat = {
+    const fcflat = {
         r: bcflat.r * (1 - fc.a) + fc.r * fc.a,
         g: bcflat.g * (1 - fc.a) + fc.g * fc.a,
         b: bcflat.b * (1 - fc.a) + fc.b * fc.a
@@ -58,10 +58,10 @@ color.combine = function(front: string, back?: string): string {
  * The resulting color is computed as: factor * first + (1 - factor) * second.
  */
 color.interpolate = function(first: string, second: string, factor: number): string {
-    var fc = tinycolor(first).toRgb();
-    var sc = tinycolor(second).toRgb();
+    const fc = tinycolor(first).toRgb();
+    const sc = tinycolor(second).toRgb();
 
-    var ic = {
+    const ic = {
         r: factor * fc.r + (1 - factor) * sc.r,
         g: factor * fc.g + (1 - factor) * sc.g,
         b: factor * fc.b + (1 - factor) * sc.b,
@@ -79,11 +79,11 @@ color.interpolate = function(first: string, second: string, factor: number): str
  * otherwise we go all the way to white or black.
  */
 color.contrast = function(cstr: string, lightAmount?: number, darkAmount?: number): string {
-    var tc = tinycolor(cstr);
+    let tc = tinycolor(cstr);
 
     if(tc.getAlpha() !== 1) tc = tinycolor(color.combine(cstr, background));
 
-    var newColor = tc.isDark() ?
+    const newColor = tc.isDark() ?
         (lightAmount ? tc.lighten(lightAmount) : background) :
         (darkAmount ? tc.darken(darkAmount) : defaultLine);
 
@@ -91,16 +91,17 @@ color.contrast = function(cstr: string, lightAmount?: number, darkAmount?: numbe
 };
 
 color.stroke = function(s: any, c: string): void {
-    var tc = tinycolor(c);
-    s.style({stroke: color.tinyRGB(tc), 'stroke-opacity': tc.getAlpha()});
+    const tc = tinycolor(c);
+    s
+        .style('stroke', color.tinyRGB(tc))
+        .style('stroke-opacity', tc.getAlpha());
 };
 
 color.fill = function(s: any, c: string): void {
-    var tc = tinycolor(c);
-    s.style({
-        fill: color.tinyRGB(tc),
-        'fill-opacity': tc.getAlpha()
-    });
+    const tc = tinycolor(c);
+    s
+        .style('fill', color.tinyRGB(tc))
+        .style('fill-opacity', tc.getAlpha());
 };
 
 // search container for colors with the deprecated rgb(fractions) format
@@ -108,8 +109,8 @@ color.fill = function(s: any, c: string): void {
 color.clean = function(container: any): void {
     if(!container || typeof container !== 'object') return;
 
-    var keys = Object.keys(container);
-    var i: number, j: number, key: string, val: any;
+    const keys = Object.keys(container);
+    let i: number, j: number, key: string, val: any;
 
     for(i = 0; i < keys.length; i++) {
         key = keys[i];
@@ -130,7 +131,7 @@ color.clean = function(container: any): void {
         } else if(Array.isArray(val)) {
             // recurse into arrays of objects, and plain objects
 
-            var el0 = val[0];
+            const el0 = val[0];
             if(!Array.isArray(el0) && el0 && typeof el0 === 'object') {
                 for(j = 0; j < val.length; j++) color.clean(val[j]);
             }
@@ -141,17 +142,17 @@ color.clean = function(container: any): void {
 function cleanOne(val: any): string {
     if(isNumeric(val) || typeof val !== 'string') return val;
 
-    var valTrim = val.trim();
+    const valTrim = val.trim();
     if(valTrim.slice(0, 3) !== 'rgb') return val;
 
-    var match = valTrim.match(/^rgba?\s*\(([^()]*)\)$/);
+    const match = valTrim.match(/^rgba?\s*\(([^()]*)\)$/);
     if(!match) return val;
 
-    var parts: any[] = match[1].trim().split(/\s*[\s,]\s*/);
-    var rgba = valTrim.charAt(3) === 'a' && parts.length === 4;
+    const parts: any[] = match[1].trim().split(/\s*[\s,]\s*/);
+    const rgba = valTrim.charAt(3) === 'a' && parts.length === 4;
     if(!rgba && parts.length !== 3) return val;
 
-    for(var i = 0; i < parts.length; i++) {
+    for(let i = 0; i < parts.length; i++) {
         if(!parts[i].length) return val;
         parts[i] = Number(parts[i]);
 
@@ -172,7 +173,7 @@ function cleanOne(val: any): string {
         }
     }
 
-    var rgbStr = Math.round(parts[0] * 255) + ', ' +
+    const rgbStr = Math.round(parts[0] * 255) + ', ' +
         Math.round(parts[1] * 255) + ', ' +
         Math.round(parts[2] * 255);
 

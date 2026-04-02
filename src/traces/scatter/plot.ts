@@ -13,25 +13,26 @@ import _polygon from '../../lib/polygon.js';
 const { tester: polygonTester } = _polygon;
 
 export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][], scatterLayer: any, transitionOpts?: any, makeOnCompleteCallback?: any): any {
-    var join, onComplete;
+    let join, onComplete: any;
 
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
-    var isFullReplot = !transitionOpts;
-    var hasTransition = !!transitionOpts && transitionOpts.duration > 0;
+    const isFullReplot = !transitionOpts;
+    const hasTransition = !!transitionOpts && transitionOpts.duration > 0;
 
     // Link traces so the z-order of fill layers is correct
-    var cdscatterSorted = linkTraces(gd, plotinfo, cdscatter);
+    const cdscatterSorted = linkTraces(gd, plotinfo, cdscatter);
 
     join = scatterLayer.selectAll('g.trace')
-        .data(cdscatterSorted, function(d) { return d[0].trace.uid; });
+        .data(cdscatterSorted, function(d: any) { return d[0].trace.uid; });
 
     // Append new traces:
-    join.enter().append('g')
-        .attr('class', function(d) {
+    const joinEnter = join.enter().append('g')
+        .attr('class', function(d: any) {
             return 'trace scatter trace' + d[0].trace.uid;
         })
         .style('stroke-miterlimit', 2);
+    join = join.merge(joinEnter);
     join.order();
 
     createFills(gd, join, plotinfo);
@@ -44,7 +45,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
             onComplete = makeOnCompleteCallback();
         }
 
-        var transition = transition()
+        const trans = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
             .on('end', function() {
@@ -54,15 +55,15 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
                 onComplete && onComplete();
             });
 
-        transition.each(function() {
+        trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            scatterLayer.selectAll('g.trace').each(function(d, i) {
+            scatterLayer.selectAll('g.trace').each(function(this: any, d: any, i: any) {
                 plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
             });
         });
     } else {
-        join.each(function(d, i) {
+        join.each(function(this: any, d: any, i: any) {
             plotOne(gd, i, plotinfo, d, cdscatterSorted, this, transitionOpts);
         });
     }
@@ -76,25 +77,25 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
 }
 
 function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
-    traceJoin.each(function(d) {
-        var fills = ensureSingle(select(this), 'g', 'fills');
-        setClipUrl(fills, plotinfo.layerClipId, gd);
+    traceJoin.each(function(this: any, d: any) {
+        const fills = ensureSingle(select(this), 'g', 'fills');
+        setClipUrl(fills, (plotinfo.layerClipId as any), gd);
 
-        var trace = d[0].trace;
+        const trace = d[0].trace;
 
-        var fillData = [];
+        const fillData: any[] = [];
         if(trace._ownfill) fillData.push('_ownFill');
         if(trace._nexttrace) fillData.push('_nextFill');
 
-        var fillJoin = fills.selectAll('g').data(fillData, identity);
+        const fillJoin = fills.selectAll('g').data(fillData, identity);
 
-        fillJoin.enter().append('g');
+        const fillJoinEnter = fillJoin.enter().append('g');
 
         fillJoin.exit()
-            .each(function(d) { trace[d] = null; })
+            .each(function(d: any) { trace[d] = null; })
             .remove();
 
-        fillJoin.order().each(function(d) {
+        fillJoin.merge(fillJoinEnter).order().each(function(this: any, d: any) {
             // make a path element inside the fill group, just so
             // we can give it its own data later on and the group can
             // keep its simple '_*Fill' data
@@ -104,31 +105,31 @@ function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
 }
 
 function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][], element: any, transitionOpts: any): any {
-    var isStatic = gd._context.staticPlot;
-    var i;
+    const isStatic = gd._context.staticPlot;
+    let i;
 
     // Since this has been reorganized and we're executing this on individual traces,
     // we need to pass it the full list of cdscatter as well as this trace's index (idx)
     // since it does an internal n^2 loop over comparisons with other traces:
     selectMarkers(gd, idx, plotinfo, cdscatter, cdscatterAll);
 
-    var hasTransition = !!transitionOpts && transitionOpts.duration > 0;
+    const hasTransition = !!transitionOpts && transitionOpts.duration > 0;
 
-    function transition(selection) {
+    function transition(selection: any) {
         return hasTransition ? selection.transition() : selection;
     }
 
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    var trace = cdscatter[0].trace;
-    var line = trace.line;
-    var tr = select(element);
+    const trace = cdscatter[0].trace;
+    const line = trace.line;
+    const tr = select(element);
 
-    var errorBarGroup = ensureSingle(tr, 'g', 'errorbars');
-    var lines = ensureSingle(tr, 'g', 'lines');
-    var points = ensureSingle(tr, 'g', 'points');
-    var text = ensureSingle(tr, 'g', 'text');
+    const errorBarGroup = ensureSingle(tr, 'g', 'errorbars');
+    const lines = ensureSingle(tr, 'g', 'lines');
+    const points = ensureSingle(tr, 'g', 'points');
+    const text = ensureSingle(tr, 'g', 'text');
 
     // error bars are at the bottom
     Registry.getComponentMethod('errorbars', 'plot')(gd, errorBarGroup, plotinfo, transitionOpts);
@@ -138,11 +139,11 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     transition(tr).style('opacity', trace.opacity);
 
     // BUILD LINES AND FILLS
-    var ownFillEl3, tonext;
-    var ownFillDir = trace.fill.charAt(trace.fill.length - 1);
+    let ownFillEl3, tonext;
+    let ownFillDir = trace.fill.charAt(trace.fill.length - 1);
     if(ownFillDir !== 'x' && ownFillDir !== 'y') ownFillDir = '';
 
-    var fillAxisIndex, fillAxisZero;
+    let fillAxisIndex: any, fillAxisZero: any;
     if(ownFillDir === 'y') {
         fillAxisIndex = 1;
         fillAxisZero = ya.c2p(0, true);
@@ -154,11 +155,11 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     // store node for tweaking by selectPoints
     cdscatter[0][plotinfo.isRangePlot ? 'nodeRangePlot3' : 'node3'] = tr;
 
-    var prevRevpath = '';
-    var prevPolygons = [];
-    var prevtrace = trace._prevtrace;
-    var prevFillsegments = null;
-    var prevFillElement = null;
+    let prevRevpath = '';
+    let prevPolygons = [];
+    const prevtrace = trace._prevtrace;
+    let prevFillsegments = null;
+    let prevFillElement = null;
 
     if(prevtrace) {
         prevRevpath = prevtrace._prevRevpath || '';
@@ -168,29 +169,29 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         prevFillElement = prevtrace._fillElement;
     }
 
-    var thispath;
-    var thisrevpath;
+    let thispath;
+    let thisrevpath;
     // fullpath is all paths for this curve, joined together straight
     // across gaps, for filling
-    var fullpath = '';
+    let fullpath = '';
     // revpath is fullpath reversed, for fill-to-next
-    var revpath = '';
+    let revpath = '';
     // functions for converting a point array to a path
-    var pathfn, revpathbase, revpathfn;
+    let pathfn: any, revpathbase: any, revpathfn: any;
     // variables used before and after the data join
-    var pt0, lastSegment, pt1;
+    let pt0, lastSegment, pt1;
 
     // thisPolygons always contains only the polygons of this trace only
     // whereas trace._polygons may be extended to include those of the previous
     // trace as well for exclusion during hover detection
-    var thisPolygons = [];
+    let thisPolygons: any[] = [];
     trace._polygons = [];
 
-    var fillsegments = [];
+    let fillsegments: any[] = [];
 
     // initialize line join data / method
-    var segments = [];
-    var makeUpdate = noop;
+    let segments: any[] = [];
+    let makeUpdate = noop;
 
     ownFillEl3 = trace._ownFill;
 
@@ -206,8 +207,8 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 line.shape.split('').reverse().join('')
             );
         } else if(line.shape === 'spline') {
-            pathfn = revpathbase = function(pts) {
-                var pLast = pts[pts.length - 1];
+            pathfn = revpathbase = function(pts: any) {
+                const pLast = pts[pts.length - 1];
                 if(pts.length > 1 && pts[0][0] === pLast[0] && pts[0][1] === pLast[1]) {
                     // identical start and end points: treat it as a
                     // closed curve so we don't get a kink
@@ -217,12 +218,12 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 }
             };
         } else {
-            pathfn = revpathbase = function(pts) {
+            pathfn = revpathbase = function(pts: any) {
                 return 'M' + pts.join('L');
             };
         }
 
-        revpathfn = function(pts) {
+        revpathfn = function(pts: any) {
             // note: this is destructive (reverses pts in place) so can't use pts after this
             return revpathbase(pts.reverse());
         };
@@ -246,12 +247,12 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         // TODO: can we skip this if hoveron!=fills? That would mean we
         // need to redraw when you change hoveron...
         fillsegments = new Array(segments.length);
-        var fillsegmentCount = 0;
+        let fillsegmentCount = 0;
         for(i = 0; i < segments.length; i++) {
-            var curpoints;
-            var pts = segments[i];
+            let curpoints;
+            const pts = segments[i];
             if(!curpoints || !ownFillDir) {
-                curpoints = pts.slice();
+                curpoints = (pts as any).slice();
                 fillsegments[fillsegmentCount] = curpoints;
                 fillsegmentCount++;
             } else {
@@ -266,13 +267,13 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         fillsegments = trace._fillsegments;
 
         if(segments.length) {
-            pt0 = segments[0][0].slice();
+            pt0 = (segments[0][0] as any).slice();
             lastSegment = segments[segments.length - 1];
             pt1 = lastSegment[lastSegment.length - 1].slice();
         }
 
-        makeUpdate = function(isEnter) {
-            return function(pts) {
+        makeUpdate = function(isEnter: any) {
+            return function(this: any, pts: any) {
                 thispath = pathfn(pts);
                 thisrevpath = revpathfn(pts); // side-effect: reverses input
                 // calculate SVG path over all segments for fills
@@ -290,7 +291,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
                 // actual lines get drawn here, with gaps between segments if requested
                 if(subTypes.hasLines(trace)) {
-                    var el = select(this);
+                    const el = select(this);
 
                     // This makes the coloring work correctly:
                     el.datum(cdscatter);
@@ -301,7 +302,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                             .call(lineGroupStyle))
                                 .style('opacity', 1);
                     } else {
-                        var sel = transition(el);
+                        const sel = transition(el);
                         sel.attr('d', thispath);
                         singleLineStyle(cdscatter, sel);
                     }
@@ -310,7 +311,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         };
     }
 
-    var lineJoin = lines.selectAll('.js-line').data(segments);
+    const lineJoin = lines.selectAll('.js-line').data(segments);
 
     transition(lineJoin.exit())
         .style('opacity', 0)
@@ -318,41 +319,41 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
     lineJoin.each(makeUpdate(false));
 
-    lineJoin.enter().append('path')
+    const lineJoinEnter = lineJoin.enter().append('path')
         .classed('js-line', true)
         .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
         .call(lineGroupStyle)
         .each(makeUpdate(true));
 
-    setClipUrl(lineJoin, plotinfo.layerClipId, gd);
+    setClipUrl(lineJoin.merge(lineJoinEnter), (plotinfo.layerClipId as any), gd);
 
-    function clearFill(selection) {
+    function clearFill(selection: any) {
         transition(selection).attr('d', 'M0,0Z');
     }
 
     // helper functions to create polygons for hoveron fill detection
-    var makeSelfPolygons = function() {
-        var polygons = new Array(fillsegments.length);
+    const makeSelfPolygons = function() {
+        const polygons = new Array(fillsegments.length);
         for(i = 0; i < fillsegments.length; i++) {
             polygons[i] = polygonTester(fillsegments[i]);
         }
         return polygons;
     };
 
-    var makePolygonsToPrevious = function(prevFillsegments) {
-        var polygons, i;
+    const makePolygonsToPrevious = function(prevFillsegments: any) {
+        let polygons, i;
         if(!prevFillsegments || prevFillsegments.length === 0) {
             // if there are no fill segments of a previous trace, stretch the
             // polygon to the relevant axis
             polygons = new Array(fillsegments.length);
             for(i = 0; i < fillsegments.length; i++) {
-                var pt0 = fillsegments[i][0].slice();
-                var pt1 = fillsegments[i][fillsegments[i].length - 1].slice();
+                const pt0 = (fillsegments[i][0] as any).slice();
+                const pt1 = (fillsegments[i][fillsegments[i].length - 1] as any).slice();
 
                 pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
 
-                var zeropoints = [pt1, pt0];
-                var polypoints = zeropoints.concat(fillsegments[i]);
+                const zeropoints = [pt1, pt0];
+                const polypoints = zeropoints.concat(fillsegments[i]);
                 polygons[i] = polygonTester(polypoints);
             }
         } else {
@@ -365,11 +366,11 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 polygons[i] = polygonTester(prevFillsegments[i]);
             }
 
-            var reversedPrevFillsegment = prevFillsegments[prevFillsegments.length - 1].slice();
+            const reversedPrevFillsegment = prevFillsegments[prevFillsegments.length - 1].slice();
             reversedPrevFillsegment.reverse();
 
             for(i = 0; i < fillsegments.length; i++) {
-                polygons[prevFillsegments.length - 1 + i] = polygonTester(fillsegments[i].concat(reversedPrevFillsegment));
+                polygons[prevFillsegments.length - 1 + i] = polygonTester((fillsegments[i] as any).concat(reversedPrevFillsegment));
             }
         }
         return polygons;
@@ -399,7 +400,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                         .call(singleFillStyle, gd);
 
                     // and simply emit hover polygons for each segment
-                    thisPolygons = makeSelfPolygons();
+                    thisPolygons = (makeSelfPolygons() as any);
                 }
             }
             trace._polygons = thisPolygons;
@@ -416,7 +417,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                         .call(singleFillStyle, gd);
 
                                             // and simply emit hover polygons for each segment
-                    thisPolygons = makeSelfPolygons();
+                    thisPolygons = (makeSelfPolygons() as any);
 
                     // we add the polygons of the previous trace which causes hover
                     // detection to ignore points contained in them.
@@ -450,24 +451,24 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     }
     trace._ownPolygons = thisPolygons;
 
-    function visFilter(d) {
-        return d.filter(function(v) { return !v.gap && v.vis; });
+    function visFilter(d: any) {
+        return d.filter(function(v: any) { return !v.gap && v.vis; });
     }
 
-    function visFilterWithGaps(d) {
-        return d.filter(function(v) { return v.vis; });
+    function visFilterWithGaps(d: any) {
+        return d.filter(function(v: any) { return v.vis; });
     }
 
-    function gapFilter(d) {
-        return d.filter(function(v) { return !v.gap; });
+    function gapFilter(d: any) {
+        return d.filter(function(v: any) { return !v.gap; });
     }
 
-    function keyFunc(d) {
+    function keyFunc(d: any) {
         return d.id;
     }
 
     // Returns a function if the trace is keyed, otherwise returns undefined
-    function getKeyFunc(trace) {
+    function getKeyFunc(trace: any) {
         if(trace.ids) {
             return keyFunc;
         }
@@ -477,25 +478,25 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         return false;
     }
 
-    function makePoints(points, text, cdscatter) {
-        var join, selection, hasNode;
+    function makePoints(points: any, text: any, cdscatter: any) {
+        let join, selection, hasNode;
 
-        var trace = cdscatter[0].trace;
-        var showMarkers = subTypes.hasMarkers(trace);
-        var showText = subTypes.hasText(trace);
+        const trace = cdscatter[0].trace;
+        const showMarkers = subTypes.hasMarkers(trace);
+        const showText = subTypes.hasText(trace);
 
-        var keyFunc = getKeyFunc(trace);
-        var markerFilter = hideFilter;
-        var textFilter = hideFilter;
+        const keyFunc = getKeyFunc(trace);
+        let markerFilter = hideFilter;
+        let textFilter = hideFilter;
 
         if(showMarkers || showText) {
-            var showFilter = identity;
+            let showFilter = identity;
             // if we're stacking, "infer zero" gap mode gets markers in the
             // gap points - because we've inferred a zero there - but other
             // modes (currently "interpolate", later "interrupt" hopefully)
             // we don't draw generated markers
-            var stackGroup = trace.stackgroup;
-            var isInferZero = stackGroup && (
+            const stackGroup = trace.stackgroup;
+            const isInferZero = stackGroup && (
                 gd._fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup].stackgaps === 'infer zero');
             if(trace.marker.maxdisplayed || trace._needsCull) {
                 showFilter = isInferZero ? visFilterWithGaps : visFilter;
@@ -513,7 +514,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join = selection.data(markerFilter, keyFunc);
 
-        var enter = join.enter().append('path')
+        const enter = join.enter().append('path')
             .classed('point', true);
 
         if(hasTransition) {
@@ -525,16 +526,17 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 .style('opacity', 1);
         }
 
+        join = join.merge(enter);
         join.order();
 
-        var styleFns;
+        let styleFns: any;
         if(showMarkers) {
             styleFns = makePointStyleFns(trace);
         }
 
-        join.each(function(d) {
-            var el = select(this);
-            var sel = transition(el);
+        join.each(function(this: any, d: any) {
+            const el = select(this);
+            const sel = transition(el);
             hasNode = translatePoint(d, sel, xa, ya);
 
             if(hasNode) {
@@ -566,13 +568,15 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         // each text needs to go in its own 'g' in case
         // it gets converted to mathjax
-        join.enter().append('g').classed('textpoint', true).append('text');
+        const textEnter = join.enter().append('g').classed('textpoint', true);
+        textEnter.append('text');
 
+        join = join.merge(textEnter);
         join.order();
 
-        join.each(function(d) {
-            var g = select(this);
-            var sel = transition(g.select('text'));
+        join.each(function(this: any, d: any) {
+            const g = select(this);
+            const sel = transition(g.select('text'));
             hasNode = translatePoint(d, sel, xa, ya);
 
             if(hasNode) {
@@ -586,14 +590,16 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join.selectAll('text')
             .call(textPointStyle, trace, gd)
-            .each(function(d) {
+            .each(function(this: any, d: any) {
                 // This just *has* to be totally custom because of SVG text positioning :(
                 // It's obviously copied from translatePoint; we just can't use that
-                var x = xa.c2p(d.x);
-                var y = ya.c2p(d.y);
+                const x = xa.c2p(d.x);
+                const y = ya.c2p(d.y);
 
-                select(this).selectAll('tspan.line').each(function() {
-                    transition(select(this)).attr({x: x, y: y});
+                select(this).selectAll('tspan.line').each(function(this: any) {
+                    transition(select(this))
+                        .attr('x', x)
+                        .attr('y', y);
                 });
             });
 
@@ -606,34 +612,34 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
     // lastly, clip points groups of `cliponaxis !== false` traces
     // on `plotinfo._hasClipOnAxisFalse === true` subplots
-    var hasClipOnAxisFalse = trace.cliponaxis === false;
-    var clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
-    setClipUrl(points, clipUrl, gd);
-    setClipUrl(text, clipUrl, gd);
+    const hasClipOnAxisFalse = trace.cliponaxis === false;
+    const clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
+    setClipUrl(points, (clipUrl as any), gd);
+    setClipUrl(text, (clipUrl as any), gd);
 }
 
 function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][]): void {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var xr = extent(simpleMap(xa.range, xa.r2c));
-    var yr = extent(simpleMap(ya.range, ya.r2c));
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const xr = extent(simpleMap(xa.range, xa.r2c));
+    const yr = extent(simpleMap(ya.range, ya.r2c));
 
-    var trace = cdscatter[0].trace;
+    const trace = cdscatter[0].trace;
     if(!subTypes.hasMarkers(trace)) return;
     // if marker.maxdisplayed is used, select a maximum of
     // mnum markers to show, from the set that are in the viewport
-    var mnum = trace.marker.maxdisplayed;
+    const mnum = trace.marker.maxdisplayed;
 
     // TODO: remove some as we get away from the viewport?
     if(mnum === 0) return;
 
-    var cd = cdscatter.filter(function(v) {
+    const cd = cdscatter.filter(function(v) {
         return v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1];
     });
-    var inc = Math.ceil(cd.length / mnum);
-    var tnum = 0;
+    const inc = Math.ceil(cd.length / mnum);
+    let tnum = 0;
     cdscatterAll.forEach(function(cdj, j) {
-        var tracei = cdj[0].trace;
+        const tracei = cdj[0].trace;
         if(subTypes.hasMarkers(tracei) &&
                 tracei.marker.maxdisplayed > 0 && j < idx) {
             tnum++;
@@ -644,7 +650,7 @@ function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter:
     // display this formula offsets successive traces by 1/3 of the
     // increment, adding an extra small amount after each triplet so
     // it's not quite periodic
-    var i0 = Math.round(tnum * inc / 3 + Math.floor(tnum / 3) * inc / 7.1);
+    const i0 = Math.round(tnum * inc / 3 + Math.floor(tnum / 3) * inc / 7.1);
 
     // for error bars: save in cd which markers to show
     // so we don't have to repeat this

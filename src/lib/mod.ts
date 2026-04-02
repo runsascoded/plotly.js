@@ -3,7 +3,7 @@
  * rather than (-d, 0] if v is negative
  */
 export function mod(v: number, d: number): number {
-    var out = v % d;
+    const out = v % d;
     return out < 0 ? out + d : out;
 }
 

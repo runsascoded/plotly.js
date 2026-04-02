@@ -6,19 +6,19 @@ const { mod } = _mod;
 import constants from '../constants/numerical.js';
 import Registry from '../registry.js';
 import { utcFormat } from 'd3-time-format';
-var BADNUM: number = constants.BADNUM;
-var ONEDAY: number = constants.ONEDAY;
-var ONEHOUR: number = constants.ONEHOUR;
-var ONEMIN: number = constants.ONEMIN;
-var ONESEC: number = constants.ONESEC;
-var EPOCHJD: number = constants.EPOCHJD;
+const BADNUM: number = (constants.BADNUM as any);
+const ONEDAY: number = constants.ONEDAY;
+const ONEHOUR: number = constants.ONEHOUR;
+const ONEMIN: number = constants.ONEMIN;
+const ONESEC: number = constants.ONESEC;
+const EPOCHJD: number = constants.EPOCHJD;
 
-var DATETIME_REGEXP = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\d)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
+const DATETIME_REGEXP = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\d)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
 // special regex for chinese calendars to support yyyy-mmi-dd etc for intercalary months
-var DATETIME_REGEXP_CN = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\di?)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
+const DATETIME_REGEXP_CN = /^\s*(-?\d\d\d\d|\d\d)(-(\d?\di?)(-(\d?\d)([ Tt]([01]?\d|2[0-3])(:([0-5]\d)(:([0-5]\d(\.\d+)?))?(Z|z|[+\-]\d\d(:?\d\d)?)?)?)?)?)?\s*$/m;
 
 // for 2-digit years, the first year we map them onto
-var YFIRST: number = new Date().getFullYear() - 70;
+const YFIRST: number = new Date().getFullYear() - 70;
 
 function isWorldCalendar(calendar: any): boolean {
     return (
@@ -28,11 +28,11 @@ function isWorldCalendar(calendar: any): boolean {
     );
 }
 
-export var dateTick0 = function(calendar: any, dayOfWeek: number): any {
-    var tick0 = _dateTick0(calendar, !!dayOfWeek);
+export const dateTick0 = function(calendar: any, dayOfWeek: number): any {
+    const tick0 = _dateTick0(calendar, !!dayOfWeek);
     if(dayOfWeek < 2) return tick0;
 
-    var v = dateTime2ms(tick0, calendar);
+    let v = dateTime2ms(tick0, calendar);
     v += ONEDAY * (dayOfWeek - 1); // shift Sunday to Monday, etc.
     return ms2DateTime(v, 0, calendar);
 };
@@ -52,7 +52,7 @@ function _dateTick0(calendar: any, sunday: boolean): string {
     }
 }
 
-export var dfltRange = function(calendar: any): string[] {
+export const dfltRange = function(calendar: any): string[] {
     if(isWorldCalendar(calendar)) {
         return Registry.getComponentMethod('calendars', 'DFLTRANGE')[calendar];
     } else {
@@ -60,27 +60,27 @@ export var dfltRange = function(calendar: any): string[] {
     }
 };
 
-export var isJSDate = function(v: any): boolean {
+export const isJSDate = function(v: any): boolean {
     return typeof v === 'object' && v !== null && typeof v.getTime === 'function';
 };
 
 // The absolute limits of our date-time system
 // This is a little weird: we use MIN_MS and MAX_MS in dateTime2ms
 // but we use dateTime2ms to calculate them (after defining it!)
-var MIN_MS: number, MAX_MS: number;
+let MIN_MS: number, MAX_MS: number;
 
-export var dateTime2ms = function(s: any, calendar?: any): number {
+export const dateTime2ms = function(s: any, calendar?: any): number {
     // first check if s is a date object
     if(isJSDate(s)) {
         // Convert to the UTC milliseconds that give the same
         // hours as this date has in the local timezone
-        var tzOffset = s.getTimezoneOffset() * ONEMIN;
-        var offsetTweak = (s.getUTCMinutes() - s.getMinutes()) * ONEMIN +
+        let tzOffset = s.getTimezoneOffset() * ONEMIN;
+        const offsetTweak = (s.getUTCMinutes() - s.getMinutes()) * ONEMIN +
             (s.getUTCSeconds() - s.getSeconds()) * ONESEC +
             (s.getUTCMilliseconds() - s.getMilliseconds());
 
         if(offsetTweak) {
-            var comb = 3 * ONEMIN;
+            const comb = 3 * ONEMIN;
             tzOffset = tzOffset - comb / 2 + mod(offsetTweak - tzOffset + comb / 2, comb);
         }
         s = Number(s) - tzOffset;
@@ -92,37 +92,37 @@ export var dateTime2ms = function(s: any, calendar?: any): number {
 
     s = String(s);
 
-    var isWorld = isWorldCalendar(calendar);
+    const isWorld = isWorldCalendar(calendar);
 
     // to handle out-of-range dates in international calendars, accept
     // 'G' as a prefix to force the built-in gregorian calendar.
-    var s0 = s.charAt(0);
+    const s0 = s.charAt(0);
     if(isWorld && (s0 === 'G' || s0 === 'g')) {
         s = s.slice(1);
         calendar = '';
     }
 
-    var isChinese = isWorld && calendar.slice(0, 7) === 'chinese';
+    const isChinese = isWorld && calendar.slice(0, 7) === 'chinese';
 
-    var match = s.match(isChinese ? DATETIME_REGEXP_CN : DATETIME_REGEXP);
+    const match = s.match(isChinese ? DATETIME_REGEXP_CN : DATETIME_REGEXP);
     if(!match) return BADNUM;
-    var y: any = match[1];
-    var m: any = match[3] || '1';
-    var d = Number(match[5] || 1);
-    var H = Number(match[7] || 0);
-    var M = Number(match[9] || 0);
-    var S = Number(match[11] || 0);
+    let y: any = match[1];
+    let m: any = match[3] || '1';
+    const d = Number(match[5] || 1);
+    const H = Number(match[7] || 0);
+    const M = Number(match[9] || 0);
+    const S = Number(match[11] || 0);
 
     if(isWorld) {
         // disallow 2-digit years for world calendars
         if(y.length === 2) return BADNUM;
         y = Number(y);
 
-        var cDate: any;
+        let cDate: any;
         try {
-            var calInstance = Registry.getComponentMethod('calendars', 'getCal')(calendar);
+            const calInstance = Registry.getComponentMethod('calendars', 'getCal')(calendar);
             if(isChinese) {
-                var isIntercalary = m.charAt(m.length - 1) === 'i';
+                const isIntercalary = m.charAt(m.length - 1) === 'i';
                 m = parseInt(m, 10);
                 cDate = calInstance.newDate(y, calInstance.toMonthIndex(y, m, isIntercalary), d);
             } else {
@@ -147,7 +147,7 @@ export var dateTime2ms = function(s: any, calendar?: any): number {
     // javascript takes new Date(0..99,m,d) to mean 1900-1999, so
     // to support years 0-99 we need to use setFullYear explicitly
     // Note that 2000 is a leap year.
-    var date = new Date(Date.UTC(2000, m, d, H, M));
+    const date = new Date(Date.UTC(2000, m, d, H, M));
     date.setUTCFullYear(y);
 
     if(date.getUTCMonth() !== m) return BADNUM;
@@ -159,7 +159,7 @@ export var dateTime2ms = function(s: any, calendar?: any): number {
 MIN_MS = dateTime2ms('-9999');
 MAX_MS = dateTime2ms('9999-12-31 23:59:59.9999');
 
-export var isDateTime = function(s: any, calendar?: any): boolean {
+export const isDateTime = function(s: any, calendar?: any): boolean {
     return (dateTime2ms(s, calendar) !== BADNUM);
 };
 
@@ -176,22 +176,22 @@ function lpad(val: number, digits: number): string {
  * Optional range r is the data range that applies, also in ms.
  * If rng is big, the later parts of time will be omitted
  */
-var NINETYDAYS = 90 * ONEDAY;
-var THREEHOURS = 3 * ONEHOUR;
-var FIVEMIN = 5 * ONEMIN;
+const NINETYDAYS = 90 * ONEDAY;
+const THREEHOURS = 3 * ONEHOUR;
+const FIVEMIN = 5 * ONEMIN;
 
-export var ms2DateTime = function(ms: number, r?: number, calendar?: any): string | number {
+export const ms2DateTime = function(ms: number, r?: number, calendar?: any): string | number {
     if(typeof ms !== 'number' || !(ms >= MIN_MS && ms <= MAX_MS)) return BADNUM;
 
     if(!r) r = 0;
 
-    var msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
-    var msRounded = Math.round(ms - msecTenths / 10);
-    var dateStr: string, h: number, m: number, s: number, msec10: number, d: Date;
+    const msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
+    const msRounded = Math.round(ms - msecTenths / 10);
+    let dateStr: string, h: number, m: number, s: number, msec10: number, d: Date;
 
     if(isWorldCalendar(calendar)) {
-        var dateJD = Math.floor(msRounded / ONEDAY) + EPOCHJD;
-        var timeMs = Math.floor(mod(ms, ONEDAY));
+        const dateJD = Math.floor(msRounded / ONEDAY) + EPOCHJD;
+        const timeMs = Math.floor(mod(ms, ONEDAY));
         try {
             dateStr = Registry.getComponentMethod('calendars', 'getCal')(calendar)
                 .fromJD(dateJD).formatDate('yyyy-mm-dd');
@@ -232,16 +232,16 @@ export var ms2DateTime = function(ms: number, r?: number, calendar?: any): strin
     return includeTime(dateStr, h, m, s, msec10);
 };
 
-export var ms2DateTimeLocal = function(ms: number): string | number {
+export const ms2DateTimeLocal = function(ms: number): string | number {
     if(!(ms >= MIN_MS + ONEDAY && ms <= MAX_MS - ONEDAY)) return BADNUM;
 
-    var msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
-    var d = new Date(Math.round(ms - msecTenths / 10));
-    var dateStr = timeFormat('%Y-%m-%d')(d);
-    var h = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var msec10 = d.getUTCMilliseconds() * 10 + msecTenths;
+    const msecTenths = Math.floor(mod(ms + 0.05, 1) * 10);
+    const d = new Date(Math.round(ms - msecTenths / 10));
+    const dateStr = timeFormat('%Y-%m-%d')(d);
+    const h = d.getHours();
+    const m = d.getMinutes();
+    const s = d.getSeconds();
+    const msec10 = d.getUTCMilliseconds() * 10 + msecTenths;
 
     return includeTime(dateStr, h, m, s, msec10);
 };
@@ -253,7 +253,7 @@ function includeTime(dateStr: string, h: number, m: number, s: number, msec10: n
         if(s || msec10) {
             dateStr += ':' + lpad(s, 2);
             if(msec10) {
-                var digits = 4;
+                let digits = 4;
                 while(msec10 % 10 === 0) {
                     digits -= 1;
                     msec10 /= 10;
@@ -265,7 +265,7 @@ function includeTime(dateStr: string, h: number, m: number, s: number, msec10: n
     return dateStr;
 }
 
-export var cleanDate = function(v: any, dflt?: any, calendar?: any): any {
+export const cleanDate = function(v: any, dflt?: any, calendar?: any): any {
     // let us use cleanDate to provide a missing default without an error
     if(v === BADNUM) return dflt;
     if(isJSDate(v) || (typeof v === 'number' && isFinite(v))) {
@@ -298,9 +298,9 @@ export var cleanDate = function(v: any, dflt?: any, calendar?: any): any {
  * %{n}f where n is the max number of digits of fractional seconds
  * %h formats: half of the year as a decimal number [1,2]
  */
-var fracMatch = /%\d?f/g;
-var halfYearMatch = /%h/g;
-var quarterToHalfYear: Record<string, string> = {
+const fracMatch = /%\d?f/g;
+const halfYearMatch = /%h/g;
+const quarterToHalfYear: Record<string, string> = {
     1: '1',
     2: '1',
     3: '2',
@@ -308,14 +308,14 @@ var quarterToHalfYear: Record<string, string> = {
 };
 function modDateFormat(fmt: string, x: number, formatter: any, calendar: any): string {
     fmt = fmt.replace(fracMatch, function(match: string) {
-        var digits = Math.min(+(match.charAt(1)) || 6, 6);
-        var fracSecs = ((x / 1000 % 1) + 2)
+        const digits = Math.min(+(match.charAt(1)) || 6, 6);
+        const fracSecs = ((x / 1000 % 1) + 2)
             .toFixed(digits)
             .slice(2).replace(/0+$/, '') || '0';
         return fracSecs;
     });
 
-    var d = new Date(Math.floor(x + 0.05));
+    const d = new Date(Math.floor(x + 0.05));
 
     fmt = fmt.replace(halfYearMatch, function() {
         return quarterToHalfYear[formatter('%q')(d)];
@@ -337,11 +337,11 @@ function modDateFormat(fmt: string, x: number, formatter: any, calendar: any): s
  *   tr: tickround ('M', 'S', or # digits)
  * only supports UTC times (where every day is 24 hours and 0 is at midnight)
  */
-var MAXSECONDS = [59, 59.9, 59.99, 59.999, 59.9999];
+const MAXSECONDS = [59, 59.9, 59.99, 59.999, 59.9999];
 function formatTime(x: number, tr: any): string {
-    var timePart = mod(x + 0.05, ONEDAY);
+    const timePart = mod(x + 0.05, ONEDAY);
 
-    var timeStr = lpad(Math.floor(timePart / ONEHOUR), 2) + ':' +
+    let timeStr = lpad(Math.floor(timePart / ONEHOUR), 2) + ':' +
         lpad(mod(Math.floor(timePart / ONEMIN), 60), 2);
 
     if(tr !== 'M') {
@@ -362,9 +362,9 @@ function formatTime(x: number, tr: any): string {
          * say we round seconds but floor everything else. BUT that means
          * we need to never round up to 60 seconds, ie 23:59:60
          */
-        var sec = Math.min(mod(x / ONESEC, 60), MAXSECONDS[tr]);
+        const sec = Math.min(mod(x / ONESEC, 60), MAXSECONDS[tr]);
 
-        var secStr = (100 + sec).toFixed(tr).slice(1);
+        let secStr = (100 + sec).toFixed(tr).slice(1);
         if(tr > 0) {
             secStr = secStr.replace(/0+$/, '').replace(/[\.]$/, '');
         }
@@ -374,7 +374,7 @@ function formatTime(x: number, tr: any): string {
     return timeStr;
 }
 
-export var formatDate = function(x: number, fmt: string, tr: any, formatter: any, calendar?: any, extraFormat?: any): string {
+export const formatDate = function(x: number, fmt: string, tr: any, formatter: any, calendar?: any, extraFormat?: any): string {
     calendar = isWorldCalendar(calendar) && calendar;
 
     if(!fmt) {
@@ -416,22 +416,22 @@ export var formatDate = function(x: number, fmt: string, tr: any, formatter: any
  * but at least you can't shift any dates into the wrong month,
  * and ticks on these days incrementing by month would be very unusual
  */
-var THREEDAYS = 3 * ONEDAY;
+const THREEDAYS = 3 * ONEDAY;
 
-export var incrementMonth = function(ms: number, dMonth: number, calendar?: any): number {
+export const incrementMonth = function(ms: number, dMonth: number, calendar?: any): number {
     calendar = isWorldCalendar(calendar) && calendar;
 
     // pull time out and operate on pure dates, then add time back at the end
     // this gives maximum precision - not that we *normally* care if we're
     // incrementing by month, but better to be safe!
-    var timeMs = mod(ms, ONEDAY);
+    const timeMs = mod(ms, ONEDAY);
     ms = Math.round(ms - timeMs);
 
     if(calendar) {
         try {
-            var dateJD = Math.round(ms / ONEDAY) + EPOCHJD;
-            var calInstance = Registry.getComponentMethod('calendars', 'getCal')(calendar);
-            var cDate = calInstance.fromJD(dateJD);
+            const dateJD = Math.round(ms / ONEDAY) + EPOCHJD;
+            const calInstance = Registry.getComponentMethod('calendars', 'getCal')(calendar);
+            const cDate = calInstance.fromJD(dateJD);
 
             if(dMonth % 12) calInstance.add(cDate, dMonth, 'm');
             else calInstance.add(cDate, dMonth / 12, 'y');
@@ -443,24 +443,24 @@ export var incrementMonth = function(ms: number, dMonth: number, calendar?: any)
         }
     }
 
-    var y = new Date(ms + THREEDAYS);
+    const y = new Date(ms + THREEDAYS);
     return y.setUTCMonth(y.getUTCMonth() + dMonth) + timeMs - THREEDAYS;
 };
 
-export var findExactDates = function(data: any[], calendar?: any): { exactYears: number; exactMonths: number; exactDays: number } {
-    var exactYears = 0;
-    var exactMonths = 0;
-    var exactDays = 0;
-    var blankCount = 0;
-    var d: any;
-    var di: any;
+export const findExactDates = function(data: any[], calendar?: any): { exactYears: number; exactMonths: number; exactDays: number } {
+    let exactYears = 0;
+    let exactMonths = 0;
+    let exactDays = 0;
+    let blankCount = 0;
+    let d: any;
+    let di: any;
 
-    var calInstance = (
+    const calInstance = (
         isWorldCalendar(calendar) &&
         Registry.getComponentMethod('calendars', 'getCal')(calendar)
     );
 
-    for(var i = 0; i < data.length; i++) {
+    for(let i = 0; i < data.length; i++) {
         di = data[i];
 
         // not date data at all
@@ -493,7 +493,7 @@ export var findExactDates = function(data: any[], calendar?: any): { exactYears:
     exactMonths += exactYears;
     exactDays += exactMonths;
 
-    var dataCount = data.length - blankCount;
+    const dataCount = data.length - blankCount;
 
     return {
         exactYears: exactYears / dataCount,

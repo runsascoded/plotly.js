@@ -26,24 +26,24 @@ import clearGlCanvases from '../../lib/clear_gl_canvases.js';
 import { redrawReglTraces } from '../../plot_api/subroutines.js';
 import constants from './constants.js';
 import helpers from './helpers.js';
-var freeMode = dragHelpers.freeMode;
-var rectMode = dragHelpers.rectMode;
-var drawMode = dragHelpers.drawMode;
-var openMode = dragHelpers.openMode;
-var selectMode = dragHelpers.selectMode;
+const freeMode = dragHelpers.freeMode;
+const rectMode = dragHelpers.rectMode;
+const drawMode = dragHelpers.drawMode;
+const openMode = dragHelpers.openMode;
+const selectMode = dragHelpers.selectMode;
 
-var handleEllipse = newShapeHelpers.handleEllipse;
-var readPaths = newShapeHelpers.readPaths;
+const handleEllipse = newShapeHelpers.handleEllipse;
+const readPaths = newShapeHelpers.readPaths;
 
-var ascending = Lib.sorterAsc;
-var MINSELECT = constants.MINSELECT;
+const ascending = Lib.sorterAsc;
+const MINSELECT = constants.MINSELECT;
 
-var filteredPolygon = libPolygon.filter;
-var polygonTester = libPolygon.tester;
+const filteredPolygon = libPolygon.filter;
+const polygonTester = libPolygon.tester;
 
-var p2r = helpers.p2r;
-var axValue = helpers.axValue;
-var getTransform = helpers.getTransform;
+const p2r = helpers.p2r;
+const axValue = helpers.axValue;
+const getTransform = helpers.getTransform;
 
 function hasSubplot(dragOptions: any) {
     // N.B. subplot may be falsy e.g zero sankey index!
@@ -51,50 +51,50 @@ function hasSubplot(dragOptions: any) {
 }
 
 function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: any) {
-    var isCartesian = !hasSubplot(dragOptions);
+    const isCartesian = !hasSubplot(dragOptions);
 
-    var isFreeMode = freeMode(mode);
-    var isRectMode = rectMode(mode);
-    var isOpenMode = openMode(mode);
-    var isDrawMode = drawMode(mode);
-    var isSelectMode = selectMode(mode);
+    const isFreeMode = freeMode(mode);
+    const isRectMode = rectMode(mode);
+    const isOpenMode = openMode(mode);
+    const isDrawMode = drawMode(mode);
+    const isSelectMode = selectMode(mode);
 
-    var isLine = mode === 'drawline';
-    var isEllipse = mode === 'drawcircle';
-    var isLineOrEllipse = isLine || isEllipse; // cases with two start & end positions
+    const isLine = mode === 'drawline';
+    const isEllipse = mode === 'drawcircle';
+    const isLineOrEllipse = isLine || isEllipse; // cases with two start & end positions
 
-    var gd = dragOptions.gd;
-    var fullLayout = gd._fullLayout;
-    var immediateSelect = isSelectMode && fullLayout.newselection.mode === 'immediate' &&
+    const gd = dragOptions.gd;
+    const fullLayout = gd._fullLayout;
+    const immediateSelect = isSelectMode && fullLayout.newselection.mode === 'immediate' &&
         isCartesian; // N.B. only cartesian subplots have persistent selection
 
-    var zoomLayer = fullLayout._zoomlayer;
-    var dragBBox = dragOptions.element.getBoundingClientRect();
-    var plotinfo = dragOptions.plotinfo;
-    var transform = getTransform(plotinfo);
-    var x0 = startX - dragBBox.left;
-    var y0 = startY - dragBBox.top;
+    const zoomLayer = fullLayout._zoomlayer;
+    const dragBBox = dragOptions.element.getBoundingClientRect();
+    const plotinfo = dragOptions.plotinfo;
+    const transform = getTransform(plotinfo);
+    let x0 = startX - dragBBox.left;
+    let y0 = startY - dragBBox.top;
 
     fullLayout._calcInverseTransform(gd);
-    var transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
+    const transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
     x0 = transformedCoords[0];
     y0 = transformedCoords[1];
-    var scaleX = fullLayout._invScaleX;
-    var scaleY = fullLayout._invScaleY;
+    const scaleX = fullLayout._invScaleX;
+    const scaleY = fullLayout._invScaleY;
 
-    var x1 = x0;
-    var y1 = y0;
-    var path0 = 'M' + x0 + ',' + y0;
-    var xAxis = dragOptions.xaxes[0];
-    var yAxis = dragOptions.yaxes[0];
-    var pw = xAxis._length;
-    var ph = yAxis._length;
+    let x1 = x0;
+    let y1 = y0;
+    const path0 = 'M' + x0 + ',' + y0;
+    const xAxis = dragOptions.xaxes[0];
+    const yAxis = dragOptions.yaxes[0];
+    const pw = xAxis._length;
+    const ph = yAxis._length;
 
-    var subtract = evt.altKey &&
+    const subtract = evt.altKey &&
         !(drawMode(mode) && isOpenMode);
 
-    var filterPoly, selectionTesters, mergedPolygons, currentPolygon;
-    var i, searchInfo, eventData;
+    let filterPoly: any, selectionTesters: any, mergedPolygons: any, currentPolygon: any;
+    let i, searchInfo, eventData: any;
 
     coerceSelectionsCache(evt, gd, dragOptions);
 
@@ -102,8 +102,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         filterPoly = filteredPolygon([[x0, y0]], constants.BENDPX);
     }
 
-    var outlines = zoomLayer.selectAll('path.select-outline-' + plotinfo.id).data([1]);
-    var newStyle = isDrawMode ?
+    const outlines = zoomLayer.selectAll('path.select-outline-' + plotinfo.id).data([1]);
+    const newStyle = isDrawMode ?
         fullLayout.newshape :
         fullLayout.newselection;
 
@@ -111,21 +111,19 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         dragOptions.hasText = newStyle.label.text || newStyle.label.texttemplate;
     }
 
-    var fillC = (isDrawMode && !isOpenMode) ? newStyle.fillcolor : 'rgba(0,0,0,0)';
+    const fillC = (isDrawMode && !isOpenMode) ? newStyle.fillcolor : 'rgba(0,0,0,0)';
 
-    var strokeC = newStyle.line.color || (
+    const strokeC = newStyle.line.color || (
         (isCartesian ? Color.contrast(gd._fullLayout.plot_bgcolor) : '#7f7f7f') // non-cartesian subplot
     );
 
     outlines.enter()
         .append('path')
         .attr('class', 'select-outline select-outline-' + plotinfo.id)
-        .style({
-            opacity: isDrawMode ? newStyle.opacity / 2 : 1,
-            'stroke-dasharray': dashStyle(newStyle.line.dash, newStyle.line.width),
-            'stroke-width': newStyle.line.width + 'px',
-            'shape-rendering': 'crispEdges'
-        })
+        .style('opacity', isDrawMode ? newStyle.opacity / 2 : 1)
+        .style('stroke-dasharray', dashStyle(newStyle.line.dash, newStyle.line.width))
+        .style('stroke-width', newStyle.line.width + 'px')
+        .style('shape-rendering', 'crispEdges')
         .call(Color.stroke, strokeC)
         .call(Color.fill, fillC)
         .attr('fill-rule', 'evenodd')
@@ -133,47 +131,45 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         .attr('transform', transform)
         .attr('d', path0 + 'Z');
 
-    var corners = zoomLayer.append('path')
+    const corners = zoomLayer.append('path')
         .attr('class', 'zoombox-corners')
-        .style({
-            fill: Color.background,
-            stroke: Color.defaultLine,
-            'stroke-width': 1
-        })
+        .style('fill', Color.background)
+        .style('stroke', Color.defaultLine)
+        .style('stroke-width', 1)
         .attr('transform', transform)
         .attr('d', 'M0,0Z');
 
     // create & style group for text label
     if(isDrawMode && dragOptions.hasText) {
-        var shapeGroup = zoomLayer.select('.label-temp');
+        let shapeGroup = zoomLayer.select('.label-temp');
         if(shapeGroup.empty()) {
             shapeGroup = zoomLayer.append('g')
                 .classed('label-temp', true)
                 .classed('select-outline', true)
-                .style({ opacity: 0.8 });
+                .style('opacity', 0.8);
         }
     }
 
-    var throttleID = fullLayout._uid + constants.SELECTID;
-    var selection = [];
+    const throttleID = fullLayout._uid + constants.SELECTID;
+    let selection: any[] = [];
 
     // find the traces to search for selection points
-    var searchTraces = determineSearchTraces(gd, dragOptions.xaxes,
+    const searchTraces = determineSearchTraces(gd, dragOptions.xaxes,
       dragOptions.yaxes, dragOptions.subplot);
 
     if(immediateSelect && !evt.shiftKey) {
         dragOptions._clearSubplotSelections = function() {
             if(!isCartesian) return;
 
-            var xRef = xAxis._id;
-            var yRef = yAxis._id;
+            const xRef = xAxis._id;
+            const yRef = yAxis._id;
             deselectSubplot(gd, xRef, yRef, searchTraces);
 
-            var selections = (gd.layout || {}).selections || [];
-            var list = [];
-            var selectionErased = false;
-            for(var q = 0; q < selections.length; q++) {
-                var s = fullLayout.selections[q];
+            const selections = (gd.layout || {}).selections || [];
+            const list: any[] = [];
+            let selectionErased = false;
+            for(let q = 0; q < selections.length; q++) {
+                const s = fullLayout.selections[q];
                 if(
                     !s ||
                     s.xref !== xRef ||
@@ -195,7 +191,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         };
     }
 
-    var fillRangeItems = getFillRangeItems(dragOptions);
+    const fillRangeItems = getFillRangeItems(dragOptions);
 
     dragOptions.moveFn = function(dx0: any, dy0: any) {
         if(dragOptions._clearSubplotSelections) {
@@ -206,15 +202,15 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         x1 = Math.max(0, Math.min(pw, scaleX * dx0 + x0));
         y1 = Math.max(0, Math.min(ph, scaleY * dy0 + y0));
 
-        var dx = Math.abs(x1 - x0);
-        var dy = Math.abs(y1 - y0);
+        const dx = Math.abs(x1 - x0);
+        const dy = Math.abs(y1 - y0);
 
         if(isRectMode) {
-            var direction;
-            var start, end;
+            let direction;
+            let start, end;
 
             if(isSelectMode) {
-                var q = fullLayout.selectdirection;
+                const q = fullLayout.selectdirection;
 
                 if(q === 'any') {
                     if(dy < Math.min(dx * 0.6, MINSELECT)) {
@@ -276,8 +272,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
 
                 currentPolygon.xmin = isLineOrEllipse ? x1 : Math.min(x0, x1);
                 currentPolygon.xmax = isLineOrEllipse ? x1 : Math.max(x0, x1);
-                currentPolygon.ymin = Math.min(start, end);
-                currentPolygon.ymax = Math.max(start, end);
+                currentPolygon.ymin = Math.min(start as any, end);
+                currentPolygon.ymax = Math.max(start as any, end);
                 // extras to guide users in keeping a straight selection
                 corners.attr('d', 'M' + currentPolygon.xmin + ',' + (y0 - MINSELECT) +
                     'h-4v' + (2 * MINSELECT) + 'h4Z' +
@@ -289,8 +285,8 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                     handleEllipse(isEllipse, [start, y1], [end, y1]) : // using y1 instead of y0 allows adjusting the line while drawing
                     [[start, y0], [start, y1], [end, y1], [end, y0]]; // make a horizontal box
 
-                currentPolygon.xmin = Math.min(start, end);
-                currentPolygon.xmax = Math.max(start, end);
+                currentPolygon.xmin = Math.min(start as any, end);
+                currentPolygon.xmax = Math.max(start as any, end);
                 currentPolygon.ymin = isLineOrEllipse ? y1 : Math.min(y0, y1);
                 currentPolygon.ymax = isLineOrEllipse ? y1 : Math.max(y0, y1);
                 corners.attr('d', 'M' + (x0 - MINSELECT) + ',' + currentPolygon.ymin +
@@ -329,14 +325,14 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         displayOutlines(convertPoly(mergedPolygons, isOpenMode), outlines, dragOptions);
 
         if(isSelectMode) {
-            var _res = reselect(gd, false);
-            var extraPoints = _res.eventData ? _res.eventData.points.slice() : [];
+            let _res = reselect(gd, false);
+            const extraPoints = _res.eventData ? _res.eventData.points.slice() : [];
 
             _res = reselect(gd, false, selectionTesters, searchTraces, dragOptions);
             selectionTesters = _res.selectionTesters;
             eventData = _res.eventData;
 
-            var poly;
+            let poly;
             if(filterPoly) {
                 poly = filterPoly.filtered;
             } else {
@@ -349,21 +345,21 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                 function() {
                     selection = _doSelect(selectionTesters, searchTraces);
 
-                    var newPoints = selection.slice();
+                    const newPoints = selection.slice();
 
-                    for(var w = 0; w < extraPoints.length; w++) {
-                        var p = extraPoints[w];
-                        var found = false;
-                        for(var u = 0; u < newPoints.length; u++) {
+                    for(let w = 0; w < extraPoints.length; w++) {
+                        const p = extraPoints[w];
+                        let found = false;
+                        for(let u = 0; u < newPoints.length; u++) {
                             if(
-                                newPoints[u].curveNumber === p.curveNumber &&
-                                newPoints[u].pointNumber === p.pointNumber
+                                (newPoints[u] as any).curveNumber === p.curveNumber &&
+                                (newPoints[u] as any).pointNumber === p.pointNumber
                             ) {
                                 found = true;
                                 break;
                             }
                         }
-                        if(!found) newPoints.push(p);
+                        if(!found) newPoints.push((p as any));
                     }
 
                     if(newPoints.length) {
@@ -388,7 +384,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
         }
         if(isDrawMode) return;
 
-        var clickmode = fullLayout.clickmode;
+        const clickmode = fullLayout.clickmode;
 
         throttle.done(throttleID).then(function() {
             throttle.clear(throttleID);
@@ -407,15 +403,15 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                 emitDeselect(gd);
 
                 if(searchTraces.length) {
-                    var clickedXaxis = searchTraces[0].xaxis;
-                    var clickedYaxis = searchTraces[0].yaxis;
+                    const clickedXaxis = (searchTraces[0] as any).xaxis;
+                    const clickedYaxis = (searchTraces[0] as any).yaxis;
 
                     if(clickedXaxis && clickedYaxis) {
                         // drop selections in the clicked subplot
-                        var subSelections = [];
-                        var allSelections = gd._fullLayout.selections;
-                        for(var k = 0; k < allSelections.length; k++) {
-                            var s = allSelections[k];
+                        const subSelections: any[] = [];
+                        const allSelections = gd._fullLayout.selections;
+                        for(let k = 0; k < allSelections.length; k++) {
+                            const s = allSelections[k];
                             if(!s) continue; // also drop null selections if any
 
                             if(
@@ -486,19 +482,19 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
 }
 
 function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: any, dragOptions: any, polygonOutlines?: any) {
-    var hoverData = gd._hoverdata;
-    var fullLayout = gd._fullLayout;
-    var clickmode = fullLayout.clickmode;
-    var sendEvents = clickmode.indexOf('event') > -1;
-    var selection = [];
-    var searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
-    var thisTracesSelection, pointOrBinSelected, subtract, eventData, i;
+    const hoverData = gd._hoverdata;
+    const fullLayout = gd._fullLayout;
+    const clickmode = fullLayout.clickmode;
+    const sendEvents = clickmode.indexOf('event') > -1;
+    let selection: any[] = [];
+    let searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
+    let thisTracesSelection, pointOrBinSelected, subtract, eventData, i;
 
     if(isHoverDataSet(hoverData)) {
         coerceSelectionsCache(evt, gd, dragOptions);
         searchTraces = determineSearchTraces(gd, xAxes, yAxes, subplot);
-        var clickedPtInfo = extractClickedPtInfo(hoverData, searchTraces);
-        var isBinnedTrace = clickedPtInfo.pointNumbers.length > 0;
+        const clickedPtInfo = extractClickedPtInfo(hoverData, searchTraces);
+        const isBinnedTrace = clickedPtInfo.pointNumbers.length > 0;
 
         // Note: potentially costly operation isPointOrBinSelected is
         // called as late as possible through the use of an assignment
@@ -527,7 +523,7 @@ function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: 
                 isPointOrBinSelected(clickedPtInfo));
             currentSelectionDef = newPointSelectionDef(clickedPtInfo.pointNumber, clickedPtInfo.searchInfo, subtract);
 
-            var allSelectionDefs = dragOptions.selectionDefs.concat([currentSelectionDef]);
+            const allSelectionDefs = dragOptions.selectionDefs.concat([currentSelectionDef]);
             selectionTesters = multiTester(allSelectionDefs, selectionTesters);
 
             for(i = 0; i < searchTraces.length; i++) {
@@ -535,7 +531,7 @@ function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: 
                 thisTracesSelection = fillSelectionItem(traceSelection, searchTraces[i]);
 
                 if(selection.length) {
-                    for(var j = 0; j < thisTracesSelection.length; j++) {
+                    for(let j = 0; j < thisTracesSelection.length; j++) {
                         selection.push(thisTracesSelection[j]);
                     }
                 } else selection = thisTracesSelection;
@@ -549,8 +545,8 @@ function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: 
             }
 
             if(polygonOutlines) {
-                var polygons = dragOptions.mergedPolygons;
-                var isOpenMode = openMode(dragOptions.dragmode);
+                const polygons = dragOptions.mergedPolygons;
+                const isOpenMode = openMode(dragOptions.dragmode);
 
                 // display polygons on the screen
                 displayOutlines(convertPoly(polygons, isOpenMode), polygonOutlines, dragOptions);
@@ -589,8 +585,8 @@ function newPointNumTester(pointSelectionDef: any) {
         ymax: 0,
         pts: [],
         contains: function(pt: any, omitFirstEdge: any, pointNumber: any, searchInfo: any) {
-            var idxWantedTrace = pointSelectionDef.searchInfo.cd[0].trace.index;
-            var idxActualTrace = searchInfo.cd[0].trace.index;
+            const idxWantedTrace = pointSelectionDef.searchInfo.cd[0].trace.index;
+            const idxActualTrace = searchInfo.cd[0].trace.index;
             return idxActualTrace === idxWantedTrace &&
               pointNumber === pointSelectionDef.pointNumber;
         },
@@ -612,17 +608,17 @@ function newPointNumTester(pointSelectionDef: any) {
 function multiTester(list: any, _selectionTesters?: any) {
     if(!list.length) return;
 
-    var testers = [];
-    var xmin = isPointSelectionDef(list[0]) ? 0 : list[0][0][0];
-    var xmax = xmin;
-    var ymin = isPointSelectionDef(list[0]) ? 0 : list[0][0][1];
-    var ymax = ymin;
+    const testers: any[] = [];
+    let xmin = isPointSelectionDef(list[0]) ? 0 : list[0][0][0];
+    let xmax = xmin;
+    let ymin = isPointSelectionDef(list[0]) ? 0 : list[0][0][1];
+    let ymax = ymin;
 
-    for(var i = 0; i < list.length; i++) {
+    for(let i = 0; i < list.length; i++) {
         if(isPointSelectionDef(list[i])) {
             testers.push(newPointNumTester(list[i]));
         } else {
-            var tester = polygonTester(list[i]);
+            const tester = polygonTester(list[i]);
             tester.subtract = !!list[i].subtract;
             testers.push(tester);
 
@@ -644,11 +640,11 @@ function multiTester(list: any, _selectionTesters?: any) {
      * @return {boolean} true if point is considered to be selected, false otherwise.
      */
     function contains(pt: any, arg: any, pointNumber: any, searchInfo: any) {
-        var contained = false;
-        for(var i = 0; i < testers.length; i++) {
-            if(testers[i].contains(pt, arg, pointNumber, searchInfo)) {
+        let contained = false;
+        for(let i = 0; i < testers.length; i++) {
+            if((testers[i] as any).contains(pt, arg, pointNumber, searchInfo)) {
                 // if contained by subtract tester - exclude the point
-                contained = !testers[i].subtract;
+                contained = !(testers[i] as any).subtract;
             }
         }
 
@@ -668,16 +664,16 @@ function multiTester(list: any, _selectionTesters?: any) {
 }
 
 function coerceSelectionsCache(evt: any, gd: GraphDiv, dragOptions: any) {
-    var fullLayout = gd._fullLayout;
-    var plotinfo = dragOptions.plotinfo;
-    var dragmode = dragOptions.dragmode;
+    const fullLayout = gd._fullLayout;
+    const plotinfo = dragOptions.plotinfo;
+    const dragmode = dragOptions.dragmode;
 
-    var selectingOnSameSubplot = (
+    const selectingOnSameSubplot = (
         fullLayout._lastSelectedSubplot &&
         fullLayout._lastSelectedSubplot === plotinfo.id
     );
 
-    var hasModifierKey = (evt.shiftKey || evt.altKey) &&
+    const hasModifierKey = (evt.shiftKey || evt.altKey) &&
         !(drawMode(dragmode) && openMode(dragmode));
 
     if(
@@ -710,10 +706,10 @@ function hasActiveSelection(gd: GraphDiv) {
 }
 
 function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
-    var dragmode = dragOptions.dragmode;
-    var plotinfo = dragOptions.plotinfo;
+    const dragmode = dragOptions.dragmode;
+    const plotinfo = dragOptions.plotinfo;
 
-    var gd = dragOptions.gd;
+    const gd = dragOptions.gd;
     if(hasActiveShape(gd)) {
         gd._fullLayout._deactivateShape(gd);
     }
@@ -721,17 +717,17 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
         gd._fullLayout._deactivateSelection(gd);
     }
 
-    var fullLayout = gd._fullLayout;
-    var zoomLayer = fullLayout._zoomlayer;
+    const fullLayout = gd._fullLayout;
+    const zoomLayer = fullLayout._zoomlayer;
 
-    var isDrawMode = drawMode(dragmode);
-    var isSelectMode = selectMode(dragmode);
+    const isDrawMode = drawMode(dragmode);
+    const isSelectMode = selectMode(dragmode);
 
     if(isDrawMode || isSelectMode) {
-        var outlines = zoomLayer.selectAll('.select-outline-' + plotinfo.id);
+        const outlines = zoomLayer.selectAll('.select-outline-' + plotinfo.id);
         if(outlines && gd._fullLayout._outlining) {
             // add shape
-            var shapes;
+            let shapes;
             if(isDrawMode) {
                 shapes = newShapes(outlines, dragOptions);
             }
@@ -742,7 +738,7 @@ function clearSelectionsCache(dragOptions: any, immediateSelect?: any) {
             }
 
             // add selection
-            var selections;
+            let selections;
             if(
                 isSelectMode &&
                 !hasSubplot(dragOptions) // only allow cartesian - no maps for now
@@ -775,10 +771,10 @@ function getAxId(ax: FullAxis) {
 function determineSearchTraces(gd: GraphDiv, xAxes: any, yAxes: any, subplot: any) {
     if(!gd.calcdata) return [];
 
-    var searchTraces = [];
-    var xAxisIds = xAxes.map(getAxId);
-    var yAxisIds = yAxes.map(getAxId);
-    var cd, trace, i;
+    const searchTraces: any[] = [];
+    const xAxisIds = xAxes.map(getAxId);
+    const yAxisIds = yAxes.map(getAxId);
+    let cd, trace, i;
 
     for(i = 0; i < gd.calcdata.length; i++) {
         cd = gd.calcdata[i];
@@ -794,12 +790,12 @@ function determineSearchTraces(gd: GraphDiv, xAxes: any, yAxes: any, subplot: an
         } else if(trace.type === 'splom') {
             // FIXME: make sure we don't have more than single axis for splom
             if(trace._xaxes[xAxisIds[0]] && trace._yaxes[yAxisIds[0]]) {
-                var info = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
+                const info = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
                 info.scene = gd._fullLayout._splomScenes[trace.uid];
                 searchTraces.push(info);
             }
         } else if(trace.type === 'sankey') {
-            var sankeyInfo = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
+            const sankeyInfo = createSearchInfo(trace._module, cd, xAxes[0], yAxes[0]);
             searchTraces.push(sankeyInfo);
         } else {
             if(xAxisIds.indexOf(trace.xaxis) === -1 && (!trace._xA || !trace._xA.overlaying)) continue;
@@ -829,10 +825,10 @@ function isHoverDataSet(hoverData: any) {
 }
 
 function extractClickedPtInfo(hoverData: any, searchTraces: any) {
-    var hoverDatum = hoverData[0];
-    var pointNumber = -1;
-    var pointNumbers = [];
-    var searchInfo, i;
+    const hoverDatum = hoverData[0];
+    let pointNumber = -1;
+    let pointNumbers = [];
+    let searchInfo, i;
 
     for(i = 0; i < searchTraces.length; i++) {
         searchInfo = searchTraces[i];
@@ -865,15 +861,15 @@ function extractClickedPtInfo(hoverData: any, searchTraces: any) {
 }
 
 function isPointOrBinSelected(clickedPtInfo: any) {
-    var trace = clickedPtInfo.searchInfo.cd[0].trace;
-    var ptNum = clickedPtInfo.pointNumber;
-    var ptNums = clickedPtInfo.pointNumbers;
-    var ptNumsSet = ptNums.length > 0;
+    const trace = clickedPtInfo.searchInfo.cd[0].trace;
+    const ptNum = clickedPtInfo.pointNumber;
+    const ptNums = clickedPtInfo.pointNumbers;
+    const ptNumsSet = ptNums.length > 0;
 
     // When pointsNumbers is set (e.g. histogram's binning),
     // it is assumed that when the first point of
     // a bin is selected, all others are as well
-    var ptNumToTest = ptNumsSet ? ptNums[0] : ptNum;
+    const ptNumToTest = ptNumsSet ? ptNums[0] : ptNum;
 
     // TODO potential performance improvement
     // Primarily we need this function to determine if a click adds
@@ -884,8 +880,8 @@ function isPointOrBinSelected(clickedPtInfo: any) {
 }
 
 function isOnlyThisBinSelected(searchTraces: any, clickedPtInfo: any) {
-    var tracesWithSelectedPts = [];
-    var searchInfo, trace, isSameTrace, i;
+    const tracesWithSelectedPts: any[] = [];
+    let searchInfo, trace, isSameTrace, i;
 
     for(i = 0; i < searchTraces.length; i++) {
         searchInfo = searchTraces[i];
@@ -913,8 +909,8 @@ function isOnlyThisBinSelected(searchTraces: any, clickedPtInfo: any) {
 }
 
 function isOnlyOnePointSelected(searchTraces: any) {
-    var len = 0;
-    var searchInfo, trace, i;
+    let len = 0;
+    let searchInfo, trace, i;
 
     for(i = 0; i < searchTraces.length; i++) {
         searchInfo = searchTraces[i];
@@ -931,32 +927,32 @@ function isOnlyOnePointSelected(searchTraces: any) {
 }
 
 function updateSelectedState(gd: GraphDiv, searchTraces: any, eventData?: any) {
-    var i;
+    let i;
 
     // before anything else, update preGUI if necessary
     for(i = 0; i < searchTraces.length; i++) {
-        var fullInputTrace = searchTraces[i].cd[0].trace._fullInput;
-        var tracePreGUI = gd._fullLayout._tracePreGUI[fullInputTrace.uid] || {};
+        const fullInputTrace = searchTraces[i].cd[0].trace._fullInput;
+        const tracePreGUI = gd._fullLayout._tracePreGUI[fullInputTrace.uid] || {};
         if(tracePreGUI.selectedpoints === undefined) {
             tracePreGUI.selectedpoints = fullInputTrace._input.selectedpoints || null;
         }
     }
 
-    var trace;
+    let trace;
     if(eventData) {
-        var pts = eventData.points || [];
+        const pts = eventData.points || [];
         for(i = 0; i < searchTraces.length; i++) {
             trace = searchTraces[i].cd[0].trace;
             trace._input.selectedpoints = trace._fullInput.selectedpoints = [];
             if(trace._fullInput !== trace) trace.selectedpoints = [];
         }
 
-        for(var k = 0; k < pts.length; k++) {
-            var pt = pts[k];
-            var data = pt.data;
-            var fullData = pt.fullData;
-            var pointIndex = pt.pointIndex;
-            var pointIndices = pt.pointIndices;
+        for(let k = 0; k < pts.length; k++) {
+            const pt = pts[k];
+            const data = pt.data;
+            const fullData = pt.fullData;
+            const pointIndex = pt.pointIndex;
+            const pointIndices = pt.pointIndices;
             if(pointIndices) {
                 [].push.apply(data.selectedpoints, pointIndices);
                 if(trace._fullInput !== trace) {
@@ -984,18 +980,18 @@ function updateSelectedState(gd: GraphDiv, searchTraces: any, eventData?: any) {
 }
 
 function updateReglSelectedState(gd: GraphDiv, searchTraces: any) {
-    var hasRegl = false;
+    let hasRegl = false;
 
-    for(var i = 0; i < searchTraces.length; i++) {
-        var searchInfo = searchTraces[i];
-        var cd = searchInfo.cd;
+    for(let i = 0; i < searchTraces.length; i++) {
+        const searchInfo = searchTraces[i];
+        const cd = searchInfo.cd;
 
         if(Registry.traceIs(cd[0].trace, 'regl')) {
             hasRegl = true;
         }
 
-        var _module = searchInfo._module;
-        var fn = _module.styleOnSelect || _module.style;
+        const _module = searchInfo._module;
+        const fn = _module.styleOnSelect || _module.style;
         if(fn) {
             fn(gd, cd, cd[0].node3);
             if(cd[0].nodeRangePlot3) fn(gd, cd, cd[0].nodeRangePlot3);
@@ -1009,20 +1005,20 @@ function updateReglSelectedState(gd: GraphDiv, searchTraces: any) {
 }
 
 function mergePolygons(list: any, poly: any, subtract: any) {
-    var fn = subtract ?
+    const fn = subtract ?
         polybool.difference :
         polybool.union;
 
-    var res = fn({
+    const res = fn({
         regions: list
     }, {
         regions: [poly]
     });
 
-    var allPolygons = res.regions.reverse();
+    const allPolygons = res.regions.reverse();
 
-    for(var i = 0; i < allPolygons.length; i++) {
-        var polygon = allPolygons[i];
+    for(let i = 0; i < allPolygons.length; i++) {
+        const polygon = allPolygons[i];
 
         polygon.subtract = getSubtract(polygon, allPolygons.slice(0, i));
     }
@@ -1032,10 +1028,10 @@ function mergePolygons(list: any, poly: any, subtract: any) {
 
 function fillSelectionItem(selection: any, searchInfo: any) {
     if(Array.isArray(selection)) {
-        var cd = searchInfo.cd;
-        var trace = searchInfo.cd[0].trace;
+        const cd = searchInfo.cd;
+        const trace = searchInfo.cd[0].trace;
 
-        for(var i = 0; i < selection.length; i++) {
+        for(let i = 0; i < selection.length; i++) {
             selection[i] = makeEventData(selection[i], trace, cd);
         }
     }
@@ -1044,21 +1040,21 @@ function fillSelectionItem(selection: any, searchInfo: any) {
 }
 
 function convertPoly(polygonsIn: any, isOpenMode: any) { // add M and L command to draft positions
-    var polygonsOut = [];
-    for(var i = 0; i < polygonsIn.length; i++) {
+    const polygonsOut: any[] = [];
+    for(let i = 0; i < polygonsIn.length; i++) {
         polygonsOut[i] = [];
-        for(var j = 0; j < polygonsIn[i].length; j++) {
+        for(let j = 0; j < polygonsIn[i].length; j++) {
             polygonsOut[i][j] = [];
             polygonsOut[i][j][0] = j ? 'L' : 'M';
-            for(var k = 0; k < polygonsIn[i][j].length; k++) {
-                polygonsOut[i][j].push(
+            for(let k = 0; k < polygonsIn[i][j].length; k++) {
+                (polygonsOut[i][j] as any).push(
                     polygonsIn[i][j][k]
                 );
             }
         }
 
         if(!isOpenMode) {
-            polygonsOut[i].push([
+            (polygonsOut[i] as any).push([
                 'Z',
                 polygonsOut[i][0][1], // initial x
                 polygonsOut[i][0][2]  // initial y
@@ -1070,13 +1066,13 @@ function convertPoly(polygonsIn: any, isOpenMode: any) { // add M and L command 
 }
 
 function _doSelect(selectionTesters: any, searchTraces: any) {
-    var allSelections = [];
+    let allSelections: any[] = [];
 
-    var thisSelection;
-    var traceSelections = [];
-    var traceSelection;
-    for(var i = 0; i < searchTraces.length; i++) {
-        var searchInfo = searchTraces[i];
+    let thisSelection;
+    const traceSelections: any[] = [];
+    let traceSelection;
+    for(let i = 0; i < searchTraces.length; i++) {
+        const searchInfo = searchTraces[i];
 
         traceSelection = searchInfo._module.selectPoints(searchInfo, selectionTesters);
         traceSelections.push(traceSelection);
@@ -1090,43 +1086,43 @@ function _doSelect(selectionTesters: any, searchTraces: any) {
 }
 
 function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, searchTraces?: any, dragOptions?: any) {
-    var hadSearchTraces = !!searchTraces;
-    var plotinfo, xRef, yRef;
+    const hadSearchTraces = !!searchTraces;
+    let plotinfo, xRef, yRef;
     if(dragOptions) {
         plotinfo = dragOptions.plotinfo;
         xRef = dragOptions.xaxes[0]._id;
         yRef = dragOptions.yaxes[0]._id;
     }
 
-    var allSelections = [];
-    var allSearchTraces = [];
+    let allSelections: any[] = [];
+    let allSearchTraces: any[] = [];
 
     // select layout.selection polygons
-    var layoutPolygons = getLayoutPolygons(gd);
+    let layoutPolygons = getLayoutPolygons(gd);
 
     // add draft outline polygons to layoutPolygons
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
     if(plotinfo) {
-        var zoomLayer = fullLayout._zoomlayer;
-        var mode = fullLayout.dragmode;
-        var isDrawMode = drawMode(mode);
-        var isSelectMode = selectMode(mode);
+        const zoomLayer = fullLayout._zoomlayer;
+        const mode = fullLayout.dragmode;
+        const isDrawMode = drawMode(mode);
+        const isSelectMode = selectMode(mode);
         if(isDrawMode || isSelectMode) {
-            var xaxis = getFromId(gd, xRef, 'x');
-            var yaxis = getFromId(gd, yRef, 'y');
+            const xaxis = getFromId(gd, xRef, 'x');
+            const yaxis = getFromId(gd, yRef, 'y');
             if(xaxis && yaxis) {
-                var outlines = zoomLayer.selectAll('.select-outline-' + plotinfo.id);
+                const outlines = zoomLayer.selectAll('.select-outline-' + plotinfo.id);
                 if(outlines && gd._fullLayout._outlining) {
                     if(outlines.length) {
-                        var e = outlines[0][0]; // pick first
-                        var d = e.getAttribute('d');
-                        var outlinePolys = readPaths(d, gd, plotinfo);
+                        const e = outlines[0][0]; // pick first
+                        const d = e.getAttribute('d');
+                        const outlinePolys = readPaths(d, gd, plotinfo);
 
-                        var draftPolygons: any[] = [];
-                        for(var u = 0; u < outlinePolys.length; u++) {
-                            var p = outlinePolys[u];
-                            var polygon: any = [];
-                            for(var t = 0; t < p.length; t++) {
+                        const draftPolygons: any[] = [];
+                        for(let u = 0; u < outlinePolys.length; u++) {
+                            const p = outlinePolys[u];
+                            const polygon: any = [];
+                            for(let t = 0; t < (p as any).length; t++) {
                                 polygon.push([
                                     convert(xaxis, p[t][1]),
                                     convert(yaxis, p[t][2])
@@ -1140,34 +1136,34 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
                             draftPolygons.push(polygon);
                         }
 
-                        layoutPolygons = layoutPolygons.concat(draftPolygons);
+                        layoutPolygons = layoutPolygons.concat((draftPolygons as any));
                     }
                 }
             }
         }
     }
 
-    var subplots = (xRef && yRef) ? [xRef + yRef] :
+    const subplots = (xRef && yRef) ? [xRef + yRef] :
         fullLayout._subplots.cartesian;
 
     epmtySplomSelectionBatch(gd);
 
-    var seenSplom: any = {};
+    const seenSplom: any = {};
 
-    for(var i = 0; i < subplots.length; i++) {
-        var subplot = subplots[i];
-        var yAt = subplot.indexOf('y');
-        var _xRef = subplot.slice(0, yAt);
-        var _yRef = subplot.slice(yAt);
+    for(let i = 0; i < subplots.length; i++) {
+        const subplot = subplots[i];
+        const yAt = subplot.indexOf('y');
+        const _xRef = subplot.slice(0, yAt);
+        const _yRef = subplot.slice(yAt);
 
-        var _selectionTesters = (xRef && yRef) ? selectionTesters : undefined;
+        let _selectionTesters = (xRef && yRef) ? selectionTesters : undefined;
         _selectionTesters = addTester(layoutPolygons, _xRef, _yRef, _selectionTesters);
 
         if(_selectionTesters) {
-            var _searchTraces = searchTraces;
+            let _searchTraces = searchTraces;
             if(!hadSearchTraces) {
-                var _xA = getFromId(gd, _xRef, 'x');
-                var _yA = getFromId(gd, _yRef, 'y');
+                const _xA = getFromId(gd, _xRef, 'x');
+                const _yA = getFromId(gd, _yRef, 'y');
 
                 _searchTraces = determineSearchTraces(
                     gd,
@@ -1176,19 +1172,19 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
                     subplot
                 );
 
-                for(var w = 0; w < _searchTraces.length; w++) {
-                    var s = _searchTraces[w];
-                    var cd0 = s.cd[0];
-                    var trace = cd0.trace;
+                for(let w = 0; w < _searchTraces.length; w++) {
+                    const s = _searchTraces[w];
+                    const cd0 = s.cd[0];
+                    const trace = cd0.trace;
 
                     if(s._module.name === 'scattergl' && !cd0.t.xpx) {
-                        var x = trace.x;
-                        var y = trace.y;
-                        var len = trace._length;
+                        const x = trace.x;
+                        const y = trace.y;
+                        const len = trace._length;
                         // generate stash for scattergl
                         cd0.t.xpx = [];
                         cd0.t.ypx = [];
-                        for(var j = 0; j < len; j++) {
+                        for(let j = 0; j < len; j++) {
                             cd0.t.xpx[j] = _xA.c2p(x[j]);
                             cd0.t.ypx[j] = _yA.c2p(y[j]);
                         }
@@ -1201,32 +1197,32 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
                     }
                 }
             }
-            var selection = _doSelect(_selectionTesters, _searchTraces);
+            const selection = _doSelect(_selectionTesters, _searchTraces);
 
             allSelections = allSelections.concat(selection);
             allSearchTraces = allSearchTraces.concat(_searchTraces);
         }
     }
 
-    var eventData: any = {points: allSelections};
+    const eventData: any = {points: allSelections};
     updateSelectedState(gd, allSearchTraces, eventData);
 
-    var clickmode = fullLayout.clickmode;
-    var sendEvents = clickmode.indexOf('event') > -1 && mayEmitSelected;
+    const clickmode = fullLayout.clickmode;
+    const sendEvents = clickmode.indexOf('event') > -1 && mayEmitSelected;
 
     if(
         !plotinfo && // get called from plot_api & plots
         mayEmitSelected
     ) {
-        var activePolygons = getLayoutPolygons(gd, true);
+        const activePolygons = getLayoutPolygons(gd, true);
 
         if(activePolygons.length) {
-            var xref = activePolygons[0].xref;
-            var yref = activePolygons[0].yref;
+            const xref = (activePolygons[0] as any).xref;
+            const yref = (activePolygons[0] as any).yref;
             if(xref && yref) {
-                var poly = castMultiPolygon(activePolygons);
+                const poly = castMultiPolygon(activePolygons);
 
-                var fillRangeItems = makeFillRangeItems([
+                const fillRangeItems = makeFillRangeItems([
                     getFromId(gd, xref, 'x'),
                     getFromId(gd, yref, 'y')
                 ]);
@@ -1248,7 +1244,7 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
         !plotinfo && // get called from plot_api & plots
         fullLayout._deselect
     ) {
-        var deselect = fullLayout._deselect;
+        const deselect = fullLayout._deselect;
         xRef = deselect.xref;
         yRef = deselect.yref;
 
@@ -1274,15 +1270,15 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
 }
 
 function epmtySplomSelectionBatch(gd: GraphDiv) {
-    var cd = gd.calcdata;
+    const cd = gd.calcdata;
     if(!cd) return;
 
-    for(var i = 0; i < cd.length; i++) {
-        var cd0 = cd[i][0];
-        var trace = cd0.trace;
-        var splomScenes = gd._fullLayout._splomScenes;
+    for(let i = 0; i < cd.length; i++) {
+        const cd0 = cd[i][0];
+        const trace = cd0.trace;
+        const splomScenes = gd._fullLayout._splomScenes;
         if(splomScenes) {
-            var scene = splomScenes[trace.uid];
+            const scene = splomScenes[trace.uid];
             if(scene) {
                 scene.selectBatch = [];
             }
@@ -1291,8 +1287,8 @@ function epmtySplomSelectionBatch(gd: GraphDiv) {
 }
 
 function subplotSelected(xRef: any, yRef: any, searchTraces?: any) {
-    for(var i = 0; i < searchTraces.length; i++) {
-        var s = searchTraces[i];
+    for(let i = 0; i < searchTraces.length; i++) {
+        const s = searchTraces[i];
         if(
             (s.xaxis && s.xaxis._id === xRef) &&
             (s.yaxis && s.yaxis._id === yRef)
@@ -1311,8 +1307,8 @@ function deselectSubplot(gd: GraphDiv, xRef: any, yRef: any, searchTraces: any) 
         xRef + yRef
     );
 
-    for(var k = 0; k < searchTraces.length; k++) {
-        var searchInfo = searchTraces[k];
+    for(let k = 0; k < searchTraces.length; k++) {
+        const searchInfo = searchTraces[k];
         searchInfo._module.selectPoints(searchInfo, false);
     }
 
@@ -1320,14 +1316,14 @@ function deselectSubplot(gd: GraphDiv, xRef: any, yRef: any, searchTraces: any) 
 }
 
 function addTester(layoutPolygons: any, xRef: any, yRef: any, selectionTesters: any) {
-    var mergedPolygons;
+    let mergedPolygons;
 
-    for(var i = 0; i < layoutPolygons.length; i++) {
-        var currentPolygon = layoutPolygons[i];
+    for(let i = 0; i < layoutPolygons.length; i++) {
+        const currentPolygon = layoutPolygons[i];
         if(xRef !== currentPolygon.xref || yRef !== currentPolygon.yref) continue;
 
         if(mergedPolygons) {
-            var subtract = !!currentPolygon.subtract;
+            const subtract = !!currentPolygon.subtract;
             mergedPolygons = mergePolygons(mergedPolygons, currentPolygon, subtract);
             selectionTesters = multiTester(mergedPolygons);
         } else {
@@ -1340,34 +1336,34 @@ function addTester(layoutPolygons: any, xRef: any, yRef: any, selectionTesters: 
 }
 
 function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
-    var allPolygons = [];
+    const allPolygons: any[] = [];
 
-    var fullLayout = gd._fullLayout;
-    var allSelections = fullLayout.selections;
-    var len = allSelections.length;
+    const fullLayout = gd._fullLayout;
+    const allSelections = fullLayout.selections;
+    const len = allSelections.length;
 
-    for(var i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         if(onlyActiveOnes && i !== fullLayout._activeSelectionIndex) continue;
 
-        var selection = allSelections[i];
+        const selection = allSelections[i];
         if(!selection) continue;
 
-        var xref = selection.xref;
-        var yref = selection.yref;
+        const xref = selection.xref;
+        const yref = selection.yref;
 
-        var xaxis = getFromId(gd, xref, 'x');
-        var yaxis = getFromId(gd, yref, 'y');
+        const xaxis = getFromId(gd, xref, 'x');
+        const yaxis = getFromId(gd, yref, 'y');
 
-        var xmin, xmax, ymin, ymax;
+        let xmin, xmax, ymin, ymax;
 
-        var polygon;
+        let polygon: any;
         if(selection.type === 'rect') {
             polygon = [];
 
-            var x0 = convert(xaxis, selection.x0);
-            var x1 = convert(xaxis, selection.x1);
-            var y0 = convert(yaxis, selection.y0);
-            var y1 = convert(yaxis, selection.y1);
+            const x0 = convert(xaxis, selection.x0);
+            const x1 = convert(xaxis, selection.x1);
+            const y0 = convert(yaxis, selection.y0);
+            const y1 = convert(yaxis, selection.y1);
             polygon = [[x0, y0], [x0, y1], [x1, y1], [x1, y0]];
 
             xmin = Math.min(x0, x1);
@@ -1388,16 +1384,16 @@ function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
 
             allPolygons.push(polygon);
         } else if(selection.type === 'path') {
-            var segments = selection.path.split('Z');
+            const segments = selection.path.split('Z');
 
-            var multiPolygons = [];
-            for(var j = 0; j < segments.length; j++) {
-                var path = segments[j];
+            const multiPolygons: any[] = [];
+            for(let j = 0; j < segments.length; j++) {
+                let path = segments[j];
                 if(!path) continue;
                 path += 'Z';
 
-                var allX = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsX, 'raw');
-                var allY = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsY, 'raw');
+                const allX = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsX, 'raw');
+                const allY = shapeHelpers.extractPathCoords(path, shapeConstants.paramIsY, 'raw');
 
                 xmin = Infinity;
                 xmax = -Infinity;
@@ -1406,9 +1402,9 @@ function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
 
                 polygon = [];
 
-                for(var k = 0; k < allX.length; k++) {
-                    var x = convert(xaxis, allX[k]);
-                    var y = convert(yaxis, allY[k]);
+                for(let k = 0; k < allX.length; k++) {
+                    const x = convert(xaxis, allX[k]);
+                    const y = convert(yaxis, allY[k]);
 
                     polygon.push([x, y]);
 
@@ -1437,12 +1433,12 @@ function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
 }
 
 function getSubtract(polygon: any, previousPolygons: any) {
-    var subtract = false;
-    for(var i = 0; i < previousPolygons.length; i++) {
-        var previousPolygon = previousPolygons[i];
+    let subtract = false;
+    for(let i = 0; i < previousPolygons.length; i++) {
+        const previousPolygon = previousPolygons[i];
 
         // find out if a point of polygon is inside previous polygons
-        for(var k = 0; k < polygon.length; k++) {
+        for(let k = 0; k < polygon.length; k++) {
             if(pointInPolygon(polygon[k], previousPolygon)) {
                 subtract = !subtract;
                 break;
@@ -1458,17 +1454,17 @@ function convert(ax: FullAxis, d: any) {
 }
 
 function castMultiPolygon(allPolygons: any) {
-    var len = allPolygons.length;
+    const len = allPolygons.length;
 
     // descibe multi polygons in one polygon
-    var p = [];
-    for(var i = 0; i < len; i++) {
-        var polygon = allPolygons[i];
+    let p: any[] = [];
+    for(let i = 0; i < len; i++) {
+        const polygon = allPolygons[i];
         p = p.concat(polygon);
 
         // add starting vertex to close
         // which indicates next polygon
-        p = p.concat([polygon[0]]);
+        p = p.concat([(polygon[0] as any)]);
     }
 
     return computeRectAndRanges(p);
@@ -1503,28 +1499,28 @@ function computeRectAndRanges(poly: any) {
 
 function makeFillRangeItems(allAxes: any) {
     return function(eventData: any, poly: any) {
-        var range;
-        var lassoPoints;
+        let range;
+        let lassoPoints;
 
-        for(var i = 0; i < allAxes.length; i++) {
-            var ax = allAxes[i];
-            var id = ax._id;
-            var axLetter = id.charAt(0);
+        for(let i = 0; i < allAxes.length; i++) {
+            const ax = allAxes[i];
+            const id = ax._id;
+            const axLetter = id.charAt(0);
 
             if(poly.isRect) {
                 if(!range) range = {};
-                var min = poly[axLetter + 'min'];
-                var max = poly[axLetter + 'max'];
+                const min = poly[axLetter + 'min'];
+                const max = poly[axLetter + 'max'];
 
                 if(min !== undefined && max !== undefined) {
-                    range[id] = [
+                    (range as any)[id] = [
                         p2r(ax, min),
                         p2r(ax, max)
                     ].sort(ascending);
                 }
             } else {
                 if(!lassoPoints) lassoPoints = {};
-                lassoPoints[id] = poly.map(axValue(ax));
+                (lassoPoints as any)[id] = poly.map(axValue(ax));
             }
         }
 
@@ -1539,7 +1535,7 @@ function makeFillRangeItems(allAxes: any) {
 }
 
 function getFillRangeItems(dragOptions: any) {
-    var plotinfo = dragOptions.plotinfo;
+    const plotinfo = dragOptions.plotinfo;
 
     return (
         plotinfo.fillRangeItems || // allow subplots (i.e. geo, mapbox, map, sankey) to override fillRangeItems routine

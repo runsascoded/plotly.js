@@ -1,7 +1,7 @@
 export default function align(v: number, dv: number, v0: number, v1: number, anchor?: string): number {
-    var vmin = (v - v0) / (v1 - v0);
-    var vmax = vmin + dv / (v1 - v0);
-    var vc = (vmin + vmax) / 2;
+    const vmin = (v - v0) / (v1 - v0);
+    const vmax = vmin + dv / (v1 - v0);
+    const vc = (vmin + vmax) / 2;
 
     // explicitly specified anchor
     if(anchor === 'left' || anchor === 'bottom') return vmin;

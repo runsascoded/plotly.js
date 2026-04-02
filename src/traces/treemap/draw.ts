@@ -6,29 +6,30 @@ import uniformText from '../bar/uniform_text.js';
 import _style from '../bar/style.js';
 const { resizeText } = _style;
 import plotOne from './plot_one.js';
-var clearMinTextSize = uniformText.clearMinTextSize;
+const clearMinTextSize = uniformText.clearMinTextSize;
 
 export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnCompleteCallback: any, opts: any) {
-    var type = opts.type;
-    var drawDescendants = opts.drawDescendants;
+    const type = opts.type;
+    const drawDescendants = opts.drawDescendants;
 
-    var fullLayout = gd._fullLayout;
-    var layer = fullLayout['_' + type + 'layer'];
-    var join, onComplete;
+    const fullLayout = gd._fullLayout;
+    const layer = fullLayout['_' + type + 'layer'];
+    let join, onComplete: any;
 
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
-    var isFullReplot = !transitionOpts;
+    const isFullReplot = !transitionOpts;
 
     clearMinTextSize(type, fullLayout);
 
     join = layer.selectAll('g.trace.' + type)
-        .data(cdmodule, function(cd) { return cd[0].trace.uid; });
+        .data(cdmodule, function(cd: any) { return cd[0].trace.uid; });
 
-    join.enter().append('g')
+    const joinEnter = join.enter().append('g')
         .classed('trace', true)
         .classed(type, true);
 
+    join = join.merge(joinEnter);
     join.order();
 
     if(!fullLayout.uniformtext.mode && helpers.hasTransition(transitionOpts)) {
@@ -39,21 +40,21 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
             onComplete = makeOnCompleteCallback();
         }
 
-        var transition = transition()
+        const trans = transition()
             .duration(transitionOpts.duration)
             .ease(transitionOpts.easing)
             .on('end', function() { onComplete && onComplete(); })
             .on('interrupt', function() { onComplete && onComplete(); });
 
-        transition.each(function() {
+        trans.each(function() {
             // Must run the selection again since otherwise enters/updates get grouped together
             // and these get executed out of order. Except we need them in order!
-            layer.selectAll('g.trace').each(function(cd) {
+            layer.selectAll('g.trace').each(function(this: any, cd: any) {
                 plotOne(gd, cd, this, transitionOpts, drawDescendants);
             });
         });
     } else {
-        join.each(function(cd) {
+        join.each(function(this: any, cd: any) {
             plotOne(gd, cd, this, transitionOpts, drawDescendants);
         });
 

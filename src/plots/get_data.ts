@@ -2,16 +2,16 @@ import Registry from '../registry.js';
 import _constants from './cartesian/constants.js';
 const { SUBPLOT_PATTERN } = _constants;
 
-export var getSubplotCalcData = function(calcData?: any, type?: any, subplotId?: any): any {
-    var basePlotModule = Registry.subplotsRegistry[type];
+export const getSubplotCalcData = function(calcData?: any, type?: any, subplotId?: any): any {
+    const basePlotModule = Registry.subplotsRegistry[type];
     if(!basePlotModule) return [];
 
-    var attr = basePlotModule.attr;
-    var subplotCalcData = [];
+    const attr = basePlotModule.attr;
+    const subplotCalcData: any[] = [];
 
-    for(var i = 0; i < calcData.length; i++) {
-        var calcTrace = calcData[i];
-        var trace = calcTrace[0].trace;
+    for(let i = 0; i < calcData.length; i++) {
+        const calcTrace = calcData[i];
+        const trace = calcTrace[0].trace;
 
         if(trace[attr] === subplotId) subplotCalcData.push(calcTrace);
     }
@@ -19,11 +19,11 @@ export var getSubplotCalcData = function(calcData?: any, type?: any, subplotId?:
     return subplotCalcData;
 };
 
-export var getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any): any {
-    var moduleCalcData = [];
-    var remainingCalcData = [];
+export const getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any): any {
+    const moduleCalcData: any[] = [];
+    const remainingCalcData: any[] = [];
 
-    var plotMethod;
+    let plotMethod;
     if(typeof arg1 === 'string') {
         plotMethod = Registry.getModule(arg1).plot;
     } else if(typeof arg1 === 'function') {
@@ -34,12 +34,12 @@ export var getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any):
     if(!plotMethod) {
         return [moduleCalcData, calcdata];
     }
-    var zorder = arg2;
+    const zorder = arg2;
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
-        var trace = cd[0].trace;
-        var filterByZ = (trace.zorder !== undefined);
+    for(let i = 0; i < calcdata.length; i++) {
+        const cd = calcdata[i];
+        const trace = cd[0].trace;
+        const filterByZ = (trace.zorder !== undefined);
         // N.B.
         // - 'legendonly' traces do not make it past here
         // - skip over 'visible' traces that got trimmed completely during calc transforms
@@ -59,14 +59,14 @@ export var getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any):
     return [moduleCalcData, remainingCalcData];
 };
 
-export var getSubplotData = function getSubplotData(data?: any, type?: any, subplotId?: any): any {
+export const getSubplotData = function getSubplotData(data?: any, type?: any, subplotId?: any): any {
     if(!Registry.subplotsRegistry[type]) return [];
 
-    var attr = Registry.subplotsRegistry[type].attr;
-    var subplotData = [];
-    var trace, subplotX, subplotY;
+    const attr = Registry.subplotsRegistry[type].attr;
+    const subplotData: any[] = [];
+    let trace, subplotX, subplotY;
 
-    for(var i = 0; i < data.length; i++) {
+    for(let i = 0; i < data.length; i++) {
         trace = data[i];
 
         if(trace[attr] === subplotId) subplotData.push(trace);

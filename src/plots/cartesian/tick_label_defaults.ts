@@ -8,12 +8,12 @@ import handleArrayContainerDefaults from '../array_container_defaults.js';
 export default function handleTickLabelDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, options?: any): void {
     if(!options) options = {};
 
-    var labelalias = coerce('labelalias');
+    const labelalias = coerce('labelalias');
     if(!isPlainObject(labelalias)) delete containerOut.labelalias;
 
-    var showAttrDflt = getShowAttrDflt(containerIn);
+    const showAttrDflt = getShowAttrDflt(containerIn);
 
-    var showTickLabels = coerce('showticklabels');
+    const showTickLabels = coerce('showticklabels');
     if(showTickLabels) {
         if(!options.noTicklabelshift) {
             coerce('ticklabelshift');
@@ -21,10 +21,10 @@ export default function handleTickLabelDefaults(containerIn?: any, containerOut?
         if(!options.noTicklabelstandoff) {
             coerce('ticklabelstandoff');
         }
-        var font = options.font || {};
-        var contColor = containerOut.color;
-        var position = containerOut.ticklabelposition || '';
-        var dfltFontColor = position.indexOf('inside') !== -1 ?
+        const font = options.font || {};
+        const contColor = containerOut.color;
+        const position = containerOut.ticklabelposition || '';
+        const dfltFontColor = position.indexOf('inside') !== -1 ?
             contrast(options.bgColor) :
             // as with title.font.color, inherit axis.color only if one was
             // explicitly provided
@@ -44,14 +44,14 @@ export default function handleTickLabelDefaults(containerIn?: any, containerOut?
         }
 
         if(!options.noAng) {
-            var tickAngle = coerce('tickangle');
+            const tickAngle = coerce('tickangle');
             if(!options.noAutotickangles && tickAngle === 'auto') {
                 coerce('autotickangles');
             }
         }
 
         if(axType !== 'category') {
-            var tickFormat = coerce('tickformat');
+            const tickFormat = coerce('tickformat');
 
             handleArrayContainerDefaults(containerIn, containerOut, {
                 name: 'tickformatstops',
@@ -81,7 +81,7 @@ function tickformatstopDefaults(valueIn?: any, valueOut?: any): void {
         return Lib.coerce(valueIn, valueOut, layoutAttributes.tickformatstops, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
     if(enabled) {
         coerce('dtickrange');
         coerce('value');

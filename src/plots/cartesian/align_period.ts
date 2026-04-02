@@ -1,44 +1,44 @@
 import isNumeric from 'fast-isnumeric';
 import { dateTime2ms, incrementMonth } from '../../lib/index.js';
 import constants from '../../constants/numerical.js';
-var ONEAVGMONTH = constants.ONEAVGMONTH;
+const ONEAVGMONTH = constants.ONEAVGMONTH;
 
 export default function alignPeriod(trace?: any, ax?: any, axLetter?: any, vals?: any): any {
     if(ax.type !== 'date') return {vals: vals};
 
-    var alignment = trace[axLetter + 'periodalignment'];
+    const alignment = trace[axLetter + 'periodalignment'];
     if(!alignment) return {vals: vals};
 
-    var period = trace[axLetter + 'period'];
-    var mPeriod;
+    let period = trace[axLetter + 'period'];
+    let mPeriod;
     if(isNumeric(period)) {
         period = +period;
         if(period <= 0) return {vals: vals};
     } else if(typeof period === 'string' && period.charAt(0) === 'M') {
-        var n = +(period.substring(1));
+        const n = +(period.substring(1));
         if(n > 0 && Math.round(n) === n) {
             mPeriod = n;
         } else return {vals: vals};
     }
 
-    var calendar = ax.calendar;
+    const calendar = ax.calendar;
 
-    var isStart = 'start' === alignment;
-    // var isMiddle = 'middle' === alignment;
-    var isEnd = 'end' === alignment;
+    const isStart = 'start' === alignment;
+    // const isMiddle = 'middle' === alignment;
+    const isEnd = 'end' === alignment;
 
-    var period0 = trace[axLetter + 'period0'];
-    var base = dateTime2ms(period0, calendar) || 0;
+    const period0 = trace[axLetter + 'period0'];
+    const base = dateTime2ms(period0, calendar) || 0;
 
-    var newVals = [];
-    var starts = [];
-    var ends = [];
+    const newVals: any[] = [];
+    const starts: any[] = [];
+    const ends: any[] = [];
 
-    var len = vals.length;
-    for(var i = 0; i < len; i++) {
-        var v = vals[i];
+    const len = vals.length;
+    for(let i = 0; i < len; i++) {
+        const v = vals[i];
 
-        var nEstimated, startTime, endTime;
+        let nEstimated, startTime, endTime;
         if(mPeriod) {
             // guess at how many periods away from base we are
             nEstimated = Math.round((v - base) / (mPeriod * ONEAVGMONTH));
@@ -75,10 +75,10 @@ export default function alignPeriod(trace?: any, ax?: any, axLetter?: any, vals?
             isStart ? startTime :
             isEnd ? endTime :
             (startTime + endTime) / 2
-        );
+        ) as any;
 
-        starts[i] = startTime;
-        ends[i] = endTime;
+        starts[i] = (startTime as any);
+        ends[i] = (endTime as any);
     }
 
     return {

@@ -10,7 +10,7 @@ import constants from './constants.js';
 import { extendFlat } from '../../lib/extend.js';
 import makeFillcolorAttr from './fillcolor_attribute.js';
 
-function axisPeriod(axis) {
+function axisPeriod(axis: any) {
     return {
         valType: 'any',
         dflt: 0,
@@ -24,7 +24,7 @@ function axisPeriod(axis) {
     };
 }
 
-function axisPeriod0(axis) {
+function axisPeriod0(axis: any) {
     return {
         valType: 'any',
         editType: 'calc',
@@ -38,7 +38,7 @@ function axisPeriod0(axis) {
     };
 }
 
-function axisPeriodAlignment(axis) {
+function axisPeriodAlignment(axis: any) {
     return {
         valType: 'enumerated',
         values: ['start', 'middle', 'end'],

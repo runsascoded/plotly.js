@@ -21,7 +21,7 @@ interface PolygonFilter {
     filtered: Point[];
 }
 
-var polygon: Record<string, any> = {};
+const polygon: Record<string, any> = {};
 
 /**
  * Turn an array of [x, y] pairs into a polygon object
@@ -40,12 +40,12 @@ var polygon: Record<string, any> = {};
  *          returns boolean: is pt inside the polygon (including on its edges)
  */
 polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
-    var pts = ptsIn.slice();
-    var xmin = pts[0][0];
-    var xmax = xmin;
-    var ymin = pts[0][1];
-    var ymax = ymin;
-    var i: number;
+    const pts = ptsIn.slice();
+    let xmin = pts[0][0];
+    let xmax = xmin;
+    let ymin = pts[0][1];
+    let ymax = ymin;
+    let i: number;
 
     if(
         pts[pts.length - 1][0] !== pts[0][0] ||
@@ -65,8 +65,8 @@ polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
     // do we have a rectangle? Handle this here, so we can use the same
     // tester for the rectangular case without sacrificing speed
 
-    var isRect = false;
-    var rectFirstEdgeTest: ((pt: Point) => boolean) | undefined;
+    let isRect = false;
+    let rectFirstEdgeTest: ((pt: Point) => boolean) | undefined;
 
     if(pts.length === 5) {
         if(pts[0][0] === pts[1][0]) { // vert, horz, vert, horz
@@ -87,8 +87,8 @@ polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
     }
 
     function rectContains(pt: Point, omitFirstEdge?: boolean): boolean {
-        var x = pt[0];
-        var y = pt[1];
+        const x = pt[0];
+        const y = pt[1];
 
         if(x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
             // pt is outside the bounding box of polygon
@@ -100,23 +100,23 @@ polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
     }
 
     function contains(pt: Point, omitFirstEdge?: boolean): boolean {
-        var x = pt[0];
-        var y = pt[1];
+        const x = pt[0];
+        const y = pt[1];
 
         if(x === BADNUM || x < xmin || x > xmax || y === BADNUM || y < ymin || y > ymax) {
             // pt is outside the bounding box of polygon
             return false;
         }
 
-        var imax = pts.length;
-        var x1 = pts[0][0];
-        var y1 = pts[0][1];
-        var crossings = 0;
-        var i: number;
-        var x0: number;
-        var y0: number;
-        var xmini: number;
-        var ycross: number;
+        const imax = pts.length;
+        let x1 = pts[0][0];
+        let y1 = pts[0][1];
+        let crossings = 0;
+        let i: number;
+        let x0: number;
+        let y0: number;
+        let xmini: number;
+        let ycross: number;
 
         for(i = 1; i < imax; i++) {
             // find all crossings of a vertical line upward from pt with
@@ -166,8 +166,8 @@ polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
     }
 
     // detect if poly is degenerate
-    var degenerate = true;
-    var lastPt = pts[0];
+    let degenerate = true;
+    const lastPt = pts[0];
     for(i = 1; i < pts.length; i++) {
         if(lastPt[0] !== pts[i][0] || lastPt[1] !== pts[i][1]) {
             degenerate = false;
@@ -198,14 +198,14 @@ polygon.tester = function tester(ptsIn: Point[]): PolygonTester {
  * @returns boolean: true means this segment is bent, false means straight
  */
 polygon.isSegmentBent = function isSegmentBent(pts: Point[], start: number, end: number, tolerance: number): boolean {
-    var startPt = pts[start];
-    var segment: number[] = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
-    var segmentSquared: number = dot(segment, segment);
-    var segmentLen = Math.sqrt(segmentSquared);
-    var unitPerp: number[] = [-segment[1] / segmentLen, segment[0] / segmentLen];
-    var i: number;
-    var part: number[];
-    var partParallel: number;
+    const startPt = pts[start];
+    const segment: number[] = [pts[end][0] - startPt[0], pts[end][1] - startPt[1]];
+    const segmentSquared: number = dot(segment, segment);
+    const segmentLen = Math.sqrt(segmentSquared);
+    const unitPerp: number[] = [-segment[1] / segmentLen, segment[0] / segmentLen];
+    let i: number;
+    let part: number[];
+    let partParallel: number;
 
     for(i = start + 1; i < end; i++) {
         part = [pts[i][0] - startPt[0], pts[i][1] - startPt[1]];
@@ -231,17 +231,17 @@ polygon.isSegmentBent = function isSegmentBent(pts: Point[], start: number, end:
  *      filtered is the resulting filtered Array of [x, y] pairs
  */
 polygon.filter = function filter(pts: Point[], tolerance: number): PolygonFilter {
-    var ptsFiltered: Point[] = [pts[0]];
-    var doneRawIndex = 0;
-    var doneFilteredIndex = 0;
+    const ptsFiltered: Point[] = [pts[0]];
+    let doneRawIndex = 0;
+    let doneFilteredIndex = 0;
 
     function addPt(pt: Point): void {
         pts.push(pt);
-        var prevFilterLen = ptsFiltered.length;
-        var iLast = doneRawIndex;
+        const prevFilterLen = ptsFiltered.length;
+        let iLast = doneRawIndex;
         ptsFiltered.splice(doneFilteredIndex + 1);
 
-        for(var i = iLast + 1; i < pts.length; i++) {
+        for(let i = iLast + 1; i < pts.length; i++) {
             if(i === pts.length - 1 || polygon.isSegmentBent(pts, iLast, i + 1, tolerance)) {
                 ptsFiltered.push(pts[i]);
                 if(ptsFiltered.length < prevFilterLen - 2) {
@@ -254,7 +254,7 @@ polygon.filter = function filter(pts: Point[], tolerance: number): PolygonFilter
     }
 
     if(pts.length > 1) {
-        var lastPt = pts.pop()!;
+        const lastPt = pts.pop()!;
         addPt(lastPt);
     }
 

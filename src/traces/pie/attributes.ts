@@ -6,7 +6,7 @@ import { hovertemplateAttrs, texttemplateAttrs, templatefallbackAttrs } from '..
 import { extendFlat } from '../../lib/extend.js';
 import { pattern } from '../../components/drawing/attributes.js';
 
-var textFontAttrs = fontAttrs({
+const textFontAttrs = fontAttrs({
     editType: 'plot',
     arrayOk: true,
     colorEditType: 'plot',

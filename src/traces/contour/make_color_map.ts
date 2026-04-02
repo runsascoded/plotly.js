@@ -2,32 +2,32 @@ import { extent } from 'd3-array';
 import Colorscale from '../../components/colorscale/index.js';
 import endPlus from './end_plus.js';
 
-export default function makeColorMap(trace) {
-    var contours = trace.contours;
-    var start = contours.start;
-    var end = endPlus(contours);
-    var cs = contours.size || 1;
-    var nc = Math.floor((end - start) / cs) + 1;
-    var extra = contours.coloring === 'lines' ? 0 : 1;
-    var cOpts = Colorscale.extractOpts(trace);
+export default function makeColorMap(trace: any) {
+    const contours = trace.contours;
+    let start = contours.start;
+    let end = endPlus(contours);
+    let cs = contours.size || 1;
+    let nc = Math.floor((end - start) / cs) + 1;
+    let extra = contours.coloring === 'lines' ? 0 : 1;
+    const cOpts = Colorscale.extractOpts(trace);
 
     if(!isFinite(cs)) {
         cs = 1;
         nc = 1;
     }
 
-    var scl = cOpts.reversescale ?
+    const scl = cOpts.reversescale ?
         Colorscale.flipScale(cOpts.colorscale) :
         cOpts.colorscale;
 
-    var len = scl.length;
-    var domain = new Array(len);
-    var range = new Array(len);
+    const len = scl.length;
+    const domain = new Array(len);
+    const range = new Array(len);
 
-    var si, i;
+    let si, i;
 
-    var zmin0 = cOpts.min;
-    var zmax0 = cOpts.max;
+    const zmin0 = cOpts.min;
+    const zmax0 = cOpts.max;
 
     if(contours.coloring === 'heatmap') {
         for(i = 0; i < len; i++) {
@@ -38,14 +38,14 @@ export default function makeColorMap(trace) {
 
         // do the contours extend beyond the colorscale?
         // if so, extend the colorscale with constants
-        var zRange = extent([
+        const zRange = extent([
             zmin0,
             zmax0,
             contours.start,
             contours.start + cs * (nc - 1)
         ]);
-        var zmin = zRange[zmin0 < zmax0 ? 0 : 1];
-        var zmax = zRange[zmin0 < zmax0 ? 1 : 0];
+        const zmin = zRange[zmin0 < zmax0 ? 0 : 1];
+        const zmax = zRange[zmin0 < zmax0 ? 1 : 0];
 
         if(zmin !== zmin0) {
             domain.splice(0, 0, zmin);
@@ -57,7 +57,7 @@ export default function makeColorMap(trace) {
             range.push(range[range.length - 1]);
         }
     } else {
-        var zRangeInput = trace._input && (
+        const zRangeInput = trace._input && (
             typeof trace._input.zmin === 'number' && typeof trace._input.zmax === 'number'
         );
 

@@ -12,11 +12,11 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var labels = coerce('labels');
-    var values = coerce('values');
+    const labels = coerce('labels');
+    const values = coerce('values');
 
-    var res = handleLabelsAndValues(labels, values);
-    var len = res.len;
+    const res = handleLabelsAndValues(labels, values);
+    const len = res.len;
     traceOut._hasLabels = res.hasLabels;
     traceOut._hasValues = res.hasValues;
 
@@ -35,10 +35,10 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
 
     coerce('scalegroup');
 
-    var textData = coerce('text');
-    var textTemplate = coerce('texttemplate');
+    const textData = coerce('text');
+    const textTemplate = coerce('texttemplate');
     coerce('texttemplatefallback');
-    var textInfo;
+    let textInfo;
     if (!textTemplate) textInfo = coerce('textinfo', Array.isArray(textData) ? 'text+percent' : 'percent');
 
     coerce('hovertext');
@@ -46,7 +46,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
     coerce('hovertemplatefallback');
 
     if (textTemplate || (textInfo && textInfo !== 'none')) {
-        var textposition = coerce('textposition');
+        const textposition = coerce('textposition');
         handleText(traceIn, traceOut, layout, coerce, textposition, {
             moduleHasSelected: false,
             moduleHasUnselected: false,
@@ -61,7 +61,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
 
     handleDomainDefaults(traceOut, layout, coerce);
 
-    var title = coerce('title.text');
+    const title = coerce('title.text');
     if (title) {
         coerce('title.position');
         Lib.coerceFont(coerce, 'title.font', layout.font);

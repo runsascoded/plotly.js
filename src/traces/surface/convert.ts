@@ -10,9 +10,9 @@ import str2RgbaArray from '../../lib/str2rgbarray.js';
 import _index2 from '../../components/colorscale/index.js';
 const { extractOpts } = _index2;
 import { ndarray_linear_interpolate as _req0 } from '../../../stackgl_modules/esm.js';
-var ndarrayInterp2d = _req0.d2;
+const ndarrayInterp2d = _req0.d2;
 
-function SurfaceTrace(scene, surface, uid) {
+function SurfaceTrace(this: any, scene: any, surface: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.surface = surface;
@@ -29,10 +29,10 @@ function SurfaceTrace(scene, surface, uid) {
     this.objectOffset = [0, 0, 0];
 }
 
-var proto = SurfaceTrace.prototype;
+const proto = SurfaceTrace.prototype;
 
-proto.getXat = function(a, b, calendar, axis) {
-    var v = (
+proto.getXat = function(a: any, b: any, calendar: any, axis: any) {
+    const v = (
        (!isArrayOrTypedArray(this.data.x)) ?
             a :
        (isArrayOrTypedArray(this.data.x[0])) ?
@@ -43,8 +43,8 @@ proto.getXat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.getYat = function(a, b, calendar, axis) {
-    var v = (
+proto.getYat = function(a: any, b: any, calendar: any, axis: any) {
+    const v = (
        (!isArrayOrTypedArray(this.data.y)) ?
             b :
        (isArrayOrTypedArray(this.data.y[0])) ?
@@ -55,8 +55,8 @@ proto.getYat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.getZat = function(a, b, calendar, axis) {
-    var v = this.data.z[b][a];
+proto.getZat = function(a: any, b: any, calendar: any, axis: any) {
+    let v = this.data.z[b][a];
 
     if(v === null && this.data.connectgaps && this.data._interpolatedZ) {
         v = this.data._interpolatedZ[b][a];
@@ -65,13 +65,13 @@ proto.getZat = function(a, b, calendar, axis) {
     return (calendar === undefined) ? v : axis.d2l(v, 0, calendar);
 };
 
-proto.handlePick = function(selection) {
+proto.handlePick = function(selection: any) {
     if(selection.object === this.surface) {
-        var xRatio = (selection.data.index[0] - 1) / this.dataScaleX - 1;
-        var yRatio = (selection.data.index[1] - 1) / this.dataScaleY - 1;
+        const xRatio = (selection.data.index[0] - 1) / this.dataScaleX - 1;
+        const yRatio = (selection.data.index[1] - 1) / this.dataScaleY - 1;
 
-        var j = Math.max(Math.min(Math.round(xRatio), this.data.z[0].length - 1), 0);
-        var k = Math.max(Math.min(Math.round(yRatio), this.data._ylength - 1), 0);
+        const j = Math.max(Math.min(Math.round(xRatio), this.data.z[0].length - 1), 0);
+        const k = Math.max(Math.min(Math.round(yRatio), this.data._ylength - 1), 0);
 
         selection.index = [j, k];
 
@@ -87,14 +87,14 @@ proto.handlePick = function(selection) {
             this.getZat(j, k, this.data.zcalendar, this.scene.fullSceneLayout.zaxis)
         ];
 
-        for(var i = 0; i < 3; i++) {
-            var v = selection.dataCoordinate[i];
+        for(let i = 0; i < 3; i++) {
+            const v = selection.dataCoordinate[i];
             if(v !== null && v !== undefined) {
                 selection.dataCoordinate[i] *= this.scene.dataScale[i];
             }
         }
 
-        var text = this.data.hovertext || this.data.text;
+        const text = this.data.hovertext || this.data.text;
         if(isArrayOrTypedArray(text) && text[k] && text[k][j] !== undefined) {
             selection.textLabel = text[k][j];
         } else if(text) {
@@ -114,9 +114,9 @@ proto.handlePick = function(selection) {
     }
 };
 
-function isColormapCircular(colormap) {
-    var first = colormap[0].rgb;
-    var last = colormap[colormap.length - 1].rgb;
+function isColormapCircular(colormap: any) {
+    const first = colormap[0].rgb;
+    const last = colormap[colormap.length - 1].rgb;
 
     return (
         first[0] === last[0] &&
@@ -126,7 +126,7 @@ function isColormapCircular(colormap) {
     );
 }
 
-var shortPrimes = [
+const shortPrimes = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
     101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
     211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293,
@@ -159,9 +159,9 @@ var shortPrimes = [
     2903, 2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999
 ];
 
-function getPow(a, b) {
+function getPow(a: any, b: any) {
     if(a < b) return 0;
-    var n = 0;
+    let n = 0;
     while(Math.floor(a % b) === 0) {
         a /= b;
         n++;
@@ -169,21 +169,21 @@ function getPow(a, b) {
     return n;
 }
 
-function getFactors(a) {
-    var powers = [];
-    for(var i = 0; i < shortPrimes.length; i++) {
-        var b = shortPrimes[i];
+function getFactors(a: any) {
+    const powers: any[] = [];
+    for(let i = 0; i < shortPrimes.length; i++) {
+        const b = shortPrimes[i];
         powers.push(
-            getPow(a, b)
+            (getPow(a, b) as any)
         );
     }
     return powers;
 }
 
-function smallestDivisor(a) {
-    var A = getFactors(a);
-    var result = a;
-    for(var i = 0; i < shortPrimes.length; i++) {
+function smallestDivisor(a: any) {
+    const A = getFactors(a);
+    let result = a;
+    for(let i = 0; i < shortPrimes.length; i++) {
         if(A[i] > 0) {
             result = shortPrimes[i];
             break;
@@ -192,12 +192,12 @@ function smallestDivisor(a) {
     return result;
 }
 
-function leastCommonMultiple(a, b) {
+function leastCommonMultiple(a: any, b: any) {
     if(a < 1 || b < 1) return undefined;
-    var A = getFactors(a);
-    var B = getFactors(b);
-    var n = 1;
-    for(var i = 0; i < shortPrimes.length; i++) {
+    const A = getFactors(a);
+    const B = getFactors(b);
+    let n = 1;
+    for(let i = 0; i < shortPrimes.length; i++) {
         n *= Math.pow(
             shortPrimes[i], Math.max(A[i], B[i])
         );
@@ -205,90 +205,90 @@ function leastCommonMultiple(a, b) {
     return n;
 }
 
-function arrayLCM(A) {
+function arrayLCM(A: any) {
     if(A.length === 0) return undefined;
-    var n = 1;
-    for(var i = 0; i < A.length; i++) {
-        n = leastCommonMultiple(n, A[i]);
+    let n = 1;
+    for(let i = 0; i < A.length; i++) {
+        n = (leastCommonMultiple(n, A[i]) as any);
     }
     return n;
 }
 
-proto.calcXnums = function(xlen) {
-    var i;
-    var nums = [];
+proto.calcXnums = function(xlen: any) {
+    let i;
+    const nums: any[] = [];
     for(i = 1; i < xlen; i++) {
-        var a = this.getXat(i - 1, 0);
-        var b = this.getXat(i, 0);
+        const a = this.getXat(i - 1, 0);
+        const b = this.getXat(i, 0);
 
         if(b !== a &&
             a !== undefined && a !== null &&
             b !== undefined && b !== null) {
-            nums[i - 1] = Math.abs(b - a);
+            nums[i - 1] = (Math.abs(b - a) as any);
         } else {
-            nums[i - 1] = 0;
+            nums[i - 1] = (0 as any);
         }
     }
 
-    var totalDist = 0;
+    let totalDist = 0;
     for(i = 1; i < xlen; i++) {
         totalDist += nums[i - 1];
     }
 
     for(i = 1; i < xlen; i++) {
         if(nums[i - 1] === 0) {
-            nums[i - 1] = 1;
+            nums[i - 1] = (1 as any);
         } else {
-            nums[i - 1] = Math.round(totalDist / nums[i - 1]);
+            nums[i - 1] = (Math.round(totalDist / nums[i - 1]) as any);
         }
     }
 
     return nums;
 };
 
-proto.calcYnums = function(ylen) {
-    var i;
-    var nums = [];
+proto.calcYnums = function(ylen: any) {
+    let i;
+    const nums: any[] = [];
     for(i = 1; i < ylen; i++) {
-        var a = this.getYat(0, i - 1);
-        var b = this.getYat(0, i);
+        const a = this.getYat(0, i - 1);
+        const b = this.getYat(0, i);
 
         if(b !== a &&
             a !== undefined && a !== null &&
             b !== undefined && b !== null) {
-            nums[i - 1] = Math.abs(b - a);
+            nums[i - 1] = (Math.abs(b - a) as any);
         } else {
-            nums[i - 1] = 0;
+            nums[i - 1] = (0 as any);
         }
     }
 
-    var totalDist = 0;
+    let totalDist = 0;
     for(i = 1; i < ylen; i++) {
         totalDist += nums[i - 1];
     }
 
     for(i = 1; i < ylen; i++) {
         if(nums[i - 1] === 0) {
-            nums[i - 1] = 1;
+            nums[i - 1] = (1 as any);
         } else {
-            nums[i - 1] = Math.round(totalDist / nums[i - 1]);
+            nums[i - 1] = (Math.round(totalDist / nums[i - 1]) as any);
         }
     }
 
     return nums;
 };
 
-var highlyComposites = [1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, 840, 1260];
+const highlyComposites = [1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, 840, 1260];
 
-var MIN_RESOLUTION = highlyComposites[9];
-var MAX_RESOLUTION = highlyComposites[13];
+const MIN_RESOLUTION = highlyComposites[9];
+const MAX_RESOLUTION = highlyComposites[13];
 
-proto.estimateScale = function(resSrc, axis) {
-    var nums = (axis === 0) ?
+proto.estimateScale = function(resSrc: any, axis: any) {
+    const nums = (axis === 0) ?
         this.calcXnums(resSrc) :
         this.calcYnums(resSrc);
 
-    var resDst = 1 + arrayLCM(nums);
+    let resDst = 1 + arrayLCM(nums)!;
 
     while(resDst < MIN_RESOLUTION) {
         resDst *= 2;
@@ -305,21 +305,21 @@ proto.estimateScale = function(resSrc, axis) {
         }
     }
 
-    var scale = Math.round(resDst / resSrc);
+    const scale = Math.round(resDst / resSrc);
     return (scale > 1) ? scale : 1;
 };
 
 // based on Mikola Lysenko's ndarray-homography
 // see https://github.com/scijs/ndarray-homography
 
-function fnHomography(out, inp, X) {
-    var w = X[8] + X[2] * inp[0] + X[5] * inp[1];
+function fnHomography(out: any, inp: any, X: any) {
+    const w = X[8] + X[2] * inp[0] + X[5] * inp[1];
     out[0] = (X[6] + X[0] * inp[0] + X[3] * inp[1]) / w;
     out[1] = (X[7] + X[1] * inp[0] + X[4] * inp[1]) / w;
     return out;
 }
 
-function homography(dest, src, X) {
+function homography(dest: any, src: any, X: any) {
     warp(dest, src, fnHomography, X);
     return dest;
 }
@@ -327,12 +327,12 @@ function homography(dest, src, X) {
 // based on Mikola Lysenko's ndarray-warp
 // see https://github.com/scijs/ndarray-warp
 
-function warp(dest, src, func, X) {
-    var warped = [0, 0];
-    var ni = dest.shape[0];
-    var nj = dest.shape[1];
-    for(var i = 0; i < ni; i++) {
-        for(var j = 0; j < nj; j++) {
+function warp(dest: any, src: any, func: any, X: any) {
+    const warped = [0, 0];
+    const ni = dest.shape[0];
+    const nj = dest.shape[1];
+    for(let i = 0; i < ni; i++) {
+        for(let j = 0; j < nj; j++) {
             func(warped, [i, j], X);
             dest.set(i, j, ndarrayInterp2d(src, warped[0], warped[1]));
         }
@@ -340,38 +340,38 @@ function warp(dest, src, func, X) {
     return dest;
 }
 
-proto.refineCoords = function(coords) {
-    var scaleW = this.dataScaleX;
-    var scaleH = this.dataScaleY;
+proto.refineCoords = function(coords: any) {
+    const scaleW = this.dataScaleX;
+    const scaleH = this.dataScaleY;
 
-    var width = coords[0].shape[0];
-    var height = coords[0].shape[1];
+    const width = coords[0].shape[0];
+    const height = coords[0].shape[1];
 
-    var newWidth = Math.floor(coords[0].shape[0] * scaleW + 1) | 0;
-    var newHeight = Math.floor(coords[0].shape[1] * scaleH + 1) | 0;
+    const newWidth = Math.floor(coords[0].shape[0] * scaleW + 1) | 0;
+    const newHeight = Math.floor(coords[0].shape[1] * scaleH + 1) | 0;
 
     // Pad coords by +1
-    var padWidth = 1 + width + 1;
-    var padHeight = 1 + height + 1;
-    var padImg = ndarray(new Float32Array(padWidth * padHeight), [padWidth, padHeight]);
-    var X = [
+    const padWidth = 1 + width + 1;
+    const padHeight = 1 + height + 1;
+    const padImg = ndarray(new Float32Array(padWidth * padHeight), [padWidth, padHeight]);
+    const X = [
         1 / scaleW, 0, 0,
         0, 1 / scaleH, 0,
         0, 0, 1
     ];
 
-    for(var i = 0; i < coords.length; ++i) {
+    for(let i = 0; i < coords.length; ++i) {
         this.surface.padField(padImg, coords[i]);
 
-        var scaledImg = ndarray(new Float32Array(newWidth * newHeight), [newWidth, newHeight]);
+        const scaledImg = ndarray(new Float32Array(newWidth * newHeight), [newWidth, newHeight]);
         homography(scaledImg, padImg, X);
         coords[i] = scaledImg;
     }
 };
 
-function insertIfNewLevel(arr, newValue) {
-    var found = false;
-    for(var k = 0; k < arr.length; k++) {
+function insertIfNewLevel(arr: any, newValue: any) {
+    let found = false;
+    for(let k = 0; k < arr.length; k++) {
         if(newValue === arr[k]) {
             found = true;
             break;
@@ -381,11 +381,11 @@ function insertIfNewLevel(arr, newValue) {
 }
 
 proto.setContourLevels = function() {
-    var newLevels = [[], [], []];
-    var useNewLevels = [false, false, false];
-    var needsUpdate = false;
+    const newLevels = [[], [], []];
+    const useNewLevels = [false, false, false];
+    let needsUpdate = false;
 
-    var i, j, value;
+    let i, j, value;
 
     for(i = 0; i < 3; ++i) {
         if(this.showContour[i]) {
@@ -409,7 +409,7 @@ proto.setContourLevels = function() {
     }
 
     if(needsUpdate) {
-        var allLevels = [[], [], []];
+        const allLevels = [[], [], []];
         for(i = 0; i < 3; ++i) {
             if(this.showContour[i]) {
                 allLevels[i] = useNewLevels[i] ? newLevels[i] : this.scene.contourLevels[i];
@@ -419,15 +419,15 @@ proto.setContourLevels = function() {
     }
 };
 
-proto.update = function(data) {
-    var scene = this.scene;
-    var sceneLayout = scene.fullSceneLayout;
-    var surface = this.surface;
-    var colormap = parseColorScale(data);
-    var scaleFactor = scene.dataScale;
-    var xlen = data.z[0].length;
-    var ylen = data._ylength;
-    var contourLevels = scene.contourLevels;
+proto.update = function(data: any) {
+    const scene = this.scene;
+    const sceneLayout = scene.fullSceneLayout;
+    const surface = this.surface;
+    const colormap = parseColorScale(data);
+    const scaleFactor = scene.dataScale;
+    const xlen = data.z[0].length;
+    const ylen = data._ylength;
+    const contourLevels = scene.contourLevels;
 
     // Save data
     this.data = data;
@@ -440,12 +440,12 @@ proto.update = function(data) {
      * which is the transpose of 'gl-surface-plot'.
      */
 
-    var i, j, k, v;
-    var rawCoords = [];
+    let i, j, k, v;
+    let rawCoords: any[] = [];
     for(i = 0; i < 3; i++) {
-        rawCoords[i] = [];
+        rawCoords[i] = ([] as any);
         for(j = 0; j < xlen; j++) {
-            rawCoords[i][j] = [];
+            rawCoords[i][j] = ([] as any);
             /*
             for(k = 0; k < ylen; k++) {
                 rawCoords[i][j][k] = undefined;
@@ -457,9 +457,9 @@ proto.update = function(data) {
     // coords x, y & z
     for(j = 0; j < xlen; j++) {
         for(k = 0; k < ylen; k++) {
-            rawCoords[0][j][k] = this.getXat(j, k, data.xcalendar, sceneLayout.xaxis);
-            rawCoords[1][j][k] = this.getYat(j, k, data.ycalendar, sceneLayout.yaxis);
-            rawCoords[2][j][k] = this.getZat(j, k, data.zcalendar, sceneLayout.zaxis);
+            rawCoords[0][j][k] = (this.getXat(j, k, data.xcalendar, sceneLayout.xaxis) as any);
+            rawCoords[1][j][k] = (this.getYat(j, k, data.ycalendar, sceneLayout.yaxis) as any);
+            rawCoords[2][j][k] = (this.getZat(j, k, data.zcalendar, sceneLayout.zaxis) as any);
         }
     }
 
@@ -484,9 +484,9 @@ proto.update = function(data) {
             for(k = 0; k < ylen; k++) {
                 v = rawCoords[i][j][k];
                 if(v === null || v === undefined) {
-                    rawCoords[i][j][k] = NaN;
+                    rawCoords[i][j][k] = (NaN as any);
                 } else {
-                    v = rawCoords[i][j][k] *= scaleFactor[i];
+                    v = rawCoords[i][j][k] *= (scaleFactor[i] as any);
                 }
             }
         }
@@ -517,14 +517,14 @@ proto.update = function(data) {
             for(k = 0; k < ylen; k++) {
                 v = rawCoords[i][j][k];
                 if(v !== null && v !== undefined) {
-                    rawCoords[i][j][k] -= this.objectOffset[i];
+                    rawCoords[i][j][k] -= (this.objectOffset[i] as any);
                 }
             }
         }
     }
 
     // convert processed raw data to Float32 matrices
-    var coords = [
+    const coords = [
         ndarray(new Float32Array(xlen * ylen), [xlen, ylen]),
         ndarray(new Float32Array(xlen * ylen), [xlen, ylen]),
         ndarray(new Float32Array(xlen * ylen), [xlen, ylen])
@@ -538,7 +538,7 @@ proto.update = function(data) {
     }
     rawCoords = []; // free memory
 
-    var params: any = {
+    const params: any = {
         colormap: colormap,
         levels: [[], [], []],
         showContour: [true, true, true],
@@ -558,12 +558,12 @@ proto.update = function(data) {
         opacity: data.opacity
     };
 
-    var cOpts = extractOpts(data);
+    const cOpts = extractOpts(data);
     params.intensityBounds = [cOpts.min, cOpts.max];
 
     // Refine surface color if necessary
     if(data.surfacecolor) {
-        var intensity = ndarray(new Float32Array(xlen * ylen), [xlen, ylen]);
+        const intensity = ndarray(new Float32Array(xlen * ylen), [xlen, ylen]);
 
         for(j = 0; j < xlen; j++) {
             for(k = 0; k < ylen; k++) {
@@ -596,11 +596,11 @@ proto.update = function(data) {
         params.intensity = coords.pop();
     }
 
-    var highlightEnable = [true, true, true];
-    var axis = ['x', 'y', 'z'];
+    const highlightEnable = [true, true, true];
+    const axis = ['x', 'y', 'z'];
 
     for(i = 0; i < 3; ++i) {
-        var contourParams = data.contours[axis[i]];
+        const contourParams = data.contours[axis[i]];
         highlightEnable[i] = contourParams.highlight;
 
         params.showContour[i] = contourParams.show || contourParams.highlight;
@@ -675,10 +675,11 @@ proto.dispose = function() {
     this.surface.dispose();
 };
 
-function createSurfaceTrace(scene, data) {
-    var gl = scene.glplot.gl;
-    var surface = createSurface({ gl: gl });
-    var result = new SurfaceTrace(scene, surface, data.uid);
+function createSurfaceTrace(scene: any, data: any) {
+    const gl = scene.glplot.gl;
+    const surface = createSurface({ gl: gl });
+    // @ts-ignore TS7009
+    const result: any = (new SurfaceTrace(scene, surface, data.uid) as any);
     surface._trace = result;
     result.update(data);
     scene.glplot.add(surface);

@@ -7,40 +7,40 @@ import handlePrefixSuffixDefaults from '../../plots/cartesian/prefix_suffix_defa
 import attributes from './attributes.js';
 
 export default function colorbarDefaults(containerIn: any, containerOut: any, layout: any) {
-    var colorbarOut = Template.newContainer(containerOut, 'colorbar');
-    var colorbarIn = containerIn.colorbar || {};
+    const colorbarOut = Template.newContainer(containerOut, 'colorbar');
+    const colorbarIn = containerIn.colorbar || {};
 
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(colorbarIn, colorbarOut, attributes, attr, dflt);
     }
 
-    var margin = layout.margin || {t: 0, b: 0, l: 0, r: 0};
-    var w = layout.width - margin.l - margin.r;
-    var h = layout.height - margin.t - margin.b;
+    const margin = layout.margin || {t: 0, b: 0, l: 0, r: 0};
+    const w = layout.width - margin.l - margin.r;
+    const h = layout.height - margin.t - margin.b;
 
-    var orientation = coerce('orientation');
-    var isVertical = orientation === 'v';
+    const orientation = coerce('orientation');
+    const isVertical = orientation === 'v';
 
-    var thicknessmode = coerce('thicknessmode');
+    const thicknessmode = coerce('thicknessmode');
     coerce('thickness', (thicknessmode === 'fraction') ?
         30 / (isVertical ? w : h) :
         30
     );
 
-    var lenmode = coerce('lenmode');
+    const lenmode = coerce('lenmode');
     coerce('len', (lenmode === 'fraction') ?
         1 :
         isVertical ? h : w
     );
 
-    var yref = coerce('yref');
-    var xref = coerce('xref');
+    const yref = coerce('yref');
+    const xref = coerce('xref');
 
-    var isPaperY = yref === 'paper';
-    var isPaperX = xref === 'paper';
+    const isPaperY = yref === 'paper';
+    const isPaperX = xref === 'paper';
 
-    var defaultX, defaultY, defaultYAnchor;
-    var defaultXAnchor = 'left';
+    let defaultX, defaultY, defaultYAnchor;
+    let defaultXAnchor = 'left';
 
     if(isVertical) {
         defaultYAnchor = 'middle';
@@ -84,7 +84,7 @@ export default function colorbarDefaults(containerIn: any, containerOut: any, la
     coerce('borderwidth');
     coerce('bgcolor');
 
-    var ticklabelposition = Lib.coerce(colorbarIn, colorbarOut, {
+    const ticklabelposition = Lib.coerce(colorbarIn, colorbarOut, {
         ticklabelposition: {
             valType: 'enumerated',
             dflt: 'outside',
@@ -104,8 +104,8 @@ export default function colorbarDefaults(containerIn: any, containerOut: any, la
 
     handleTickValueDefaults(colorbarIn, colorbarOut, coerce, 'linear');
 
-    var font = layout.font;
-    var opts: any = {
+    const font = layout.font;
+    const opts: any = {
         noAutotickangles: true,
         noTicklabelshift: true,
         noTicklabelstandoff: true,
@@ -121,9 +121,9 @@ export default function colorbarDefaults(containerIn: any, containerOut: any, la
 
     coerce('title.text', layout._dfltTitle.colorbar);
 
-    var tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font;
+    const tickFont = colorbarOut.showticklabels ? colorbarOut.tickfont : font;
 
-    var dfltTitleFont = extendFlat({}, font, {
+    const dfltTitleFont = extendFlat({}, font, {
         family: tickFont.family,
         size: bigFont(tickFont.size)
     });

@@ -105,11 +105,11 @@ const { ensureArray } = _index;
  * Of course it works whichever way it's oriented; you just need to interpret the
  * input/output accordingly.
  */
-function inferCubicControlPoint(p0, p2, p3) {
+function inferCubicControlPoint(p0: any, p2: any, p3: any) {
     // Extend p1 away from p0 by 50%. This is the equivalent quadratic point that
     // would give the same slope as catmull rom at p0.
-    var p2e0 = -0.5 * p3[0] + 1.5 * p2[0];
-    var p2e1 = -0.5 * p3[1] + 1.5 * p2[1];
+    const p2e0 = -0.5 * p3[0] + 1.5 * p2[0];
+    const p2e1 = -0.5 * p3[1] + 1.5 * p2[1];
 
     return [
         (2 * p2e0 + p0[0]) / 3,
@@ -117,16 +117,16 @@ function inferCubicControlPoint(p0, p2, p3) {
     ];
 }
 
-export default function computeControlPoints(xe, ye, x, y, asmoothing, bsmoothing) {
-    var i, j, ie, je, xej, yej, xj, yj, cp, p1;
+export default function computeControlPoints(xe: any, ye: any, x: any, y: any, asmoothing: any, bsmoothing: any) {
+    let i, j, ie, je, xej, yej, xj, yj, cp, p1;
     // At this point, we know these dimensions are correct and representative of
     // the whole 2D arrays:
-    var na = x[0].length;
-    var nb = x.length;
+    const na = x[0].length;
+    const nb = x.length;
 
     // (n)umber of (e)xpanded points:
-    var nea = asmoothing ? 3 * na - 2 : na;
-    var neb = bsmoothing ? 3 * nb - 2 : nb;
+    const nea = asmoothing ? 3 * na - 2 : na;
+    const neb = bsmoothing ? 3 * nb - 2 : nb;
 
     xe = ensureArray(xe, neb);
     ye = ensureArray(ye, neb);

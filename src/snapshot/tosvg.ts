@@ -4,13 +4,13 @@ import { setRect } from '../components/drawing/index.js';
 import Color from '../components/color/index.js';
 import xmlnsNamespaces from '../constants/xmlns_namespaces.js';
 import type { GraphDiv } from '../../types/core';
-var DOUBLEQUOTE_REGEX = /"/g;
-var DUMMY_SUB = 'TOBESTRIPPED';
-var DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
+const DOUBLEQUOTE_REGEX = /"/g;
+const DUMMY_SUB = 'TOBESTRIPPED';
+const DUMMY_REGEX = new RegExp('("' + DUMMY_SUB + ')|(' + DUMMY_SUB + '")', 'g');
 
-function htmlEntityDecode(s) {
-    var hiddenDiv = select('body').append('div').style({display: 'none'}).html('');
-    var replaced = s.replace(/(&[^;]*;)/gi, function(d) {
+function htmlEntityDecode(s: any) {
+    const hiddenDiv = select('body').append('div').style('display', 'none').html('');
+    const replaced = s.replace(/(&[^;]*;)/gi, function(d: any) {
         if(d === '&lt;') { return '&#60;'; } // special handling for brackets
         if(d === '&rt;') { return '&#62;'; }
         if(d.indexOf('<') !== -1 || d.indexOf('>') !== -1) { return ''; }
@@ -20,17 +20,17 @@ function htmlEntityDecode(s) {
     return replaced;
 }
 
-function xmlEntityEncode(str) {
+function xmlEntityEncode(str: any) {
     return str.replace(/&(?!\w+;|\#[0-9]+;| \#x[0-9A-F]+;)/g, '&amp;');
 }
 
 export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
-    var fullLayout = gd._fullLayout;
-    var svg = fullLayout._paper;
-    var toppaper = fullLayout._toppaper;
-    var width = fullLayout.width;
-    var height = fullLayout.height;
-    var i;
+    const fullLayout = gd._fullLayout;
+    const svg = fullLayout._paper;
+    const toppaper = fullLayout._toppaper;
+    const width = fullLayout.width;
+    const height = fullLayout.height;
+    let i;
 
     // make background color a rect in the svg, then revert after scraping
     // all other alterations have been dealt with by properly preparing the svg
@@ -44,9 +44,9 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     // subplot-specific to-SVG methods
     // which notably add the contents of the gl-container
     // into the main svg node
-    var basePlotModules = fullLayout._basePlotModules || [];
+    const basePlotModules = fullLayout._basePlotModules || [];
     for(i = 0; i < basePlotModules.length; i++) {
-        var _module = basePlotModules[i];
+        const _module = basePlotModules[i];
 
         if(_module.toSVG) _module.toSVG(gd);
     }
@@ -54,13 +54,13 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     // add top items above them assumes everything in toppaper is either
     // a group or a defs, and if it's empty (like hoverlayer) we can ignore it.
     if(toppaper) {
-        var nodes = toppaper.node().childNodes;
+        const nodes = toppaper.node().childNodes;
 
         // make copy of nodes as childNodes prop gets mutated in loop below
-        var topGroups = Array.prototype.slice.call(nodes);
+        const topGroups = Array.prototype.slice.call(nodes);
 
         for(i = 0; i < topGroups.length; i++) {
-            var topGroup = topGroups[i];
+            const topGroup = topGroups[i];
 
             if(topGroup.childNodes.length) svg.node().appendChild(topGroup);
         }
@@ -77,9 +77,10 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     svg.node().style.background = '';
 
     svg.selectAll('text')
-        .attr({'data-unformatted': null, 'data-math': null})
-        .each(function() {
-            var txt = select(this);
+        .attr('data-unformatted', null)
+        .attr('data-math', null)
+        .each(function(this: any) {
+            const txt = select(this);
 
             // hidden text is pre-formatting mathjax, the browser ignores it
             // but in a static plot it's useless and it can confuse batik
@@ -91,43 +92,45 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
             } else {
                 // clear other visibility/display values to default
                 // to not potentially confuse non-browser SVG implementations
-                txt.style({visibility: null, display: null});
+                txt
+                    .style('visibility', null)
+                    .style('display', null);
             }
 
             // Font family styles break things because of quotation marks,
             // so we must remove them *after* the SVG DOM has been serialized
             // to a string (browsers convert singles back)
-            var ff = this.style.fontFamily;
+            const ff = this.style.fontFamily;
             if(ff && ff.indexOf('"') !== -1) {
                 txt.style('font-family', ff.replace(DOUBLEQUOTE_REGEX, DUMMY_SUB));
             }
 
             // Drop normal font-weight, font-style and font-variant to reduce the size
-            var fw = this.style.fontWeight;
+            const fw = this.style.fontWeight;
             if(fw && (fw === 'normal' || fw === '400')) { // font-weight 400 is similar to normal
                 txt.style('font-weight', undefined);
             }
-            var fs = this.style.fontStyle;
+            const fs = this.style.fontStyle;
             if(fs && fs === 'normal') {
                 txt.style('font-style', undefined);
             }
-            var fv = this.style.fontVariant;
+            const fv = this.style.fontVariant;
             if(fv && fv === 'normal') {
                 txt.style('font-variant', undefined);
             }
         });
 
-    svg.selectAll('.gradient_filled,.pattern_filled').each(function() {
-        var pt = select(this);
+    svg.selectAll('.gradient_filled,.pattern_filled').each(function(this: any) {
+        const pt = select(this);
 
         // similar to font family styles above,
         // we must remove " after the SVG DOM has been serialized
-        var fill = this.style.fill;
+        const fill = this.style.fill;
         if(fill && fill.indexOf('url(') !== -1) {
             pt.style('fill', fill.replace(DOUBLEQUOTE_REGEX, DUMMY_SUB));
         }
 
-        var stroke = this.style.stroke;
+        const stroke = this.style.stroke;
         if(stroke && stroke.indexOf('url(') !== -1) {
             pt.style('stroke', stroke.replace(DOUBLEQUOTE_REGEX, DUMMY_SUB));
         }
@@ -141,12 +144,12 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     }
 
     if(format === 'svg' && scale) {
-        svg.attr('width', scale * width);
-        svg.attr('height', scale * height);
+        svg.attr('width', scale * width!);
+        svg.attr('height', scale * height!);
         svg.attr('viewBox', '0 0 ' + width + ' ' + height);
     }
 
-    var s = new window.XMLSerializer().serializeToString(svg.node());
+    let s = new window.XMLSerializer().serializeToString(svg.node());
     s = htmlEntityDecode(s);
     s = xmlEntityEncode(s);
 

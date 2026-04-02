@@ -1,31 +1,31 @@
 import tinycolor from 'tinycolor2';
-var colorMix = tinycolor.mix;
+const colorMix = tinycolor.mix;
 import colorAttrs from '../../components/color/attributes.js';
 import Lib from '../../lib/index.js';
 
 export default function handleLineGridDefaults(containerIn?: any, containerOut?: any, coerce?: any, opts?: any): void {
     opts = opts || {};
 
-    var dfltColor = opts.dfltColor;
+    const dfltColor = opts.dfltColor;
 
     function coerce2(attr?: any, dflt?: any) {
         return Lib.coerce2(containerIn, containerOut, opts.attributes, attr, dflt);
     }
 
-    var lineColor = coerce2('linecolor', dfltColor);
-    var lineWidth = coerce2('linewidth');
-    var showLine = coerce('showline', opts.showLine || !!lineColor || !!lineWidth);
+    const lineColor = coerce2('linecolor', dfltColor);
+    const lineWidth = coerce2('linewidth');
+    const showLine = coerce('showline', opts.showLine || !!lineColor || !!lineWidth);
 
     if(!showLine) {
         delete containerOut.linecolor;
         delete containerOut.linewidth;
     }
 
-    var gridColorDflt = colorMix(dfltColor, opts.bgColor, opts.blend || colorAttrs.lightFraction).toRgbString();
-    var gridColor = coerce2('gridcolor', gridColorDflt);
-    var gridWidth = coerce2('gridwidth');
-    var gridDash = coerce2('griddash');
-    var showGridLines = coerce('showgrid', opts.showGrid ||
+    const gridColorDflt = colorMix(dfltColor, opts.bgColor, opts.blend || colorAttrs.lightFraction).toRgbString();
+    const gridColor = coerce2('gridcolor', gridColorDflt);
+    const gridWidth = coerce2('gridwidth');
+    const gridDash = coerce2('griddash');
+    const showGridLines = coerce('showgrid', opts.showGrid ||
         !!gridColor ||
         !!gridWidth ||
         !!gridDash
@@ -38,11 +38,11 @@ export default function handleLineGridDefaults(containerIn?: any, containerOut?:
     }
 
     if(opts.hasMinor) {
-        var minorGridColorDflt = colorMix(containerOut.gridcolor, opts.bgColor, 67).toRgbString();
-        var minorGridColor = coerce2('minor.gridcolor', minorGridColorDflt);
-        var minorGridWidth = coerce2('minor.gridwidth', containerOut.gridwidth || 1);
-        var minorGridDash = coerce2('minor.griddash', containerOut.griddash || 'solid');
-        var minorShowGridLines = coerce('minor.showgrid',
+        const minorGridColorDflt = colorMix(containerOut.gridcolor, opts.bgColor, 67).toRgbString();
+        const minorGridColor = coerce2('minor.gridcolor', minorGridColorDflt);
+        const minorGridWidth = coerce2('minor.gridwidth', containerOut.gridwidth || 1);
+        const minorGridDash = coerce2('minor.griddash', containerOut.griddash || 'solid');
+        const minorShowGridLines = coerce('minor.showgrid',
             !!minorGridColor ||
             !!minorGridWidth ||
             !!minorGridDash
@@ -56,10 +56,10 @@ export default function handleLineGridDefaults(containerIn?: any, containerOut?:
     }
 
     if(!opts.noZeroLine) {
-        var zeroLineLayer = coerce2('zerolinelayer');
-        var zeroLineColor = coerce2('zerolinecolor', dfltColor);
-        var zeroLineWidth = coerce2('zerolinewidth');
-        var showZeroLine = coerce('zeroline', opts.showGrid || !!zeroLineColor || !!zeroLineWidth);
+        const zeroLineLayer = coerce2('zerolinelayer');
+        const zeroLineColor = coerce2('zerolinecolor', dfltColor);
+        const zeroLineWidth = coerce2('zerolinewidth');
+        const showZeroLine = coerce('zeroline', opts.showGrid || !!zeroLineColor || !!zeroLineWidth);
 
         if(!showZeroLine) {
             delete containerOut.zerolinelayer;

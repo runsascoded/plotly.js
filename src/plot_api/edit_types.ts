@@ -1,7 +1,7 @@
 import { extendFlat } from '../lib/extend.js';
 import isPlainObject from '../lib/is_plain_object.js';
 
-var traceOpts = {
+const traceOpts = {
     valType: 'flaglist',
     extras: ['none'],
     flags: ['calc', 'clearAxisTypes', 'plot', 'style', 'markerSize', 'colorbars'],
@@ -19,7 +19,7 @@ var traceOpts = {
     ].join(' ')
 };
 
-var layoutOpts = {
+const layoutOpts = {
     valType: 'flaglist',
     extras: ['none'],
     flags: [
@@ -46,10 +46,10 @@ var layoutOpts = {
 // flags for inside restyle/relayout include a few extras
 // that shouldn't be used in attributes, to deal with certain
 // combinations and conditionals efficiently
-var traceEditTypeFlags = traceOpts.flags.slice()
+const traceEditTypeFlags = traceOpts.flags.slice()
     .concat(['fullReplot']);
 
-var layoutEditTypeFlags = layoutOpts.flags.slice()
+const layoutEditTypeFlags = layoutOpts.flags.slice()
     .concat('layoutReplot');
 
 export default {
@@ -70,11 +70,11 @@ export default {
     /*
      * update `flags` with the `editType` values found in `attr`
      */
-    update: function(flags, attr) {
-        var editType = attr.editType;
+    update: function(flags: any, attr: any) {
+        const editType = attr.editType;
         if(editType && editType !== 'none') {
-            var editTypeParts = editType.split('+');
-            for(var i = 0; i < editTypeParts.length; i++) {
+            const editTypeParts = editType.split('+');
+            for(let i = 0; i < editTypeParts.length; i++) {
                 flags[editTypeParts[i]] = true;
             }
         }
@@ -84,8 +84,8 @@ export default {
 };
 
 function falseObj(keys?: any): any {
-    var out: any = {};
-    for(var i = 0; i < keys.length; i++) out[keys[i]] = false;
+    const out: any = {};
+    for(let i = 0; i < keys.length; i++) out[keys[i]] = false;
     return out;
 }
 
@@ -105,9 +105,9 @@ function falseObj(keys?: any): any {
  * @return {object} a new attributes object with `editType` modified as directed
  */
 function overrideAll(attrs?: any, editTypeOverride?: any, overrideContainers?: any): any {
-    var out = extendFlat({}, attrs);
-    for(var key in out) {
-        var attr = out[key];
+    const out = extendFlat({}, attrs);
+    for(const key in out) {
+        const attr = out[key];
         if(isPlainObject(attr)) {
             out[key] = overrideOne(attr, editTypeOverride, overrideContainers, key);
         }
@@ -119,12 +119,12 @@ function overrideAll(attrs?: any, editTypeOverride?: any, overrideContainers?: a
 
 function overrideOne(attr?: any, editTypeOverride?: any, overrideContainers?: any, key?: any): void {
     if(attr.valType) {
-        var out = extendFlat({}, attr);
+        const out = extendFlat({}, attr);
         out.editType = editTypeOverride;
 
         if(Array.isArray(attr.items)) {
             out.items = new Array(attr.items.length);
-            for(var i = 0; i < attr.items.length; i++) {
+            for(let i = 0; i < attr.items.length; i++) {
                 out.items[i] = overrideOne(attr.items[i], editTypeOverride, 'from-root');
             }
         }

@@ -4,8 +4,8 @@ import { coerceHoverinfo } from '../../lib/index.js';
 import Registry from '../../registry.js';
 
 export default function calc(gd: GraphDiv): void {
-    var calcdata = gd.calcdata;
-    var fullLayout = gd._fullLayout;
+    const calcdata = gd.calcdata;
+    const fullLayout = gd._fullLayout;
 
     function makeCoerceHoverInfo(trace: FullTrace): (val: any) => any {
         return function(val: any): any {
@@ -13,16 +13,16 @@ export default function calc(gd: GraphDiv): void {
         };
     }
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cd: CalcDatum[] = calcdata[i];
-        var trace = cd[0].trace;
+    for(let i = 0; i < calcdata.length; i++) {
+        const cd: CalcDatum[] = calcdata[i];
+        const trace = cd[0].trace;
 
         // don't include hover calc fields for pie traces
         // as calcdata items might be sorted by value and
         // won't match the data array order.
         if(Registry.traceIs(trace, 'pie-like')) continue;
 
-        var fillFn = Registry.traceIs(trace, '2dMap') ? paste : fillArray;
+        const fillFn = Registry.traceIs(trace, '2dMap') ? paste : fillArray;
 
         fillFn(trace.hoverinfo, cd, 'hi', makeCoerceHoverInfo(trace));
 
@@ -48,6 +48,6 @@ function paste(traceAttr: any, cd: CalcDatum[], cdAttr: string, fn?: (val: any) 
     fn = fn || identity;
 
     if(Array.isArray(traceAttr)) {
-        cd[0][cdAttr] = fn(traceAttr);
+        cd[0][cdAttr] = fn!(traceAttr);
     }
 }

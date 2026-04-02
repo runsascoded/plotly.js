@@ -5,11 +5,11 @@ import Colorscale from '../components/colorscale/index.js';
 import { defaultLine as colorDflt } from '../components/color/attributes.js';
 import { isArrayOrTypedArray } from './array.js';
 
-var colorDfltRgba = rgba(colorDflt);
-var opacityDflt = 1;
+const colorDfltRgba = rgba(colorDflt);
+const opacityDflt = 1;
 
 function calculateColor(colorIn: number[], opacityIn: number): number[] {
-    var colorOut = colorIn;
+    const colorOut = colorIn;
     colorOut[3] *= opacityIn;
     return colorOut;
 }
@@ -17,7 +17,7 @@ function calculateColor(colorIn: number[], opacityIn: number): number[] {
 function validateColor(colorIn: any): number[] {
     if(isNumeric(colorIn)) return colorDfltRgba;
 
-    var colorOut = rgba(colorIn);
+    const colorOut = rgba(colorIn);
 
     return colorOut.length ? colorOut : colorDfltRgba;
 }
@@ -27,15 +27,15 @@ function validateOpacity(opacityIn: any): number {
 }
 
 function formatColor(containerIn: any, opacityIn: any, len: number): number[] | number[][] {
-    var colorIn = containerIn.color;
+    let colorIn = containerIn.color;
     if(colorIn && colorIn._inputArray) colorIn = colorIn._inputArray;
 
-    var isArrayColorIn = isArrayOrTypedArray(colorIn);
-    var isArrayOpacityIn = isArrayOrTypedArray(opacityIn);
-    var cOpts = Colorscale.extractOpts(containerIn);
-    var colorOut: any[] = [];
+    const isArrayColorIn = isArrayOrTypedArray(colorIn);
+    const isArrayOpacityIn = isArrayOrTypedArray(opacityIn);
+    const cOpts = Colorscale.extractOpts(containerIn);
+    let colorOut: any[] = [];
 
-    var sclFunc: any, getColor: any, getOpacity: any, colori: any, opacityi: any;
+    let sclFunc: any, getColor: any, getOpacity: any, colori: any, opacityi: any;
 
     if(cOpts.colorscale !== undefined) {
         sclFunc = Colorscale.makeColorScaleFuncFromTrace(containerIn);
@@ -57,7 +57,7 @@ function formatColor(containerIn: any, opacityIn: any, len: number): number[] | 
     } else getOpacity = validateOpacity;
 
     if(isArrayColorIn || isArrayOpacityIn) {
-        for(var i = 0; i < len; i++) {
+        for(let i = 0; i < len; i++) {
             colori = getColor(colorIn, i);
             opacityi = getOpacity(opacityIn, i);
             colorOut[i] = calculateColor(colori, opacityi);
@@ -68,15 +68,15 @@ function formatColor(containerIn: any, opacityIn: any, len: number): number[] | 
 }
 
 function parseColorScale(cont: any): { index: number; rgb: number[] }[] {
-    var cOpts = Colorscale.extractOpts(cont);
+    const cOpts = Colorscale.extractOpts(cont);
 
-    var colorscale = cOpts.colorscale;
+    let colorscale = cOpts.colorscale;
     if(cOpts.reversescale) colorscale = Colorscale.flipScale(cOpts.colorscale);
 
     return colorscale.map(function(elem: any[]) {
-        var index = elem[0];
-        var color = tinycolor(elem[1]);
-        var rgb = color.toRgb();
+        const index = elem[0];
+        const color = tinycolor(elem[1]);
+        const rgb = color.toRgb();
         return {
             index: index,
             rgb: [rgb.r, rgb.g, rgb.b, rgb.a]

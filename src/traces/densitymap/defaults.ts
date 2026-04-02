@@ -8,10 +8,10 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var lon = coerce('lon') || [];
-    var lat = coerce('lat') || [];
+    const lon = coerce('lon') || [];
+    const lat = coerce('lat') || [];
 
-    var len = Math.min(lon.length, lat.length);
+    const len = Math.min(lon.length, lat.length);
     if (!len) {
         traceOut.visible = false;
         return;

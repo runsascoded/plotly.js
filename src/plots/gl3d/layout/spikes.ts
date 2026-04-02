@@ -1,8 +1,8 @@
 import str2RGBArray from '../../../lib/str2rgbarray.js';
 
-var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
+const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
-function SpikeOptions() {
+function SpikeOptions(this: any) {
     this.enabled = [true, true, true];
     this.colors = [[0, 0, 0, 1],
                    [0, 0, 0, 1],
@@ -11,11 +11,11 @@ function SpikeOptions() {
     this.lineWidth = [1, 1, 1];
 }
 
-var proto = SpikeOptions.prototype;
+const proto = SpikeOptions.prototype;
 
-proto.merge = function(sceneLayout) {
-    for(var i = 0; i < 3; ++i) {
-        var axes = sceneLayout[AXES_NAMES[i]];
+proto.merge = function(sceneLayout: any) {
+    for(let i = 0; i < 3; ++i) {
+        const axes = sceneLayout[AXES_NAMES[i]];
 
         if(!axes.visible) {
             this.enabled[i] = false;
@@ -30,8 +30,9 @@ proto.merge = function(sceneLayout) {
     }
 };
 
-function createSpikeOptions(layout) {
-    var result = new SpikeOptions();
+function createSpikeOptions(layout: any) {
+    // @ts-ignore TS7009
+    const result: any = (new SpikeOptions() as any);
     result.merge(layout);
     return result;
 }

@@ -4,25 +4,25 @@ import Axes from '../../plots/cartesian/axes.js';
 import alignPeriod from '../../plots/cartesian/align_period.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
-var _ = Lib._;
+const _ = Lib._;
 
 function calc(gd: GraphDiv,  trace: FullTrace) {
-    var xa = Axes.getFromId(gd, trace.xaxis);
-    var ya = Axes.getFromId(gd, trace.yaxis);
+    const xa = Axes.getFromId(gd, trace.xaxis);
+    const ya = Axes.getFromId(gd, trace.yaxis);
 
-    var tickLen = convertTickWidth(gd, xa, trace);
-    var minDiff = trace._minDiff;
+    const tickLen = convertTickWidth(gd, xa, trace);
+    const minDiff = trace._minDiff;
     trace._minDiff = null;
-    var origX = trace._origX;
+    const origX = trace._origX;
     trace._origX = null;
-    var x = trace._xcalc;
+    const x = trace._xcalc;
     trace._xcalc = null;
 
-    var cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
+    const cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
 
     trace._extremes[xa._id] = Axes.findExtremes(xa, x, {vpad: minDiff / 2});
     if(cd.length) {
-        Lib.extendFlat(cd[0].t, {
+        Lib.extendFlat((cd[0] as any).t, {
             wHover: minDiff / 2,
             tickLen: tickLen
         });
@@ -32,7 +32,7 @@ function calc(gd: GraphDiv,  trace: FullTrace) {
     }
 }
 
-function ptFunc(o,  h,  l,  c) {
+function ptFunc(o: any,  h: any,  l: any,  c: any) {
     return {
         o: o,
         h: h,
@@ -43,28 +43,28 @@ function ptFunc(o,  h,  l,  c) {
 
 // shared between OHLC and candlestick
 // ptFunc makes a calcdata point specific to each trace type, from oi, hi, li, ci
-function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis,  ptFunc) {
-    var o = ya.makeCalcdata(trace, 'open');
-    var h = ya.makeCalcdata(trace, 'high');
-    var l = ya.makeCalcdata(trace, 'low');
-    var c = ya.makeCalcdata(trace, 'close');
+function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX: any,  x: any,  ya: FullAxis,  ptFunc: any) {
+    const o = ya.makeCalcdata(trace, 'open');
+    const h = ya.makeCalcdata(trace, 'high');
+    const l = ya.makeCalcdata(trace, 'low');
+    const c = ya.makeCalcdata(trace, 'close');
 
-    var hasTextArray = Lib.isArrayOrTypedArray(trace.text);
-    var hasHovertextArray = Lib.isArrayOrTypedArray(trace.hovertext);
+    const hasTextArray = Lib.isArrayOrTypedArray(trace.text);
+    const hasHovertextArray = Lib.isArrayOrTypedArray(trace.hovertext);
 
     // we're optimists - before we have any changing data, assume increasing
-    var increasing = true;
-    var cPrev = null;
+    let increasing = true;
+    let cPrev = null;
 
-    var hasPeriod = !!trace.xperiodalignment;
+    const hasPeriod = !!trace.xperiodalignment;
 
-    var cd = [];
-    for(var i = 0; i < x.length; i++) {
-        var xi = x[i];
-        var oi = o[i];
-        var hi = h[i];
-        var li = l[i];
-        var ci = c[i];
+    const cd: any[] = [];
+    for(let i = 0; i < x.length; i++) {
+        const xi = x[i];
+        const oi = o[i];
+        const hi = h[i];
+        const li = l[i];
+        const ci = c[i];
 
         if(xi !== BADNUM && oi !== BADNUM && hi !== BADNUM && li !== BADNUM && ci !== BADNUM) {
             if(ci === oi) {
@@ -75,7 +75,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
 
             cPrev = ci;
 
-            var pt = ptFunc(oi, hi, li, ci);
+            const pt = ptFunc(oi, hi, li, ci);
 
             pt.pos = xi;
             pt.yc = (oi + ci) / 2;
@@ -87,7 +87,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
             pt.y = [li, hi];
 
             if(hasPeriod) pt.orig_p = origX[i]; // used by hover
-            if(hasTextArray) pt.tx = trace.text[i];
+            if(hasTextArray) pt.tx = trace.text![i];
             if(hasHovertextArray) pt.htx = trace.hovertext[i];
 
             cd.push(pt);
@@ -99,7 +99,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
     trace._extremes[ya._id] = Axes.findExtremes(ya, Lib.concat(l, h), {padded: true});
 
     if(cd.length) {
-        cd[0].t = {
+        (cd[0] as any).t = {
             labels: {
                 open: _(gd, 'open:') + ' ',
                 high: _(gd, 'high:') + ' ',
@@ -121,18 +121,18 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
  * also since we need it here, stash _xcalc (and _origX) on the trace
  */
 function convertTickWidth(gd: GraphDiv,  xa: FullAxis,  trace: FullTrace) {
-    var minDiff = trace._minDiff;
+    let minDiff = trace._minDiff;
 
     if(!minDiff) {
-        var fullData = gd._fullData;
-        var ohlcTracesOnThisXaxis = [];
+        const fullData = gd._fullData;
+        const ohlcTracesOnThisXaxis: any[] = [];
 
         minDiff = Infinity;
 
-        var i;
+        let i;
 
         for(i = 0; i < fullData.length; i++) {
-            var tracei = fullData[i];
+            const tracei = fullData[i];
 
             if(tracei.type === 'ohlc' &&
                 tracei.visible === true &&
@@ -140,13 +140,13 @@ function convertTickWidth(gd: GraphDiv,  xa: FullAxis,  trace: FullTrace) {
             ) {
                 ohlcTracesOnThisXaxis.push(tracei);
 
-                var origX = xa.makeCalcdata(tracei, 'x');
+                const origX = xa.makeCalcdata(tracei, 'x');
                 tracei._origX = origX;
 
-                var xcalc = alignPeriod(trace, xa, 'x', origX).vals;
+                const xcalc = alignPeriod(trace, xa, 'x', origX).vals;
                 tracei._xcalc = xcalc;
 
-                var _minDiff = Lib.distinctVals(xcalc).minDiff;
+                const _minDiff = Lib.distinctVals(xcalc).minDiff;
                 if(_minDiff && isFinite(_minDiff)) {
                     minDiff = Math.min(minDiff, _minDiff);
                 }
@@ -157,7 +157,7 @@ function convertTickWidth(gd: GraphDiv,  xa: FullAxis,  trace: FullTrace) {
         if(minDiff === Infinity) minDiff = 1;
 
         for(i = 0; i < ohlcTracesOnThisXaxis.length; i++) {
-            ohlcTracesOnThisXaxis[i]._minDiff = minDiff;
+            (ohlcTracesOnThisXaxis[i] as any)._minDiff = minDiff;
         }
     }
 

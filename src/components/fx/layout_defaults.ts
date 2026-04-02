@@ -9,22 +9,22 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 
-    var hoverMode = handleHoverModeDefaults(layoutIn, layoutOut);
+    const hoverMode = handleHoverModeDefaults(layoutIn, layoutOut);
     if(hoverMode) {
         coerce('hoverdistance');
         coerce('spikedistance');
     }
 
-    var dragMode = coerce('dragmode');
+    const dragMode = coerce('dragmode');
     if(dragMode === 'select') coerce('selectdirection');
 
     // if only mapbox, map or geo subplots is present on graph,
     // reset 'zoom' dragmode to 'pan' until 'zoom' is implemented,
     // so that the correct modebar button is active
-    var hasMapbox = layoutOut._has('mapbox');
-    var hasMap = layoutOut._has('map');
-    var hasGeo = layoutOut._has('geo');
-    var len = layoutOut._basePlotModules.length;
+    const hasMapbox = layoutOut._has('mapbox');
+    const hasMap = layoutOut._has('map');
+    const hasGeo = layoutOut._has('geo');
+    const len = layoutOut._basePlotModules.length;
 
     if(layoutOut.dragmode === 'zoom' && (
         ((hasMapbox || hasMap || hasGeo) && len === 1) ||

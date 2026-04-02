@@ -11,12 +11,12 @@ import delta from '../../constants/delta.js';
 import _axis_format_attributes from '../../plots/cartesian/axis_format_attributes.js';
 const { descriptionOnlyNumbers } = _axis_format_attributes;
 
-var textFontAttrs = fontAttrs({
+const textFontAttrs = fontAttrs({
     editType: 'plot',
     colorEditType: 'plot'
 });
 
-var gaugeBarAttrs = {
+const gaugeBarAttrs = {
     color: {
         valType: 'color',
         editType: 'plot',
@@ -57,7 +57,7 @@ var gaugeBarAttrs = {
     editType: 'calc'
 };
 
-var rangeAttr = {
+const rangeAttr = {
     valType: 'info_array',
     items: [
             {valType: 'number', editType: 'plot'},
@@ -79,7 +79,7 @@ var rangeAttr = {
     ].join(' ')
 };
 
-var stepsAttrs = templatedArray('step', extendDeep({}, gaugeBarAttrs, {
+const stepsAttrs = templatedArray('step', extendDeep({}, gaugeBarAttrs, {
     range: rangeAttr
 }));
 

@@ -1,11 +1,11 @@
 import type { FullAxis } from '../../../types/core';
 import scatterHover from '../scatter/hover.js';
 
-export default function hoverPoints(pointData, xval, yval, hovermode) {
-    var scatterPointData = scatterHover(pointData, xval, yval, hovermode);
+export default function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
+    const scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
-    var newPointData = scatterPointData[0];
+    const newPointData = scatterPointData[0];
 
     // if hovering on a fill, we don't show any point data so the label is
     // unchanged from what scatter gives us - except that it needs to
@@ -18,18 +18,18 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     // so easy and anyway we lost the information we would have needed to do
     // this inside scatterHover.
     if(newPointData.index === undefined) {
-        var yFracUp = 1 - (newPointData.y0 / pointData.ya._length);
-        var xLen = pointData.xa._length;
-        var xMin = xLen * yFracUp / 2;
-        var xMax = xLen - xMin;
+        const yFracUp = 1 - (newPointData.y0 / pointData.ya._length);
+        const xLen = pointData.xa._length;
+        const xMin = xLen * yFracUp / 2;
+        const xMax = xLen - xMin;
         newPointData.x0 = Math.max(Math.min(newPointData.x0, xMax), xMin);
         newPointData.x1 = Math.max(Math.min(newPointData.x1, xMax), xMin);
         return scatterPointData;
     }
 
-    var cdi = newPointData.cd[newPointData.index];
-    var trace = newPointData.trace;
-    var subplot = newPointData.subplot;
+    const cdi = newPointData.cd[newPointData.index];
+    const trace = newPointData.trace;
+    const subplot = newPointData.subplot;
 
     newPointData.a = cdi.a;
     newPointData.b = cdi.b;
@@ -38,20 +38,20 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     newPointData.xLabelVal = undefined;
     newPointData.yLabelVal = undefined;
 
-    var fullLayout: any = {};
+    const fullLayout: any = {};
     fullLayout[trace.subplot] = {_subplot: subplot};
-    var labels = trace._module.formatLabels(cdi, trace, fullLayout);
+    const labels = trace._module.formatLabels(cdi, trace, fullLayout);
     newPointData.aLabel = labels.aLabel;
     newPointData.bLabel = labels.bLabel;
     newPointData.cLabel = labels.cLabel;
 
-    var hoverinfo = cdi.hi || trace.hoverinfo;
-    var text = [];
-    function textPart(ax: FullAxis, val) {
+    const hoverinfo = cdi.hi || trace.hoverinfo;
+    const text: any[] = [];
+    function textPart(ax: FullAxis, val: any) {
         text.push(ax._hovertitle + ': ' + val);
     }
     if(!trace.hovertemplate) {
-        var parts = hoverinfo.split('+');
+        let parts = hoverinfo.split('+');
         if(parts.indexOf('all') !== -1) parts = ['a', 'b', 'c'];
         if(parts.indexOf('a') !== -1) textPart(subplot.aaxis, newPointData.aLabel);
         if(parts.indexOf('b') !== -1) textPart(subplot.baxis, newPointData.bLabel);

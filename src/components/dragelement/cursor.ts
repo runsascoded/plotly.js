@@ -3,7 +3,7 @@ import { constrain } from '../../lib/index.js';
 // set cursors pointing toward the closest corner/side,
 // to indicate alignment
 // x and y are 0-1, fractions of the plot area
-var cursorset: string[][] = [
+const cursorset: string[][] = [
     ['sw-resize', 's-resize', 'se-resize'],
     ['w-resize', 'move', 'e-resize'],
     ['nw-resize', 'n-resize', 'ne-resize']

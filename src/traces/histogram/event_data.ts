@@ -13,7 +13,7 @@ export default function eventData(out: any, pt: any, trace: FullTrace, cd: any[]
 
     // specific to histogram - CDFs do not have pts (yet?)
     if(!(trace.cumulative || {}).enabled) {
-        var pts = Array.isArray(pointNumber) ?
+        const pts = Array.isArray(pointNumber) ?
             cd[0].pts[pointNumber[0]][pointNumber[1]] :
             cd[pointNumber].pts;
 
@@ -22,10 +22,10 @@ export default function eventData(out: any, pt: any, trace: FullTrace, cd: any[]
         delete out.pointNumber;
         delete out.pointIndex;
 
-        var pointIndices;
+        let pointIndices: any[];
         if(trace._indexToPoints) {
             pointIndices = [];
-            for(var i = 0; i < pts.length; i++) {
+            for(let i = 0; i < pts.length; i++) {
                 pointIndices = pointIndices.concat(trace._indexToPoints[pts[i]]);
             }
         } else {

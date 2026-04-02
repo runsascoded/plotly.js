@@ -3,24 +3,24 @@ import Axes from '../../plots/cartesian/axes.js';
 import Lib from '../../lib/index.js';
 import { getAxisGroup } from '../../plots/cartesian/constraints.js';
 
-var orientations = ['v', 'h'];
+const orientations = ['v', 'h'];
 
 function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
-    var calcdata = gd.calcdata;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+    const calcdata = gd.calcdata;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    for(var i = 0; i < orientations.length; i++) {
-        var orientation = orientations[i];
-        var posAxis = orientation === 'h' ? ya : xa;
-        var boxList = [];
+    for(let i = 0; i < orientations.length; i++) {
+        const orientation = orientations[i];
+        const posAxis = orientation === 'h' ? ya : xa;
+        const boxList: any[] = [];
 
         // make list of boxes / candlesticks
         // For backward compatibility, candlesticks are treated as if they *are* box traces here
-        for(var j = 0; j < calcdata.length; j++) {
-            var cd = calcdata[j];
-            var t = cd[0].t;
-            var trace = cd[0].trace;
+        for(let j = 0; j < calcdata.length; j++) {
+            const cd = calcdata[j];
+            const t = cd[0].t;
+            const trace = cd[0].trace;
 
             if(trace.visible === true &&
                     (trace.type === 'box' || trace.type === 'candlestick') &&
@@ -38,14 +38,14 @@ function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
 }
 
 function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], posAxis: FullAxis): void {
-    var calcdata = gd.calcdata;
-    var fullLayout = gd._fullLayout;
-    var axId = posAxis._id;
-    var axLetter = axId.charAt(0);
+    const calcdata = gd.calcdata;
+    const fullLayout = gd._fullLayout;
+    const axId = posAxis._id;
+    const axLetter = axId.charAt(0);
 
-    var i, j, calcTrace;
-    var pointList = [];
-    var shownPts = 0;
+    let i, j, calcTrace;
+    const pointList: any[] = [];
+    let shownPts = 0;
 
     // make list of box points
     for(i = 0; i < boxList.length; i++) {
@@ -59,39 +59,39 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
     if(!pointList.length) return;
 
     // box plots - update dPos based on multiple traces
-    var boxdv = Lib.distinctVals(pointList);
+    const boxdv = Lib.distinctVals(pointList);
     if(posAxis.type === 'category' || posAxis.type === 'multicategory') {
         boxdv.minDiff = 1;
     }
 
-    var dPos0 = boxdv.minDiff / 2;
+    const dPos0 = boxdv.minDiff / 2;
 
     // check for forced minimum dtick
     Axes.minDtick(posAxis, boxdv.minDiff, boxdv.vals[0], true);
 
-    var numKey = traceType === 'violin' ? '_numViolins' : '_numBoxes';
-    var numTotal = fullLayout[numKey];
-    var group = fullLayout[traceType + 'mode'] === 'group' && numTotal > 1;
-    var groupFraction = 1 - fullLayout[traceType + 'gap'];
-    var groupGapFraction = 1 - fullLayout[traceType + 'groupgap'];
+    const numKey = traceType === 'violin' ? '_numViolins' : '_numBoxes';
+    const numTotal = fullLayout[numKey];
+    const group = fullLayout[traceType + 'mode'] === 'group' && numTotal > 1;
+    const groupFraction = 1 - fullLayout[traceType + 'gap'];
+    const groupGapFraction = 1 - fullLayout[traceType + 'groupgap'];
 
     for(i = 0; i < boxList.length; i++) {
         calcTrace = calcdata[boxList[i]];
 
-        var trace = calcTrace[0].trace;
-        var t = calcTrace[0].t;
-        var width = trace.width;
-        var side = trace.side;
+        const trace = calcTrace[0].trace;
+        const t = calcTrace[0].t;
+        const width = trace.width;
+        const side = trace.side;
 
         // position coordinate delta
-        var dPos;
+        let dPos;
         // box half width;
-        var bdPos;
+        let bdPos;
         // box center offset
-        var bPos;
+        let bPos;
         // half-width within which to accept hover for this box/violin
         // always split the distance to the closest box/violin
-        var wHover;
+        let wHover;
 
         if(width) {
             dPos = bdPos = wHover = width / 2;
@@ -100,12 +100,12 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
             dPos = dPos0;
 
             if(group) {
-                var groupId = getAxisGroup(fullLayout, posAxis._id) + trace.orientation;
-                var alignmentGroups = fullLayout._alignmentOpts[groupId] || {};
-                var alignmentGroupOpts = alignmentGroups[trace.alignmentgroup] || {};
-                var nOffsetGroups = Object.keys(alignmentGroupOpts.offsetGroups || {}).length;
-                var num = nOffsetGroups || numTotal;
-                var shift = nOffsetGroups ? trace._offsetIndex : t.num;
+                const groupId = getAxisGroup(fullLayout, posAxis._id) + trace.orientation;
+                const alignmentGroups = fullLayout._alignmentOpts[groupId] || {};
+                const alignmentGroupOpts = alignmentGroups[trace.alignmentgroup] || {};
+                const nOffsetGroups = Object.keys(alignmentGroupOpts.offsetGroups || {}).length;
+                const num = nOffsetGroups || numTotal;
+                const shift = nOffsetGroups ? trace._offsetIndex : t.num;
 
                 bdPos = dPos * groupFraction * groupGapFraction / num;
                 bPos = 2 * dPos * (-0.5 + (shift + 0.5) / num) * groupFraction;
@@ -122,22 +122,22 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
         t.wHover = wHover;
 
         // box/violin-only value-space push value
-        var pushplus;
-        var pushminus;
+        let pushplus;
+        let pushminus;
         // edge of box/violin
-        var edge = bPos + bdPos;
-        var edgeplus;
-        var edgeminus;
+        const edge = bPos + bdPos;
+        let edgeplus;
+        let edgeminus: any;
         // value-space padding
-        var vpadplus;
-        var vpadminus;
+        let vpadplus;
+        let vpadminus;
         // pixel-space padding
-        var ppadplus;
-        var ppadminus;
+        let ppadplus;
+        let ppadminus;
         // do we add 5% of both sides (more logic for points beyond box/violin below)
-        var padded = Boolean(width);
+        let padded = Boolean(width);
         // does this trace show points?
-        var hasPts = (trace.boxpoints || trace.points) && (shownPts > 0);
+        const hasPts = (trace.boxpoints || trace.points) && (shownPts > 0);
 
         if(side === 'positive') {
             pushplus = dPos * (width ? 1 : 0.5);
@@ -153,11 +153,11 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
         }
 
         if(hasPts) {
-            var pointpos = trace.pointpos;
-            var jitter = trace.jitter;
-            var ms = trace.marker.size / 2;
+            const pointpos = trace.pointpos;
+            const jitter = trace.jitter;
+            const ms = trace.marker.size / 2;
 
-            var pp = 0;
+            let pp = 0;
             if((pointpos + jitter) >= 0) {
                 pp = edge * (pointpos + jitter);
                 if(pp > pushplus) {
@@ -176,7 +176,7 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
                 vpadplus = pushplus;
             }
 
-            var pm = 0;
+            let pm = 0;
             if((pointpos - jitter) <= 0) {
                 pm = -edge * (pointpos - jitter);
                 if(pm > pushminus) {
@@ -199,7 +199,7 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
             vpadminus = pushminus;
         }
 
-        var pos = new Array(calcTrace.length);
+        const pos = new Array(calcTrace.length);
         for(j = 0; j < calcTrace.length; j++) {
             pos[j] = calcTrace[j].pos;
         }

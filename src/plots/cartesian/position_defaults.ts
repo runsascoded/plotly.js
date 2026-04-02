@@ -2,12 +2,12 @@ import isNumeric from 'fast-isnumeric';
 import Lib, { noneOrAll } from '../../lib/index.js';
 
 export default function handlePositionDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): any {
-    var counterAxes = options.counterAxes || [];
-    var overlayableAxes = options.overlayableAxes || [];
-    var letter = options.letter;
-    var grid = options.grid;
-    var overlayingDomain = options.overlayingDomain;
-    var dfltAnchor, dfltDomain, dfltSide, dfltPosition, dfltShift, dfltAutomargin;
+    const counterAxes = options.counterAxes || [];
+    const overlayableAxes = options.overlayableAxes || [];
+    const letter = options.letter;
+    const grid = options.grid;
+    const overlayingDomain = options.overlayingDomain;
+    let dfltAnchor, dfltDomain, dfltSide, dfltPosition, dfltShift, dfltAutomargin;
 
     if(grid) {
         dfltDomain = grid._domains[letter][grid._axisMap[containerOut._id]];
@@ -26,7 +26,7 @@ export default function handlePositionDefaults(containerIn?: any, containerOut?:
     dfltShift = 0;
     dfltAutomargin = false;
 
-    var anchor = Lib.coerce(containerIn, containerOut, {
+    const anchor = Lib.coerce(containerIn, containerOut, {
         anchor: {
             valType: 'enumerated',
             values: ['free'].concat(counterAxes),
@@ -34,7 +34,7 @@ export default function handlePositionDefaults(containerIn?: any, containerOut?:
         }
     }, 'anchor');
 
-    var side = Lib.coerce(containerIn, containerOut, {
+    const side = Lib.coerce(containerIn, containerOut, {
         side: {
             valType: 'enumerated',
             values: letter === 'x' ? ['bottom', 'top'] : ['left', 'right'],
@@ -44,7 +44,7 @@ export default function handlePositionDefaults(containerIn?: any, containerOut?:
 
     if(anchor === 'free') {
         if(letter === 'y') {
-            var autoshift = coerce('autoshift');
+            const autoshift = coerce('autoshift');
             if(autoshift) {
                 dfltPosition = side === 'left' ? overlayingDomain[0] : overlayingDomain[1];
                 dfltAutomargin = containerOut.automargin ? containerOut.automargin : true;
@@ -56,7 +56,7 @@ export default function handlePositionDefaults(containerIn?: any, containerOut?:
     }
     coerce('automargin', dfltAutomargin);
 
-    var overlaying = false;
+    let overlaying = false;
     if(overlayableAxes.length) {
         overlaying = Lib.coerce(containerIn, containerOut, {
             overlaying: {
@@ -72,7 +72,7 @@ export default function handlePositionDefaults(containerIn?: any, containerOut?:
         // in ax.setscale()... but this means we still need (imperfect) logic
         // in the axes popover to hide domain for the overlaying axis.
         // perhaps I should make a private version _domain that all axes get???
-        var domain = coerce('domain', dfltDomain);
+        const domain = coerce('domain', dfltDomain);
 
         // according to https://www.npmjs.com/package/canvas-size
         // the minimum value of max canvas width across browsers and devices is 4096

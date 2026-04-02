@@ -5,18 +5,18 @@ import constants from './constants.js';
 import helpers from './helpers.js';
 
 export default function calcAutorange(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var shapeList = Lib.filterVisible(fullLayout.shapes);
+    const fullLayout = gd._fullLayout;
+    const shapeList = Lib.filterVisible(fullLayout.shapes);
 
     if(!shapeList.length || !gd._fullData.length) return;
 
-    for(var i = 0; i < shapeList.length; i++) {
-        var shape = shapeList[i];
+    for(let i = 0; i < shapeList.length; i++) {
+        const shape = shapeList[i];
         shape._extremes = {};
 
-        var ax; var bounds;
-        var xRefType = Axes.getRefType(shape.xref);
-        var yRefType = Axes.getRefType(shape.yref);
+        let ax, bounds;
+        const xRefType = Axes.getRefType(shape.xref);
+        const yRefType = Axes.getRefType(shape.yref);
 
         // paper and axis domain referenced shapes don't affect autorange
         if(shape.xref !== 'paper' && xRefType !== 'domain') {
@@ -48,17 +48,17 @@ function calcYPaddingOptions(shape: any) {
 }
 
 function calcPaddingOptions(lineWidth: any, sizeMode: any, v0: any, v1: any, path: any, isYAxis: any) {
-    var ppad = lineWidth / 2;
-    var axisDirectionReverted = isYAxis;
+    const ppad = lineWidth / 2;
+    const axisDirectionReverted = isYAxis;
 
     if(sizeMode === 'pixel') {
-        var coords = path ?
+        const coords = path ?
             helpers.extractPathCoords(path, isYAxis ? constants.paramIsY : constants.paramIsX) :
             [v0, v1];
-        var maxValue = Lib.aggNums(Math.max, null, coords);
-        var minValue = Lib.aggNums(Math.min, null, coords);
-        var beforePad = minValue < 0 ? Math.abs(minValue) + ppad : ppad;
-        var afterPad = maxValue > 0 ? maxValue + ppad : ppad;
+        const maxValue = Lib.aggNums(Math.max, null, coords);
+        const minValue = Lib.aggNums(Math.min, null, coords);
+        const beforePad = minValue < 0 ? Math.abs(minValue) + ppad : ppad;
+        const afterPad = maxValue > 0 ? maxValue + ppad : ppad;
 
         return {
             ppad: ppad,
@@ -71,16 +71,16 @@ function calcPaddingOptions(lineWidth: any, sizeMode: any, v0: any, v1: any, pat
 }
 
 function shapeBounds(ax: FullAxis, shape: any, paramsToUse: any) {
-    var dim = ax._id.charAt(0) === 'x' ? 'x' : 'y';
-    var isCategory = ax.type === 'category' || ax.type === 'multicategory';
-    var v0;
-    var v1;
-    var shiftStart = 0;
-    var shiftEnd = 0;
+    const dim = ax._id.charAt(0) === 'x' ? 'x' : 'y';
+    const isCategory = ax.type === 'category' || ax.type === 'multicategory';
+    let v0;
+    let v1;
+    let shiftStart = 0;
+    let shiftEnd = 0;
 
-    var convertVal = isCategory ? ax.r2c : ax.d2c;
+    let convertVal = isCategory ? ax.r2c : ax.d2c;
 
-    var isSizeModeScale = shape[dim + 'sizemode'] === 'scaled';
+    const isSizeModeScale = shape[dim + 'sizemode'] === 'scaled';
     if(isSizeModeScale) {
         v0 = shape[dim + '0'];
         v1 = shape[dim + '1'];
@@ -96,14 +96,14 @@ function shapeBounds(ax: FullAxis, shape: any, paramsToUse: any) {
     if(v0 !== undefined) return [convertVal(v0) + shiftStart, convertVal(v1) + shiftEnd];
     if(!shape.path) return;
 
-    var min = Infinity;
-    var max = -Infinity;
-    var segments = shape.path.match(constants.segmentRE);
-    var i;
-    var segment;
-    var drawnParam;
-    var params;
-    var val;
+    let min = Infinity;
+    let max = -Infinity;
+    const segments = shape.path.match(constants.segmentRE);
+    let i;
+    let segment;
+    let drawnParam;
+    let params;
+    let val;
 
     if(ax.type === 'date') convertVal = helpers.decodeDate(convertVal);
 

@@ -7,23 +7,23 @@ import colorscaleCalc from '../../components/colorscale/calc.js';
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var len = trace._length;
-    var calcTrace = new Array(len);
-    var z = trace.z;
-    var hasZ = isArrayOrTypedArray(z) && z.length;
+    const len = trace._length;
+    const calcTrace = new Array(len);
+    const z = trace.z;
+    const hasZ = isArrayOrTypedArray(z) && z!.length;
 
-    for(var i = 0; i < len; i++) {
-        var cdi: any = calcTrace[i] = {};
+    for(let i = 0; i < len; i++) {
+        const cdi: any = calcTrace[i] = {};
 
-        var lon = trace.lon[i];
-        var lat = trace.lat[i];
+        const lon = trace.lon[i];
+        const lat = trace.lat[i];
 
         cdi.lonlat = isNumeric(lon) && isNumeric(lat) ?
             [+lon, +lat] :
             [BADNUM, BADNUM];
 
         if(hasZ) {
-            var zi = z[i];
+            const zi = z![i];
             cdi.z = isNumeric(zi) ? zi : BADNUM;
         }
     }

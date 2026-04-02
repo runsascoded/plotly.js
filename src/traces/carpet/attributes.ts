@@ -4,7 +4,7 @@ import colorAttrs from '../../components/color/attributes.js';
 import _attributes from '../scatter/attributes.js';
 const { zorder } = _attributes;
 
-var carpetFont = fontAttrs({
+const carpetFont = fontAttrs({
     editType: 'calc',
     description: 'The default font used for axis & tick labels on this carpet'
 });

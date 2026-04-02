@@ -3,18 +3,18 @@ import _cross_trace_calc from '../bar/cross_trace_calc.js';
 const { setGroupPositions } = _cross_trace_calc;
 
 export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
-    var fullLayout = gd._fullLayout;
-    var fullData = gd._fullData;
-    var calcdata = gd.calcdata;
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
-    var waterfalls = [];
-    var waterfallsVert = [];
-    var waterfallsHorz = [];
-    var cd, i;
+    const fullLayout = gd._fullLayout;
+    const fullData = gd._fullData;
+    const calcdata = gd.calcdata;
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
+    const waterfalls: any[] = [];
+    const waterfallsVert: any[] = [];
+    const waterfallsHorz: any[] = [];
+    let cd, i;
 
     for(i = 0; i < fullData.length; i++) {
-        var fullTrace = fullData[i];
+        const fullTrace = fullData[i];
 
         if(
             fullTrace.visible === true &&
@@ -34,7 +34,7 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
         }
     }
 
-    var opts = {
+    const opts = {
         mode: fullLayout.waterfallmode,
         norm: fullLayout.waterfallnorm,
         gap: fullLayout.waterfallgap,
@@ -47,8 +47,8 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
     for(i = 0; i < waterfalls.length; i++) {
         cd = waterfalls[i];
 
-        for(var j = 0; j < cd.length; j++) {
-            var di = cd[j];
+        for(let j = 0; j < cd.length; j++) {
+            const di = cd[j];
 
             if(di.isSum === false) {
                 di.s0 += (j === 0) ? 0 : cd[j - 1].s;

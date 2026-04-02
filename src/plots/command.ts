@@ -1,9 +1,9 @@
 import Registry from '../registry.js';
 import { isPlainObject, log, nestedProperty, warn } from '../lib/index.js';
 
-export var manageCommandObserver = function(gd?: any, container?: any, commandList?: any, onchange?: any): any {
-    var ret: any = {};
-    var enabled = true;
+export const manageCommandObserver = function(gd?: any, container?: any, commandList?: any, onchange?: any): any {
+    let ret: any = {};
+    let enabled = true;
 
     if(container && container._commandObserver) {
         ret = container._commandObserver;
@@ -16,7 +16,7 @@ export var manageCommandObserver = function(gd?: any, container?: any, commandLi
     // Either create or just recompute this:
     ret.lookupTable = {};
 
-    var binding: any = hasSimpleAPICommandBindings(gd, commandList, ret.lookupTable);
+    const binding: any = hasSimpleAPICommandBindings(gd, commandList, ret.lookupTable);
 
     if(container && container._commandObserver) {
         if(!binding) {
@@ -44,7 +44,7 @@ export var manageCommandObserver = function(gd?: any, container?: any, commandLi
         ret.check = function check() {
             if(!enabled) return;
 
-            var update = bindingValueHasChanged(gd, binding, ret.cache);
+            const update = bindingValueHasChanged(gd, binding, ret.cache);
 
             if(update.changed && onchange) {
                 // Disable checks for the duration of this command in order to avoid
@@ -64,7 +64,7 @@ export var manageCommandObserver = function(gd?: any, container?: any, commandLi
             return update.changed;
         };
 
-        var checkEvents = [
+        const checkEvents = [
             'plotly_relayout',
             'plotly_redraw',
             'plotly_restyle',
@@ -73,12 +73,12 @@ export var manageCommandObserver = function(gd?: any, container?: any, commandLi
             'plotly_afterplot'
         ];
 
-        for(var i = 0; i < checkEvents.length; i++) {
+        for(let i = 0; i < checkEvents.length; i++) {
             gd._internalOn(checkEvents[i], ret.check);
         }
 
         ret.remove = function() {
-            for(var i = 0; i < checkEvents.length; i++) {
+            for(let i = 0; i < checkEvents.length; i++) {
                 gd._removeInternalListener(checkEvents[i], ret.check);
             }
         };
@@ -106,17 +106,17 @@ export var manageCommandObserver = function(gd?: any, container?: any, commandLi
     return ret;
 };
 
-export var hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, bindingsByValue?: any): any {
-    var i;
-    var n = commandList.length;
+export const hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, bindingsByValue?: any): any {
+    let i;
+    const n = commandList.length;
 
-    var refBinding;
+    let refBinding;
 
     for(i = 0; i < n; i++) {
-        var binding;
-        var command = commandList[i];
-        var method = command.method;
-        var args = command.args;
+        let binding;
+        const command = commandList[i];
+        const method = command.method;
+        let args = command.args;
 
         if(!Array.isArray(args)) args = [];
 
@@ -124,7 +124,7 @@ export var hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, b
         if(!method) {
             return false;
         }
-        var bindings = computeAPICommandBindings(gd, method, args);
+        const bindings = computeAPICommandBindings(gd, method, args);
 
         // Right now, handle one and *only* one property being set:
         if(bindings.length !== 1) {
@@ -147,7 +147,7 @@ export var hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, b
             if(Array.isArray(refBinding.traces)) {
                 if(Array.isArray(binding.traces)) {
                     binding.traces.sort();
-                    for(var j = 0; j < refBinding.traces.length; j++) {
+                    for(let j = 0; j < refBinding.traces.length; j++) {
                         if(refBinding.traces[j] !== binding.traces[j]) {
                             return false;
                         }
@@ -163,7 +163,7 @@ export var hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, b
         }
 
         binding = bindings[0];
-        var value: any = binding.value;
+        let value: any = binding.value;
         if(Array.isArray(value)) {
             if(value.length === 1) {
                 value = value[0];
@@ -180,8 +180,8 @@ export var hasSimpleAPICommandBindings = function(gd?: any, commandList?: any, b
 };
 
 function bindingValueHasChanged(gd?: any, binding?: any, cache?: any): any {
-    var container, value, obj;
-    var changed = false;
+    let container, value, obj;
+    let changed = false;
 
     if(binding.type === 'data') {
         // If it's data, we need to get a trace. Based on the limited scope
@@ -212,25 +212,25 @@ function bindingValueHasChanged(gd?: any, binding?: any, cache?: any): any {
     };
 }
 
-export var executeAPICommand = function(gd?: any, method?: any, args?: any): any {
+export const executeAPICommand = function(gd?: any, method?: any, args?: any): any {
     if(method === 'skip') return Promise.resolve();
 
-    var _method = Registry.apiMethodRegistry[method];
-    var allArgs = [gd];
+    const _method = Registry.apiMethodRegistry[method];
+    const allArgs = [gd];
     if(!Array.isArray(args)) args = [];
 
-    for(var i = 0; i < args.length; i++) {
+    for(let i = 0; i < args.length; i++) {
         allArgs.push(args[i]);
     }
 
-    return _method.apply(null, allArgs).catch(function(err) {
+    return _method.apply(null, allArgs).catch(function(err: any) {
         warn('API call to Plotly.' + method + ' rejected.', err);
         return Promise.reject(err);
     });
 };
 
-export var computeAPICommandBindings = function(gd?: any, method?: any, args?: any): any {
-    var bindings;
+export const computeAPICommandBindings = function(gd?: any, method?: any, args?: any): any {
+    let bindings;
 
     if(!Array.isArray(args)) args = [];
 
@@ -268,10 +268,10 @@ function computeAnimateBindings(gd?: any, args?: any): any {
 }
 
 function computeLayoutBindings(gd?: any, args?: any): any {
-    var bindings = [];
+    const bindings: any[] = [];
 
-    var astr = args[0];
-    var aobj: any = {};
+    const astr = args[0];
+    let aobj: any = {};
     if(typeof astr === 'string') {
         aobj[astr] = args[1];
     } else if(isPlainObject(astr)) {
@@ -280,7 +280,7 @@ function computeLayoutBindings(gd?: any, args?: any): any {
         return bindings;
     }
 
-    crawl(aobj, function(path, attrName, attr) {
+    crawl(aobj, function(path: any, attrName: any, attr: any) {
         bindings.push({type: 'layout', prop: path, value: attr});
     }, '', 0);
 
@@ -288,8 +288,8 @@ function computeLayoutBindings(gd?: any, args?: any): any {
 }
 
 function computeDataBindings(gd?: any, args?: any): any {
-    var traces, astr, val, aobj;
-    var bindings = [];
+    let traces, astr, val, aobj;
+    const bindings: any[] = [];
 
     // Logic copied from Plotly.restyle:
     astr = args[0];
@@ -297,7 +297,7 @@ function computeDataBindings(gd?: any, args?: any): any {
     traces = args[2];
     aobj = {};
     if(typeof astr === 'string') {
-        aobj[astr] = val;
+        (aobj as any)[astr] = val;
     } else if(isPlainObject(astr)) {
         // the 3-arg form
         aobj = astr;
@@ -314,19 +314,19 @@ function computeDataBindings(gd?: any, args?: any): any {
         traces = null;
     }
 
-    crawl(aobj, function(path, attrName, _attr) {
-        var thisTraces;
-        var attr;
+    crawl(aobj, function(path: any, attrName: any, _attr: any) {
+        let thisTraces;
+        let attr;
 
         if(Array.isArray(_attr)) {
             attr = _attr.slice();
 
-            var nAttr = Math.min(attr.length, gd.data.length);
+            let nAttr = Math.min(attr.length, gd.data.length);
             if(traces) {
                 nAttr = Math.min(nAttr, traces.length);
             }
             thisTraces = [];
-            for(var j = 0; j < nAttr; j++) {
+            for(let j = 0; j < nAttr; j++) {
                 thisTraces[j] = traces ? traces[j] : j;
             }
         } else {
@@ -341,9 +341,9 @@ function computeDataBindings(gd?: any, args?: any): any {
             }
         } else if(Array.isArray(thisTraces)) {
             if(!Array.isArray(attr)) {
-                var tmp = attr;
+                const tmp = attr;
                 attr = [];
-                for(var i = 0; i < thisTraces.length; i++) {
+                for(let i = 0; i < thisTraces.length; i++) {
                     attr[i] = tmp;
                 }
             }
@@ -363,11 +363,11 @@ function computeDataBindings(gd?: any, args?: any): any {
 
 function crawl(attrs?: any, callback?: any, path?: any, depth?: any): void {
     Object.keys(attrs).forEach(function(attrName) {
-        var attr: any = attrs[attrName];
+        const attr: any = attrs[attrName];
 
         if(attrName[0] === '_') return;
 
-        var thisPath = path + (depth > 0 ? '.' : '') + attrName;
+        const thisPath = path + (depth > 0 ? '.' : '') + attrName;
 
         if(isPlainObject(attr)) {
             crawl(attr, callback, thisPath, depth + 1);

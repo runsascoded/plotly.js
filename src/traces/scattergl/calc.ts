@@ -13,28 +13,28 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import _constants from './constants.js';
 const { TOO_MANY_POINTS } = _constants;
-var calcMarkerSize = scatterCalc.calcMarkerSize;
-var calcAxisExpansion = scatterCalc.calcAxisExpansion;
-var setFirstScatter = scatterCalc.setFirstScatter;
+const calcMarkerSize = scatterCalc.calcMarkerSize;
+const calcAxisExpansion = scatterCalc.calcAxisExpansion;
+const setFirstScatter = scatterCalc.setFirstScatter;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var xa = trace._xA = AxisIDs.getFromId(gd, trace.xaxis, 'x');
-    var ya = trace._yA = AxisIDs.getFromId(gd, trace.yaxis, 'y');
+    const fullLayout = gd._fullLayout;
+    const xa = trace._xA = AxisIDs.getFromId(gd, trace.xaxis, 'x');
+    const ya = trace._yA = AxisIDs.getFromId(gd, trace.yaxis, 'y');
 
-    var subplot = fullLayout._plots[trace.xaxis + trace.yaxis];
-    var len = trace._length;
-    var hasTooManyPoints = len >= TOO_MANY_POINTS;
-    var len2 = len * 2;
-    var stash: any = {};
-    var i;
+    const subplot = fullLayout._plots[trace.xaxis + trace.yaxis];
+    const len = trace._length;
+    const hasTooManyPoints = len >= TOO_MANY_POINTS;
+    const len2 = len * 2;
+    const stash: any = {};
+    let i;
 
-    var origX = xa.makeCalcdata(trace, 'x');
-    var origY = ya.makeCalcdata(trace, 'y');
-    var xObj = alignPeriod(trace, xa, 'x', origX);
-    var yObj = alignPeriod(trace, ya, 'y', origY);
-    var x = xObj.vals;
-    var y = yObj.vals;
+    const origX = xa.makeCalcdata(trace, 'x');
+    const origY = ya.makeCalcdata(trace, 'y');
+    const xObj = alignPeriod(trace, xa, 'x', origX);
+    const yObj = alignPeriod(trace, ya, 'y', origY);
+    const x = xObj.vals;
+    const y = yObj.vals;
     trace._x = x;
     trace._y = y;
 
@@ -51,8 +51,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     // we need hi-precision for scatter2d,
     // regl-scatter2d uses NaNs for bad/missing values
-    var positions = new Array(len2);
-    var _ids = new Array(len);
+    const positions = new Array(len2);
+    const _ids = new Array(len);
     for(i = 0; i < len; i++) {
         positions[i * 2] = x[i] === BADNUM ? NaN : x[i];
         positions[i * 2 + 1] = y[i] === BADNUM ? NaN : y[i];
@@ -82,14 +82,14 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     // create scene options and scene
     calcColorscale(gd, trace);
-    var opts = sceneOptions(gd, subplot, trace, positions, x, y);
-    var scene = sceneUpdate(gd, subplot);
+    const opts = sceneOptions(gd, subplot, trace, positions, x, y);
+    const scene = sceneUpdate(gd, subplot);
 
     // Reuse SVG scatter axis expansion routine.
     // For graphs with very large number of points and array marker.size,
     // use average marker size instead to speed things up.
     setFirstScatter(fullLayout, trace);
-    var ppad;
+    let ppad;
     if(!hasTooManyPoints) {
         ppad = calcMarkerSize(trace, len);
     } else if(opts.marker) {
@@ -130,15 +130,15 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     return [{x: false, y: false, t: stash, trace: trace}];
 }
 
-function expandForErrorBars(trace: FullTrace, ax: FullAxis, opts) {
-    var extremes = trace._extremes[ax._id];
-    var errExt = findExtremes(ax, opts._bnds, {padded: true});
+function expandForErrorBars(trace: FullTrace, ax: FullAxis, opts: any) {
+    const extremes = trace._extremes[ax._id];
+    const errExt = findExtremes(ax, opts._bnds, {padded: true});
     extremes.min = extremes.min.concat(errExt.min);
     extremes.max = extremes.max.concat(errExt.max);
 }
 
-function sceneOptions(gd: GraphDiv, subplot: PlotInfo, trace: FullTrace, positions, x, y) {
-    var opts = convert.style(gd, trace);
+function sceneOptions(gd: GraphDiv, subplot: PlotInfo, trace: FullTrace, positions: any, x: any, y: any) {
+    const opts = convert.style(gd, trace);
 
     if(opts.marker) {
         opts.marker.positions = positions;
@@ -152,7 +152,7 @@ function sceneOptions(gd: GraphDiv, subplot: PlotInfo, trace: FullTrace, positio
     }
 
     if(opts.errorX || opts.errorY) {
-        var errors = convert.errorBarPositions(gd, trace, positions, x, y);
+        const errors = convert.errorBarPositions(gd, trace, positions, x, y);
 
         if(opts.errorX) {
             Lib.extendFlat(opts.errorX, errors.x);

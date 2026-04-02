@@ -8,11 +8,11 @@ import handleTextDefaults from '../scatter/text_defaults.js';
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleXYZDefaults(traceIn, traceOut, coerce, layout);
+    const len = handleXYZDefaults(traceIn, traceOut, coerce, layout);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -48,32 +48,32 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         });
     }
 
-    var lineColor = (traceOut.line || {}).color;
-    var markerColor = (traceOut.marker || {}).color;
+    const lineColor = (traceOut.line || {}).color;
+    const markerColor = (traceOut.marker || {}).color;
     if (coerce('surfaceaxis') >= 0) coerce('surfacecolor', lineColor || markerColor);
 
-    var dims = ['x', 'y', 'z'];
-    for (var i = 0; i < 3; ++i) {
-        var projection = 'projection.' + dims[i];
+    const dims = ['x', 'y', 'z'];
+    for (let i = 0; i < 3; ++i) {
+        const projection = 'projection.' + dims[i];
         if (coerce(projection + '.show')) {
             coerce(projection + '.opacity');
             coerce(projection + '.scale');
         }
     }
 
-    var errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
+    const errorBarsSupplyDefaults = Registry.getComponentMethod('errorbars', 'supplyDefaults');
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'y', inherit: 'z' });
     errorBarsSupplyDefaults(traceIn, traceOut, lineColor || markerColor || defaultColor, { axis: 'x', inherit: 'z' });
 }
 
-function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce, layout: FullLayout) {
-    var len = 0;
-    var x = coerce('x');
-    var y = coerce('y');
-    var z = coerce('z');
+function handleXYZDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout) {
+    let len = 0;
+    const x = coerce('x');
+    const y = coerce('y');
+    const z = coerce('z');
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     if (x && y && z) {

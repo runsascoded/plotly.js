@@ -1,17 +1,17 @@
 Autoscale                                              // components/modebar/buttons.ts:185
 Box Select                                             // components/modebar/buttons.ts:81
-Click to enter Colorscale title                        // plots/plots.ts:199
+Click to enter Colorscale title                        // plots/plots.ts:182
 Click to enter Component A title                       // plots/ternary/ternary.ts:271
 Click to enter Component B title                       // plots/ternary/ternary.ts:281
 Click to enter Component C title                       // plots/ternary/ternary.ts:291
-Click to enter Plot subtitle                           // plots/plots.ts:196
-Click to enter Plot title                              // plots/plots.ts:195
-Click to enter X axis title                            // plots/plots.ts:197
-Click to enter Y axis title                            // plots/plots.ts:198
+Click to enter Plot subtitle                           // plots/plots.ts:179
+Click to enter Plot title                              // plots/plots.ts:178
+Click to enter X axis title                            // plots/plots.ts:180
+Click to enter Y axis title                            // plots/plots.ts:181
 Click to enter radial axis title                       // plots/polar/polar.ts:428
 Compare data on hover                                  // components/modebar/buttons.ts:219
 Double-click on legend to isolate one trace            // components/legend/handle_click.ts:11
-Double-click to zoom back out                          // plots/ternary/ternary.ts:504
+Double-click to zoom back out                          // plots/ternary/ternary.ts:496
 Download plot                                          // components/modebar/buttons.ts:15
 Download plot as a PNG                                 // components/modebar/buttons.ts:13
 Draw circle                                            // components/modebar/buttons.ts:142
@@ -55,12 +55,12 @@ mean ± σ:                                              // traces/box/calc.ts:2
 mean:                                                  // traces/box/calc.ts:223
 median:                                                // traces/box/calc.ts:216
 min:                                                   // traces/box/calc.ts:217
-new text                                               // plots/plots.ts:200
+new text                                               // plots/plots.ts:183
 open:                                                  // traces/ohlc/calc.ts:78
 outgoing flow count:                                   // traces/sankey/plot.ts:141
 q1:                                                    // traces/box/calc.ts:218
 q3:                                                    // traces/box/calc.ts:219
 source:                                                // traces/sankey/plot.ts:137
 target:                                                // traces/sankey/plot.ts:138
-trace                                                  // plots/plots.ts:202
+trace                                                  // plots/plots.ts:185
 upper fence:                                           // traces/box/calc.ts:226

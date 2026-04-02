@@ -1,4 +1,4 @@
-export default function eventData(out, pt) {
+export default function eventData(out: any, pt: any) {
     if('xVal' in pt) out.x = pt.xVal;
     if('yVal' in pt) out.y = pt.yVal;
     if(pt.xa) out.xaxis = pt.xa;

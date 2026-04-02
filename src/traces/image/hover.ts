@@ -2,13 +2,13 @@ import type { GraphDiv } from '../../../types/core';
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
 import constants from './constants.js';
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
 export default function hoverPoints(pointData: any, xval: number, yval: number) {
-    var cd0 = pointData.cd[0];
-    var trace = cd0.trace;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
+    const cd0 = pointData.cd[0];
+    const trace = cd0.trace;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
 
     // Return early if not on image
     if(Fx.inbox(xval - cd0.x0, xval - (cd0.x0 + cd0.w * trace.dx), 0) > 0 ||
@@ -17,10 +17,10 @@ export default function hoverPoints(pointData: any, xval: number, yval: number) 
     }
 
     // Find nearest pixel's index
-    var nx = Math.floor((xval - cd0.x0) / trace.dx);
-    var ny = Math.floor(Math.abs(yval - cd0.y0) / trace.dy);
+    const nx = Math.floor((xval - cd0.x0) / trace.dx);
+    const ny = Math.floor(Math.abs(yval - cd0.y0) / trace.dy);
 
-    var pixel;
+    let pixel;
     if(trace._hasZ) {
         pixel = cd0.z[ny][nx];
     } else if(trace._hasSource) {
@@ -30,21 +30,21 @@ export default function hoverPoints(pointData: any, xval: number, yval: number) 
     // return early if pixel is undefined
     if(!pixel) return;
 
-    var hoverinfo = cd0.hi || trace.hoverinfo;
-    var fmtColor;
+    const hoverinfo = cd0.hi || trace.hoverinfo;
+    let fmtColor;
     if(hoverinfo) {
-        var parts = hoverinfo.split('+');
+        let parts = hoverinfo.split('+');
         if(parts.indexOf('all') !== -1) parts = ['color'];
         if(parts.indexOf('color') !== -1) fmtColor = true;
     }
 
-    var cr = constants.colormodel[trace.colormodel];
-    var colormodel = cr.colormodel || trace.colormodel;
-    var dims = colormodel.length;
-    var c = trace._scaler(pixel);
-    var s = cr.suffix;
+    const cr = (constants.colormodel as any)[trace.colormodel];
+    const colormodel = cr.colormodel || trace.colormodel;
+    const dims = colormodel.length;
+    const c = trace._scaler(pixel);
+    const s = cr.suffix;
 
-    var colorstring: any = [];
+    let colorstring: any = [];
     if(trace.hovertemplate || fmtColor) {
         colorstring.push('[' + [c[0] + s[0], c[1] + s[1], c[2] + s[2]].join(', '));
         if(dims === 4) colorstring.push(', ' + c[3] + s[3]);
@@ -53,7 +53,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number) 
         pointData.extraText = colormodel.toUpperCase() + ': ' + colorstring;
     }
 
-    var text;
+    let text;
     if(isArrayOrTypedArray(trace.hovertext) && isArrayOrTypedArray(trace.hovertext[ny])) {
         text = trace.hovertext[ny][nx];
     } else if(isArrayOrTypedArray(trace.text) && isArrayOrTypedArray(trace.text[ny])) {
@@ -61,10 +61,10 @@ export default function hoverPoints(pointData: any, xval: number, yval: number) 
     }
 
     // TODO: for color model with 3 dims, display something useful for hovertemplate `%{color[3]}`
-    var py = ya.c2p(cd0.y0 + (ny + 0.5) * trace.dy);
-    var xVal = cd0.x0 + (nx + 0.5) * trace.dx;
-    var yVal = cd0.y0 + (ny + 0.5) * trace.dy;
-    var zLabel = '[' + pixel.slice(0, trace.colormodel.length).join(', ') + ']';
+    const py = ya.c2p(cd0.y0 + (ny + 0.5) * trace.dy);
+    const xVal = cd0.x0 + (nx + 0.5) * trace.dx;
+    const yVal = cd0.y0 + (ny + 0.5) * trace.dy;
+    const zLabel = '[' + pixel.slice(0, trace.colormodel.length).join(', ') + ']';
     return [Lib.extendFlat(pointData, {
         index: [ny, nx],
         x0: xa.c2p(cd0.x0 + nx * trace.dx),

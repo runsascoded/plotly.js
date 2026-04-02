@@ -23,15 +23,15 @@ import _req2 from './layout_attributes.js';
 import type { GraphDiv, FullLayout, FullTrace, FullAxis, CalcData, CalcDatum } from '../../types/core';
 
 
-export var attributes = _req0;
-attributes.type.values = Registry.allTypes;
-export var fontAttrs = _req1;
-export var layoutAttributes = _req2;
+export const attributes = _req0;
+attributes.type.values = (Registry.allTypes as any);
+export const fontAttrs = _req1;
+export const layoutAttributes = _req2;
 
-export var executeAPICommand = commandModule.executeAPICommand;
-export var computeAPICommandBindings = commandModule.computeAPICommandBindings;
-export var manageCommandObserver = commandModule.manageCommandObserver;
-export var hasSimpleAPICommandBindings = commandModule.hasSimpleAPICommandBindings;
+export const executeAPICommand = commandModule.executeAPICommand;
+export const computeAPICommandBindings = commandModule.computeAPICommandBindings;
+export const manageCommandObserver = commandModule.manageCommandObserver;
+export const hasSimpleAPICommandBindings = commandModule.hasSimpleAPICommandBindings;
 
 // in some cases the browser doesn't seem to know how big
 // the text is at first, so it needs to draw it,
@@ -54,8 +54,8 @@ export function redrawText(gd?: any): any {
 export function resize(gd?: any): any {
     gd = getGraphDiv(gd);
 
-    var resolveLastResize;
-    var p = new Promise(function(resolve, reject) {
+    let resolveLastResize;
+    const p = new Promise(function(resolve, reject) {
         if(!gd || isHidden(gd)) {
             reject(new Error('Resize must be passed a displayed plot div element.'));
         }
@@ -75,7 +75,7 @@ export function resize(gd?: any): any {
             delete gd.layout.height;
 
             // autosizing doesn't count as a change that needs saving
-            var oldchanged = gd.changed;
+            const oldchanged = gd.changed;
 
             // nor should it be included in the undo queue
             gd.autoplay = true;
@@ -91,7 +91,7 @@ export function resize(gd?: any): any {
         }, 100);
     });
 
-    if(resolveLastResize) resolveLastResize(p);
+    if(resolveLastResize) (resolveLastResize as any)(p);
     return p;
 };
 
@@ -114,17 +114,16 @@ export function addLinks(gd?: any): void {
     // Do not do anything if showLink and showSources are not set to true in config
     if(!gd._context.showLink && !gd._context.showSources) return;
 
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s) {
-        s.style({
-            'font-family': '"Open Sans", Arial, sans-serif',
-            'font-size': '12px',
-            fill: Color.defaultLine,
-            'pointer-events': 'all'
-        })
-        .each(function() {
-            var links = select(this);
+    const linkContainer = ensureSingle(fullLayout._paper, 'text', 'js-plot-link-container', function(s: any) {
+        s
+            .style('font-family', '"Open Sans", Arial, sans-serif')
+            .style('font-size', '12px')
+            .style('fill', Color.defaultLine)
+            .style('pointer-events', 'all')
+        .each(function(this: any) {
+            const links = select(this);
             links.append('tspan').classed('js-link-to-tool', true);
             links.append('tspan').classed('js-link-spacer', true);
             links.append('tspan').classed('js-sourcelinks', true);
@@ -132,29 +131,31 @@ export function addLinks(gd?: any): void {
     });
 
     // The text node inside svg
-    var text = linkContainer.node();
-    var attrs: any = {y: fullLayout._paper.attr('height') - 9};
+    const text = linkContainer.node();
+    const y = fullLayout._paper.attr('height') - 9;
 
     // If text's width is bigger than the layout
     // Check that text is a child node or document.body
     // because otherwise Edge might throw an exception
     // when calling getComputedTextLength().
     // Apparently offsetParent is null for invisibles.
+    let textAnchor: string;
+    let x: number;
     if(document.body.contains(text) && text.getComputedTextLength() >= (fullLayout.width - 20)) {
         // Align the text at the left
-        attrs['text-anchor'] = 'start';
-        attrs.x = 5;
+        textAnchor = 'start';
+        x = 5;
     } else {
         // Align the text at the right
-        attrs['text-anchor'] = 'end';
-        attrs.x = fullLayout._paper.attr('width') - 7;
+        textAnchor = 'end';
+        x = fullLayout._paper.attr('width') - 7;
     }
 
-    linkContainer.attr(attrs);
+    linkContainer.attr('y', y).attr('text-anchor', textAnchor).attr('x', x);
 
-    var toolspan = linkContainer.select('.js-link-to-tool');
-    var spacespan = linkContainer.select('.js-link-spacer');
-    var sourcespan = linkContainer.select('.js-sourcelinks');
+    const toolspan = linkContainer.select('.js-link-to-tool');
+    const spacespan = linkContainer.select('.js-link-spacer');
+    const sourcespan = linkContainer.select('.js-sourcelinks');
 
     if(gd._context.showSources) gd._context.showSources(gd);
 
@@ -169,12 +170,10 @@ export function addLinks(gd?: any): void {
 // iframes and 3rd-party apps
 function positionPlayWithData(gd?: any, container?: any): void {
     container.text('');
-    var link = container.append('a')
-        .attr({
-            'xlink:xlink:href': '#',
-            class: 'link--impt link--embedview',
-            'font-weight': 'bold'
-        })
+    const link = container.append('a')
+        .attr('xlink:xlink:href', '#')
+        .attr('class', 'link--impt link--embedview')
+        .attr('font-weight', 'bold')
         .text(gd._context.linkText + ' ' + String.fromCharCode(187));
 
     if(gd._context.sendData) {
@@ -182,40 +181,35 @@ function positionPlayWithData(gd?: any, container?: any): void {
             sendDataToCloud(gd);
         });
     } else {
-        var path: any = window.location.pathname.split('/');
-        var query = window.location.search;
-        link.attr({
-            'xlink:xlink:show': 'new',
-            'xlink:xlink:href': '/' + path[2].split('.')[0] + '/' + path[1] + query
-        });
+        const path: any = window.location.pathname.split('/');
+        const query = window.location.search;
+        link
+            .attr('xlink:xlink:show', 'new')
+            .attr('xlink:xlink:href', '/' + path[2].split('.')[0] + '/' + path[1] + query);
     }
 }
 
 export function sendDataToCloud(gd?: any): boolean {
-    var baseUrl = ((window as any).PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
-    if(!baseUrl) return;
+    const baseUrl = ((window as any).PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
+    if(!baseUrl) return undefined as any;
 
     gd.emit('plotly_beforeexport');
 
-    var hiddenformDiv = select(gd)
+    const hiddenformDiv = select(gd)
         .append('div')
         .attr('id', 'hiddenform')
         .style('display', 'none');
 
-    var hiddenform = hiddenformDiv
+    const hiddenform = hiddenformDiv
         .append('form')
-        .attr({
-            action: baseUrl + '/external',
-            method: 'post',
-            target: '_blank'
-        });
+        .attr('action', baseUrl + '/external')
+        .attr('method', 'post')
+        .attr('target', '_blank');
 
-    var hiddenformInput = hiddenform
+    const hiddenformInput = hiddenform
         .append('input')
-        .attr({
-            type: 'text',
-            name: 'data'
-        });
+        .attr('type', 'text')
+        .attr('name', 'data');
 
     hiddenformInput.node().value = graphJson(gd, false, 'keepdata');
     hiddenform.node().submit();
@@ -225,13 +219,13 @@ export function sendDataToCloud(gd?: any): boolean {
     return false;
 };
 
-var d3FormatKeys = [
+const d3FormatKeys = [
     'days', 'shortDays', 'months', 'shortMonths', 'periods',
     'dateTime', 'date', 'time',
     'decimal', 'thousands', 'grouping', 'currency'
 ];
 
-var extraFormatKeys = [
+const extraFormatKeys = [
     'year', 'month', 'dayMonth', 'dayMonthYear'
 ];
 
@@ -266,26 +260,26 @@ var extraFormatKeys = [
  *
  */
 export function supplyDefaults(gd?: any, opts?: any): void {
-    var skipUpdateCalc = opts && opts.skipUpdateCalc;
-    var oldFullLayout = gd._fullLayout || {} as FullLayout;
+    const skipUpdateCalc = opts && opts.skipUpdateCalc;
+    const oldFullLayout = gd._fullLayout || {} as FullLayout;
 
     if(oldFullLayout._skipDefaults) {
         delete oldFullLayout._skipDefaults;
         return;
     }
 
-    var newFullLayout = gd._fullLayout = {} as FullLayout;
-    var newLayout = gd.layout || {};
+    const newFullLayout = gd._fullLayout = {} as FullLayout;
+    const newLayout = gd.layout || {};
 
-    var oldFullData = gd._fullData || [];
-    var newFullData = gd._fullData = [] as FullTrace[];
-    var newData = gd.data || [];
+    const oldFullData = gd._fullData || [];
+    const newFullData = gd._fullData = [] as FullTrace[];
+    const newData = gd.data || [];
 
-    var oldCalcdata = gd.calcdata || [] as CalcData[];
+    const oldCalcdata = gd.calcdata || [] as CalcData[];
 
-    var context = gd._context || {};
+    const context = gd._context || {};
 
-    var i;
+    let i;
 
     // Create all the storage space for frames, but only if doesn't already exist
     if(!gd._transitionData) createTransitionData(gd);
@@ -311,7 +305,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     };
     newFullLayout._traceWord = _(gd, 'trace');
 
-    var formatObj: any = getFormatObj(gd, d3FormatKeys);
+    const formatObj: any = getFormatObj(gd, d3FormatKeys);
 
     // stash the token from context so mapbox subplots can use it as default
     newFullLayout._mapboxAccessToken = context.mapboxAccessToken;
@@ -320,8 +314,8 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     // because fullData needs a few things from layout
     if(oldFullLayout._initialAutoSizeIsDone) {
         // coerce the updated layout while preserving width and height
-        var oldWidth = oldFullLayout.width;
-        var oldHeight = oldFullLayout.height;
+        const oldWidth = oldFullLayout.width;
+        const oldHeight = oldFullLayout.height;
 
         supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
 
@@ -332,10 +326,10 @@ export function supplyDefaults(gd?: any, opts?: any): void {
         // coerce the updated layout and autosize if needed
         supplyLayoutGlobalDefaults(newLayout, newFullLayout, formatObj);
 
-        var missingWidthOrHeight = (!newLayout.width || !newLayout.height);
-        var autosize = newFullLayout.autosize;
-        var autosizable = context.autosizable;
-        var initialAutoSize = missingWidthOrHeight && (autosize || autosizable);
+        const missingWidthOrHeight = (!newLayout.width || !newLayout.height);
+        const autosize = newFullLayout.autosize;
+        const autosizable = context.autosizable;
+        const initialAutoSize = missingWidthOrHeight && (autosize || autosizable);
 
         if(initialAutoSize) plotAutoSize(gd, newLayout, newFullLayout);
         else if(missingWidthOrHeight) sanitizeMargins(newFullLayout);
@@ -359,11 +353,11 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     newFullLayout._modules = [];
     newFullLayout._visibleModules = [];
     newFullLayout._basePlotModules = [];
-    var subplots = newFullLayout._subplots = emptySubplotLists();
+    const subplots = newFullLayout._subplots = emptySubplotLists();
 
     // initialize axis and subplot hash objects for splom-generated grids
-    var splomAxes = newFullLayout._splomAxes = {x: {}, y: {}};
-    var splomSubplots = newFullLayout._splomSubplots = {};
+    const splomAxes = newFullLayout._splomAxes = {x: {}, y: {}};
+    const splomSubplots = newFullLayout._splomSubplots = {};
     // initialize splom grid defaults
     newFullLayout._splomGridDflt = {};
 
@@ -388,8 +382,8 @@ export function supplyDefaults(gd?: any, opts?: any): void {
 
     // redo grid size defaults with info about splom x/y axes,
     // and fill in generated cartesian axes and subplots
-    var splomXa = Object.keys(splomAxes.x);
-    var splomYa = Object.keys(splomAxes.y);
+    const splomXa = Object.keys(splomAxes.x);
+    const splomYa = Object.keys(splomAxes.y);
     if(splomXa.length > 1 && splomYa.length > 1) {
         Registry.getComponentMethod('grid', 'sizeDefaults')(newLayout, newFullLayout);
 
@@ -399,7 +393,7 @@ export function supplyDefaults(gd?: any, opts?: any): void {
         for(i = 0; i < splomYa.length; i++) {
             pushUnique(subplots.yaxis, splomYa[i]);
         }
-        for(var k in splomSubplots) {
+        for(const k in splomSubplots) {
             pushUnique(subplots.cartesian, k);
         }
     }
@@ -419,15 +413,15 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     // Special cases that introduce interactions between traces.
     // This is after relinkPrivateKeys so we can use those in crossTraceDefaults
     // and after layout module defaults, so we can use eg barmode
-    var _modules = newFullLayout._visibleModules;
-    var crossTraceDefaultsFuncs = [];
+    const _modules = newFullLayout._visibleModules;
+    const crossTraceDefaultsFuncs: any[] = [];
     for(i = 0; i < _modules.length; i++) {
-        var funci = _modules[i].crossTraceDefaults;
+        const funci = _modules[i].crossTraceDefaults;
         // some trace types share crossTraceDefaults (ie histogram2d, histogram2dcontour)
         if(funci) pushUnique(crossTraceDefaultsFuncs, funci);
     }
     for(i = 0; i < crossTraceDefaultsFuncs.length; i++) {
-        crossTraceDefaultsFuncs[i](newFullData, newFullLayout);
+        (crossTraceDefaultsFuncs[i](newFullData, newFullLayout) as any);
     }
 
     // turn on flag to optimize large splom-only graphs
@@ -437,8 +431,8 @@ export function supplyDefaults(gd?: any, opts?: any): void {
         newFullLayout._basePlotModules[0].name === 'splom' &&
         splomXa.length > 15 &&
         splomYa.length > 15 &&
-        newFullLayout.shapes.length === 0 &&
-        newFullLayout.images.length === 0
+        newFullLayout.shapes!.length === 0 &&
+        newFullLayout.images!.length === 0
     );
 
     // relink / initialize subplot axis objects
@@ -447,10 +441,10 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     // clean subplots and other artifacts from previous plot calls
     cleanPlot(newFullData, newFullLayout, oldFullData, oldFullLayout);
 
-    var hadCartesian = !!(oldFullLayout._has && oldFullLayout._has('cartesian'));
-    var hasCartesian = !!(newFullLayout._has && newFullLayout._has('cartesian'));
-    var hadBgLayer = hadCartesian;
-    var hasBgLayer = hasCartesian;
+    const hadCartesian = !!(oldFullLayout._has && oldFullLayout._has('cartesian'));
+    const hasCartesian = !!(newFullLayout._has && newFullLayout._has('cartesian'));
+    const hadBgLayer = hadCartesian;
+    const hasBgLayer = hasCartesian;
     if(hadBgLayer && !hasBgLayer) {
         // remove bgLayer
         oldFullLayout._bgLayer.remove();
@@ -483,9 +477,9 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     if(!newFullLayout._preGUI) newFullLayout._preGUI = {};
     // track trace GUI changes by uid rather than by trace index
     if(!newFullLayout._tracePreGUI) newFullLayout._tracePreGUI = {};
-    var tracePreGUI = newFullLayout._tracePreGUI;
-    var uids: any = {};
-    var uid;
+    const tracePreGUI = newFullLayout._tracePreGUI;
+    const uids: any = {};
+    let uid;
     for(uid in tracePreGUI) uids[uid] = 'old';
     for(i = 0; i < newFullData.length; i++) {
         uid = newFullData[i]._fullInput.uid;
@@ -509,14 +503,14 @@ export function supplyDefaults(gd?: any, opts?: any): void {
 };
 
 export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: FullTrace[]): void {
-    for(var i = 0; i < newFullData.length; i++) {
-        var newTrace = newFullData[i];
-        var cd0 = (oldCalcdata[i] || [])[0] as CalcDatum | undefined;
+    for(let i = 0; i < newFullData.length; i++) {
+        const newTrace = newFullData[i];
+        const cd0 = (oldCalcdata[i] || [])[0] as CalcDatum | undefined;
         if(cd0 && cd0.trace) {
-            var oldTrace = cd0.trace;
+            const oldTrace = cd0.trace;
             if(oldTrace._hasCalcTransform) {
-                var arrayAttrs = oldTrace._arrayAttrs;
-                var j, astr, oldArrayVal;
+                const arrayAttrs = oldTrace._arrayAttrs;
+                let j, astr, oldArrayVal;
 
                 for(j = 0; j < arrayAttrs.length; j++) {
                     astr = arrayAttrs[j];
@@ -536,17 +530,17 @@ export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: F
  * 3. matches previous data uids
  */
 function getTraceUids(oldFullData?: any, newData?: any): any {
-    var len = newData.length;
-    var oldFullInput = [];
-    var i, prevFullInput;
+    const len = newData.length;
+    const oldFullInput: any[] = [];
+    let i, prevFullInput;
     for(i = 0; i < oldFullData.length; i++) {
-        var thisFullInput = oldFullData[i]._fullInput;
+        const thisFullInput = oldFullData[i]._fullInput;
         if(thisFullInput !== prevFullInput) oldFullInput.push(thisFullInput);
         prevFullInput = thisFullInput;
     }
-    var oldLen = oldFullInput.length;
-    var out = new Array(len);
-    var seenUids: any = {};
+    const oldLen = oldFullInput.length;
+    const out = new Array(len);
+    const seenUids: any = {};
 
     function setUid(uid?: any, i?: any) {
         out[i] = uid;
@@ -561,11 +555,11 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
     }
 
     for(i = 0; i < len; i++) {
-        var newUid = newData[i].uid;
+        let newUid = newData[i].uid;
         if(typeof newUid === 'number') newUid = String(newUid);
 
         if(tryUid(newUid, i)) continue;
-        if(i < oldLen && tryUid(oldFullInput[i].uid, i)) continue;
+        if(i < oldLen && tryUid((oldFullInput[i] as any).uid, i)) continue;
         setUid(randstr(seenUids), i);
     }
 
@@ -581,21 +575,21 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
  * do not need to be collected because we just draw all visible traces.
  */
 function emptySubplotLists(): any {
-    var collectableSubplotTypes = Registry.collectableSubplotTypes;
-    var out: any = {};
-    var i, j;
+    let collectableSubplotTypes: any[] | null = Registry.collectableSubplotTypes;
+    const out: any = {};
+    let i, j;
 
     if(!collectableSubplotTypes) {
-        collectableSubplotTypes = [];
+        collectableSubplotTypes = [] as any[];
 
-        var subplotsRegistry = Registry.subplotsRegistry;
+        const subplotsRegistry = Registry.subplotsRegistry;
 
-        for(var subplotType in subplotsRegistry) {
-            var subplotModule = subplotsRegistry[subplotType];
-            var subplotAttr = subplotModule.attr;
+        for(const subplotType in subplotsRegistry) {
+            const subplotModule = subplotsRegistry[subplotType];
+            const subplotAttr = subplotModule.attr;
 
             if(subplotAttr) {
-                collectableSubplotTypes.push(subplotType);
+                collectableSubplotTypes!.push(subplotType);
 
                 // special case, currently just for cartesian:
                 // we need to enumerate axes, not just subplots
@@ -608,8 +602,8 @@ function emptySubplotLists(): any {
         }
     }
 
-    for(i = 0; i < collectableSubplotTypes.length; i++) {
-        out[collectableSubplotTypes[i]] = [];
+    for(i = 0; i < collectableSubplotTypes!.length; i++) {
+        out[collectableSubplotTypes![i]] = [];
     }
     return out;
 }
@@ -626,16 +620,16 @@ function emptySubplotLists(): any {
  * @returns {object} d3.locale format object
  */
 function getFormatObj(gd?: any, formatKeys?: any): any {
-    var locale = gd._context.locale;
+    let locale = gd._context.locale;
     if(!locale) locale = 'en-US';
 
-    var formatDone = false;
-    var formatObj: any = {};
+    let formatDone = false;
+    const formatObj: any = {};
 
     function includeFormat(newFormat?: any) {
-        var formatFinished = true;
-        for(var i = 0; i < formatKeys.length; i++) {
-            var formatKey = formatKeys[i];
+        let formatFinished = true;
+        for(let i = 0; i < formatKeys.length; i++) {
+            const formatKey = formatKeys[i];
             if(!formatObj[formatKey]) {
                 if(newFormat[formatKey]) {
                     formatObj[formatKey] = newFormat[formatKey];
@@ -646,10 +640,10 @@ function getFormatObj(gd?: any, formatKeys?: any): any {
     }
 
     // same as localize, look for format parts in each format spec in the chain
-    for(var i = 0; i < 2; i++) {
-        var locales = gd._context.locales;
-        for(var j = 0; j < 2; j++) {
-            var formatj = (locales[locale] || {}).format;
+    for(let i = 0; i < 2; i++) {
+        let locales = gd._context.locales;
+        for(let j = 0; j < 2; j++) {
+            const formatj = (locales[locale] || {}).format;
             if(formatj) {
                 includeFormat(formatj);
                 if(formatDone) break;
@@ -657,7 +651,7 @@ function getFormatObj(gd?: any, formatKeys?: any): any {
             locales = Registry.localeRegistry;
         }
 
-        var baseLocale = locale.split('-')[0];
+        const baseLocale = locale.split('-')[0];
         if(formatDone || baseLocale === locale) break;
         locale = baseLocale;
     }
@@ -685,7 +679,7 @@ function getFormatter(formatObj?: any, separators?: any): any {
     formatObj.thousands = separators.charAt(1);
 
     return {
-        numberFormat: function(formatStr) {
+        numberFormat: function(formatStr: any) {
             try {
                 formatStr = formatLocale(formatObj).format(
                     adjustFormat(formatStr)
@@ -702,8 +696,8 @@ function getFormatter(formatObj?: any, separators?: any): any {
 }
 
 function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
-    var _meta;
-    var meta4data = [];
+    let _meta: any;
+    const meta4data: any[] = [];
 
     if(newFullLayout.meta) {
         _meta = newFullLayout._meta = {
@@ -712,11 +706,11 @@ function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
         };
     }
 
-    for(var i = 0; i < newFullData.length; i++) {
-        var trace = newFullData[i];
+    for(let i = 0; i < newFullData.length; i++) {
+        const trace = newFullData[i];
 
         if(trace.meta) {
-            meta4data[trace.index] = trace._meta = {meta: trace.meta};
+            meta4data[trace.index] = (trace._meta = {meta: trace.meta} as any);
         } else if(newFullLayout.meta) {
             trace._meta = {meta: newFullLayout.meta};
         }
@@ -760,22 +754,22 @@ export function createTransitionData(gd?: any): void {
 // helper function to be bound to fullLayout to check
 // whether a certain plot type is present on plot
 // or trace has a category
-export function _hasPlotType(category?: any): boolean {
-    var i;
+export function _hasPlotType(this: any, category?: any): boolean {
+    let i;
 
     // check base plot modules
-    var basePlotModules = this._basePlotModules || [];
+    const basePlotModules = this._basePlotModules || [];
     for(i = 0; i < basePlotModules.length; i++) {
         if(basePlotModules[i].name === category) return true;
     }
 
     // check trace modules (including non-visible:true)
-    var modules = this._modules || [];
+    const modules = this._modules || [];
     for(i = 0; i < modules.length; i++) {
-        var name = modules[i].name;
+        const name = modules[i].name;
         if(name === category) return true;
         // N.B. this is modules[i] along with 'categories' as a hash object
-        var _module: any = Registry.modules[name];
+        const _module: any = Registry.modules[name];
         if(_module && _module.categories[category]) return true;
     }
 
@@ -783,19 +777,19 @@ export function _hasPlotType(category?: any): boolean {
 };
 
 export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
-    var i, j;
+    let i, j;
 
-    var basePlotModules = oldFullLayout._basePlotModules || [];
+    const basePlotModules = oldFullLayout._basePlotModules || [];
     for(i = 0; i < basePlotModules.length; i++) {
-        var _module: any = basePlotModules[i];
+        const _module: any = basePlotModules[i];
 
         if(_module.clean) {
             _module.clean(newFullData, newFullLayout, oldFullData, oldFullLayout);
         }
     }
 
-    var hadGl = oldFullLayout._has && oldFullLayout._has('gl');
-    var hasGl = newFullLayout._has && newFullLayout._has('gl');
+    const hadGl = oldFullLayout._has && oldFullLayout._has('gl');
+    const hasGl = newFullLayout._has && newFullLayout._has('gl');
 
     if(hadGl && !hasGl) {
         if(oldFullLayout._glcontainer !== undefined) {
@@ -805,15 +799,15 @@ export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: 
         }
     }
 
-    var hasInfoLayer = !!oldFullLayout._infolayer;
+    const hasInfoLayer = !!oldFullLayout._infolayer;
 
     oldLoop:
     for(i = 0; i < oldFullData.length; i++) {
-        var oldTrace = oldFullData[i];
-        var oldUid = oldTrace.uid;
+        const oldTrace = oldFullData[i];
+        const oldUid = oldTrace.uid;
 
         for(j = 0; j < newFullData.length; j++) {
-            var newTrace = newFullData[j];
+            const newTrace = newFullData[j];
 
             if(oldUid === newTrace.uid) continue oldLoop;
         }
@@ -826,31 +820,31 @@ export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: 
 };
 
 export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
-    var i, j;
+    let i, j;
 
-    var oldSubplots = oldFullLayout._plots || {};
-    var newSubplots = newFullLayout._plots = {};
-    var newSubplotList = newFullLayout._subplots;
+    const oldSubplots = oldFullLayout._plots || {};
+    const newSubplots = newFullLayout._plots = {};
+    const newSubplotList = newFullLayout._subplots;
 
-    var mockGd = {
+    const mockGd = {
         _fullData: newFullData,
         _fullLayout: newFullLayout
     };
 
-    var ids = newSubplotList.cartesian || [];
+    const ids = newSubplotList.cartesian || [];
 
     for(i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        var oldSubplot = oldSubplots[id];
-        var xaxis = axisIDs.getFromId(mockGd, id, 'x');
-        var yaxis = axisIDs.getFromId(mockGd, id, 'y');
-        var plotinfo;
+        const id = ids[i];
+        const oldSubplot = oldSubplots[id];
+        const xaxis = axisIDs.getFromId(mockGd, id, 'x');
+        const yaxis = axisIDs.getFromId(mockGd, id, 'y');
+        let plotinfo: any;
 
         // link or create subplot object
         if(oldSubplot) {
-            plotinfo = newSubplots[id] = oldSubplot;
+            plotinfo = (newSubplots as any)[id] = oldSubplot;
         } else {
-            plotinfo = newSubplots[id] = {};
+            plotinfo = (newSubplots as any)[id] = {};
             plotinfo.id = id;
         }
 
@@ -871,7 +865,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
         plotinfo._hasClipOnAxisFalse = false;
 
         for(j = 0; j < newFullData.length; j++) {
-            var trace = newFullData[j];
+            const trace = newFullData[j];
 
             if(
                 trace.xaxis === plotinfo.xaxis._id &&
@@ -890,26 +884,26 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
     // in dragbox.js can still transform them during relayout operations that don't
     // trigger a full redraw (e.g., resize). If drawFramework runs later, it will
     // properly update/remove these subplots as needed.
-    var zindexSeparator = cartesianConstants.zindexSeparator;
-    for(var oldId in oldSubplots) {
-        if(oldId.indexOf(zindexSeparator) !== -1 && !newSubplots[oldId]) {
-            newSubplots[oldId] = oldSubplots[oldId];
+    const zindexSeparator = cartesianConstants.zindexSeparator;
+    for(const oldId in oldSubplots) {
+        if(oldId.indexOf(zindexSeparator) !== -1 && !(newSubplots as any)[oldId]) {
+            (newSubplots as any)[oldId] = oldSubplots[oldId];
         }
     }
 
     // while we're at it, link overlaying axes to their main axes and
     // anchored axes to the axes they're anchored to
-    var axList = axisIDs.list(mockGd, null, true);
-    var ax;
+    const axList = axisIDs.list(mockGd, null, true);
+    let ax;
     for(i = 0; i < axList.length; i++) {
         ax = axList[i];
-        var mainAx = null;
+        let mainAx = null;
 
         if(ax.overlaying) {
             mainAx = axisIDs.getFromId(mockGd, ax.overlaying);
 
             // you cannot overlay an axis that's already overlaying another
-            if(mainAx && mainAx.overlaying) {
+            if(mainAx && (mainAx as any).overlaying) {
                 ax.overlaying = false;
                 mainAx = null;
             }
@@ -924,7 +918,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
          * the (possibly larger) dragger and background but don't
          * have to both be drawn over that whole domain
          */
-        if(mainAx) ax.domain = mainAx.domain.slice();
+        if(mainAx) ax.domain = (mainAx as any).domain.slice();
 
         ax._anchorAxis = ax.anchor === 'free' ?
             null :
@@ -946,10 +940,10 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
             (ax.automargin && ax.mirror && ax.anchor !== 'free') ||
             Registry.getComponentMethod('rangeslider', 'isVisible')(ax)
         )) {
-            var min = 1;
-            var max = 0;
+            let min = 1;
+            let max = 0;
             for(j = 0; j < ax._counterAxes.length; j++) {
-                var ax2 = axisIDs.getFromId(mockGd, ax._counterAxes[j]);
+                const ax2 = axisIDs.getFromId(mockGd, ax._counterAxes[j]);
                 min = Math.min(min, ax2.domain[0]);
                 max = Math.max(max, ax2.domain[1]);
             }
@@ -962,13 +956,13 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
 };
 
 function findMainSubplot(ax?: any, fullLayout?: any): any {
-    var mockGd = {_fullLayout: fullLayout};
+    const mockGd = {_fullLayout: fullLayout};
 
-    var isX = ax._id.charAt(0) === 'x';
-    var anchorAx = ax._mainAxis._anchorAxis;
-    var mainSubplotID = '';
-    var nextBestMainSubplotID = '';
-    var anchorID = '';
+    const isX = ax._id.charAt(0) === 'x';
+    const anchorAx = ax._mainAxis._anchorAxis;
+    let mainSubplotID = '';
+    let nextBestMainSubplotID = '';
+    let anchorID = '';
 
     // First try the main ID with the anchor
     if(anchorAx) {
@@ -981,12 +975,12 @@ function findMainSubplot(ax?: any, fullLayout?: any): any {
     if(!mainSubplotID || !fullLayout._plots[mainSubplotID]) {
         mainSubplotID = '';
 
-        var counterIDs = ax._counterAxes;
-        for(var j = 0; j < counterIDs.length; j++) {
-            var counterPart = counterIDs[j];
-            var id = isX ? (ax._id + counterPart) : (counterPart + ax._id);
+        const counterIDs = ax._counterAxes;
+        for(let j = 0; j < counterIDs.length; j++) {
+            const counterPart = counterIDs[j];
+            const id = isX ? (ax._id + counterPart) : (counterPart + ax._id);
             if(!nextBestMainSubplotID) nextBestMainSubplotID = id;
-            var counterAx: any = axisIDs.getFromId(mockGd, counterPart);
+            const counterAx: any = axisIDs.getFromId(mockGd, counterPart);
             if(anchorID && counterAx.overlaying === anchorID) {
                 mainSubplotID = id;
                 break;
@@ -1006,7 +1000,7 @@ function findMainSubplot(ax?: any, fullLayout?: any): any {
 // the final result that groups are indistinguishable. This function clears
 // those colors so that individual groupby groups get unique colors.
 export function clearExpandedTraceDefaultColors(trace?: any): void {
-    var colorAttrs, path, i;
+    let colorAttrs, path: any, i;
 
     // This uses weird closure state in order to satisfy the linter rule
     // that we can't create functions in a loop.
@@ -1033,7 +1027,7 @@ export function clearExpandedTraceDefaultColors(trace?: any): void {
     }
 
     for(i = 0; i < colorAttrs.length; i++) {
-        var origprop = nestedProperty(trace, '_input.' + colorAttrs[i]);
+        const origprop = nestedProperty(trace, '_input.' + colorAttrs[i]);
 
         if(!origprop.get()) {
             nestedProperty(trace, colorAttrs[i]).set(null);
@@ -1042,20 +1036,20 @@ export function clearExpandedTraceDefaultColors(trace?: any): void {
 };
 
 export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: any, fullLayout: FullLayout): any {
-    var modules = fullLayout._modules;
-    var visibleModules = fullLayout._visibleModules;
-    var basePlotModules = fullLayout._basePlotModules;
-    var cnt = 0;
-    var colorCnt = 0;
+    const modules = fullLayout._modules;
+    const visibleModules = fullLayout._visibleModules;
+    const basePlotModules = fullLayout._basePlotModules;
+    let cnt = 0;
+    let colorCnt = 0;
 
-    var i, fullTrace, trace;
+    let i, fullTrace, trace;
 
     fullLayout._transformModules = [];
 
     function pushModule(fullTrace?: any) {
         dataOut.push(fullTrace);
 
-        var _module = fullTrace._module;
+        const _module = fullTrace._module;
         if(!_module) return;
 
         pushUnique(modules, _module);
@@ -1073,10 +1067,10 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
         if(fullTrace._input.visible !== false) colorCnt++;
     }
 
-    var carpetIndex: any = {};
-    var carpetDependents = [];
-    var dataTemplate = (layout.template || {}).data || {};
-    var templater = Template.traceTemplater(dataTemplate);
+    const carpetIndex: any = {};
+    const carpetDependents: any[] = [];
+    const dataTemplate = (layout.template || {}).data || {};
+    const templater = Template.traceTemplater(dataTemplate);
 
     for(i = 0; i < dataIn.length; i++) {
         trace = dataIn[i];
@@ -1107,7 +1101,7 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
 
         if(!fullTrace.visible) continue;
 
-        var carpetAxis = carpetIndex[fullTrace.carpet];
+        const carpetAxis = carpetIndex[fullTrace.carpet];
         fullTrace._carpet = carpetAxis;
 
         if(!carpetAxis || !carpetAxis.visible) {
@@ -1122,8 +1116,8 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
 
 export function supplyAnimationDefaults(opts?: any): any {
     opts = opts || {};
-    var i;
-    var optsOut: any = {};
+    let i;
+    const optsOut: any = {};
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(opts || {}, optsOut, animationAttrs, attr, dflt);
@@ -1155,7 +1149,7 @@ export function supplyAnimationDefaults(opts?: any): any {
 };
 
 export function supplyAnimationFrameDefaults(opts?: any): any {
-    var optsOut: any = {};
+    const optsOut: any = {};
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(opts || {}, optsOut, animationAttrs.frame, attr, dflt);
@@ -1168,7 +1162,7 @@ export function supplyAnimationFrameDefaults(opts?: any): any {
 };
 
 export function supplyAnimationTransitionDefaults(opts?: any): any {
-    var optsOut: any = {};
+    const optsOut: any = {};
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(opts || {}, optsOut, animationAttrs.transition, attr, dflt);
@@ -1181,7 +1175,7 @@ export function supplyAnimationTransitionDefaults(opts?: any): any {
 };
 
 export function supplyFrameDefaults(frameIn?: any): any {
-    var frameOut = {};
+    const frameOut = {};
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(frameIn, frameOut, frameAttrs, attr, dflt);
@@ -1198,16 +1192,16 @@ export function supplyFrameDefaults(frameIn?: any): any {
 };
 
 export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: any, layout?: any, traceInIndex?: any): any {
-    var colorway = layout.colorway || Color.defaults;
-    var defaultColor = colorway[colorIndex % colorway.length];
+    const colorway = layout.colorway || Color.defaults;
+    const defaultColor = colorway[colorIndex % colorway.length];
 
-    var i;
+    let i;
 
     function coerce(attr?: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
 
     coerce('type');
     coerce('name', layout._traceWord + ' ' + traceInIndex);
@@ -1216,21 +1210,21 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
 
     // we want even invisible traces to make their would-be subplots visible
     // so coerce the subplot id(s) now no matter what
-    var _module: any = Registry.getModule(traceOut);
+    const _module: any = Registry.getModule(traceOut);
 
     traceOut._module = _module;
     if(_module) {
-        var basePlotModule = _module.basePlotModule;
-        var subplotAttr = basePlotModule.attr;
-        var subplotAttrs = basePlotModule.attributes;
+        const basePlotModule = _module.basePlotModule;
+        const subplotAttr = basePlotModule.attr;
+        const subplotAttrs = basePlotModule.attributes;
         if(subplotAttr && subplotAttrs) {
-            var subplots = layout._subplots;
-            var subplotId = '';
+            const subplots = layout._subplots;
+            let subplotId = '';
 
             if(Array.isArray(subplotAttr)) {
                 for(i = 0; i < subplotAttr.length; i++) {
-                    var attri = subplotAttr[i];
-                    var vali = Lib.coerce(traceIn, traceOut, subplotAttrs, attri);
+                    const attri = subplotAttr[i];
+                    const vali = Lib.coerce(traceIn, traceOut, subplotAttrs, attri);
 
                     if(subplots[attri]) pushUnique(subplots[attri], vali);
                     subplotId += vali;
@@ -1293,7 +1287,7 @@ export function supplyTraceDefaults(traceIn?: any, traceOut?: any, colorIndex?: 
         }
 
         if(_module && _module.selectPoints) {
-            var selectedpoints = coerce('selectedpoints');
+            const selectedpoints = coerce('selectedpoints');
             if(isTypedArray(selectedpoints)) {
                 traceOut.selectedpoints = Array.from(selectedpoints);
             }
@@ -1308,7 +1302,7 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
         return Lib.coerce(layoutIn, layoutOut, layoutAttributes, attr, dflt);
     }
 
-    var template = layoutIn.template;
+    const template = layoutIn.template;
     if(isPlainObject(template)) {
         layoutOut.template = template;
         layoutOut._template = template.layout;
@@ -1317,8 +1311,8 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
 
     coerce('autotypenumbers');
 
-    var font = coerceFont(coerce, 'font');
-    var fontSize = font.size;
+    const font = coerceFont(coerce, 'font');
+    const fontSize = font.size;
 
     coerceFont(coerce, 'title.font', font, { overrideDflt: {
         size: Math.round(fontSize * 1.4)
@@ -1326,12 +1320,12 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
 
     coerce('title.text', layoutOut._dfltTitle.plot);
     coerce('title.xref');
-    var titleYref = coerce('title.yref');
+    const titleYref = coerce('title.yref');
     coerce('title.pad.t');
     coerce('title.pad.r');
     coerce('title.pad.b');
     coerce('title.pad.l');
-    var titleAutomargin = coerce('title.automargin');
+    const titleAutomargin = coerce('title.automargin');
 
     coerce('title.x');
     coerce('title.xanchor');
@@ -1369,7 +1363,7 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
         }
     }
 
-    var uniformtextMode = coerce('uniformtext.mode');
+    const uniformtextMode = coerce('uniformtext.mode');
     if(uniformtextMode) {
         coerce('uniformtext.minsize');
     }
@@ -1409,7 +1403,7 @@ export function supplyLayoutGlobalDefaults(layoutIn?: any, layoutOut?: any, form
     coerce('colorway');
 
     coerce('datarevision');
-    var uirevision = coerce('uirevision');
+    const uirevision = coerce('uirevision');
     coerce('editrevision', uirevision);
     coerce('selectionrevision', uirevision);
 
@@ -1459,12 +1453,12 @@ function getComputedSize(attr?: any): any {
 }
 
 export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): void {
-    var context = gd._context || {};
-    var frameMargins = context.frameMargins;
-    var newWidth;
-    var newHeight;
+    const context = gd._context || {};
+    const frameMargins = context.frameMargins;
+    let newWidth;
+    let newHeight;
 
-    var isPlot = isPlotDiv(gd);
+    const isPlot = isPlotDiv(gd);
 
     if(isPlot) gd.emit('plotly_autosize');
 
@@ -1482,26 +1476,26 @@ export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): void {
         // provide height and width for the container div,
         // specify size in layout, or take the defaults,
         // but don't enforce any ratio restrictions
-        var computedStyle: any = isPlot ? window.getComputedStyle(gd) : {};
+        const computedStyle: any = isPlot ? window.getComputedStyle(gd) : {};
 
         newWidth = getComputedSize(computedStyle.width) || getComputedSize(computedStyle.maxWidth) || fullLayout.width;
         newHeight = getComputedSize(computedStyle.height) || getComputedSize(computedStyle.maxHeight) || fullLayout.height;
 
         if(isNumeric(frameMargins) && frameMargins > 0) {
-            var factor = 1 - 2 * frameMargins;
+            const factor = 1 - 2 * frameMargins;
             newWidth = Math.round(factor * newWidth);
             newHeight = Math.round(factor * newHeight);
         }
     }
 
-    var minWidth = layoutAttributes.width.min;
-    var minHeight = layoutAttributes.height.min;
+    const minWidth = layoutAttributes.width.min;
+    const minHeight = layoutAttributes.height.min;
     if(newWidth < minWidth) newWidth = minWidth;
     if(newHeight < minHeight) newHeight = minHeight;
 
-    var widthHasChanged = !layout.width &&
+    const widthHasChanged = !layout.width &&
         (Math.abs(fullLayout.width - newWidth) > 1);
-    var heightHasChanged = !layout.height &&
+    const heightHasChanged = !layout.height &&
         (Math.abs(fullLayout.height - newHeight) > 1);
 
     if(heightHasChanged || widthHasChanged) {
@@ -1519,11 +1513,11 @@ export function plotAutoSize(gd?: any, layout?: any, fullLayout?: any): void {
 };
 
 export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, fullData?: any, transitionData?: any): void {
-    var componentsRegistry = Registry.componentsRegistry;
-    var basePlotModules = layoutOut._basePlotModules;
-    var component, i, _module;
+    const componentsRegistry = Registry.componentsRegistry;
+    const basePlotModules = layoutOut._basePlotModules;
+    let component, i, _module;
 
-    var Cartesian = Registry.subplotsRegistry.cartesian;
+    const Cartesian = Registry.subplotsRegistry.cartesian;
 
     // check if any components need to add more base plot modules
     // that weren't captured by traces
@@ -1547,7 +1541,7 @@ export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, full
     }
 
     // sort subplot lists
-    for(var subplotType in layoutOut._subplots) {
+    for(const subplotType in layoutOut._subplots) {
         layoutOut._subplots[subplotType].sort(subplotSort);
     }
 
@@ -1565,7 +1559,7 @@ export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, full
     // use _modules rather than _visibleModules so that even
     // legendonly traces can include settings - eg barmode, which affects
     // legend.traceorder default value.
-    var modules = layoutOut._modules;
+    const modules = layoutOut._modules;
     for(i = 0; i < modules.length; i++) {
         _module = modules[i];
 
@@ -1575,7 +1569,7 @@ export function supplyLayoutModuleDefaults(layoutIn?: any, layoutOut?: any, full
     }
 
     // transform module layout defaults
-    var transformModules = layoutOut._transformModules;
+    const transformModules = layoutOut._transformModules;
     for(i = 0; i < transformModules.length; i++) {
         _module = transformModules[i];
 
@@ -1599,7 +1593,7 @@ export function purge(gd?: any): void {
     // note: we DO NOT remove _context because it doesn't change when we insert
     // a new plot, and may have been set outside of our scope.
 
-    var fullLayout = gd._fullLayout || {} as FullLayout;
+    const fullLayout = gd._fullLayout || {} as FullLayout;
     if(fullLayout._glcontainer !== undefined) {
         fullLayout._glcontainer.selectAll('.gl-canvas').remove();
         fullLayout._glcontainer.remove();
@@ -1669,22 +1663,22 @@ export function purge(gd?: any): void {
 };
 
 export function style(gd: GraphDiv): void {
-    var _modules = gd._fullLayout._visibleModules;
-    var styleModules = [];
-    var i;
+    const _modules = gd._fullLayout._visibleModules;
+    const styleModules: any[] = [];
+    let i;
 
     // some trace modules reuse the same style method,
     // make sure to not unnecessary call them multiple times.
 
     for(i = 0; i < _modules.length; i++) {
-        var _module = _modules[i];
+        const _module = _modules[i];
         if(_module.style) {
             pushUnique(styleModules, _module.style);
         }
     }
 
     for(i = 0; i < styleModules.length; i++) {
-        styleModules[i](gd);
+        (styleModules[i](gd) as any);
     }
 };
 
@@ -1692,27 +1686,27 @@ export function sanitizeMargins(fullLayout: FullLayout): void {
     // polar doesn't do margins...
     if(!fullLayout || !fullLayout.margin) return;
 
-    var width = fullLayout.width;
-    var height = fullLayout.height;
-    var margin = fullLayout.margin;
-    var plotWidth = width - (margin.l + margin.r);
-    var plotHeight = height - (margin.t + margin.b);
-    var correction;
+    const width = fullLayout.width;
+    const height = fullLayout.height;
+    const margin = fullLayout.margin;
+    const plotWidth = width! - (margin.l! + margin.r!);
+    const plotHeight = height! - (margin.t! + margin.b!);
+    let correction;
 
     // if margin.l + margin.r = 0 then plotWidth > 0
     // as width >= 10 by supplyDefaults
     // similarly for margin.t + margin.b
 
     if(plotWidth < 0) {
-        correction = (width - 1) / (margin.l + margin.r);
-        margin.l = Math.floor(correction * margin.l);
-        margin.r = Math.floor(correction * margin.r);
+        correction = (width! - 1) / (margin.l! + margin.r!);
+        margin.l = Math.floor(correction * margin.l!);
+        margin.r = Math.floor(correction * margin.r!);
     }
 
     if(plotHeight < 0) {
-        correction = (height - 1) / (margin.t + margin.b);
-        margin.t = Math.floor(correction * margin.t);
-        margin.b = Math.floor(correction * margin.b);
+        correction = (height! - 1) / (margin.t! + margin.b!);
+        margin.t = Math.floor(correction * margin.t!);
+        margin.b = Math.floor(correction * margin.b!);
     }
 };
 
@@ -1725,18 +1719,18 @@ export function allowAutoMargin(gd?: any, id?: any): void {
 };
 
 function initMargins(fullLayout: FullLayout): void {
-    var margin = fullLayout.margin;
+    const margin = fullLayout.margin;
 
     if(!fullLayout._size) {
-        var gs = fullLayout._size = {
-            l: Math.round(margin.l),
-            r: Math.round(margin.r),
-            t: Math.round(margin.t),
-            b: Math.round(margin.b),
-            p: Math.round(margin.pad),
+        const gs = fullLayout._size = {
+            l: Math.round((margin!.l as any)),
+            r: Math.round((margin!.r as any)),
+            t: Math.round((margin!.t as any)),
+            b: Math.round((margin!.b as any)),
+            p: Math.round((margin!.pad as any)),
         } as any;
-        gs.w = Math.round(fullLayout.width) - gs.l - gs.r;
-        gs.h = Math.round(fullLayout.height) - gs.t - gs.b;
+        gs.w = Math.round((fullLayout.width as any)) - gs.l - gs.r;
+        gs.h = Math.round((fullLayout.height as any)) - gs.t - gs.b;
     }
     if(!fullLayout._pushmargin) fullLayout._pushmargin = {};
     if(!fullLayout._pushmarginIds) fullLayout._pushmarginIds = {};
@@ -1744,8 +1738,8 @@ function initMargins(fullLayout: FullLayout): void {
 }
 
 // non-negotiable - this is the smallest height we will allow users to specify via explicit margins
-var MIN_SPECIFIED_WIDTH = 2;
-var MIN_SPECIFIED_HEIGHT = 2;
+const MIN_SPECIFIED_WIDTH = 2;
+const MIN_SPECIFIED_HEIGHT = 2;
 
 /**
  * autoMargin: called by components that may need to expand the margins to
@@ -1763,64 +1757,64 @@ var MIN_SPECIFIED_HEIGHT = 2;
  *     pad: extra pixels to add in all directions, default 12 (why?)
  */
 export function autoMargin(gd: GraphDiv, id?: any, o?: any): void {
-    var fullLayout = gd._fullLayout;
-    var width = fullLayout.width;
-    var height = fullLayout.height;
-    var margin = fullLayout.margin;
-    var minreducedwidth = fullLayout.minreducedwidth;
-    var minreducedheight = fullLayout.minreducedheight;
+    const fullLayout = gd._fullLayout;
+    const width = fullLayout!.width;
+    const height = fullLayout!.height;
+    const margin = fullLayout!.margin;
+    const minreducedwidth = fullLayout.minreducedwidth;
+    const minreducedheight = fullLayout.minreducedheight;
 
-    var minFinalWidth = constrain(
-        width - margin.l - margin.r,
+    const minFinalWidth = constrain(
+        width! - margin!.l! - margin!.r!,
         MIN_SPECIFIED_WIDTH,
         minreducedwidth
     );
 
-    var minFinalHeight = constrain(
-        height - margin.t - margin.b,
+    const minFinalHeight = constrain(
+        height! - margin!.t! - margin!.b!,
         MIN_SPECIFIED_HEIGHT,
         minreducedheight
     );
 
-    var maxSpaceW = Math.max(0, width - minFinalWidth);
-    var maxSpaceH = Math.max(0, height - minFinalHeight);
+    const maxSpaceW = Math.max(0, width! - minFinalWidth);
+    const maxSpaceH = Math.max(0, height! - minFinalHeight);
 
-    var pushMargin = fullLayout._pushmargin;
-    var pushMarginIds = fullLayout._pushmarginIds;
+    const pushMargin = fullLayout!._pushmargin;
+    const pushMarginIds = fullLayout!._pushmarginIds;
 
-    if(margin.autoexpand !== false) {
+    if(margin!.autoexpand !== false) {
         if(!o) {
             delete pushMargin[id];
             delete pushMarginIds[id];
         } else {
-            var pad = o.pad;
+            let pad = o.pad;
             if(pad === undefined) {
                 // if no explicit pad is given, use 12px unless there's a
                 // specified margin that's smaller than that
-                pad = Math.min(12, margin.l, margin.r, margin.t, margin.b);
+                pad = Math.min(12, margin!.l!, margin!.r!, margin!.t!, margin!.b!);
             }
 
             // if the item is too big, just give it enough automargin to
             // make sure you can still grab it and bring it back
             if(maxSpaceW) {
-                var rW = (o.l + o.r) / maxSpaceW;
+                const rW = (o.l + o.r) / maxSpaceW;
                 if(rW > 1) {
                     o.l /= rW;
                     o.r /= rW;
                 }
             }
             if(maxSpaceH) {
-                var rH = (o.t + o.b) / maxSpaceH;
+                const rH = (o.t + o.b) / maxSpaceH;
                 if(rH > 1) {
                     o.t /= rH;
                     o.b /= rH;
                 }
             }
 
-            var xl = o.xl !== undefined ? o.xl : o.x;
-            var xr = o.xr !== undefined ? o.xr : o.x;
-            var yt = o.yt !== undefined ? o.yt : o.y;
-            var yb = o.yb !== undefined ? o.yb : o.y;
+            const xl = o.xl !== undefined ? o.xl : o.x;
+            const xr = o.xr !== undefined ? o.xr : o.x;
+            const yt = o.yt !== undefined ? o.yt : o.y;
+            const yb = o.yb !== undefined ? o.yb : o.y;
 
             pushMargin[id] = {
                 l: {val: xl, size: o.l + pad},
@@ -1841,48 +1835,48 @@ function needsRedrawForShift(gd?: any): boolean {
     if('_redrawFromAutoMarginCount' in gd._fullLayout) {
         return false;
     }
-    var axList = axisIDs.list(gd, '', true);
-    for(var ax in axList) {
+    const axList = axisIDs.list(gd, '', true);
+    for(const ax in axList) {
         if(axList[ax].autoshift || axList[ax].shift) return true;
     }
     return false;
 }
 
 export function doAutoMargin(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
-    var width = fullLayout.width;
-    var height = fullLayout.height;
+    const fullLayout = gd._fullLayout;
+    const width = fullLayout.width;
+    const height = fullLayout.height;
 
     if(!fullLayout._size) fullLayout._size = {} as any;
     initMargins(fullLayout);
 
-    var gs = fullLayout._size;
-    var margin = fullLayout.margin;
-    var reservedMargins = {t: 0, b: 0, l: 0, r: 0};
-    var oldMargins = extendFlat({}, gs);
+    const gs = fullLayout._size;
+    const margin = fullLayout.margin;
+    const reservedMargins = {t: 0, b: 0, l: 0, r: 0};
+    const oldMargins = extendFlat({}, gs);
 
     // adjust margins for outside components
     // fullLayout.margin is the requested margin,
     // fullLayout._size has margins and plotsize after adjustment
-    var ml = margin.l;
-    var mr = margin.r;
-    var mt = margin.t;
-    var mb = margin.b;
-    var pushMargin = fullLayout._pushmargin;
-    var pushMarginIds = fullLayout._pushmarginIds;
-    var minreducedwidth = fullLayout.minreducedwidth;
-    var minreducedheight = fullLayout.minreducedheight;
+    let ml = margin!.l;
+    let mr = margin!.r;
+    let mt = margin!.t;
+    let mb = margin!.b;
+    const pushMargin = fullLayout._pushmargin;
+    const pushMarginIds = fullLayout._pushmarginIds;
+    const minreducedwidth = fullLayout.minreducedwidth;
+    const minreducedheight = fullLayout.minreducedheight;
 
-    if(margin.autoexpand !== false) {
-        for(var k in pushMargin) {
+    if(margin!.autoexpand !== false) {
+        for(const k in pushMargin) {
             if(!pushMarginIds[k]) delete pushMargin[k];
         }
 
-        var margins = gd._fullLayout._reservedMargin;
-        for(var key in margins) {
-            for(var side in margins[key]) {
-                var val = margins[key][side];
-                reservedMargins[side] = Math.max(reservedMargins[side], val);
+        const margins = gd._fullLayout._reservedMargin;
+        for(const key in margins) {
+            for(const side in margins[key]) {
+                const val = margins[key][side];
+                (reservedMargins as any)[side] = Math.max((reservedMargins as any)[side], val);
             }
         }
         // fill in the requested margins
@@ -1894,39 +1888,39 @@ export function doAutoMargin(gd: GraphDiv): void {
         };
 
         // make sure that the reservedMargin is the minimum needed
-        for(var s in reservedMargins) {
-            var autoMarginPush = 0;
-            for(var m in pushMargin) {
+        for(const s in reservedMargins) {
+            let autoMarginPush = 0;
+            for(const m in pushMargin) {
                 if(m !== 'base') {
                     if(isNumeric(pushMargin[m][s].size)) {
                         autoMarginPush = pushMargin[m][s].size > autoMarginPush ? pushMargin[m][s].size : autoMarginPush;
                     }
                 }
             }
-            var extraMargin = Math.max(0, (margin[s] - autoMarginPush));
-            reservedMargins[s] = Math.max(0, reservedMargins[s] - extraMargin);
+            const extraMargin = Math.max(0, ((margin! as any)[s] - autoMarginPush));
+            (reservedMargins as any)[s] = Math.max(0, (reservedMargins as any)[s] - extraMargin);
         }
 
         // now cycle through all the combinations of l and r
         // (and t and b) to find the required margins
-        for(var k1 in pushMargin) {
-            var pushleft = pushMargin[k1].l || {};
-            var pushbottom = pushMargin[k1].b || {};
-            var fl = pushleft.val;
-            var pl = pushleft.size;
-            var fb = pushbottom.val;
-            var pb = pushbottom.size;
-            var availableWidth = width - reservedMargins.r - reservedMargins.l;
-            var availableHeight = height - reservedMargins.t - reservedMargins.b;
+        for(const k1 in pushMargin) {
+            const pushleft = pushMargin[k1].l || {};
+            const pushbottom = pushMargin[k1].b || {};
+            const fl = pushleft.val;
+            const pl = pushleft.size;
+            const fb = pushbottom.val;
+            const pb = pushbottom.size;
+            const availableWidth = width! - reservedMargins.r - reservedMargins.l;
+            const availableHeight = height! - reservedMargins.t - reservedMargins.b;
 
-            for(var k2 in pushMargin) {
+            for(const k2 in pushMargin) {
                 if(isNumeric(pl) && pushMargin[k2].r) {
-                    var fr = pushMargin[k2].r.val;
-                    var pr = pushMargin[k2].r.size;
+                    const fr = pushMargin[k2].r.val;
+                    const pr = pushMargin[k2].r.size;
                     if(fr > fl) {
-                        var newL = (pl * fr + (pr - availableWidth) * fl) / (fr - fl);
-                        var newR = (pr * (1 - fl) + (pl - availableWidth) * (1 - fr)) / (fr - fl);
-                        if(newL + newR > ml + mr) {
+                        const newL = (pl * fr + (pr - availableWidth) * fl) / (fr - fl);
+                        const newR = (pr * (1 - fl) + (pl - availableWidth) * (1 - fr)) / (fr - fl);
+                        if(newL + newR > ml! + mr!) {
                             ml = newL;
                             mr = newR;
                         }
@@ -1934,12 +1928,12 @@ export function doAutoMargin(gd: GraphDiv): void {
                 }
 
                 if(isNumeric(pb) && pushMargin[k2].t) {
-                    var ft = pushMargin[k2].t.val;
-                    var pt = pushMargin[k2].t.size;
+                    const ft = pushMargin[k2].t.val;
+                    const pt = pushMargin[k2].t.size;
                     if(ft > fb) {
-                        var newB = (pb * ft + (pt - availableHeight) * fb) / (ft - fb);
-                        var newT = (pt * (1 - fb) + (pb - availableHeight) * (1 - ft)) / (ft - fb);
-                        if(newB + newT > mb + mt) {
+                        const newB = (pb * ft + (pt - availableHeight) * fb) / (ft - fb);
+                        const newT = (pt * (1 - fb) + (pb - availableHeight) * (1 - ft)) / (ft - fb);
+                        if(newB + newT > mb! + mt!) {
                             mb = newB;
                             mt = newT;
                         }
@@ -1949,44 +1943,44 @@ export function doAutoMargin(gd: GraphDiv): void {
         }
     }
 
-    var minFinalWidth = constrain(
-        width - margin.l - margin.r,
+    const minFinalWidth = constrain(
+        width! - margin!.l! - margin!.r!,
         MIN_SPECIFIED_WIDTH,
         minreducedwidth
     );
 
-    var minFinalHeight = constrain(
-        height - margin.t - margin.b,
+    const minFinalHeight = constrain(
+        height! - margin!.t! - margin!.b!,
         MIN_SPECIFIED_HEIGHT,
         minreducedheight
     );
 
-    var maxSpaceW = Math.max(0, width - minFinalWidth);
-    var maxSpaceH = Math.max(0, height - minFinalHeight);
+    const maxSpaceW = Math.max(0, width! - minFinalWidth);
+    const maxSpaceH = Math.max(0, height! - minFinalHeight);
 
     if(maxSpaceW) {
-        var rW = (ml + mr) / maxSpaceW;
+        const rW = (ml! + mr!) / maxSpaceW;
         if(rW > 1) {
-            ml /= rW;
-            mr /= rW;
+            ml! /= rW;
+            mr! /= rW;
         }
     }
 
     if(maxSpaceH) {
-        var rH = (mb + mt) / maxSpaceH;
+        const rH = (mb! + mt!) / maxSpaceH;
         if(rH > 1) {
-            mb /= rH;
-            mt /= rH;
+            mb! /= rH;
+            mt! /= rH;
         }
     }
 
-    gs.l = Math.round(ml) + reservedMargins.l;
-    gs.r = Math.round(mr) + reservedMargins.r;
-    gs.t = Math.round(mt) + reservedMargins.t;
-    gs.b = Math.round(mb) + reservedMargins.b;
-    gs.p = Math.round(margin.pad);
-    gs.w = Math.round(width) - gs.l - gs.r;
-    gs.h = Math.round(height) - gs.t - gs.b;
+    gs.l = Math.round((ml as any)) + reservedMargins.l;
+    gs.r = Math.round((mr as any)) + reservedMargins.r;
+    gs.t = Math.round((mt as any)) + reservedMargins.t;
+    gs.b = Math.round((mb as any)) + reservedMargins.b;
+    gs.p = Math.round((margin!.pad as any));
+    gs.w = Math.round((width as any)) - gs.l - gs.r;
+    gs.h = Math.round((height as any)) - gs.t - gs.b;
 
     // if things changed and we're not already redrawing, trigger a redraw
     if(!fullLayout._replotting && (didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
@@ -2001,7 +1995,7 @@ export function doAutoMargin(gd: GraphDiv): void {
         // but let's keep things on the safe side until we fix our
         // auto-margin pipeline problems:
         // https://github.com/plotly/plotly.js/issues/2704
-        var maxNumberOfRedraws = 3 * (1 + Object.keys(pushMarginIds).length);
+        const maxNumberOfRedraws = 3 * (1 + Object.keys(pushMarginIds).length);
 
         if(fullLayout._redrawFromAutoMarginCount < maxNumberOfRedraws) {
             return Registry.call('_doPlot', gd);
@@ -2015,26 +2009,26 @@ export function doAutoMargin(gd: GraphDiv): void {
 };
 
 function refineTicks(gd?: any): void {
-    var axList = axisIDs.list(gd, '', true);
+    const axList = axisIDs.list(gd, '', true);
 
     [
         '_adjustTickLabelsOverflow',
         '_hideCounterAxisInsideTickLabels'
     ].forEach(function(k) {
-        for(var i = 0; i < axList.length; i++) {
-            var hideFn = axList[i][k];
+        for(let i = 0; i < axList.length; i++) {
+            const hideFn = axList[i][k];
             if(hideFn) hideFn();
         }
     });
 }
 
-var marginKeys = ['l', 'r', 't', 'b', 'p', 'w', 'h'];
+const marginKeys = ['l', 'r', 't', 'b', 'p', 'w', 'h'];
 
 export function didMarginChange(margin0?: any, margin1?: any): boolean {
-    for(var i = 0; i < marginKeys.length; i++) {
-        var k = marginKeys[i];
-        var m0 = margin0[k];
-        var m1 = margin1[k];
+    for(let i = 0; i < marginKeys.length; i++) {
+        const k = marginKeys[i];
+        const m0 = margin0[k];
+        const m1 = margin1[k];
         // use 1px tolerance in case we old/new differ only
         // by rounding errors, which can lead to infinite loops
         if(!isNumeric(m0) || Math.abs(m1 - m0) > 1) {
@@ -2074,17 +2068,17 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
         supplyDefaults(gd);
     }
 
-    var data = (useDefaults) ? gd._fullData : gd.data;
-    var layout: any = (useDefaults) ? gd._fullLayout : gd.layout;
-    var frames = (gd._transitionData || {})._frames;
+    const data = (useDefaults) ? gd._fullData : gd.data;
+    const layout: any = (useDefaults) ? gd._fullLayout : gd.layout;
+    const frames = (gd._transitionData || {})._frames;
 
-    function stripObj(d?: any, keepFunction?: any) {
+    function stripObj(d?: any, keepFunction?: any): any {
         if(typeof d === 'function') {
             return keepFunction ? '_function_' : null;
         }
         if(isPlainObject(d)) {
-            var o: any = {};
-            var src;
+            const o: any = {};
+            let src;
             Object.keys(d).sort().forEach(function(v) {
                 // remove private elements and functions
                 // _ is for private, [ is a mistake ie [object Object]
@@ -2127,11 +2121,11 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
             return o;
         }
 
-        var dIsArray = Array.isArray(d);
-        var dIsTypedArray = isTypedArray(d);
+        const dIsArray = Array.isArray(d);
+        const dIsTypedArray = isTypedArray(d);
 
         if((dIsArray || dIsTypedArray) && d.dtype && d.shape) {
-            var bdata = d.bdata;
+            const bdata = d.bdata;
             return stripObj({
                 dtype: d.dtype,
                 shape: d.shape,
@@ -2160,9 +2154,9 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
         return d;
     }
 
-    var obj: any = {
-        data: (data || []).map(function(v) {
-            var d = stripObj(v);
+    const obj: any = {
+        data: (data || []).map(function(v: any) {
+            const d = stripObj(v);
             // fit has some little arrays in it that don't contain data,
             // just fit params and meta
             if(dataonly) { delete d.fit; }
@@ -2172,7 +2166,7 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
     if(!dataonly) {
         obj.layout = stripObj(layout);
         if(useDefaults) {
-            var gs: any = layout._size;
+            const gs: any = layout._size;
             obj.layout.computed = {
                 margin: {
                     b: gs.b,
@@ -2198,9 +2192,9 @@ export function graphJson(gd?: any, dataonly?: any, mode?: any, output?: any, us
  *      Sequence of operations to be performed on the keyframes
  */
 export function modifyFrames(gd?: any, operations?: any): any {
-    var i, op, frame;
-    var _frames = gd._transitionData._frames;
-    var _frameHash = gd._transitionData._frameHash;
+    let i, op, frame;
+    const _frames = gd._transitionData._frames;
+    const _frameHash = gd._transitionData._frameHash;
 
     for(i = 0; i < operations.length; i++) {
         op = operations[i];
@@ -2215,8 +2209,8 @@ export function modifyFrames(gd?: any, operations?: any): any {
                 break;*/
             case 'replace':
                 frame = op.value;
-                var oldName = (_frames[op.index] || {}).name;
-                var newName = frame.name;
+                const oldName = (_frames[op.index] || {}).name;
+                const newName = frame.name;
                 _frames[op.index] = _frameHash[newName] = frame;
 
                 if(newName !== oldName) {
@@ -2255,8 +2249,8 @@ export function modifyFrames(gd?: any, operations?: any): any {
  * Returns: a new object with the merged content
  */
 export function computeFrame(gd?: any, frameName?: any): any {
-    var frameLookup = gd._transitionData._frameHash;
-    var i, traceIndices, traceIndex, destIndex;
+    const frameLookup = gd._transitionData._frameHash;
+    let i, traceIndices, traceIndex, destIndex;
 
     // Null or undefined will fail on .toString(). We'll allow numbers since we
     // make it clear frames must be given string names, but we'll allow numbers
@@ -2268,15 +2262,15 @@ export function computeFrame(gd?: any, frameName?: any): any {
         throw new Error('computeFrame must be given a string frame name');
     }
 
-    var framePtr = frameLookup[frameName.toString()];
+    let framePtr = frameLookup[frameName.toString()];
 
     // Return false if the name is invalid:
     if(!framePtr) {
         return false;
     }
 
-    var frameStack = [framePtr];
-    var frameNameStack = [framePtr.name];
+    const frameStack = [framePtr];
+    const frameNameStack = [framePtr.name];
 
     // Follow frame pointers:
     while(framePtr.baseframe && (framePtr = frameLookup[framePtr.baseframe.toString()])) {
@@ -2288,7 +2282,7 @@ export function computeFrame(gd?: any, frameName?: any): any {
     }
 
     // A new object for the merged result:
-    var result: any = {};
+    const result: any = {};
 
     // Merge, starting with the last and ending with the desired frame:
     while((framePtr = frameStack.pop())) {
@@ -2343,12 +2337,12 @@ export function computeFrame(gd?: any, frameName?: any): any {
  * and create and haven't updated the lookup table.
  */
 export function recomputeFrameHash(gd?: any): void {
-    var hash = gd._transitionData._frameHash = {};
-    var frames = gd._transitionData._frames;
-    for(var i = 0; i < frames.length; i++) {
-        var frame: any = frames[i];
+    const hash = gd._transitionData._frameHash = {};
+    const frames = gd._transitionData._frames;
+    for(let i = 0; i < frames.length; i++) {
+        const frame: any = frames[i];
         if(frame && frame.name) {
-            hash[frame.name] = frame;
+            (hash as any)[frame.name] = frame;
         }
     }
 };
@@ -2364,10 +2358,10 @@ export function recomputeFrameHash(gd?: any): void {
  * See extendTrace and extendLayout below for usage.
  */
 export function extendObjectWithContainers(dest?: any, src?: any, containerPaths?: any): any {
-    var containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer;
-    var copy = extendDeepNoArrays({}, src || {});
-    var expandedObj = expandObjectPaths(copy);
-    var containerObj = {};
+    let containerProp, containerVal, i, j, srcProp, destProp, srcContainer, destContainer: any[];
+    const copy = extendDeepNoArrays({}, src || {});
+    const expandedObj = expandObjectPaths(copy);
+    const containerObj = {};
 
     // Step through and extract any container properties. Otherwise extendDeepNoArrays
     // will clobber any existing properties with an empty array and then supplyDefaults
@@ -2404,7 +2398,7 @@ export function extendObjectWithContainers(dest?: any, src?: any, containerPaths
             }
 
             for(j = 0; j < srcContainer.length; j++) {
-                var srcObj = srcContainer[j];
+                const srcObj = srcContainer[j];
 
                 if(srcObj === null) destContainer[j] = null;
                 else {
@@ -2419,8 +2413,8 @@ export function extendObjectWithContainers(dest?: any, src?: any, containerPaths
     return dest;
 };
 
-export var dataArrayContainers = ['transforms', 'dimensions'];
-export var layoutArrayContainers = Registry.layoutArrayContainers;
+export const dataArrayContainers = ['transforms', 'dimensions'];
+export const layoutArrayContainers = Registry.layoutArrayContainers;
 
 /*
  * Extend a trace definition. This method:
@@ -2463,18 +2457,18 @@ export function extendLayout(destLayout?: any, srcLayout?: any): any {
  *      options for the transition
  */
 export function transition(gd?: any, data?: any, layout?: any, traces?: any, frameOpts?: any, transitionOpts?: any): any {
-    var opts: any = {redraw: frameOpts.redraw};
-    var transitionedTraces: any = {};
-    var axEdits = [];
+    const opts: any = {redraw: frameOpts.redraw};
+    const transitionedTraces: any = {};
+    const axEdits: any[] = [];
 
     opts.prepareFn = function() {
-        var dataLength = Array.isArray(data) ? data.length : 0;
-        var traceIndices = traces.slice(0, dataLength);
+        const dataLength = Array.isArray(data) ? data.length : 0;
+        const traceIndices = traces.slice(0, dataLength);
 
-        for(var i = 0; i < traceIndices.length; i++) {
-            var traceIdx = traceIndices[i];
-            var trace = gd._fullData[traceIdx];
-            var _module = trace._module;
+        for(let i = 0; i < traceIndices.length; i++) {
+            const traceIdx = traceIndices[i];
+            const trace = gd._fullData[traceIdx];
+            const _module = trace._module;
 
             // There's nothing to do if this module is not defined:
             if(!_module) continue;
@@ -2483,7 +2477,7 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
             // If it *is* registered, it will receive a callback that it's responsible
             // for calling in order to register the transition as having completed.
             if(_module.animatable) {
-                var n = _module.basePlotModule.name;
+                const n = _module.basePlotModule.name;
                 if(!transitionedTraces[n]) transitionedTraces[n] = [];
                 transitionedTraces[n].push(traceIdx);
             }
@@ -2493,14 +2487,14 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
 
         // Follow the same procedure. Clone it so we don't mangle the input, then
         // expand any object paths so we can merge deep into gd.layout:
-        var layoutUpdate = expandObjectPaths(extendDeepNoArrays({}, layout));
+        const layoutUpdate = expandObjectPaths(extendDeepNoArrays({}, layout));
 
         // Before merging though, we need to modify the incoming layout. We only
         // know how to *transition* layout ranges, so it's imperative that a new
         // range not be sent to the layout before the transition has started. So
         // we must remove the things we can transition:
-        var axisAttrRe = /^[xy]axis[0-9]*$/;
-        for(var attr in layoutUpdate) {
+        const axisAttrRe = /^[xy]axis[0-9]*$/;
+        for(const attr in layoutUpdate) {
             if(!axisAttrRe.test(attr)) continue;
             delete layoutUpdate[attr].range;
         }
@@ -2519,22 +2513,22 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
         supplyDefaults(gd);
         doCalcdata(gd);
 
-        var newLayout: any = expandObjectPaths(layout);
+        const newLayout: any = expandObjectPaths(layout);
 
         if(newLayout) {
-            var subplots = gd._fullLayout._plots;
+            const subplots = gd._fullLayout._plots;
 
-            for(var k in subplots) {
-                var plotinfo: any = subplots[k];
-                var xa = plotinfo.xaxis;
-                var ya = plotinfo.yaxis;
-                var xr0 = xa.range.slice();
-                var yr0 = ya.range.slice();
+            for(const k in subplots) {
+                const plotinfo: any = subplots[k];
+                const xa = plotinfo.xaxis;
+                const ya = plotinfo.yaxis;
+                const xr0 = xa.range.slice();
+                const yr0 = ya.range.slice();
 
-                var xr1 = null;
-                var yr1 = null;
-                var editX = null;
-                var editY = null;
+                let xr1: any = null;
+                let yr1: any = null;
+                let editX: any = null;
+                let editY: any = null;
 
                 if(Array.isArray(newLayout[xa._name + '.range'])) {
                     xr1 = newLayout[xa._name + '.range'].slice();
@@ -2550,12 +2544,12 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
                 if(xr0 && xr1 &&
                     (xa.r2l(xr0[0]) !== xa.r2l(xr1[0]) || xa.r2l(xr0[1]) !== xa.r2l(xr1[1]))
                 ) {
-                    editX = {xr0: xr0, xr1: xr1};
+                    editX = ({xr0: xr0, xr1: xr1} as any);
                 }
                 if(yr0 && yr1 &&
                     (ya.r2l(yr0[0]) !== ya.r2l(yr1[0]) || ya.r2l(yr0[1]) !== ya.r2l(yr1[1]))
                 ) {
-                    editY = {yr0: yr0, yr1: yr1};
+                    editY = ({yr0: yr0, yr1: yr1} as any);
                 }
 
                 if(editX || editY) {
@@ -2568,10 +2562,10 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
     };
 
     opts.runFn = function(makeCallback?: any) {
-        var traceTransitionOpts;
-        var basePlotModules = gd._fullLayout._basePlotModules;
-        var hasAxisTransition = axEdits.length;
-        var i;
+        let traceTransitionOpts;
+        const basePlotModules = gd._fullLayout._basePlotModules;
+        const hasAxisTransition = axEdits.length;
+        let i;
 
         if(layout) {
             for(i = 0; i < basePlotModules.length; i++) {
@@ -2598,9 +2592,9 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
         // This is since not all traces know about transitions, so it greatly simplifies matters if
         // the trace is responsible for creating a callback, if needed, and then executing it when
         // the time is right.
-        for(var n in transitionedTraces) {
-            var traceIndices = transitionedTraces[n];
-            var _module: any = gd._fullData[traceIndices[0]]._module;
+        for(const n in transitionedTraces) {
+            const traceIndices = transitionedTraces[n];
+            const _module: any = gd._fullData[traceIndices[0]]._module;
             _module.basePlotModule.plot(gd, traceIndices, traceTransitionOpts, makeCallback);
         }
     };
@@ -2619,13 +2613,13 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
  * @param {object} oldFullLayout : old (pre Plotly.react) fullLayout
  */
 export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?: any, oldFullLayout?: any): any {
-    var fullLayout = gd._fullLayout;
-    var transitionOpts: any = fullLayout.transition;
-    var opts: any = {};
-    var axEdits = [];
+    const fullLayout = gd._fullLayout;
+    const transitionOpts: any = fullLayout.transition;
+    const opts: any = {};
+    const axEdits: any[] = [];
 
     opts.prepareFn = function() {
-        var subplots = fullLayout._plots;
+        const subplots = fullLayout._plots;
 
         // no need to redraw at end of transition,
         // if all changes are animatable
@@ -2633,26 +2627,26 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
         if(restyleFlags.anim === 'some') opts.redraw = true;
         if(relayoutFlags.anim === 'some') opts.redraw = true;
 
-        for(var k in subplots) {
-            var plotinfo: any = subplots[k];
-            var xa = plotinfo.xaxis;
-            var ya = plotinfo.yaxis;
-            var xr0 = oldFullLayout[xa._name].range.slice();
-            var yr0 = oldFullLayout[ya._name].range.slice();
-            var xr1 = xa.range.slice();
-            var yr1 = ya.range.slice();
+        for(const k in subplots) {
+            const plotinfo: any = subplots[k];
+            const xa = plotinfo.xaxis;
+            const ya = plotinfo.yaxis;
+            const xr0 = oldFullLayout[xa._name].range.slice();
+            const yr0 = oldFullLayout[ya._name].range.slice();
+            const xr1 = xa.range.slice();
+            const yr1 = ya.range.slice();
 
             xa.setScale();
             ya.setScale();
 
-            var editX = null;
-            var editY = null;
+            let editX = null;
+            let editY = null;
 
             if(xa.r2l(xr0[0]) !== xa.r2l(xr1[0]) || xa.r2l(xr0[1]) !== xa.r2l(xr1[1])) {
-                editX = {xr0: xr0, xr1: xr1};
+                editX = ({xr0: xr0, xr1: xr1} as any);
             }
             if(ya.r2l(yr0[0]) !== ya.r2l(yr1[0]) || ya.r2l(yr0[1]) !== ya.r2l(yr1[1])) {
-                editY = {yr0: yr0, yr1: yr1};
+                editY = ({yr0: yr0, yr1: yr1} as any);
             }
 
             if(editX || editY) {
@@ -2664,22 +2658,22 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
     };
 
     opts.runFn = function(makeCallback?: any) {
-        var fullData = gd._fullData;
-        var fullLayout = gd._fullLayout;
-        var basePlotModules = fullLayout._basePlotModules;
+        const fullData = gd._fullData;
+        const fullLayout = gd._fullLayout;
+        const basePlotModules = fullLayout._basePlotModules;
 
-        var axisTransitionOpts;
-        var traceTransitionOpts;
-        var transitionedTraces;
+        let axisTransitionOpts: any;
+        let traceTransitionOpts: any;
+        let transitionedTraces: any;
 
-        var allTraceIndices = [];
-        for(var i = 0; i < fullData.length; i++) {
+        const allTraceIndices: any[] = [];
+        for(let i = 0; i < fullData.length; i++) {
             allTraceIndices.push(i);
         }
 
         function transitionAxes() {
             if(!gd._fullLayout) return;
-            for(var j = 0; j < basePlotModules.length; j++) {
+            for(let j = 0; j < basePlotModules.length; j++) {
                 if(basePlotModules[j].transitionAxes) {
                     basePlotModules[j].transitionAxes(gd, axEdits, axisTransitionOpts, makeCallback);
                 }
@@ -2688,7 +2682,7 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
 
         function transitionTraces() {
             if(!gd._fullLayout) return;
-            for(var j = 0; j < basePlotModules.length; j++) {
+            for(let j = 0; j < basePlotModules.length; j++) {
                 basePlotModules[j].plot(gd, transitionedTraces, traceTransitionOpts, makeCallback);
             }
         }
@@ -2732,10 +2726,10 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
  * - runFn {function} ran inside executeTransitions
  */
 function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
-    var aborted = false;
+    let aborted = false;
 
     function executeCallbacks(list?: any) {
-        var p = Promise.resolve();
+        let p = Promise.resolve();
         if(!list) return p;
         while(list.length) {
             p = p.then((list.shift()));
@@ -2784,8 +2778,8 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
 
             // Construct callbacks that are executed on transition end. This ensures the d3 transitions
             // are *complete* before anything else is done.
-            var numCallbacks = 0;
-            var numCompleted = 0;
+            let numCallbacks = 0;
+            let numCompleted = 0;
             function makeCallback() {
                 numCallbacks++;
                 return function() {
@@ -2839,7 +2833,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
         return executeCallbacks(gd._transitionData._interruptCallbacks);
     }
 
-    var seq = [
+    const seq = [
         previousPromises,
         interruptPreviousTransitions,
         opts.prepareFn,
@@ -2848,7 +2842,7 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
         executeTransitions
     ];
 
-    var transitionStarting = syncOrAsync(seq, gd);
+    let transitionStarting = syncOrAsync(seq, gd);
 
     if(!transitionStarting || !transitionStarting.then) {
         transitionStarting = Promise.resolve();
@@ -2858,16 +2852,16 @@ function _transition(gd?: any, transitionOpts?: any, opts?: any): any {
 }
 
 export function doCalcdata(gd: GraphDiv, traces?: any): void {
-    var axList = axisIDs.list(gd);
-    var fullData = gd._fullData;
-    var fullLayout = gd._fullLayout;
+    const axList = axisIDs.list(gd);
+    const fullData = gd._fullData;
+    const fullLayout = gd._fullLayout;
 
-    var trace, _module, i, j;
+    let trace, _module, i, j;
 
     // XXX: Is this correct? Needs a closer look so that *some* traces can be recomputed without
     // *all* needing doCalcdata:
-    var calcdata = new Array(fullData.length);
-    var oldCalcdata = (gd.calcdata || []).slice();
+    const calcdata = new Array(fullData.length);
+    const oldCalcdata = (gd.calcdata || []).slice();
     gd.calcdata = calcdata;
 
     // extra helper variables
@@ -2909,7 +2903,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
     }
 
     // add polar axes to axis list
-    var polarIds = fullLayout._subplots.polar || [];
+    const polarIds = fullLayout._subplots.polar || [];
     for(i = 0; i < polarIds.length; i++) {
         axList.push(
             fullLayout[polarIds[i]].radialaxis,
@@ -2918,15 +2912,15 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
     }
 
     // clear relinked cmin/cmax values in shared axes to start aggregation from scratch
-    for(var k in fullLayout._colorAxes) {
-        var cOpts = fullLayout[k];
+    for(const k in fullLayout._colorAxes) {
+        const cOpts = fullLayout[k];
         if(cOpts.cauto !== false) {
             delete cOpts.cmin;
             delete cOpts.cmax;
         }
     }
 
-    var hasCalcTransform = false;
+    let hasCalcTransform = false;
 
     function transformCalci(i?: any) {
         trace = fullData[i];
@@ -2937,7 +2931,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
             // the calc transform to 'fill in' the categories list
             // used for example in the data-to-coordinate method
             if(_module && _module.calc) {
-                var cdi = _module.calc(gd, trace);
+                const cdi = _module.calc(gd, trace);
 
                 // must clear scene 'batches', so that 2nd
                 // _module.calc call starts from scratch
@@ -2947,7 +2941,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
             }
 
             for(j = 0; j < trace.transforms.length; j++) {
-                var transform = trace.transforms[j];
+                const transform = trace.transforms[j];
 
                 _module = (Registry as any).transformsRegistry[transform.type];
                 if(_module && _module.calcTransform) {
@@ -2965,7 +2959,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
 
         if(!!_module.isContainer !== isContainer) return;
 
-        var cd = [];
+        let cd: any[] = [];
 
         if(trace.visible === true && trace._length !== 0) {
             // clear existing ref in case it got relinked
@@ -2973,7 +2967,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
             // keep ref of index-to-points map object of the *last* enabled transform,
             // this index-to-points map object is required to determine the calcdata indices
             // that correspond to input indices (e.g. from 'selectedpoints')
-            var transforms = trace.transforms || [];
+            const transforms = trace.transforms || [];
             for(j = transforms.length - 1; j >= 0; j--) {
                 if(transforms[j].enabled) {
                     trace._indexToPoints = transforms[j]._indexToPoints;
@@ -2997,8 +2991,8 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
         // add the trace-wide properties to the first point,
         // per point properties to every point
         // t is the holder for trace-wide properties
-        if(!cd[0].t) cd[0].t = {};
-        cd[0].trace = trace;
+        if(!(cd[0] as any).t) (cd[0] as any).t = {};
+        (cd[0] as any).trace = trace;
 
         calcdata[i] = cd;
     }
@@ -3021,7 +3015,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
     doCrossTraceCalc(gd);
 
     // Sort axis categories per value if specified
-    var sorted = sortAxisCategoriesByValue(axList, gd);
+    const sorted = sortAxisCategoriesByValue(axList, gd);
     if(sorted.length) {
         // how many box/violins plots do we have (in case they're grouped)
         fullLayout._numBoxes = 0;
@@ -3036,22 +3030,22 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
     Registry.getComponentMethod('errorbars', 'calc')(gd);
 };
 
-var sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
+const sortAxisCategoriesByValueRegex = /(total|sum|min|max|mean|geometric mean|median) (ascending|descending)/;
 
 function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
-    var affectedTraces = [];
-    var i, j, k, l, o;
+    let affectedTraces: any[] = [];
+    let i, j, k, l, o;
 
     function zMapCategory(type?: any, ax?: any, value?: any) {
-        var axLetter = ax._id.charAt(0);
+        const axLetter = ax._id.charAt(0);
         if(type === 'histogram2dcontour') {
-            var counterAxLetter = ax._counterAxes[0];
-            var counterAx = axisIDs.getFromId(gd, counterAxLetter);
+            const counterAxLetter = ax._counterAxes[0];
+            const counterAx = axisIDs.getFromId(gd, counterAxLetter);
 
-            var xCategorical = axLetter === 'x' || (counterAxLetter === 'x' && counterAx.type === 'category');
-            var yCategorical = axLetter === 'y' || (counterAxLetter === 'y' && counterAx.type === 'category');
+            const xCategorical = axLetter === 'x' || (counterAxLetter === 'x' && counterAx.type === 'category');
+            const yCategorical = axLetter === 'y' || (counterAxLetter === 'y' && counterAx.type === 'category');
 
-            return function(o, l) {
+            return function(o: any, l: any) {
                 if(o === 0 || l === 0) return -1; // Skip first row and column
                 if(xCategorical && o === value[l].length - 1) return -1;
                 if(yCategorical && l === value.length - 1) return -1;
@@ -3059,20 +3053,20 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                 return (axLetter === 'y' ? l : o) - 1;
             };
         } else {
-            return function(o, l) {
+            return function(o: any, l: any) {
                 return axLetter === 'y' ? l : o;
             };
         }
     }
 
-    var aggFn: any = {
-        min: function(values) {return aggNums(Math.min, null, values);},
-        max: function(values) {return aggNums(Math.max, null, values);},
-        sum: function(values) {return aggNums(function(a, b) { return a + b;}, null, values);},
-        total: function(values) {return aggNums(function(a, b) { return a + b;}, null, values);},
-        mean: function(values) {return mean(values);},
-        'geometric mean': function(values) {return geometricMean(values);},
-        median: function(values) {return median(values);}
+    const aggFn: any = {
+        min: function(values: any) {return aggNums(Math.min, null, values);},
+        max: function(values: any) {return aggNums(Math.max, null, values);},
+        sum: function(values: any) {return aggNums(function(a, b) { return a + b;}, null, values);},
+        total: function(values: any) {return aggNums(function(a, b) { return a + b;}, null, values);},
+        mean: function(values: any) {return mean(values);},
+        'geometric mean': function(values: any) {return geometricMean(values);},
+        median: function(values: any) {return median(values);}
     };
 
     function sortAscending(a?: any, b?: any) {
@@ -3084,65 +3078,65 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
     }
 
     for(i = 0; i < axList.length; i++) {
-        var ax = axList[i];
+        let ax = axList[i];
         if(ax.type !== 'category') continue;
 
         // Order by value
-        var match = ax.categoryorder.match(sortAxisCategoriesByValueRegex);
+        const match = ax.categoryorder.match(sortAxisCategoriesByValueRegex);
         if(match) {
-            var aggregator = match[1];
-            var order = match[2];
+            const aggregator = match[1];
+            const order = match[2];
 
-            var axLetter = ax._id.charAt(0);
-            var isX = axLetter === 'x';
+            const axLetter = ax._id.charAt(0);
+            const isX = axLetter === 'x';
 
             // Store values associated with each category
-            var categoriesValue = [];
+            const categoriesValue: any[] = [];
             for(j = 0; j < ax._categories.length; j++) {
                 categoriesValue.push([ax._categories[j], []]);
             }
 
             // Collect values across traces
             for(j = 0; j < ax._traceIndices.length; j++) {
-                var traceIndex = ax._traceIndices[j];
-                var fullTrace = gd._fullData[traceIndex];
+                const traceIndex = ax._traceIndices[j];
+                const fullTrace = gd._fullData[traceIndex];
 
                 // Skip over invisible traces
                 if(fullTrace.visible !== true) continue;
 
-                var type = fullTrace.type;
+                const type = fullTrace.type;
                 if(Registry.traceIs(fullTrace, 'histogram')) {
                     delete fullTrace._xautoBinFinished;
                     delete fullTrace._yautoBinFinished;
                 }
-                var isSplom = type === 'splom';
-                var isScattergl = type === 'scattergl';
+                const isSplom = type === 'splom';
+                const isScattergl = type === 'scattergl';
 
-                var cd = gd.calcdata[traceIndex];
+                const cd = gd.calcdata[traceIndex];
                 for(k = 0; k < cd.length; k++) {
-                    var cdi = cd[k];
-                    var catIndex, value;
+                    const cdi = cd[k];
+                    let catIndex, value;
 
                     if(isSplom) {
                         // If `splom`, collect values across dimensions
                         // Find which dimension the current axis is representing
-                        var currentDimensionIndex = fullTrace._axesDim[ax._id];
+                        const currentDimensionIndex = fullTrace._axesDim[ax._id];
 
                         // Apply logic to associated x axis if it's defined
                         if(!isX) {
-                            var associatedXAxisID = fullTrace._diag[currentDimensionIndex][0];
+                            const associatedXAxisID = fullTrace._diag[currentDimensionIndex][0];
                             if(associatedXAxisID) ax = gd._fullLayout[axisIDs.id2name(associatedXAxisID)];
                         }
 
-                        var categories = cdi.trace.dimensions[currentDimensionIndex].values;
+                        const categories = cdi.trace.dimensions[currentDimensionIndex].values;
                         for(l = 0; l < categories.length; l++) {
                             catIndex = ax._categoriesMap[categories[l]];
 
                             // Collect associated values at index `l` over all other dimensions
                             for(o = 0; o < cdi.trace.dimensions.length; o++) {
                                 if(o === currentDimensionIndex) continue;
-                                var dimension = cdi.trace.dimensions[o];
-                                categoriesValue[catIndex][1].push(dimension.values[l]);
+                                const dimension = cdi.trace.dimensions[o];
+                                (categoriesValue[catIndex][1] as any).push(dimension.values[l]);
                             }
                         }
                     } else if(isScattergl) {
@@ -3155,7 +3149,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                                 catIndex = cdi.t.y[l];
                                 value = cdi.t.x[l];
                             }
-                            categoriesValue[catIndex][1].push(value);
+                            (categoriesValue[catIndex][1] as any).push(value);
                         }
                         // must clear scene 'batches', so that 2nd
                         // _module.calc call starts from scratch
@@ -3165,12 +3159,12 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                     } else if(cdi.hasOwnProperty('z')) {
                         // If 2dMap, collect values in `z`
                         value = cdi.z;
-                        var mapping = zMapCategory(fullTrace.type, ax, value);
+                        const mapping = zMapCategory(fullTrace.type, ax, value);
 
                         for(l = 0; l < value.length; l++) {
                             for(o = 0; o < value[l].length; o++) {
                                 catIndex = mapping(o, l);
-                                if(catIndex + 1) categoriesValue[catIndex][1].push(value[l][o]);
+                                if(catIndex + 1) (categoriesValue[catIndex][1] as any).push(value[l][o]);
                             }
                         }
                     } else {
@@ -3187,7 +3181,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                             else value = [value];
                         }
                         for(l = 0; l < value.length; l++) {
-                            categoriesValue[catIndex][1].push(value[l]);
+                            (categoriesValue[catIndex][1] as any).push(value[l]);
                         }
                     }
                 }
@@ -3195,7 +3189,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
 
             ax._categoriesValue = categoriesValue;
 
-            var categoriesAggregatedValue = [];
+            const categoriesAggregatedValue: any[] = [];
             for(j = 0; j < categoriesValue.length; j++) {
                 categoriesAggregatedValue.push([
                     categoriesValue[j][0],
@@ -3221,7 +3215,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
 }
 
 function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): void {
-    var axLookup: any = {};
+    const axLookup: any = {};
 
     function setupOne(ax?: any) {
         ax.clearCalc();
@@ -3235,9 +3229,9 @@ function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): vo
     simpleMap(axList, setupOne);
 
     // look into match groups for 'missing' axes
-    var matchGroups = fullLayout._axisMatchGroups || [];
-    for(var i = 0; i < matchGroups.length; i++) {
-        for(var axId in matchGroups[i]) {
+    const matchGroups = fullLayout._axisMatchGroups || [];
+    for(let i = 0; i < matchGroups.length; i++) {
+        for(const axId in matchGroups[i]) {
             if(!axLookup[axId]) {
                 setupOne(fullLayout[axisIDs.id2name(axId)]);
             }
@@ -3246,20 +3240,20 @@ function setupAxisCategories(axList?: any, fullData?: any, fullLayout?: any): vo
 }
 
 function doCrossTraceCalc(gd?: any): void {
-    var fullLayout = gd._fullLayout;
-    var modules = fullLayout._visibleModules;
-    var hash: any = {};
-    var i, j, k;
+    const fullLayout = gd._fullLayout;
+    const modules = fullLayout._visibleModules;
+    const hash: any = {};
+    let i, j, k;
 
     // position and range calculations for traces that
     // depend on each other ie bars (stacked or grouped)
     // and boxes (grouped) push each other out of the way
 
     for(j = 0; j < modules.length; j++) {
-        var _module: any = modules[j];
-        var fn = _module.crossTraceCalc;
+        const _module: any = modules[j];
+        const fn = _module.crossTraceCalc;
         if(fn) {
-            var spType = _module.basePlotModule.name;
+            const spType = _module.basePlotModule.name;
             if(hash[spType]) {
                 pushUnique(hash[spType], fn);
             } else {
@@ -3269,13 +3263,13 @@ function doCrossTraceCalc(gd?: any): void {
     }
 
     for(k in hash) {
-        var methods = hash[k];
-        var subplots = fullLayout._subplots[k];
+        const methods = hash[k];
+        const subplots = fullLayout._subplots[k];
 
         if(Array.isArray(subplots)) {
             for(i = 0; i < subplots.length; i++) {
-                var sp = subplots[i];
-                var spInfo = k === 'cartesian' ?
+                const sp = subplots[i];
+                const spInfo = k === 'cartesian' ?
                     fullLayout._plots[sp] :
                     fullLayout[sp];
 
@@ -3304,27 +3298,27 @@ export function redrag(gd?: any): void {
 };
 
 export function reselect(gd?: any): void {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var A = (gd.layout || {}).selections;
-    var B = fullLayout._previousSelections;
+    const A = (gd.layout || {}).selections;
+    const B = fullLayout._previousSelections;
     fullLayout._previousSelections = A;
 
-    var mayEmitSelected = fullLayout._reselect ||
+    const mayEmitSelected = fullLayout._reselect ||
         JSON.stringify(A) !== JSON.stringify(B);
 
     Registry.getComponentMethod('selections', 'reselect')(gd, mayEmitSelected);
 };
 
 export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplotCalcData?: any, subplotLayout?: any): void {
-    var traceHashOld = subplot.traceHash;
-    var traceHash: any = {};
-    var i;
+    const traceHashOld = subplot.traceHash;
+    const traceHash: any = {};
+    let i;
 
     // build up moduleName -> calcData hash
     for(i = 0; i < subplotCalcData.length; i++) {
-        var calcTraces = subplotCalcData[i];
-        var trace = calcTraces[0].trace;
+        const calcTraces = subplotCalcData[i];
+        const trace = calcTraces[0].trace;
 
         // skip over visible === false traces
         // as they don't have `_module` ref
@@ -3337,10 +3331,10 @@ export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplot
     // when a trace gets deleted, make sure that its module's
     // plot method is called so that it is properly
     // removed from the DOM.
-    for(var moduleNameOld in traceHashOld) {
+    for(const moduleNameOld in traceHashOld) {
         if(!traceHash[moduleNameOld]) {
-            var fakeCalcTrace = traceHashOld[moduleNameOld][0];
-            var fakeTrace = fakeCalcTrace[0].trace;
+            const fakeCalcTrace = traceHashOld[moduleNameOld][0];
+            const fakeTrace = fakeCalcTrace[0].trace;
 
             fakeTrace.visible = false;
             traceHash[moduleNameOld] = [fakeCalcTrace];
@@ -3348,9 +3342,9 @@ export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplot
     }
 
     // call module plot method
-    for(var moduleName in traceHash) {
-        var moduleCalcData = traceHash[moduleName];
-        var _module = moduleCalcData[0][0].trace._module;
+    for(const moduleName in traceHash) {
+        const moduleCalcData = traceHash[moduleName];
+        const _module = moduleCalcData[0][0].trace._module;
 
         _module.plot(gd, subplot, filterVisible(moduleCalcData), subplotLayout);
     }
@@ -3360,14 +3354,14 @@ export function generalUpdatePerTraceModule(gd: GraphDiv, subplot?: any, subplot
 };
 
 export function plotBasePlot(desiredType?: any, gd?: any, traces?: any, transitionOpts?: any, makeOnCompleteCallback?: any): void {
-    var _module = Registry.getModule(desiredType);
-    var cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
+    const _module = Registry.getModule(desiredType);
+    const cdmodule = getModuleCalcData(gd.calcdata, _module)[0];
     _module.plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback);
 };
 
 export function cleanBasePlot(desiredType?: any, newFullData?: any, newFullLayout?: any, oldFullData?: any, oldFullLayout?: any): void {
-    var had = (oldFullLayout._has && oldFullLayout._has(desiredType));
-    var has = (newFullLayout._has && newFullLayout._has(desiredType));
+    const had = (oldFullLayout._has && oldFullLayout._has(desiredType));
+    const has = (newFullLayout._has && newFullLayout._has(desiredType));
 
     if(had && !has) {
         oldFullLayout['_' + desiredType + 'layer'].selectAll('g.trace').remove();
@@ -3375,7 +3369,7 @@ export function cleanBasePlot(desiredType?: any, newFullData?: any, newFullLayou
 };
 
 // Backward-compatible default export aggregating all named exports
-var plots = {
+const plots = {
     attributes,
     fontAttrs,
     layoutAttributes,

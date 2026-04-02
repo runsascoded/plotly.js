@@ -11,13 +11,13 @@ import axisIDs from '../../plots/cartesian/axis_ids.js';
 import dragElement from '../dragelement/index.js';
 import setCursor from '../../lib/setcursor.js';
 import constants from './constants.js';
-var strTranslate = Lib.strTranslate;
+const strTranslate = Lib.strTranslate;
 
 export default function(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var rangeSliderData = fullLayout._rangeSliderData;
-    for(var i = 0; i < rangeSliderData.length; i++) {
-        var opts = rangeSliderData[i][constants.name];
+    const fullLayout = gd._fullLayout;
+    const rangeSliderData = fullLayout._rangeSliderData;
+    for(let i = 0; i < rangeSliderData.length; i++) {
+        const opts = rangeSliderData[i][constants.name];
         // fullLayout._uid may not exist when we call makeData
         opts._clipId = opts._id + '-' + fullLayout._uid;
     }
@@ -43,36 +43,36 @@ export default function(gd: GraphDiv) {
         return axisOpts._name;
     }
 
-    var rangeSliders = fullLayout._infolayer
+    const rangeSliders = fullLayout._infolayer
         .selectAll('g.' + constants.containerClassName)
         .data(rangeSliderData, keyFunction);
 
     // remove exiting sliders and their corresponding clip paths
     rangeSliders.exit().each(function(axisOpts: any) {
-        var opts = axisOpts[constants.name];
+        const opts = axisOpts[constants.name];
         fullLayout._topdefs.select('#' + opts._clipId).remove();
     }).remove();
 
     // return early if no range slider is visible
     if(rangeSliderData.length === 0) return;
 
-    rangeSliders.enter().append('g')
+    const rangeSliderEnter = rangeSliders.enter().append('g')
         .classed(constants.containerClassName, true)
         .attr('pointer-events', 'all');
 
     // for all present range sliders
-    rangeSliders.each(function(axisOpts: any) {
-        var rangeSlider = select(this);
-        var opts = axisOpts[constants.name];
-        var oppAxisOpts = fullLayout[axisIDs.id2name(axisOpts.anchor)];
-        var oppAxisRangeOpts = opts[axisIDs.id2name(axisOpts.anchor)];
+    rangeSliders.merge(rangeSliderEnter).each(function(this: any, axisOpts: any) {
+        const rangeSlider = select(this);
+        const opts = axisOpts[constants.name];
+        const oppAxisOpts = fullLayout[axisIDs.id2name(axisOpts.anchor)];
+        const oppAxisRangeOpts = opts[axisIDs.id2name(axisOpts.anchor)];
 
         // update range
         // Expand slider range to the axis range
         if(opts.range) {
-            var rng = Lib.simpleMap(opts.range, axisOpts.r2l);
-            var axRng = Lib.simpleMap(axisOpts.range, axisOpts.r2l);
-            var newRng;
+            const rng = Lib.simpleMap(opts.range, axisOpts.r2l);
+            const axRng = Lib.simpleMap(axisOpts.range, axisOpts.r2l);
+            let newRng;
 
             if(axRng[0] < axRng[1]) {
                 newRng = [
@@ -93,14 +93,14 @@ export default function(gd: GraphDiv) {
 
         // update range slider dimensions
 
-        var gs = fullLayout._size;
-        var domain = axisOpts.domain;
+        const gs = fullLayout._size;
+        const domain = axisOpts.domain;
 
         opts._width = gs.w * (domain[1] - domain[0]);
 
-        var x = Math.round(gs.l + (gs.w * domain[0]));
+        const x = Math.round(gs.l + (gs.w * domain[0]));
 
-        var y = Math.round(
+        const y = Math.round(
             gs.t + gs.h * (1 - axisOpts._counterDomainMin) +
             (axisOpts.side === 'bottom' ? axisOpts._depth : 0) +
             opts._offsetShift + constants.extraPad
@@ -111,9 +111,9 @@ export default function(gd: GraphDiv) {
         // update data <--> pixel coordinate conversion methods
 
         opts._rl = Lib.simpleMap(opts.range, axisOpts.r2l);
-        var rl0 = opts._rl[0];
-        var rl1 = opts._rl[1];
-        var drl = rl1 - rl0;
+        const rl0 = opts._rl[0];
+        const rl1 = opts._rl[1];
+        const drl = rl1 - rl0;
 
         opts.p2d = function(v: any) {
             return (v / opts._width) * drl + rl0;
@@ -124,12 +124,12 @@ export default function(gd: GraphDiv) {
         };
 
         if(axisOpts.rangebreaks) {
-            var rsBreaks = axisOpts.locateBreaks(rl0, rl1);
+            const rsBreaks = axisOpts.locateBreaks(rl0, rl1);
 
             if(rsBreaks.length) {
-                var j, brk;
+                let j, brk;
 
-                var lBreaks = 0;
+                let lBreaks = 0;
                 for(j = 0; j < rsBreaks.length; j++) {
                     brk = rsBreaks[j];
                     lBreaks += (brk.max - brk.min);
@@ -138,17 +138,17 @@ export default function(gd: GraphDiv) {
                 // TODO fix for reversed-range axes !!!
 
                 // compute slope and piecewise offsets
-                var m2 = opts._width / (rl1 - rl0 - lBreaks);
-                var _B = [-m2 * rl0];
+                const m2 = opts._width / (rl1 - rl0 - lBreaks);
+                const _B = [-m2 * rl0];
                 for(j = 0; j < rsBreaks.length; j++) {
                     brk = rsBreaks[j];
                     _B.push(_B[_B.length - 1] - m2 * (brk.max - brk.min));
                 }
 
                 opts.d2p = function(v: any) {
-                    var b = _B[0];
-                    for(var j = 0; j < rsBreaks.length; j++) {
-                        var brk = rsBreaks[j];
+                    let b = _B[0];
+                    for(let j = 0; j < rsBreaks.length; j++) {
+                        const brk = rsBreaks[j];
                         if(v >= brk.max) b = _B[j + 1];
                         else if(v < brk.min) break;
                     }
@@ -164,9 +164,9 @@ export default function(gd: GraphDiv) {
                 }
 
                 opts.p2d = function(v: any) {
-                    var b = _B[0];
-                    for(var j = 0; j < rsBreaks.length; j++) {
-                        var brk = rsBreaks[j];
+                    let b = _B[0];
+                    for(let j = 0; j < rsBreaks.length; j++) {
+                        const brk = rsBreaks[j];
                         if(v >= brk.pmax) b = _B[j + 1];
                         else if(v < brk.pmin) break;
                     }
@@ -176,9 +176,9 @@ export default function(gd: GraphDiv) {
         }
 
         if(oppAxisRangeOpts.rangemode !== 'match') {
-            var range0OppAxis = oppAxisOpts.r2l(oppAxisRangeOpts.range[0]);
-            var range1OppAxis = oppAxisOpts.r2l(oppAxisRangeOpts.range[1]);
-            var distOppAxis = range1OppAxis - range0OppAxis;
+            const range0OppAxis = oppAxisOpts.r2l(oppAxisRangeOpts.range[0]);
+            const range1OppAxis = oppAxisOpts.r2l(oppAxisRangeOpts.range[1]);
+            const distOppAxis = range1OppAxis - range0OppAxis;
 
             opts.d2pOppAxis = function(v: any) {
                 return (v - range0OppAxis) / distOppAxis * opts._height;
@@ -231,19 +231,18 @@ function eventX(event: any) {
 function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     if(gd._context.staticPlot) return;
 
-    var slideBox = rangeSlider.select('rect.' + constants.slideBoxClassName).node();
-    var grabAreaMin = rangeSlider.select('rect.' + constants.grabAreaMinClassName).node();
-    var grabAreaMax = rangeSlider.select('rect.' + constants.grabAreaMaxClassName).node();
+    const slideBox = rangeSlider.select('rect.' + constants.slideBoxClassName).node();
+    const grabAreaMin = rangeSlider.select('rect.' + constants.grabAreaMinClassName).node();
+    const grabAreaMax = rangeSlider.select('rect.' + constants.grabAreaMaxClassName).node();
 
-    function mouseDownHandler() {
-        var event = event;
-        var target = event.target;
-        var startX = eventX(event);
-        var offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
-        var minVal = opts.d2p(axisOpts._rl[0]);
-        var maxVal = opts.d2p(axisOpts._rl[1]);
+    function mouseDownHandler(this: any, event: any) {
+        const target = event.target;
+        const startX = eventX(event);
+        const offsetX = startX - rangeSlider.node().getBoundingClientRect().left;
+        const minVal = opts.d2p(axisOpts._rl[0]);
+        const maxVal = opts.d2p(axisOpts._rl[1]);
 
-        var dragCover = dragElement.coverSlip();
+        const dragCover = dragElement.coverSlip();
 
         this.addEventListener('touchmove', mouseMove);
         this.addEventListener('touchend', mouseUp);
@@ -251,9 +250,9 @@ function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: a
         dragCover.addEventListener('mouseup', mouseUp);
 
         function mouseMove(e: any) {
-            var clientX = eventX(e);
-            var delta = +clientX - startX;
-            var pixelMin, pixelMax, cursor;
+            const clientX = eventX(e);
+            const delta = +clientX - startX;
+            let pixelMin, pixelMax, cursor;
 
             switch(target) {
                 case slideBox:
@@ -291,7 +290,7 @@ function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: a
             }
 
             if(pixelMax < pixelMin) {
-                var tmp = pixelMax;
+                const tmp = pixelMax;
                 pixelMax = pixelMin;
                 pixelMin = tmp;
             }
@@ -303,7 +302,7 @@ function setupDragElement(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: a
             setDataRange(rangeSlider, gd, axisOpts, opts);
         }
 
-        function mouseUp() {
+        function mouseUp(this: any) {
             dragCover.removeEventListener('mousemove', mouseMove);
             dragCover.removeEventListener('mouseup', mouseUp);
             this.removeEventListener('touchmove', mouseMove);
@@ -321,8 +320,8 @@ function setDataRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) 
         return axisOpts.l2r(Lib.constrain(v, opts._rl[0], opts._rl[1]));
     }
 
-    var dataMin = clamp(opts.p2d(opts._pixelMin));
-    var dataMax = clamp(opts.p2d(opts._pixelMax));
+    const dataMin = clamp(opts.p2d(opts._pixelMin));
+    const dataMax = clamp(opts.p2d(opts._pixelMax));
 
     window.requestAnimationFrame(function() {
         Registry.call('_guiRelayout', gd, axisOpts._name + '.range', [dataMin, dataMax]);
@@ -330,7 +329,7 @@ function setDataRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) 
 }
 
 function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, oppAxisOpts: any, oppAxisRangeOpts: any) {
-    var hw2 = constants.handleWidth / 2;
+    const hw2 = constants.handleWidth / 2;
 
     function clamp(v: any) {
         return Lib.constrain(v, 0, opts._width);
@@ -344,8 +343,8 @@ function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any,
         return Lib.constrain(v, -hw2, opts._width + hw2);
     }
 
-    var pixelMin = clamp(opts.d2p(axisOpts._rl[0]));
-    var pixelMax = clamp(opts.d2p(axisOpts._rl[1]));
+    const pixelMin = clamp(opts.d2p(axisOpts._rl[0]));
+    const pixelMax = clamp(opts.d2p(axisOpts._rl[1]));
 
     rangeSlider.select('rect.' + constants.slideBoxClassName)
         .attr('x', pixelMin)
@@ -359,8 +358,8 @@ function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any,
         .attr('width', opts._width - pixelMax);
 
     if(oppAxisRangeOpts.rangemode !== 'match') {
-        var pixelMinOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[1]));
-        var pixelMaxOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[0]));
+        const pixelMinOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[1]));
+        const pixelMaxOppAxis = opts._height - clampOppAxis(opts.d2pOppAxis(oppAxisOpts._rl[0]));
 
         rangeSlider.select('rect.' + constants.maskMinOppAxisClassName)
             .attr('x', pixelMin)
@@ -380,10 +379,10 @@ function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any,
 
     // add offset for crispier corners
     // https://github.com/plotly/plotly.js/pull/1409
-    var offset = 0.5;
+    const offset = 0.5;
 
-    var xMin = Math.round(clampHandle(pixelMin - hw2)) - offset;
-    var xMax = Math.round(clampHandle(pixelMax - hw2)) + offset;
+    const xMin = Math.round(clampHandle(pixelMin - hw2)) - offset;
+    const xMax = Math.round(clampHandle(pixelMax - hw2)) + offset;
 
     rangeSlider.select('g.' + constants.grabberMinClassName)
         .attr('transform', strTranslate(xMin, offset));
@@ -393,69 +392,69 @@ function setPixelRange(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any,
 }
 
 function drawBg(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
-    var bg = Lib.ensureSingle(rangeSlider, 'rect', constants.bgClassName, function(s: any) {
-        s.attr({
-            x: 0,
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+    const bg = Lib.ensureSingle(rangeSlider, 'rect', constants.bgClassName, function(s: any) {
+        s
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
-    var borderCorrect = (opts.borderwidth % 2) === 0 ?
+    const borderCorrect = (opts.borderwidth % 2) === 0 ?
         opts.borderwidth :
         opts.borderwidth - 1;
 
-    var offsetShift = -opts._offsetShift;
-    var lw = crispRound(gd, opts.borderwidth);
+    const offsetShift = -opts._offsetShift;
+    const lw = crispRound(gd, opts.borderwidth);
 
-    bg.attr({
-        width: opts._width + borderCorrect,
-        height: opts._height + borderCorrect,
-        transform: strTranslate(offsetShift, offsetShift),
-        'stroke-width': lw
-    })
+    bg
+        .attr('width', opts._width + borderCorrect)
+        .attr('height', opts._height + borderCorrect)
+        .attr('transform', strTranslate(offsetShift, offsetShift))
+        .attr('stroke-width', lw)
     .call(Color.stroke, opts.bordercolor)
     .call(Color.fill, opts.bgcolor);
 }
 
 function addClipPath(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var clipPath = Lib.ensureSingleById(fullLayout._topdefs, 'clipPath', opts._clipId, function(s: any) {
-        s.append('rect').attr({ x: 0, y: 0 });
+    const clipPath = Lib.ensureSingleById(fullLayout._topdefs, 'clipPath', opts._clipId, function(s: any) {
+        s.append('rect')
+            .attr('x', 0)
+            .attr('y', 0);
     });
 
-    clipPath.select('rect').attr({
-        width: opts._width,
-        height: opts._height
-    });
+    clipPath.select('rect')
+        .attr('width', opts._width)
+        .attr('height', opts._height);
 }
 
 function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
-    var calcData = gd.calcdata;
+    const calcData = gd.calcdata;
 
-    var rangePlots = rangeSlider.selectAll('g.' + constants.rangePlotClassName)
+    const rangePlots = rangeSlider.selectAll('g.' + constants.rangePlotClassName)
         .data(axisOpts._subplotsWith, Lib.identity);
 
-    rangePlots.enter().append('g')
+    const rangePlotsEnter = rangePlots.enter().append('g')
         .attr('class', function(id: any) { return constants.rangePlotClassName + ' ' + id; })
         .call(setClipUrl, opts._clipId, gd);
 
-    rangePlots.order();
-
     rangePlots.exit().remove();
 
-    var mainplotinfo;
+    const rangePlotsMerged = rangePlots.merge(rangePlotsEnter);
+    rangePlotsMerged.order();
 
-    rangePlots.each(function(id: any, i: any) {
-        var plotgroup = select(this);
-        var isMainPlot = (i === 0);
+    let mainplotinfo: any;
 
-        var oppAxisOpts = axisIDs.getFromId(gd, id, 'y');
-        var oppAxisName = oppAxisOpts._name;
-        var oppAxisRangeOpts = opts[oppAxisName];
+    rangePlotsMerged.each(function(this: any, id: any, i: any) {
+        const plotgroup = select(this);
+        const isMainPlot = (i === 0);
 
-        var mockFigure: any = {
+        const oppAxisOpts = axisIDs.getFromId(gd, id, 'y');
+        const oppAxisName = oppAxisOpts._name;
+        const oppAxisRangeOpts = opts[oppAxisName];
+
+        const mockFigure: any = {
             data: [],
             layout: {
                 xaxis: {
@@ -488,15 +487,15 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
 
         Plots.supplyDefaults(mockFigure);
 
-        var xa = mockFigure._fullLayout.xaxis;
-        var ya = mockFigure._fullLayout[oppAxisName];
+        const xa = mockFigure._fullLayout.xaxis;
+        const ya = mockFigure._fullLayout[oppAxisName];
 
         xa.clearCalc();
         xa.setScale();
         ya.clearCalc();
         ya.setScale();
 
-        var plotinfo: any = {
+        const plotinfo: any = {
             id: id,
             plotgroup: plotgroup,
             xaxis: xa,
@@ -515,11 +514,11 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
 }
 
 function filterRangePlotCalcData(calcData: any, subplotId: any) {
-    var out = [];
+    const out: any[] = [];
 
-    for(var i = 0; i < calcData.length; i++) {
-        var calcTrace = calcData[i];
-        var trace = calcTrace[0].trace;
+    for(let i = 0; i < calcData.length; i++) {
+        const calcTrace = calcData[i];
+        const trace = calcTrace[0].trace;
 
         if(trace.xaxis + trace.yaxis === subplotId) {
             out.push(calcTrace);
@@ -530,23 +529,21 @@ function filterRangePlotCalcData(calcData: any, subplotId: any) {
 }
 
 function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, oppAxisRangeOpts: any) {
-    var maskMin = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinClassName, function(s: any) {
-        s.attr({
-            x: 0,
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+    const maskMin = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinClassName, function(s: any) {
+        s
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     maskMin
         .attr('height', opts._height)
         .call(Color.fill, constants.maskColor);
 
-    var maskMax = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxClassName, function(s: any) {
-        s.attr({
-            y: 0,
-            'shape-rendering': 'crispEdges'
-        });
+    const maskMax = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxClassName, function(s: any) {
+        s
+            .attr('y', 0)
+            .attr('shape-rendering', 'crispEdges');
     });
 
     maskMax
@@ -555,22 +552,20 @@ function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, opp
 
     // masks used for oppAxis zoom
     if(oppAxisRangeOpts.rangemode !== 'match') {
-        var maskMinOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinOppAxisClassName, function(s: any) {
-            s.attr({
-                y: 0,
-                'shape-rendering': 'crispEdges'
-            });
+        const maskMinOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMinOppAxisClassName, function(s: any) {
+            s
+                .attr('y', 0)
+                .attr('shape-rendering', 'crispEdges');
         });
 
         maskMinOppAxis
             .attr('width', opts._width)
             .call(Color.fill, constants.maskOppAxisColor);
 
-        var maskMaxOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxOppAxisClassName, function(s: any) {
-            s.attr({
-                y: 0,
-                'shape-rendering': 'crispEdges'
-            });
+        const maskMaxOppAxis = Lib.ensureSingle(rangeSlider, 'rect', constants.maskMaxOppAxisClassName, function(s: any) {
+            s
+                .attr('y', 0)
+                .attr('shape-rendering', 'crispEdges');
         });
 
         maskMaxOppAxis
@@ -583,65 +578,55 @@ function drawMasks(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any, opp
 function drawSlideBox(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     if(gd._context.staticPlot) return;
 
-    var slideBox = Lib.ensureSingle(rangeSlider, 'rect', constants.slideBoxClassName, function(s: any) {
-        s.attr({
-            y: 0,
-            cursor: constants.slideBoxCursor,
-            'shape-rendering': 'crispEdges'
-        });
+    const slideBox = Lib.ensureSingle(rangeSlider, 'rect', constants.slideBoxClassName, function(s: any) {
+        s
+            .attr('y', 0)
+            .attr('cursor', constants.slideBoxCursor)
+            .attr('shape-rendering', 'crispEdges');
     });
 
-    slideBox.attr({
-        height: opts._height,
-        fill: constants.slideBoxFill
-    });
+    slideBox
+        .attr('height', opts._height)
+        .attr('fill', constants.slideBoxFill);
 }
 
 function drawGrabbers(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any) {
     // <g grabber />
-    var grabberMin = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMinClassName);
-    var grabberMax = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMaxClassName);
+    const grabberMin = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMinClassName);
+    const grabberMax = Lib.ensureSingle(rangeSlider, 'g', constants.grabberMaxClassName);
 
     // <g handle />
-    var handleFixAttrs = {
-        x: 0,
-        width: constants.handleWidth,
-        rx: constants.handleRadius,
-        fill: Color.background,
-        stroke: Color.defaultLine,
-        'stroke-width': constants.handleStrokeWidth,
-        'shape-rendering': 'crispEdges'
-    };
-    var handleDynamicAttrs = {
-        y: Math.round(opts._height / 4),
-        height: Math.round(opts._height / 2),
-    };
-    var handleMin = Lib.ensureSingle(grabberMin, 'rect', constants.handleMinClassName, function(s: any) {
-        s.attr(handleFixAttrs);
-    });
-    handleMin.attr(handleDynamicAttrs);
+    function setHandleFixAttrs(s: any) {
+        s.attr('x', 0)
+            .attr('width', constants.handleWidth)
+            .attr('rx', constants.handleRadius)
+            .attr('fill', Color.background)
+            .attr('stroke', Color.defaultLine)
+            .attr('stroke-width', constants.handleStrokeWidth)
+            .attr('shape-rendering', 'crispEdges');
+    }
+    const handleDynamicY = Math.round(opts._height / 4);
+    const handleDynamicHeight = Math.round(opts._height / 2);
+    const handleMin = Lib.ensureSingle(grabberMin, 'rect', constants.handleMinClassName, setHandleFixAttrs);
+    handleMin.attr('y', handleDynamicY).attr('height', handleDynamicHeight);
 
-    var handleMax = Lib.ensureSingle(grabberMax, 'rect', constants.handleMaxClassName, function(s: any) {
-        s.attr(handleFixAttrs);
-    });
-    handleMax.attr(handleDynamicAttrs);
+    const handleMax = Lib.ensureSingle(grabberMax, 'rect', constants.handleMaxClassName, setHandleFixAttrs);
+    handleMax.attr('y', handleDynamicY).attr('height', handleDynamicHeight);
 
     // <g grabarea />
-    var grabAreaFixAttrs = {
-        width: constants.grabAreaWidth,
-        x: 0,
-        y: 0,
-        fill: constants.grabAreaFill,
-        cursor: !gd._context.staticPlot ? constants.grabAreaCursor : undefined,
-    };
+    function setGrabAreaFixAttrs(s: any) {
+        s.attr('width', constants.grabAreaWidth)
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('fill', constants.grabAreaFill);
+        if(!gd._context.staticPlot) {
+            s.attr('cursor', constants.grabAreaCursor);
+        }
+    }
 
-    var grabAreaMin = Lib.ensureSingle(grabberMin, 'rect', constants.grabAreaMinClassName, function(s: any) {
-        s.attr(grabAreaFixAttrs);
-    });
+    const grabAreaMin = Lib.ensureSingle(grabberMin, 'rect', constants.grabAreaMinClassName, setGrabAreaFixAttrs);
     grabAreaMin.attr('height', opts._height);
 
-    var grabAreaMax = Lib.ensureSingle(grabberMax, 'rect', constants.grabAreaMaxClassName, function(s: any) {
-        s.attr(grabAreaFixAttrs);
-    });
+    const grabAreaMax = Lib.ensureSingle(grabberMax, 'rect', constants.grabAreaMaxClassName, setGrabAreaFixAttrs);
     grabAreaMax.attr('height', opts._height);
 }

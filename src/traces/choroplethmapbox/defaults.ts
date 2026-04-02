@@ -8,9 +8,9 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var locations = coerce('locations');
-    var z = coerce('z');
-    var geojson = coerce('geojson');
+    const locations = coerce('locations');
+    const z = coerce('z');
+    const geojson = coerce('geojson');
 
     if (
         !Lib.isArrayOrTypedArray(locations) ||
@@ -34,7 +34,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var mlw = coerce('marker.line.width');
+    const mlw = coerce('marker.line.width');
     if (mlw) coerce('marker.line.color');
     coerce('marker.opacity');
 

@@ -1,19 +1,19 @@
 import constants from './constants.js';
 
-export default function makeCrossings(pathinfo) {
-    var z = pathinfo[0].z;
-    var m = z.length;
-    var n = z[0].length; // we already made sure z isn't ragged in interp2d
-    var twoWide = m === 2 || n === 2;
-    var xi;
-    var yi;
-    var startIndices;
-    var ystartIndices;
-    var label;
-    var corners;
-    var mi;
-    var pi;
-    var i;
+export default function makeCrossings(pathinfo: any) {
+    const z = pathinfo[0].z;
+    const m = z.length;
+    const n = z[0].length; // we already made sure z isn't ragged in interp2d
+    const twoWide = m === 2 || n === 2;
+    let xi;
+    let yi;
+    let startIndices;
+    let ystartIndices: any[];
+    let label;
+    let corners;
+    let mi;
+    let pi;
+    let i;
 
     for(yi = 0; yi < m - 1; yi++) {
         ystartIndices = [];
@@ -59,13 +59,13 @@ export default function makeCrossings(pathinfo) {
 // except that the saddles bifurcate and I represent them
 // as the decimal combination of the two appropriate
 // non-saddle indices
-function getMarchingIndex(val,  corners) {
-    var mi = (corners[0][0] > val ? 0 : 1) +
+function getMarchingIndex(val: any,  corners: any) {
+    const mi = (corners[0][0] > val ? 0 : 1) +
              (corners[0][1] > val ? 0 : 2) +
              (corners[1][1] > val ? 0 : 4) +
              (corners[1][0] > val ? 0 : 8);
     if(mi === 5 || mi === 10) {
-        var avg = (corners[0][0] + corners[0][1] +
+        const avg = (corners[0][0] + corners[0][1] +
                    corners[1][0] + corners[1][1]) / 4;
         // two peaks with a big valley
         if(val > avg) return (mi === 5) ? 713 : 1114;

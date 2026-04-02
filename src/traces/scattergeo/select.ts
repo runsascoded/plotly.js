@@ -2,16 +2,16 @@ import subtypes from '../scatter/subtypes.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-export default function selectPoints(searchInfo, selectionTester) {
-    var cd = searchInfo.cd;
-    var xa = searchInfo.xaxis;
-    var ya = searchInfo.yaxis;
-    var selection = [];
-    var trace = cd[0].trace;
+export default function selectPoints(searchInfo: any, selectionTester: any) {
+    const cd = searchInfo.cd;
+    const xa = searchInfo.xaxis;
+    const ya = searchInfo.yaxis;
+    const selection: any[] = [];
+    const trace = cd[0].trace;
 
-    var di, lonlat, x, y, i;
+    let di, lonlat, x, y, i;
 
-    var hasOnlyLines = (!subtypes.hasMarkers(trace) && !subtypes.hasText(trace));
+    const hasOnlyLines = (!subtypes.hasMarkers(trace) && !subtypes.hasText(trace));
     if(hasOnlyLines) return [];
 
     if(selectionTester === false) {

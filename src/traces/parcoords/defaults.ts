@@ -12,8 +12,8 @@ import _constants from './constants.js';
 const { maxDimensionCount } = _constants;
 import mergeLength from './merge_length.js';
 
-function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce) {
-    var lineColor = coerce('line.color', defaultColor);
+function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any) {
+    const lineColor = coerce('line.color', defaultColor);
 
     if(hasColorscale(traceIn, 'line') && Lib.isArrayOrTypedArray(lineColor)) {
         if(lineColor.length) {
@@ -30,13 +30,13 @@ function handleLineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultCol
     return Infinity;
 }
 
-function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
-    function coerce(attr, dflt?) {
+function dimensionDefaults(dimensionIn: any, dimensionOut: any, parentOut: any, opts: any) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(dimensionIn, dimensionOut, attributes.dimensions, attr, dflt);
     }
 
-    var values = coerce('values');
-    var visible = coerce('visible');
+    const values = coerce('values');
+    let visible = coerce('visible');
     if(!(values && values.length)) {
         visible = dimensionOut.visible = false;
     }
@@ -46,7 +46,7 @@ function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
         coerce('tickvals');
         coerce('ticktext');
         coerce('tickformat');
-        var range = coerce('range');
+        const range = coerce('range');
 
         dimensionOut._ax = {
             _id: 'y',
@@ -59,7 +59,7 @@ function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
         Axes.setConvert(dimensionOut._ax, opts.layout);
 
         coerce('multiselect');
-        var constraintRange = coerce('constraintrange');
+        const constraintRange = coerce('constraintrange');
         if(constraintRange) {
             dimensionOut.constraintrange = axisBrush.cleanRanges(constraintRange, dimensionOut);
         }
@@ -67,23 +67,23 @@ function dimensionDefaults(dimensionIn, dimensionOut, parentOut, opts) {
 }
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var dimensionsIn = traceIn.dimensions;
+    const dimensionsIn = traceIn.dimensions;
     if(Array.isArray(dimensionsIn) && dimensionsIn.length > maxDimensionCount) {
         Lib.log('parcoords traces support up to ' + maxDimensionCount + ' dimensions at the moment');
         dimensionsIn.splice(maxDimensionCount);
     }
 
-    var dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
+    const dimensions = handleArrayContainerDefaults(traceIn, traceOut, {
         name: 'dimensions',
         layout: layout,
         handleItemDefaults: dimensionDefaults
     });
 
-    var len = handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce);
+    const len = handleLineDefaults(traceIn, traceOut, defaultColor, layout, coerce);
 
     handleDomainDefaults(traceOut, layout, coerce);
 
@@ -95,8 +95,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     // make default font size 10px (default is 12),
     // scale linearly with global font size
-    var fontDflt = Lib.extendFlat({}, layout.font, {
-        size: Math.round(layout.font.size / 1.2)
+    const fontDflt = Lib.extendFlat({}, layout.font, {
+        size: Math.round(layout.font!.size! / 1.2)
     });
 
     Lib.coerceFont(coerce, 'labelfont', fontDflt);

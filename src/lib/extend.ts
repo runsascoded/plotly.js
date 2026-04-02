@@ -1,8 +1,8 @@
 import isPlainObject from './is_plain_object.js';
-var isArray = Array.isArray;
+const isArray = Array.isArray;
 
 function primitivesLoopSplice(source: any[], target: any[]): boolean {
-    var i, value;
+    let i, value;
     for(i = 0; i < source.length; i++) {
         value = source[i];
         if(value !== null && typeof(value) === 'object') {
@@ -15,19 +15,19 @@ function primitivesLoopSplice(source: any[], target: any[]): boolean {
     return true;
 }
 
-export var extendFlat = function(...args: any[]): any {
+export const extendFlat = function(...args: any[]): any {
     return _extend(args, false, false, false);
 };
 
-export var extendDeep = function(...args: any[]): any {
+export const extendDeep = function(...args: any[]): any {
     return _extend(args, true, false, false);
 };
 
-export var extendDeepAll = function(...args: any[]): any {
+export const extendDeepAll = function(...args: any[]): any {
     return _extend(args, true, true, false);
 };
 
-export var extendDeepNoArrays = function(...args: any[]): any {
+export const extendDeepNoArrays = function(...args: any[]): any {
     return _extend(args, true, false, true);
 };
 
@@ -49,10 +49,10 @@ export var extendDeepNoArrays = function(...args: any[]): any {
  *
  */
 function _extend(inputs: any[], isDeep: boolean, keepAllKeys: boolean, noArrayCopies: boolean): any {
-    var target = inputs[0];
-    var length = inputs.length;
+    const target = inputs[0];
+    const length = inputs.length;
 
-    var input, key, src, copy, copyIsArray, clone, allPrimitives;
+    let input, key, src, copy, copyIsArray, clone, allPrimitives;
 
     if(length === 2 && isArray(target) && isArray(inputs[1]) && target.length === 0) {
         allPrimitives = primitivesLoopSplice(inputs[1], target);
@@ -64,7 +64,7 @@ function _extend(inputs: any[], isDeep: boolean, keepAllKeys: boolean, noArrayCo
         }
     }
 
-    for(var i = 1; i < length; i++) {
+    for(let i = 1; i < length; i++) {
         input = inputs[i];
 
         for(key in input) {

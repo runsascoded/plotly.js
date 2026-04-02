@@ -8,8 +8,8 @@ import barPlot from '../bar/plot.js';
 import _uniform_text from '../bar/uniform_text.js';
 const { clearMinTextSize } = _uniform_text;
 
-export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
-    var fullLayout = gd._fullLayout;
+export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
+    const fullLayout = gd._fullLayout;
 
     clearMinTextSize('funnel', fullLayout);
 
@@ -24,41 +24,42 @@ export default function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trac
     });
 }
 
-function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(cd) {
-        var plotGroup = select(this);
-        var trace = cd[0].trace;
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd: any) {
+        const plotGroup = select(this);
+        const trace = cd[0].trace;
 
-        var group = Lib.ensureSingle(plotGroup, 'g', 'regions');
+        const group = Lib.ensureSingle(plotGroup, 'g', 'regions');
 
         if(!trace.connector || !trace.connector.visible) {
             group.remove();
             return;
         }
 
-        var isHorizontal = (trace.orientation === 'h');
+        const isHorizontal = (trace.orientation === 'h');
 
-        var connectors = group.selectAll('g.region').data(Lib.identity);
+        const connectors = group.selectAll('g.region').data(Lib.identity);
 
-        connectors.enter().append('g')
+        const connectorsEnter = connectors.enter().append('g')
             .classed('region', true);
 
         connectors.exit().remove();
 
-        var len = connectors.size();
+        const connectorsMerged = connectors.merge(connectorsEnter);
+        const len = connectorsMerged.size();
 
-        connectors.each(function(di, i) {
+        connectorsMerged.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
-            var xy = getXY(di, xa, ya, isHorizontal);
-            var x = xy[0];
-            var y = xy[1];
+            const xy = getXY(di, xa, ya, isHorizontal);
+            const x = xy[0];
+            const y = xy[1];
 
-            var shape = '';
+            let shape = '';
 
             if(
                 x[0] !== BADNUM && y[0] !== BADNUM &&
@@ -82,41 +83,42 @@ function plotConnectorRegions(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  tra
     });
 }
 
-function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLayer) {
-    var xa = plotinfo.xaxis;
-    var ya = plotinfo.yaxis;
+function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule: any,  traceLayer: any) {
+    const xa = plotinfo.xaxis;
+    const ya = plotinfo.yaxis;
 
-    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(cd) {
-        var plotGroup = select(this);
-        var trace = cd[0].trace;
+    Lib.makeTraceGroups(traceLayer, cdModule, 'trace bars').each(function(this: any, cd: any) {
+        const plotGroup = select(this);
+        const trace = cd[0].trace;
 
-        var group = Lib.ensureSingle(plotGroup, 'g', 'lines');
+        const group = Lib.ensureSingle(plotGroup, 'g', 'lines');
 
         if(!trace.connector || !trace.connector.visible || !trace.connector.line.width) {
             group.remove();
             return;
         }
 
-        var isHorizontal = (trace.orientation === 'h');
+        const isHorizontal = (trace.orientation === 'h');
 
-        var connectors = group.selectAll('g.line').data(Lib.identity);
+        const lineConnectors = group.selectAll('g.line').data(Lib.identity);
 
-        connectors.enter().append('g')
+        const lineConnectorsEnter = lineConnectors.enter().append('g')
             .classed('line', true);
 
-        connectors.exit().remove();
+        lineConnectors.exit().remove();
 
-        var len = connectors.size();
+        const lineConnectorsMerged = lineConnectors.merge(lineConnectorsEnter);
+        const len = lineConnectorsMerged.size();
 
-        connectors.each(function(di, i) {
+        lineConnectorsMerged.each(function(this: any, di: any, i: any) {
             // don't draw lines between nulls
             if(i !== len - 1 && !di.cNext) return;
 
-            var xy = getXY(di, xa, ya, isHorizontal);
-            var x = xy[0];
-            var y = xy[1];
+            const xy = getXY(di, xa, ya, isHorizontal);
+            const x = xy[0];
+            const y = xy[1];
 
-            var shape = '';
+            let shape = '';
 
             if(x[3] !== undefined && y[3] !== undefined) {
                 if(isHorizontal) {
@@ -137,24 +139,24 @@ function plotConnectorLines(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  trace
     });
 }
 
-function getXY(di,  xa: FullAxis,  ya: FullAxis,  isHorizontal) {
-    var s = [];
-    var p = [];
+function getXY(di: any,  xa: FullAxis,  ya: FullAxis,  isHorizontal: any) {
+    const s: any[] = [];
+    const p: any[] = [];
 
-    var sAxis = isHorizontal ? xa : ya;
-    var pAxis = isHorizontal ? ya : xa;
+    const sAxis = isHorizontal ? xa : ya;
+    const pAxis = isHorizontal ? ya : xa;
 
-    s[0] = sAxis.c2p(di.s0, true);
-    p[0] = pAxis.c2p(di.p0, true);
+    s[0] = (sAxis.c2p(di.s0, true) as any);
+    p[0] = (pAxis.c2p(di.p0, true) as any);
 
-    s[1] = sAxis.c2p(di.s1, true);
-    p[1] = pAxis.c2p(di.p1, true);
+    s[1] = (sAxis.c2p(di.s1, true) as any);
+    p[1] = (pAxis.c2p(di.p1, true) as any);
 
-    s[2] = sAxis.c2p(di.nextS0, true);
-    p[2] = pAxis.c2p(di.nextP0, true);
+    s[2] = (sAxis.c2p(di.nextS0, true) as any);
+    p[2] = (pAxis.c2p(di.nextP0, true) as any);
 
-    s[3] = sAxis.c2p(di.nextS1, true);
-    p[3] = pAxis.c2p(di.nextP1, true);
+    s[3] = (sAxis.c2p(di.nextS1, true) as any);
+    p[3] = (pAxis.c2p(di.nextP1, true) as any);
 
     return isHorizontal ? [s, p] : [p, s];
 }

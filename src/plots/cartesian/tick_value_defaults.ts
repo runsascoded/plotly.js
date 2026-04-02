@@ -5,13 +5,13 @@ import { decodeTypedArraySpec } from '../../lib/array.js';
 
 export default function handleTickValueDefaults(containerIn?: any, containerOut?: any, coerce?: any, axType?: any, opts?: any): void {
     if(!opts) opts = {};
-    var isMinor = opts.isMinor;
-    var cIn = isMinor ? containerIn.minor || {} : containerIn;
-    var cOut = isMinor ? containerOut.minor : containerOut;
-    var prefix = isMinor ? 'minor.' : '';
+    const isMinor = opts.isMinor;
+    const cIn = isMinor ? containerIn.minor || {} : containerIn;
+    const cOut = isMinor ? containerOut.minor : containerOut;
+    const prefix = isMinor ? 'minor.' : '';
 
     function readInput(attr?: any) {
-        var v = cIn[attr];
+        let v = cIn[attr];
         if(isTypedArraySpec(v)) v = decodeTypedArraySpec(v);
 
         return (
@@ -19,14 +19,14 @@ export default function handleTickValueDefaults(containerIn?: any, containerOut?
         ) ? v : (cOut._template || {})[attr];
     }
 
-    var _tick0 = readInput('tick0');
-    var _dtick = readInput('dtick');
-    var _tickvals = readInput('tickvals');
+    const _tick0 = readInput('tick0');
+    const _dtick = readInput('dtick');
+    const _tickvals = readInput('tickvals');
 
-    var tickmodeDefault = isArrayOrTypedArray(_tickvals) ? 'array' :
+    const tickmodeDefault = isArrayOrTypedArray(_tickvals) ? 'array' :
         _dtick ? 'linear' :
         'auto';
-    var tickmode = coerce(prefix + 'tickmode', tickmodeDefault);
+    const tickmode = coerce(prefix + 'tickmode', tickmodeDefault);
 
     if(tickmode === 'auto' || tickmode === 'sync') {
         coerce(prefix + 'nticks');
@@ -34,12 +34,12 @@ export default function handleTickValueDefaults(containerIn?: any, containerOut?
         // dtick is usually a positive number, but there are some
         // special strings available for log or date axes
         // tick0 also has special logic
-        var dtick = cOut.dtick = cleanTicks.dtick(
+        const dtick = cOut.dtick = cleanTicks.dtick(
             _dtick, axType);
         cOut.tick0 = cleanTicks.tick0(
             _tick0, axType, containerOut.calendar, dtick);
     } else if(axType !== 'multicategory') {
-        var tickvals = coerce(prefix + 'tickvals');
+        const tickvals = coerce(prefix + 'tickvals');
         if(tickvals === undefined) cOut.tickmode = 'auto';
         else if(!isMinor) coerce('ticktext');
     }

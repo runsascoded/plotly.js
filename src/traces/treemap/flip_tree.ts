@@ -1,5 +1,5 @@
 export default function flipTree(node: any, size: number[], opts: { swapXY: boolean; flipX: boolean; flipY: boolean }) {
-    var tmp;
+    let tmp;
 
     if(opts.swapXY) {
         // swap x0 and y0
@@ -25,9 +25,9 @@ export default function flipTree(node: any, size: number[], opts: { swapXY: bool
         node.y1 = size[1] - tmp;
     }
 
-    var children = node.children;
+    const children = node.children;
     if(children) {
-        for(var i = 0; i < children.length; i++) {
+        for(let i = 0; i < children.length; i++) {
             flipTree(children[i], size, opts);
         }
     }

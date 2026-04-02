@@ -22,7 +22,7 @@ export default {
     },
 
     isBubble: function(trace: InputTrace | FullTrace) {
-        var marker = trace.marker;
+        const marker = trace.marker;
         return isPlainObject(marker) && (
             isArrayOrTypedArray(marker.size) ||
             isTypedArraySpec(marker.size)

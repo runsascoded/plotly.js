@@ -10,8 +10,8 @@ import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 import mapboxLayoutAtributes from '../../plots/mapbox/layout_attributes.js';
 
-var lineAttrs = scatterGeoAttrs.line;
-var markerAttrs = scatterGeoAttrs.marker;
+const lineAttrs = scatterGeoAttrs.line;
+const markerAttrs = scatterGeoAttrs.marker;
 
 export default overrideAll(
     {

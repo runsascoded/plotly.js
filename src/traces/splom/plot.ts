@@ -4,26 +4,26 @@ import Lib from '../../lib/index.js';
 import AxisIDs from '../../plots/cartesian/axis_ids.js';
 import { selectMode } from '../../components/dragelement/helpers.js';
 
-export default function plot(gd: GraphDiv, _, splomCalcData) {
+export default function plot(gd: GraphDiv, _: any, splomCalcData: any) {
     if(!splomCalcData.length) return;
 
-    for(var i = 0; i < splomCalcData.length; i++) {
+    for(let i = 0; i < splomCalcData.length; i++) {
         plotOne(gd, splomCalcData[i][0]);
     }
 }
 
-function plotOne(gd: GraphDiv, cd0) {
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
-    var trace = cd0.trace;
-    var stash = cd0.t;
-    var scene = fullLayout._splomScenes[trace.uid];
-    var matrixOpts = scene.matrixOptions;
-    var cdata = matrixOpts.cdata;
-    var regl = fullLayout._glcanvas.data()[0].regl;
-    var dragmode = fullLayout.dragmode;
-    var xa, ya;
-    var i, j, k;
+function plotOne(gd: GraphDiv, cd0: any) {
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
+    const trace = cd0.trace;
+    const stash = cd0.t;
+    const scene = fullLayout._splomScenes[trace.uid];
+    const matrixOpts = scene.matrixOptions;
+    const cdata = matrixOpts.cdata;
+    const regl = fullLayout._glcanvas.data()[0].regl;
+    const dragmode = fullLayout.dragmode;
+    let xa, ya;
+    let i, j, k;
 
     if(cdata.length === 0) return;
 
@@ -33,17 +33,17 @@ function plotOne(gd: GraphDiv, cd0) {
     matrixOpts.upper = trace.showlowerhalf;
     matrixOpts.diagonal = trace.diagonal.visible;
 
-    var visibleDims = trace._visibleDims;
-    var visibleLength = cdata.length;
-    var viewOpts: any = scene.viewOpts = {};
+    const visibleDims = trace._visibleDims;
+    const visibleLength = cdata.length;
+    const viewOpts: any = scene.viewOpts = {};
     viewOpts.ranges = new Array(visibleLength);
     viewOpts.domains = new Array(visibleLength);
 
     for(k = 0; k < visibleDims.length; k++) {
         i = visibleDims[k];
 
-        var rng = viewOpts.ranges[k] = new Array(4);
-        var dmn = viewOpts.domains[k] = new Array(4);
+        const rng = viewOpts.ranges[k] = new Array(4);
+        const dmn = viewOpts.domains[k] = new Array(4);
 
         xa = AxisIDs.getFromId(gd, trace._diag[i][0]);
         if(xa) {
@@ -62,11 +62,11 @@ function plotOne(gd: GraphDiv, cd0) {
         }
     }
 
-    var plotGlPixelRatio = gd._context.plotGlPixelRatio;
-    var l = gs.l * plotGlPixelRatio;
-    var b = gs.b * plotGlPixelRatio;
-    var w = gs.w * plotGlPixelRatio;
-    var h = gs.h * plotGlPixelRatio;
+    const plotGlPixelRatio = gd._context.plotGlPixelRatio;
+    const l = gs.l * plotGlPixelRatio;
+    const b = gs.b * plotGlPixelRatio;
+    const w = gs.w * plotGlPixelRatio;
+    const h = gs.h * plotGlPixelRatio;
 
     viewOpts.viewport = [l, b, w + l, h + b];
 
@@ -74,24 +74,24 @@ function plotOne(gd: GraphDiv, cd0) {
         scene.matrix = createMatrix(regl);
     }
 
-    var clickSelectEnabled = fullLayout.clickmode.indexOf('select') > -1;
-    var isSelectMode = selectMode(dragmode) ||
+    const clickSelectEnabled = fullLayout.clickmode.indexOf('select') > -1;
+    const isSelectMode = selectMode(dragmode) ||
       !!trace.selectedpoints || clickSelectEnabled;
-    var needsBaseUpdate = true;
+    let needsBaseUpdate = true;
 
     if(isSelectMode) {
-        var commonLength = trace._length;
+        const commonLength = trace._length;
 
         // regenerate scene batch, if traces number changed during selection
         if(trace.selectedpoints) {
             scene.selectBatch = trace.selectedpoints;
 
-            var selPts = trace.selectedpoints;
-            var selDict: any = {};
+            const selPts = trace.selectedpoints;
+            const selDict: any = {};
             for(i = 0; i < selPts.length; i++) {
                 selDict[selPts[i]] = true;
             }
-            var unselPts = [];
+            const unselPts: any[] = [];
             for(i = 0; i < commonLength; i++) {
                 if(!selDict[i]) unselPts.push(i);
             }
@@ -99,8 +99,8 @@ function plotOne(gd: GraphDiv, cd0) {
         }
 
         // precalculate px coords since we are not going to pan during select
-        var xpx = stash.xpx = new Array(visibleLength);
-        var ypx = stash.ypx = new Array(visibleLength);
+        const xpx = stash.xpx = new Array(visibleLength);
+        const ypx = stash.ypx = new Array(visibleLength);
 
         for(k = 0; k < visibleDims.length; k++) {
             i = visibleDims[k];
@@ -123,8 +123,8 @@ function plotOne(gd: GraphDiv, cd0) {
         }
 
         if(scene.selectBatch.length || scene.unselectBatch.length) {
-            var unselOpts = Lib.extendFlat({}, matrixOpts, scene.unselectedOptions, viewOpts);
-            var selOpts = Lib.extendFlat({}, matrixOpts, scene.selectedOptions, viewOpts);
+            const unselOpts = Lib.extendFlat({}, matrixOpts, scene.unselectedOptions, viewOpts);
+            const selOpts = Lib.extendFlat({}, matrixOpts, scene.selectedOptions, viewOpts);
             scene.matrix.update(unselOpts, selOpts);
             needsBaseUpdate = false;
         }
@@ -133,7 +133,7 @@ function plotOne(gd: GraphDiv, cd0) {
     }
 
     if(needsBaseUpdate) {
-        var opts = Lib.extendFlat({}, matrixOpts, viewOpts);
+        const opts = Lib.extendFlat({}, matrixOpts, viewOpts);
         scene.matrix.update(opts, null);
     }
 }

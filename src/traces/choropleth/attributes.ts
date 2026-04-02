@@ -5,7 +5,7 @@ import baseAttrs from '../../plots/attributes.js';
 import { defaultLine } from '../../components/color/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var scatterGeoMarkerLineAttrs = scatterGeoAttrs.marker.line;
+const scatterGeoMarkerLineAttrs = scatterGeoAttrs.marker.line;
 
 export default extendFlat(
     {

@@ -12,11 +12,11 @@ const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleRThetaDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;

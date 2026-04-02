@@ -3,7 +3,7 @@ import autoType from './axis_autotype.js';
 
 export default function handleTypeDefaults(containerIn?: any, containerOut?: any, coerce?: any, options?: any): void {
     coerce('autotypenumbers', options.autotypenumbersDflt);
-    var axType = coerce('type', (options.splomStash || {}).type);
+    const axType = coerce('type', (options.splomStash || {}).type);
 
     if(axType === '-') {
         setAutoType(containerOut, options.data);
@@ -25,32 +25,32 @@ function setAutoType(ax?: any, data?: any): any {
     // only autotype if type is '-'
     if(ax.type !== '-') return;
 
-    var id = ax._id;
-    var axLetter = id.charAt(0);
-    var i;
+    let id = ax._id;
+    const axLetter = id.charAt(0);
+    let i;
 
     // support 3d
     if(id.indexOf('scene') !== -1) id = axLetter;
 
-    var d0 = getFirstNonEmptyTrace(data, id, axLetter);
+    const d0 = getFirstNonEmptyTrace(data, id, axLetter);
     if(!d0) return;
 
     // first check for histograms, as the count direction
     // should always default to a linear axis
     if(d0.type === 'histogram' &&
-        axLetter === {v: 'y', h: 'x'}[d0.orientation || 'v']
+        axLetter === ({v: 'y', h: 'x'} as any)[d0.orientation || 'v']
     ) {
         ax.type = 'linear';
         return;
     }
 
-    var calAttr = axLetter + 'calendar';
-    var calendar = d0[calAttr];
-    var opts: any = {noMultiCategory: !traceIs(d0, 'cartesian') || traceIs(d0, 'noMultiCategory')};
+    const calAttr = axLetter + 'calendar';
+    let calendar = d0[calAttr];
+    const opts: any = {noMultiCategory: !traceIs(d0, 'cartesian') || traceIs(d0, 'noMultiCategory')};
 
     // To not confuse 2D x/y used for per-box sample points for multicategory coordinates
     if(d0.type === 'box' && d0._hasPreCompStats &&
-        axLetter === {h: 'x', v: 'y'}[d0.orientation || 'v']
+        axLetter === ({h: 'x', v: 'y'} as any)[d0.orientation || 'v']
     ) {
         opts.noMultiCategory = true;
     }
@@ -60,11 +60,11 @@ function setAutoType(ax?: any, data?: any): any {
     // check all boxes on this x axis to see
     // if they're dates, numbers, or categories
     if(isBoxWithoutPositionCoords(d0, axLetter)) {
-        var posLetter = getBoxPosLetter(d0);
-        var boxPositions = [];
+        const posLetter = getBoxPosLetter(d0);
+        const boxPositions: any[] = [];
 
         for(i = 0; i < data.length; i++) {
-            var trace = data[i];
+            const trace = data[i];
             if(!traceIs(trace, 'box-violin') || (trace[axLetter + 'axis'] || axLetter) !== id) continue;
 
             if(trace[posLetter] !== undefined) boxPositions.push(trace[posLetter][0]);
@@ -76,8 +76,8 @@ function setAutoType(ax?: any, data?: any): any {
 
         ax.type = autoType(boxPositions, calendar, opts);
     } else if(d0.type === 'splom') {
-        var dimensions = d0.dimensions;
-        var dim = dimensions[d0._axesDim[id]];
+        const dimensions = d0.dimensions;
+        const dim = dimensions[d0._axesDim[id]];
         if(dim.visible) ax.type = autoType(dim.values, calendar, opts);
     } else {
         ax.type = autoType(d0[axLetter] || [d0[axLetter + '0']], calendar, opts);
@@ -85,8 +85,8 @@ function setAutoType(ax?: any, data?: any): any {
 }
 
 function getFirstNonEmptyTrace(data?: any, id?: any, axLetter?: any): any {
-    for(var i = 0; i < data.length; i++) {
-        var trace = data[i];
+    for(let i = 0; i < data.length; i++) {
+        const trace = data[i];
 
         if(trace.type === 'splom' &&
                 trace._length > 0 &&
@@ -106,13 +106,13 @@ function getFirstNonEmptyTrace(data?: any, id?: any, axLetter?: any): any {
 }
 
 function getBoxPosLetter(trace?: any): any {
-    return {v: 'x', h: 'y'}[trace.orientation || 'v'];
+    return ({v: 'x', h: 'y'} as any)[trace.orientation || 'v'];
 }
 
 function isBoxWithoutPositionCoords(trace?: any, axLetter?: any): boolean {
-    var posLetter = getBoxPosLetter(trace);
-    var isBox = traceIs(trace, 'box-violin');
-    var isCandlestick = traceIs(trace._fullInput || {}, 'candlestick');
+    const posLetter = getBoxPosLetter(trace);
+    const isBox = traceIs(trace, 'box-violin');
+    const isCandlestick = traceIs(trace._fullInput || {}, 'candlestick');
 
     return (
         isBox &&

@@ -1,22 +1,22 @@
 import _draw from '../annotations/draw.js';
 const { drawRaw } = _draw;
 import project from '../../plots/gl3d/project.js';
-var axLetters = ['x', 'y', 'z'];
+const axLetters = ['x', 'y', 'z'];
 
 export default function draw(scene: any) {
-    var fullSceneLayout = scene.fullSceneLayout;
-    var dataScale = scene.dataScale;
-    var anns = fullSceneLayout.annotations;
+    const fullSceneLayout = scene.fullSceneLayout;
+    const dataScale = scene.dataScale;
+    const anns = fullSceneLayout.annotations;
 
-    for(var i = 0; i < anns.length; i++) {
-        var ann = anns[i];
-        var annotationIsOffscreen = false;
+    for(let i = 0; i < anns.length; i++) {
+        const ann = anns[i];
+        let annotationIsOffscreen = false;
 
-        for(var j = 0; j < 3; j++) {
-            var axLetter = axLetters[j];
-            var pos = ann[axLetter];
-            var ax = fullSceneLayout[axLetter + 'axis'];
-            var posFraction = ax.r2fraction(pos);
+        for(let j = 0; j < 3; j++) {
+            const axLetter = axLetters[j];
+            const pos = ann[axLetter];
+            const ax = fullSceneLayout[axLetter + 'axis'];
+            const posFraction = ax.r2fraction(pos);
 
             if(posFraction < 0 || posFraction > 1) {
                 annotationIsOffscreen = true;

@@ -5,7 +5,7 @@ import constants from './constants.js';
 import layoutAttributes from './layout_attributes.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
 
-var axesNames = constants.axesNames;
+const axesNames = constants.axesNames;
 
 export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout, fullData: FullTrace[]) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
@@ -17,30 +17,30 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
-    var subplotData = getSubplotData(opts.fullData, 'geo', opts.id);
-    var traceIndices = subplotData.map(function(t) { return t.index; });
+function handleGeoDefaults(geoLayoutIn: any, geoLayoutOut: any, coerce: any, opts: any) {
+    const subplotData = getSubplotData(opts.fullData, 'geo', opts.id);
+    const traceIndices = subplotData.map(function(t: any) { return t.index; });
 
-    var resolution = coerce('resolution');
-    var scope = coerce('scope');
-    var scopeParams = constants.scopeDefaults[scope];
+    const resolution = coerce('resolution');
+    let scope = coerce('scope');
+    const scopeParams = (constants.scopeDefaults as any)[scope];
 
-    var projType = coerce('projection.type', scopeParams.projType);
-    var isAlbersUsa = geoLayoutOut._isAlbersUsa = projType === 'albers usa';
+    const projType = coerce('projection.type', scopeParams.projType);
+    const isAlbersUsa = geoLayoutOut._isAlbersUsa = projType === 'albers usa';
 
     // no other scopes are allowed for 'albers usa' projection
     if(isAlbersUsa) scope = geoLayoutOut.scope = 'usa';
 
-    var isScoped = geoLayoutOut._isScoped = (scope !== 'world');
-    var isSatellite = geoLayoutOut._isSatellite = projType === 'satellite';
-    var isConic = geoLayoutOut._isConic = projType.indexOf('conic') !== -1 || projType === 'albers';
-    var isClipped = geoLayoutOut._isClipped = !!constants.lonaxisSpan[projType];
+    const isScoped = geoLayoutOut._isScoped = (scope !== 'world');
+    const isSatellite = geoLayoutOut._isSatellite = projType === 'satellite';
+    const isConic = geoLayoutOut._isConic = projType.indexOf('conic') !== -1 || projType === 'albers';
+    const isClipped = geoLayoutOut._isClipped = !!(constants.lonaxisSpan as any)[projType];
 
     if(geoLayoutIn.visible === false) {
         // should override template.layout.geo.show* - see issue 4482
 
         // make a copy
-        var newTemplate = Lib.extendDeep({}, geoLayoutOut._template);
+        const newTemplate = Lib.extendDeep({}, geoLayoutOut._template);
 
         // override show*
         newTemplate.showcoastlines = false;
@@ -57,27 +57,27 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
         // set ref to copy
         geoLayoutOut._template = newTemplate;
     }
-    var visible = coerce('visible');
+    const visible = coerce('visible');
 
-    var show;
-    for(var i = 0; i < axesNames.length; i++) {
-        var axisName = axesNames[i];
-        var dtickDflt = [30, 10][i];
-        var rangeDflt;
+    let show;
+    for(let i = 0; i < axesNames.length; i++) {
+        const axisName = axesNames[i];
+        const dtickDflt = [30, 10][i];
+        let rangeDflt;
 
         if(isScoped) {
             rangeDflt = scopeParams[axisName + 'Range'];
         } else {
-            var dfltSpans = constants[axisName + 'Span'];
-            var hSpan = (dfltSpans[projType] || dfltSpans['*']) / 2;
-            var rot = coerce(
+            const dfltSpans = (constants as any)[axisName + 'Span'];
+            const hSpan = (dfltSpans[projType] || dfltSpans['*']) / 2;
+            const rot = coerce(
                 'projection.rotation.' + axisName.slice(0, 3),
                 scopeParams.projRotate[i]
             );
             rangeDflt = [rot - hSpan, rot + hSpan];
         }
 
-        var range = coerce(axisName + '.range', rangeDflt);
+        const range = coerce(axisName + '.range', rangeDflt);
         coerce(axisName + '.tick0');
         coerce(axisName + '.dtick', dtickDflt);
 
@@ -103,19 +103,19 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
         };
     }
 
-    var lonRange = geoLayoutOut.lonaxis.range;
-    var latRange = geoLayoutOut.lataxis.range;
+    const lonRange = geoLayoutOut.lonaxis.range;
+    const latRange = geoLayoutOut.lataxis.range;
 
     // to cross antimeridian w/o ambiguity
-    var lon0 = lonRange[0];
-    var lon1 = lonRange[1];
+    const lon0 = lonRange[0];
+    let lon1 = lonRange[1];
     if(lon0 > 0 && lon1 < 0) lon1 += 360;
 
-    var centerLon = (lon0 + lon1) / 2;
-    var projLon;
+    const centerLon = (lon0 + lon1) / 2;
+    let projLon;
 
     if(!isAlbersUsa) {
-        var dfltProjRotate = isScoped ? scopeParams.projRotate : [centerLon, 0, 0];
+        const dfltProjRotate = isScoped ? scopeParams.projRotate : [centerLon, 0, 0];
 
         projLon = coerce('projection.rotation.lon', dfltProjRotate[0]);
         coerce('projection.rotation.lat', dfltProjRotate[1]);
@@ -131,8 +131,8 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
         if(show) coerce('oceancolor');
     }
 
-    var centerLonDflt;
-    var centerLatDflt;
+    let centerLonDflt;
+    let centerLatDflt;
 
     if(isAlbersUsa) {
         // 'albers usa' does not have a 'center',
@@ -154,7 +154,7 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
     }
 
     if(isConic) {
-        var dfltProjParallels = scopeParams.projParallels || [0, 60];
+        const dfltProjParallels = scopeParams.projParallels || [0, 60];
         coerce('projection.parallels', dfltProjParallels);
     }
 
@@ -198,7 +198,7 @@ function handleGeoDefaults(geoLayoutIn, geoLayoutOut, coerce, opts) {
 
     coerce('bgcolor');
 
-    var fitBounds = coerce('fitbounds');
+    const fitBounds = coerce('fitbounds');
 
     // clear attributes that will get auto-filled later
     if(fitBounds) {

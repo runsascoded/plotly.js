@@ -8,19 +8,19 @@ import constants from './constants.js';
 import { pattern } from '../../components/drawing/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var textFontAttrs = fontAttrs({
+const textFontAttrs = fontAttrs({
     editType: 'calc',
     arrayOk: true,
     colorEditType: 'style',
     description: ''
 });
 
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-var markerLineWidth = extendFlat({}, scatterMarkerLineAttrs.width, { dflt: 0 });
+const markerLineWidth = extendFlat({}, scatterMarkerLineAttrs.width, { dflt: 0 });
 
-var markerLine = extendFlat(
+const markerLine = extendFlat(
     {
         width: markerLineWidth,
         editType: 'calc'
@@ -28,7 +28,7 @@ var markerLine = extendFlat(
     (colorScaleAttrs as any)('marker.line')
 );
 
-var marker = extendFlat(
+const marker = extendFlat(
     {
         line: markerLine,
         editType: 'calc'

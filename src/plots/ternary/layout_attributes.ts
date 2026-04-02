@@ -5,7 +5,7 @@ import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 import { extendFlat } from '../../lib/extend.js';
 
-var ternaryAxesAttrs = {
+const ternaryAxesAttrs = {
     title: {
         text: axesAttrs.title.text,
         font: axesAttrs.title.font
@@ -62,7 +62,7 @@ var ternaryAxesAttrs = {
     },
 };
 
-var attrs = overrideAll({
+const attrs = overrideAll({
     domain: domainAttrs({name: 'ternary'}),
 
     bgcolor: {

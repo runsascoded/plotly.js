@@ -1,20 +1,20 @@
 export default function makeComputeError(opts: any): (dataPt: number, index?: number) => [number, number] {
-    var type = opts.type;
-    var symmetric = opts.symmetric;
+    const type = opts.type;
+    const symmetric = opts.symmetric;
 
     if(type === 'data') {
-        var array = opts.array || [];
+        const array = opts.array || [];
 
         if(symmetric) {
             return function computeError(dataPt: number, index?: number): [number, number] {
-                var val = +(array[index!]);
+                const val = +(array[index!]);
                 return [val, val];
             };
         } else {
-            var arrayminus = opts.arrayminus || [];
+            const arrayminus = opts.arrayminus || [];
             return function computeError(dataPt: number, index?: number): [number, number] {
-                var val = +array[index!];
-                var valMinus = +arrayminus[index!];
+                const val = +array[index!];
+                const valMinus = +arrayminus[index!];
                 if(!isNaN(val) || !isNaN(valMinus)) {
                     return [valMinus || 0, val || 0];
                 }
@@ -22,12 +22,12 @@ export default function makeComputeError(opts: any): (dataPt: number, index?: nu
             };
         }
     } else {
-        var computeErrorValue = makeComputeErrorValue(type, opts.value);
-        var computeErrorValueMinus = makeComputeErrorValue(type, opts.valueminus);
+        const computeErrorValue = makeComputeErrorValue(type, opts.value);
+        const computeErrorValueMinus = makeComputeErrorValue(type, opts.valueminus);
 
         if(symmetric || opts.valueminus === undefined) {
             return function computeError(dataPt: number): [number, number] {
-                var val = computeErrorValue(dataPt);
+                const val = computeErrorValue(dataPt);
                 return [val, val];
             };
         } else {

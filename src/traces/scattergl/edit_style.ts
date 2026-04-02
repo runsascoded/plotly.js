@@ -5,24 +5,24 @@ import _interactions from '../../constants/interactions.js';
 const { DESELECTDIM } = _interactions;
 
 function styleTextSelection(cd: CalcDatum[]) {
-    var cd0 = cd[0];
-    var trace = cd0.trace;
-    var stash = cd0.t;
-    var scene = stash._scene;
-    var index = stash.index;
-    var els = scene.selectBatch[index];
-    var unels = scene.unselectBatch[index];
-    var baseOpts = scene.textOptions[index];
-    var selOpts = scene.textSelectedOptions[index] || {};
-    var unselOpts = scene.textUnselectedOptions[index] || {};
-    var opts = Lib.extendFlat({}, baseOpts);
-    var i, j;
+    const cd0 = cd[0];
+    const trace = cd0.trace;
+    const stash = cd0.t;
+    const scene = stash._scene;
+    const index = stash.index;
+    const els = scene.selectBatch[index];
+    const unels = scene.unselectBatch[index];
+    const baseOpts = scene.textOptions[index];
+    const selOpts = scene.textSelectedOptions[index] || {};
+    const unselOpts = scene.textUnselectedOptions[index] || {};
+    const opts = Lib.extendFlat({}, baseOpts);
+    let i, j;
 
     if(els.length || unels.length) {
-        var stc = selOpts.color;
-        var utc = unselOpts.color;
-        var base = baseOpts.color;
-        var hasArrayBase = Lib.isArrayOrTypedArray(base);
+        const stc = selOpts.color;
+        const utc = unselOpts.color;
+        const base = baseOpts.color;
+        const hasArrayBase = Lib.isArrayOrTypedArray(base);
         opts.color = new Array(trace._length);
 
         for(i = 0; i < els.length; i++) {
@@ -31,7 +31,7 @@ function styleTextSelection(cd: CalcDatum[]) {
         }
         for(i = 0; i < unels.length; i++) {
             j = unels[i];
-            var basej = hasArrayBase ? base[j] : base;
+            const basej = hasArrayBase ? base[j] : base;
             opts.color[j] = utc ? utc :
                 stc ? basej : Color.addOpacity(basej, DESELECTDIM);
         }

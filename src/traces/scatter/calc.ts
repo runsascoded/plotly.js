@@ -11,28 +11,28 @@ import arraysToCalcdata from './arrays_to_calcdata.js';
 import calcSelection from './calc_selection.js';
 
 function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var fullLayout = gd._fullLayout;
-    var xa = trace._xA = Axes.getFromId(gd, trace.xaxis || 'x', 'x');
-    var ya = trace._yA = Axes.getFromId(gd, trace.yaxis || 'y', 'y');
-    var origX = xa.makeCalcdata(trace, 'x');
-    var origY = ya.makeCalcdata(trace, 'y');
-    var xObj = alignPeriod(trace, xa, 'x', origX);
-    var yObj = alignPeriod(trace, ya, 'y', origY);
-    var x = xObj.vals;
-    var y = yObj.vals;
+    const fullLayout = gd._fullLayout;
+    const xa = trace._xA = Axes.getFromId(gd, trace.xaxis || 'x', 'x');
+    const ya = trace._yA = Axes.getFromId(gd, trace.yaxis || 'y', 'y');
+    const origX = xa.makeCalcdata(trace, 'x');
+    const origY = ya.makeCalcdata(trace, 'y');
+    const xObj = alignPeriod(trace, xa, 'x', origX);
+    const yObj = alignPeriod(trace, ya, 'y', origY);
+    const x = xObj.vals;
+    const y = yObj.vals;
 
-    var serieslen = trace._length;
-    var cd = new Array(serieslen);
-    var ids = trace.ids;
-    var stackGroupOpts = getStackOpts(trace, fullLayout, xa, ya);
-    var interpolateGaps = false;
-    var isV, i, j, k, interpolate, vali;
+    const serieslen = trace._length;
+    const cd = new Array(serieslen);
+    const ids = trace.ids;
+    const stackGroupOpts = getStackOpts(trace, fullLayout, xa, ya);
+    let interpolateGaps = false;
+    let isV, i, j, k, interpolate, vali;
 
     setFirstScatter(fullLayout, trace);
 
-    var xAttr = 'x';
-    var yAttr = 'y';
-    var posAttr;
+    let xAttr = 'x';
+    let yAttr = 'y';
+    let posAttr: any;
     if(stackGroupOpts) {
         pushUnique(stackGroupOpts.traceIndices, trace.index);
         isV = stackGroupOpts.orientation === 'v';
@@ -47,17 +47,17 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         }
         interpolate = stackGroupOpts.stackgaps === 'interpolate';
     } else {
-        var ppad = calcMarkerSize(trace, serieslen);
+        const ppad = calcMarkerSize(trace, serieslen);
         calcAxisExpansion(gd, trace, xa, ya, x, y, ppad);
     }
 
-    var hasPeriodX = !!trace.xperiodalignment;
-    var hasPeriodY = !!trace.yperiodalignment;
+    const hasPeriodX = !!trace.xperiodalignment;
+    const hasPeriodY = !!trace.yperiodalignment;
 
     for(i = 0; i < serieslen; i++) {
-        var cdi: any = cd[i] = {};
-        var xValid = isNumeric(x[i]);
-        var yValid = isNumeric(y[i]);
+        const cdi: any = cd[i] = {};
+        const xValid = isNumeric(x[i]);
+        const yValid = isNumeric(y[i]);
         if(xValid && yValid) {
             cdi[xAttr] = x[i];
             cdi[yAttr] = y[i];
@@ -139,9 +139,9 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
                     while(cd[j].gap) {
                         j++;
                     }
-                    var pos0 = cd[i - 1][posAttr];
-                    var size0 = cd[i - 1].s;
-                    var m = (cd[j].s - size0) / (cd[j][posAttr] - pos0);
+                    const pos0 = cd[i - 1][posAttr];
+                    const size0 = cd[i - 1].s;
+                    const m = (cd[j].s - size0) / (cd[j][posAttr] - pos0);
                     while(i < j) {
                         cd[i].s = size0 + (cd[i][posAttr] - pos0) * m;
                         i++;
@@ -155,13 +155,13 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
 }
 
 function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: FullAxis, x: any[], y: any[], ppad: any): any {
-    var serieslen = trace._length;
-    var fullLayout = gd._fullLayout;
-    var xId = xa._id;
-    var yId = ya._id;
-    var firstScatter = fullLayout._firstScatter[firstScatterGroup(trace)] === trace.uid;
-    var stackOrientation = (getStackOpts(trace, fullLayout, xa, ya) || {}).orientation;
-    var fill = trace.fill;
+    const serieslen = trace._length;
+    const fullLayout = gd._fullLayout;
+    const xId = xa._id;
+    const yId = ya._id;
+    const firstScatter = fullLayout._firstScatter[firstScatterGroup(trace)] === trace.uid;
+    const stackOrientation = (getStackOpts(trace, fullLayout, xa, ya) || {}).orientation;
+    const fill = trace.fill;
 
     // cancel minimum tick spacings (only applies to bars and boxes)
     xa._minDtick = 0;
@@ -169,8 +169,8 @@ function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: Ful
 
     // check whether bounds should be tight, padded, extended to zero...
     // most cases both should be padded on both ends, so start with that.
-    var xOptions: any = {padded: true};
-    var yOptions: any = {padded: true};
+    const xOptions: any = {padded: true};
+    const yOptions: any = {padded: true};
 
     if(ppad) {
         xOptions.ppad = yOptions.ppad = ppad;
@@ -178,7 +178,7 @@ function calcAxisExpansion(gd: GraphDiv, trace: FullTrace, xa: FullAxis, ya: Ful
 
     // TODO: text size
 
-    var openEnded = serieslen < 2 || (x[0] !== x[serieslen - 1]) || (y[0] !== y[serieslen - 1]);
+    const openEnded = serieslen < 2 || (x[0] !== x[serieslen - 1]) || (y[0] !== y[serieslen - 1]);
 
     if(openEnded && (
         (fill === 'tozerox') ||
@@ -222,29 +222,29 @@ function calcMarkerSize(trace: FullTrace, serieslen: number): any {
 
     // Treat size like x or y arrays --- Run d2c
     // this needs to go before ppad computation
-    var marker = trace.marker;
-    var sizeref = 1.6 * (trace.marker.sizeref || 1);
-    var markerTrans;
+    const marker = trace.marker;
+    const sizeref = 1.6 * (trace.marker.sizeref || 1);
+    let markerTrans;
 
     if(trace.marker.sizemode === 'area') {
-        markerTrans = function(v) {
+        markerTrans = function(v: any) {
             return Math.max(Math.sqrt((v || 0) / sizeref), 3);
         };
     } else {
-        markerTrans = function(v) {
+        markerTrans = function(v: any) {
             return Math.max((v || 0) / sizeref, 3);
         };
     }
 
     if(isArrayOrTypedArray(marker.size)) {
         // I tried auto-type but category and dates dont make much sense.
-        var ax: any = {type: 'linear'};
+        const ax: any = {type: 'linear'};
         Axes.setConvert(ax);
 
-        var s = ax.makeCalcdata(trace.marker, 'size');
+        const s = ax.makeCalcdata(trace.marker, 'size');
 
-        var sizeOut = new Array(serieslen);
-        for(var i = 0; i < serieslen; i++) {
+        const sizeOut = new Array(serieslen);
+        for(let i = 0; i < serieslen; i++) {
             sizeOut[i] = markerTrans(s[i]);
         }
         return sizeOut;
@@ -261,22 +261,22 @@ function calcMarkerSize(trace: FullTrace, serieslen: number): any {
  * per-trace calc this will get confused.
  */
 function setFirstScatter(fullLayout: FullLayout, trace: FullTrace): void {
-    var group = firstScatterGroup(trace);
-    var firstScatter = fullLayout._firstScatter;
+    const group = firstScatterGroup(trace);
+    const firstScatter = fullLayout._firstScatter;
     if(!firstScatter[group]) firstScatter[group] = trace.uid;
 }
 
 function firstScatterGroup(trace: FullTrace): string {
-    var stackGroup = trace.stackgroup;
+    const stackGroup = trace.stackgroup;
     return trace.xaxis + trace.yaxis + trace.type +
         (stackGroup ? '-' + stackGroup : '');
 }
 
 function getStackOpts(trace: FullTrace, fullLayout: FullLayout, xa: FullAxis, ya: FullAxis): any {
-    var stackGroup = trace.stackgroup;
+    const stackGroup = trace.stackgroup;
     if(!stackGroup) return;
-    var stackOpts = fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup];
-    var stackAx = stackOpts.orientation === 'v' ? ya : xa;
+    const stackOpts = fullLayout._scatterStackOpts[xa._id + ya._id][stackGroup];
+    const stackAx = stackOpts.orientation === 'v' ? ya : xa;
     // Allow stacking only on numeric axes
     // calc is a little late to be figuring this out, but during supplyDefaults
     // we don't know the axis type yet

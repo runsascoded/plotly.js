@@ -5,7 +5,7 @@ import Lib from '../../lib/index.js';
 import Icons from '../../fonts/ploticon.js';
 import { version } from '../../version.js';
 
-var Parser = new DOMParser();
+const Parser = new DOMParser();
 
 /**
  * UI controller for interactive plots
@@ -15,7 +15,7 @@ var Parser = new DOMParser();
  * @Param {object} opts.container  container div to append modeBar
  * @Param {object} opts.graphInfo  primary plot object containing data and layout
  */
-function ModeBar(opts: any) {
+function ModeBar(this: any, opts: any) {
     this.container = opts.container;
     this.element = document.createElement('div');
 
@@ -24,7 +24,7 @@ function ModeBar(opts: any) {
     this.container.appendChild(this.element);
 }
 
-var proto = ModeBar.prototype;
+const proto = ModeBar.prototype;
 
 /**
  * Update modeBar (buttons and logo)
@@ -36,9 +36,9 @@ var proto = ModeBar.prototype;
 proto.update = function(graphInfo: any, buttons: any) {
     this.graphInfo = graphInfo;
 
-    var context = this.graphInfo._context;
-    var fullLayout = this.graphInfo._fullLayout;
-    var modeBarId = 'modebar-' + fullLayout._uid;
+    const context = this.graphInfo._context;
+    const fullLayout = this.graphInfo._fullLayout;
+    const modeBarId = 'modebar-' + fullLayout._uid;
 
     this.element.setAttribute('id', modeBarId);
     this.element.setAttribute('role', 'toolbar');
@@ -52,17 +52,17 @@ proto.update = function(graphInfo: any, buttons: any) {
         buttons = buttons.reverse();
     }
 
-    var style = fullLayout.modebar;
+    const style = fullLayout.modebar;
 
     // set style for modebar-group directly instead of inline CSS that's not allowed by strict CSP's
-    var groupSelector = '#' + modeBarId + ' .modebar-group';
+    const groupSelector = '#' + modeBarId + ' .modebar-group';
     document.querySelectorAll(groupSelector).forEach(function(group: any) {
         group.style.backgroundColor = style.bgcolor;
     });
     // if buttons or logo have changed, redraw modebar interior
-    var needsNewButtons = !this.hasButtons(buttons);
-    var needsNewLogo = (this.hasLogo !== context.displaylogo);
-    var needsNewLocale = (this.locale !== context.locale);
+    const needsNewButtons = !this.hasButtons(buttons);
+    const needsNewLogo = (this.hasLogo !== context.displaylogo);
+    const needsNewLocale = (this.locale !== context.locale);
 
     this.locale = context.locale;
 
@@ -72,7 +72,7 @@ proto.update = function(graphInfo: any, buttons: any) {
         this.updateButtons(buttons);
 
         if(context.watermark || context.displaylogo) {
-            var logoGroup = this.getLogo();
+            const logoGroup = this.getLogo();
             if(context.watermark) {
                 logoGroup.className = logoGroup.className + ' watermark';
             }
@@ -95,17 +95,17 @@ proto.update = function(graphInfo: any, buttons: any) {
 };
 
 proto.updateButtons = function(buttons: any) {
-    var _this = this;
+    const _this = this;
 
     this.buttons = buttons;
     this.buttonElements = [];
     this.buttonsNames = [];
 
     this.buttons.forEach(function(buttonGroup: any) {
-        var group = _this.createGroup();
+        const group = _this.createGroup();
 
         buttonGroup.forEach(function(buttonConfig: any) {
-            var buttonName = buttonConfig.name;
+            const buttonName = buttonConfig.name;
             if(!buttonName) {
                 throw new Error('must provide button \'name\' in button config');
             }
@@ -114,7 +114,7 @@ proto.updateButtons = function(buttons: any) {
             }
             _this.buttonsNames.push(buttonName);
 
-            var button = _this.createButton(buttonConfig);
+            const button = _this.createButton(buttonConfig);
             _this.buttonElements.push(button);
             group.appendChild(button);
         });
@@ -128,10 +128,10 @@ proto.updateButtons = function(buttons: any) {
  * @Return {HTMLelement}
  */
 proto.createGroup = function() {
-    var group = document.createElement('div');
+    const group = document.createElement('div');
     group.className = 'modebar-group';
 
-    var style = this.graphInfo._fullLayout.modebar;
+    const style = this.graphInfo._fullLayout.modebar;
     group.style.backgroundColor = style.bgcolor;
 
     return group;
@@ -143,14 +143,14 @@ proto.createGroup = function() {
  * @Return {HTMLelement}
  */
 proto.createButton = function(config: any) {
-    var _this = this;
-    var button = document.createElement('button');
+    const _this = this;
+    const button = document.createElement('button');
 
     button.setAttribute('type', 'button');
     button.setAttribute('rel', 'tooltip');
     button.className = 'modebar-btn';
 
-    var title = config.title;
+    let title = config.title;
     if(title === undefined) title = config.name;
     // for localization: allow title to be a callable that takes gd as arg
     else if(typeof title === 'function') title = title(this.graphInfo);
@@ -162,13 +162,13 @@ proto.createButton = function(config: any) {
 
     if(config.attr !== undefined) button.setAttribute('data-attr', config.attr);
 
-    var val = config.val;
+    let val = config.val;
     if(val !== undefined) {
         if(typeof val === 'function') val = val(this.graphInfo);
         button.setAttribute('data-val', val);
     }
 
-    var click = config.click;
+    const click = config.click;
     if(typeof click !== 'function') {
         throw new Error('must provide button \'click\' function in button config');
     } else {
@@ -183,7 +183,7 @@ proto.createButton = function(config: any) {
     button.setAttribute('data-toggle', config.toggle || false);
     if(config.toggle) select(button).classed('active', true);
 
-    var icon = config.icon;
+    const icon = config.icon;
     if(typeof icon === 'function') {
         button.appendChild(icon());
     } else {
@@ -203,18 +203,18 @@ proto.createButton = function(config: any) {
  * @Return {HTMLelement}
  */
 proto.createIcon = function(thisIcon: any) {
-    var iconHeight = isNumeric(thisIcon.height) ?
+    const iconHeight = isNumeric(thisIcon.height) ?
         Number(thisIcon.height) :
         thisIcon.ascent - thisIcon.descent;
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var icon;
+    const svgNS = 'http://www.w3.org/2000/svg';
+    let icon: any;
 
     if(thisIcon.path) {
         icon = document.createElementNS(svgNS, 'svg');
         icon.setAttribute('viewBox', [0, 0, thisIcon.width, iconHeight].join(' '));
         icon.setAttribute('class', 'icon');
 
-        var path = document.createElementNS(svgNS, 'path');
+        const path = document.createElementNS(svgNS, 'path');
         path.setAttribute('d', thisIcon.path);
 
         if(thisIcon.transform) {
@@ -228,7 +228,7 @@ proto.createIcon = function(thisIcon: any) {
     }
 
     if(thisIcon.svg) {
-        var svgDoc = Parser.parseFromString(thisIcon.svg, 'application/xml');
+        const svgDoc = Parser.parseFromString(thisIcon.svg, 'application/xml');
         icon = svgDoc.childNodes[0];
     }
 
@@ -244,22 +244,22 @@ proto.createIcon = function(thisIcon: any) {
  * @Return {HTMLelement}
  */
 proto.updateActiveButton = function(buttonClicked: any) {
-    var fullLayout = this.graphInfo._fullLayout;
-    var dataAttrClicked = (buttonClicked !== undefined) ?
+    const fullLayout = this.graphInfo._fullLayout;
+    const dataAttrClicked = (buttonClicked !== undefined) ?
         buttonClicked.getAttribute('data-attr') :
         null;
 
     this.buttonElements.forEach(function(button: any) {
-        var thisval = button.getAttribute('data-val') || true;
-        var dataAttr = button.getAttribute('data-attr');
-        var isToggleButton = (button.getAttribute('data-toggle') === 'true');
-        var button3 = select(button);
+        const thisval = button.getAttribute('data-val') || true;
+        const dataAttr = button.getAttribute('data-attr');
+        const isToggleButton = (button.getAttribute('data-toggle') === 'true');
+        const button3 = select(button);
 
         // set style on button based on its state at the moment this is called
         // (e.g. during the handling when a modebar button is clicked)
-        var updateButtonStyle = function(button: any, isActive: any) {
-            var style = fullLayout.modebar;
-            var childEl = button.querySelector('.icon path');
+        const updateButtonStyle = function(button: any, isActive: any) {
+            const style = fullLayout.modebar;
+            const childEl = button.querySelector('.icon path');
             if(childEl) {
                 if(isActive || button.matches(':hover')) {
                     childEl.style.fill = style.activecolor;
@@ -273,12 +273,12 @@ proto.updateActiveButton = function(buttonClicked: any) {
         // that have no one-to-one equivalent in fullLayout
         if(isToggleButton) {
             if(dataAttr === dataAttrClicked) {
-                var isActive = !button3.classed('active');
+                const isActive = !button3.classed('active');
                 button3.classed('active', isActive);
                 updateButtonStyle(button, isActive);
             }
         } else {
-            var val = (dataAttr === null) ?
+            const val = (dataAttr === null) ?
                 dataAttr :
                 Lib.nestedProperty(fullLayout, dataAttr).get();
 
@@ -295,15 +295,15 @@ proto.updateActiveButton = function(buttonClicked: any) {
  * @Return {boolean}
  */
 proto.hasButtons = function(buttons: any) {
-    var currentButtons = this.buttons;
+    const currentButtons = this.buttons;
 
     if(!currentButtons) return false;
 
     if(buttons.length !== currentButtons.length) return false;
 
-    for(var i = 0; i < buttons.length; ++i) {
+    for(let i = 0; i < buttons.length; ++i) {
         if(buttons[i].length !== currentButtons[i].length) return false;
-        for(var j = 0; j < buttons[i].length; j++) {
+        for(let j = 0; j < buttons[i].length; j++) {
             if(buttons[i][j].name !== currentButtons[i][j].name) return false;
         }
     }
@@ -319,8 +319,8 @@ function jsVersion(str: any) {
  * @return {HTMLDivElement} The logo image wrapped in a group
  */
 proto.getLogo = function() {
-    var group = this.createGroup();
-    var a = document.createElement('a');
+    const group = this.createGroup();
+    const a = document.createElement('a');
 
     a.href = 'https://plotly.com/';
     a.target = '_blank';
@@ -346,9 +346,10 @@ proto.destroy = function() {
 };
 
 function createModeBar(gd: GraphDiv, buttons: any) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var modeBar = new ModeBar({
+    // @ts-ignore TS7009
+    const modeBar: any = new ModeBar({
         graphInfo: gd,
         container: fullLayout._modebardiv.node(),
         buttons: buttons

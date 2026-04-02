@@ -7,7 +7,7 @@ import colorscaleDefaults from '../../components/colorscale/defaults.js';
 export default function lineDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout, coerce: any, opts?: any): void {
     if(!opts) opts = {};
 
-    var markerColor = (traceIn.marker || {}).color;
+    let markerColor = (traceIn.marker || {}).color;
     if(markerColor && markerColor._inputArray) markerColor = markerColor._inputArray;
 
     coerce('line.color', defaultColor);
@@ -15,7 +15,7 @@ export default function lineDefaults(traceIn: InputTrace, traceOut: FullTrace, d
     if(hasColorscale(traceIn, 'line')) {
         colorscaleDefaults(traceIn, traceOut, layout, coerce, {prefix: 'line.', cLetter: 'c'});
     } else {
-        var lineColorDflt = (isArrayOrTypedArray(markerColor) ? false : markerColor) || defaultColor;
+        const lineColorDflt = (isArrayOrTypedArray(markerColor) ? false : markerColor) || defaultColor;
         coerce('line.color', lineColorDflt);
     }
 

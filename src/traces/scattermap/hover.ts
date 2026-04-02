@@ -6,43 +6,43 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 import _constants from '../../plots/map/constants.js';
 const { traceLayerPrefix: LAYER_PREFIX } = _constants;
-var fillText = Lib.fillText;
+const fillText = Lib.fillText;
 
-function hoverPoints(pointData, xval, yval) {
-    var cd = pointData.cd;
-    var trace = cd[0].trace;
-    var xa = pointData.xa;
-    var ya = pointData.ya;
-    var subplot = pointData.subplot;
-    var clusteredPointsIds = [];
-    var layer = LAYER_PREFIX + trace.uid + '-circle';
-    var hasCluster = trace.cluster && trace.cluster.enabled;
+function hoverPoints(pointData: any, xval: any, yval: any) {
+    const cd = pointData.cd;
+    const trace = cd[0].trace;
+    const xa = pointData.xa;
+    const ya = pointData.ya;
+    const subplot = pointData.subplot;
+    let clusteredPointsIds: any[] = [];
+    const layer = LAYER_PREFIX + trace.uid + '-circle';
+    const hasCluster = trace.cluster && trace.cluster.enabled;
 
     if(hasCluster) {
-        var elems = subplot.map.queryRenderedFeatures(null, {layers: [layer]});
-        clusteredPointsIds = elems.map(function(elem) {return elem.id;});
+        const elems = subplot.map.queryRenderedFeatures(null, {layers: [layer]});
+        clusteredPointsIds = elems.map(function(elem: any) {return elem.id;});
     }
 
     // compute winding number about [-180, 180] globe
-    var winding = (xval >= 0) ?
+    const winding = (xval >= 0) ?
         Math.floor((xval + 180) / 360) :
         Math.ceil((xval - 180) / 360);
 
     // shift longitude to [-180, 180] to determine closest point
-    var lonShift = winding * 360;
-    var xval2 = xval - lonShift;
+    const lonShift = winding * 360;
+    const xval2 = xval - lonShift;
 
-    function distFn(d) {
-        var lonlat = d.lonlat;
+    function distFn(d: any) {
+        const lonlat = d.lonlat;
         if(lonlat[0] === BADNUM) return Infinity;
         if(hasCluster && clusteredPointsIds.indexOf(d.i + 1) === -1) return Infinity;
 
-        var lon = Lib.modHalf(lonlat[0], 360);
-        var lat = lonlat[1];
-        var pt = subplot.project([lon, lat]);
-        var dx = pt.x - xa.c2p([xval2, lat]);
-        var dy = pt.y - ya.c2p([lon, yval]);
-        var rad = Math.max(3, d.mrc || 0);
+        const lon = Lib.modHalf(lonlat[0], 360);
+        const lat = lonlat[1];
+        const pt = subplot.project([lon, lat]);
+        const dx = pt.x - xa.c2p([xval2, lat]);
+        const dy = pt.y - ya.c2p([lon, yval]);
+        const rad = Math.max(3, d.mrc || 0);
 
         return Math.max(Math.sqrt(dx * dx + dy * dy) - rad, 1 - 3 / rad);
     }
@@ -52,23 +52,23 @@ function hoverPoints(pointData, xval, yval) {
     // skip the rest (for this trace) if we didn't find a close point
     if(pointData.index === false) return;
 
-    var di = cd[pointData.index];
-    var lonlat = di.lonlat;
-    var lonlatShifted = [Lib.modHalf(lonlat[0], 360) + lonShift, lonlat[1]];
+    const di = cd[pointData.index];
+    const lonlat = di.lonlat;
+    const lonlatShifted = [Lib.modHalf(lonlat[0], 360) + lonShift, lonlat[1]];
 
     // shift labels back to original winded globe
-    var xc = xa.c2p(lonlatShifted);
-    var yc = ya.c2p(lonlatShifted);
-    var rad = di.mrc || 1;
+    const xc = xa.c2p(lonlatShifted);
+    const yc = ya.c2p(lonlatShifted);
+    const rad = di.mrc || 1;
 
     pointData.x0 = xc - rad;
     pointData.x1 = xc + rad;
     pointData.y0 = yc - rad;
     pointData.y1 = yc + rad;
 
-    var fullLayout: any = {};
+    const fullLayout: any = {};
     fullLayout[trace.subplot] = {_subplot: subplot};
-    var labels = trace._module.formatLabels(di, trace, fullLayout);
+    const labels = trace._module.formatLabels(di, trace, fullLayout);
     pointData.lonLabel = labels.lonLabel;
     pointData.latLabel = labels.latLabel;
 
@@ -79,20 +79,20 @@ function hoverPoints(pointData, xval, yval) {
     return [pointData];
 }
 
-function getExtraText(trace: FullTrace, di, labels) {
+function getExtraText(trace: FullTrace, di: any, labels: any) {
     if(trace.hovertemplate) return;
 
-    var hoverinfo = di.hi || trace.hoverinfo;
-    var parts = hoverinfo.split('+');
-    var isAll = parts.indexOf('all') !== -1;
-    var hasLon = parts.indexOf('lon') !== -1;
-    var hasLat = parts.indexOf('lat') !== -1;
-    var lonlat = di.lonlat;
-    var text = [];
+    const hoverinfo = di.hi || trace.hoverinfo;
+    const parts = hoverinfo.split('+');
+    const isAll = parts.indexOf('all') !== -1;
+    const hasLon = parts.indexOf('lon') !== -1;
+    const hasLat = parts.indexOf('lat') !== -1;
+    const lonlat = di.lonlat;
+    const text: any[] = [];
 
     // TODO should we use a mock axis to format hover?
     // If so, we'll need to make precision be zoom-level dependent
-    function format(v) {
+    function format(v: any) {
         return v + '\u00B0';
     }
 

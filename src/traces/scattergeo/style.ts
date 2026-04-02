@@ -3,16 +3,16 @@ import { select } from 'd3-selection';
 import { dashLine, lineGroupStyle } from '../../components/drawing/index.js';
 import Color from '../../components/color/index.js';
 import scatterStyle from '../scatter/style.js';
-var stylePoints = scatterStyle.stylePoints;
-var styleText = scatterStyle.styleText;
+const stylePoints = scatterStyle.stylePoints;
+const styleText = scatterStyle.styleText;
 
-export default function style(gd: GraphDiv, calcTrace) {
+export default function style(gd: GraphDiv, calcTrace: any) {
     if(calcTrace) styleTrace(gd, calcTrace);
 }
 
-function styleTrace(gd: GraphDiv, calcTrace) {
-    var trace = calcTrace[0].trace;
-    var s = calcTrace[0].node3;
+function styleTrace(gd: GraphDiv, calcTrace: any) {
+    const trace = calcTrace[0].trace;
+    const s = calcTrace[0].node3;
 
     s.style('opacity', calcTrace[0].trace.opacity);
 
@@ -22,10 +22,10 @@ function styleTrace(gd: GraphDiv, calcTrace) {
     // this part is incompatible with lineGroupStyle
     s.selectAll('path.js-line')
         .style('fill', 'none')
-        .each(function(d) {
-            var path = select(this);
-            var trace = d.trace;
-            var line = trace.line || {};
+        .each(function(this: any, d: any) {
+            const path = select(this);
+            const trace = d.trace;
+            const line = trace.line || {};
 
             path.call(Color.stroke, line.color)
                 .call(dashLine, line.dash || '', line.width || 0);

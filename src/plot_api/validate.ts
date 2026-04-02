@@ -4,19 +4,19 @@ import PlotSchema from './plot_schema.js';
 import _plot_config from './plot_config.js';
 const { dfltConfig } = _plot_config;
 
-var isPlainObject = Lib.isPlainObject;
-var isArray = Array.isArray;
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const isPlainObject = Lib.isPlainObject;
+const isArray = Array.isArray;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
 
 export default function validate(data?: any, layout?: any): any {
     if(data === undefined) data = [];
     if(layout === undefined) layout = {};
 
-    var schema = PlotSchema.get();
-    var errorList: any = [];
-    var gd: any = {_context: Lib.extendFlat({}, dfltConfig)};
+    const schema = PlotSchema.get();
+    const errorList: any = [];
+    const gd: any = {_context: Lib.extendFlat({}, dfltConfig)};
 
-    var dataIn, layoutIn;
+    let dataIn, layoutIn;
 
     if(isArray(data)) {
         gd.data = Lib.extendDeep([], data);
@@ -44,21 +44,21 @@ export default function validate(data?: any, layout?: any): any {
 
     Plots.supplyDefaults(gd);
 
-    var dataOut = gd._fullData;
-    var len = dataIn.length;
+    const dataOut = gd._fullData;
+    const len = dataIn.length;
 
-    for(var i = 0; i < len; i++) {
-        var traceIn = dataIn[i];
-        var base = ['data', i];
+    for(let i = 0; i < len; i++) {
+        const traceIn = dataIn[i];
+        const base = ['data', i];
 
         if(!isPlainObject(traceIn)) {
             errorList.push(format('object', base));
             continue;
         }
 
-        var traceOut: any = dataOut[i];
-        var traceType = traceOut.type;
-        var traceSchema: any = schema.traces[traceType].attributes;
+        const traceOut: any = dataOut[i];
+        const traceType = traceOut.type;
+        const traceSchema: any = schema.traces[traceType].attributes;
 
         // PlotSchema does something fancy with trace 'type', reset it here
         // to make the trace schema compatible with Lib.validate.
@@ -74,8 +74,8 @@ export default function validate(data?: any, layout?: any): any {
         crawl(traceIn, traceOut, traceSchema, errorList, base);
     }
 
-    var layoutOut = gd._fullLayout;
-    var layoutSchema = fillLayoutSchema(schema, dataOut);
+    const layoutOut = gd._fullLayout;
+    const layoutSchema = fillLayoutSchema(schema, dataOut);
 
     crawl(layoutIn, layoutOut, layoutSchema, errorList, 'layout');
 
@@ -86,22 +86,22 @@ export default function validate(data?: any, layout?: any): any {
 function crawl(objIn?: any, objOut?: any, schema?: any, list?: any, base?: any, path?: any): any {
     path = path || [];
 
-    var keys = Object.keys(objIn);
+    const keys = Object.keys(objIn);
 
-    for(var i = 0; i < keys.length; i++) {
-        var k = keys[i];
+    for(let i = 0; i < keys.length; i++) {
+        const k = keys[i];
 
-        var p = path.slice();
+        const p = path.slice();
         p.push(k);
 
-        var valIn = objIn[k];
-        var valOut = objOut[k];
+        const valIn = objIn[k];
+        const valOut = objOut[k];
 
-        var nestedSchema: any = getNestedSchema(schema, k);
-        var nestedValType = (nestedSchema || {}).valType;
-        var isInfoArray = nestedValType === 'info_array';
-        var isColorscale = nestedValType === 'colorscale';
-        var items = (nestedSchema || {}).items;
+        const nestedSchema: any = getNestedSchema(schema, k);
+        const nestedValType = (nestedSchema || {}).valType;
+        const isInfoArray = nestedValType === 'info_array';
+        const isColorscale = nestedValType === 'colorscale';
+        const items = (nestedSchema || {}).items;
 
         if(!isInSchema(schema, k)) {
             list.push(format('schema', base, p));
@@ -111,17 +111,17 @@ function crawl(objIn?: any, objOut?: any, schema?: any, list?: any, base?: any, 
             if(valIn.length > valOut.length) {
                 list.push(format('unused', base, p.concat(valOut.length)));
             }
-            var len = valOut.length;
-            var arrayItems = Array.isArray(items);
+            let len = valOut.length;
+            const arrayItems = Array.isArray(items);
             if(arrayItems) len = Math.min(len, items.length);
-            var m, n, item, valInPart, valOutPart;
+            let m, n, item, valInPart, valOutPart;
             if(nestedSchema.dimensions === 2) {
                 for(n = 0; n < len; n++) {
                     if(isArray(valIn[n])) {
                         if(valIn[n].length > valOut[n].length) {
                             list.push(format('unused', base, p.concat(n, valOut[n].length)));
                         }
-                        var len2 = valOut[n].length;
+                        const len2 = valOut[n].length;
                         for(m = 0; m < (arrayItems ? Math.min(len2, items[n].length) : len2); m++) {
                             item = arrayItems ? items[n][m] : items;
                             valInPart = valIn[n][m];
@@ -149,23 +149,23 @@ function crawl(objIn?: any, objOut?: any, schema?: any, list?: any, base?: any, 
                 }
             }
         } else if(nestedSchema.items && !isInfoArray && isArray(valIn)) {
-            var _nestedSchema = items[Object.keys(items)[0]];
-            var indexList = [];
+            const _nestedSchema = items[Object.keys(items)[0]];
+            const indexList: any[] = [];
 
-            var j, _p;
+            let j, _p;
 
             // loop over valOut items while keeping track of their
             // corresponding input container index (given by _index)
             for(j = 0; j < valOut.length; j++) {
-                var _index = valOut[j]._index || j;
+                const _index = valOut[j]._index || j;
 
                 _p = p.slice();
                 _p.push(_index);
 
                 if(isPlainObject(valIn[_index]) && isPlainObject(valOut[j])) {
                     indexList.push(_index);
-                    var valInj = valIn[_index];
-                    var valOutj: any = valOut[j];
+                    const valInj = valIn[_index];
+                    const valOutj: any = valOut[j];
                     if(isPlainObject(valInj) && valInj.visible !== false && valOutj.visible === false) {
                         list.push(format('invisible', base, _p));
                     } else crawl(valInj, valOutj, _nestedSchema, list, base, _p);
@@ -207,12 +207,12 @@ function crawl(objIn?: any, objOut?: any, schema?: any, list?: any, base?: any, 
 
 // the 'full' layout schema depends on the traces types presents
 function fillLayoutSchema(schema?: any, dataOut?: any): any {
-    var layoutSchema = schema.layout.layoutAttributes;
+    const layoutSchema = schema.layout.layoutAttributes;
 
-    for(var i = 0; i < dataOut.length; i++) {
-        var traceOut: any = dataOut[i];
-        var traceSchema: any = schema.traces[traceOut.type];
-        var traceLayoutAttr = traceSchema.layoutAttributes;
+    for(let i = 0; i < dataOut.length; i++) {
+        const traceOut: any = dataOut[i];
+        const traceSchema: any = schema.traces[traceOut.type];
+        const traceLayoutAttr = traceSchema.layoutAttributes;
 
         if(traceLayoutAttr) {
             if(traceOut.subplot) {
@@ -227,9 +227,9 @@ function fillLayoutSchema(schema?: any, dataOut?: any): any {
 }
 
 // validation error codes
-var code2msgFunc: any = {
-    object: function(base, astr) {
-        var prefix;
+const code2msgFunc: any = {
+    object: function(base: any, astr: any) {
+        let prefix;
 
         if(base === 'layout' && astr === '') prefix = 'The layout argument';
         else if(base[0] === 'data' && astr === '') {
@@ -238,23 +238,23 @@ var code2msgFunc: any = {
 
         return prefix + ' must be linked to an object container';
     },
-    array: function(base, astr) {
-        var prefix;
+    array: function(base: any, astr: any) {
+        let prefix;
 
         if(base === 'data') prefix = 'The data argument';
         else prefix = inBase(base) + 'key ' + astr;
 
         return prefix + ' must be linked to an array container';
     },
-    schema: function(base, astr) {
+    schema: function(base: any, astr: any) {
         return inBase(base) + 'key ' + astr + ' is not part of the schema';
     },
-    unused: function(base, astr, valIn) {
-        var target = isPlainObject(valIn) ? 'container' : 'key';
+    unused: function(base: any, astr: any, valIn: any) {
+        const target = isPlainObject(valIn) ? 'container' : 'key';
 
         return inBase(base) + target + ' ' + astr + ' did not get coerced';
     },
-    dynamic: function(base, astr, valIn, valOut) {
+    dynamic: function(base: any, astr: any, valIn: any, valOut: any) {
         return [
             inBase(base) + 'key',
             astr,
@@ -264,12 +264,12 @@ var code2msgFunc: any = {
             'during defaults.'
         ].join(' ');
     },
-    invisible: function(base, astr) {
+    invisible: function(base: any, astr: any) {
         return (
             astr ? (inBase(base) + 'item ' + astr) : ('Trace ' + base[1])
         ) + ' got defaulted to be not visible';
     },
-    value: function(base, astr, valIn) {
+    value: function(base: any, astr: any, valIn: any) {
         return [
             inBase(base) + 'key ' + astr,
             'is set to an invalid value (' + valIn + ')'
@@ -286,7 +286,7 @@ function inBase(base?: any): string {
 function format(code?: any, base?: any, path?: any, valIn?: any, valOut?: any): any {
     path = path || '';
 
-    var container, trace;
+    let container, trace;
 
     // container is either 'data' or 'layout
     // trace is the trace index if 'data', null otherwise
@@ -299,8 +299,8 @@ function format(code?: any, base?: any, path?: any, valIn?: any, valOut?: any): 
         trace = null;
     }
 
-    var astr = convertPathToAttributeString(path);
-    var msg = code2msgFunc[code](base, astr, valIn, valOut);
+    const astr = convertPathToAttributeString(path);
+    const msg = code2msgFunc[code](base, astr, valIn, valOut);
 
     // log to console if logger config option is enabled
     Lib.log(msg);
@@ -316,9 +316,9 @@ function format(code?: any, base?: any, path?: any, valIn?: any, valOut?: any): 
 }
 
 function isInSchema(schema?: any, key?: any): any {
-    var parts = splitKey(key);
-    var keyMinusId = parts.keyMinusId;
-    var id = parts.id;
+    const parts = splitKey(key);
+    const keyMinusId = parts.keyMinusId;
+    const id = parts.id;
 
     if((keyMinusId in schema) && schema[keyMinusId]._isSubplotObj && id) {
         return true;
@@ -330,15 +330,15 @@ function isInSchema(schema?: any, key?: any): any {
 function getNestedSchema(schema?: any, key?: any): any {
     if(key in schema) return schema[key];
 
-    var parts = splitKey(key);
+    const parts = splitKey(key);
 
     return schema[parts.keyMinusId];
 }
 
-var idRegex = Lib.counterRegex('([a-z]+)');
+const idRegex = Lib.counterRegex('([a-z]+)');
 
 function splitKey(key?: any): any {
-    var idMatch = key.match(idRegex);
+    const idMatch = key.match(idRegex);
 
     return {
         keyMinusId: idMatch && idMatch[1],
@@ -349,10 +349,10 @@ function splitKey(key?: any): any {
 function convertPathToAttributeString(path?: any): any {
     if(!isArray(path)) return String(path);
 
-    var astr = '';
+    let astr = '';
 
-    for(var i = 0; i < path.length; i++) {
-        var p = path[i];
+    for(let i = 0; i < path.length; i++) {
+        const p = path[i];
 
         if(typeof p === 'number') {
             astr = astr.slice(0, -1) + '[' + p + ']';

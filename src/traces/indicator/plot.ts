@@ -14,31 +14,31 @@ import handleAxisDefaults from '../../plots/cartesian/axis_defaults.js';
 import handleAxisPositionDefaults from '../../plots/cartesian/position_defaults.js';
 import axisLayoutAttrs from '../../plots/cartesian/layout_attributes.js';
 import Color from '../../components/color/index.js';
-var strScale = Lib.strScale;
-var strTranslate = Lib.strTranslate;
-var rad2deg = Lib.rad2deg;
-var anchor: any = {
+const strScale = Lib.strScale;
+const strTranslate = Lib.strTranslate;
+const rad2deg = Lib.rad2deg;
+const anchor: any = {
     left: 'start',
     center: 'middle',
     right: 'end'
 };
-var position: any = {
+const position: any = {
     left: 0,
     center: 0.5,
     right: 1
 };
 
-var SI_PREFIX = /[yzafpnµmkMGTPEZY]/;
+const SI_PREFIX = /[yzafpnµmkMGTPEZY]/;
 
-function hasTransition(transitionOpts) {
+function hasTransition(transitionOpts: any) {
     // If transition config is provided, then it is only a partial replot and traces not
     // updated are removed.
     return transitionOpts && transitionOpts.duration > 0;
 }
 
-export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallback) {
-    var fullLayout = gd._fullLayout;
-    var onComplete;
+export default function plot(gd: any, cdModule: any, transitionOpts: any, makeOnCompleteCallback: any) {
+    const fullLayout = gd._fullLayout;
+    let onComplete: any;
 
     if(hasTransition(transitionOpts)) {
         if(makeOnCompleteCallback) {
@@ -49,20 +49,20 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
     }
 
-    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(cd) {
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+    Lib.makeTraceGroups(fullLayout._indicatorlayer, cdModule, 'trace').each(function(this: any, cd: any) {
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
-        var plotGroup = select(this);
+        const plotGroup = select(this);
 
         // Elements in trace
-        var hasGauge = trace._hasGauge;
-        var isAngular = trace._isAngular;
-        var isBullet = trace._isBullet;
+        const hasGauge = trace._hasGauge;
+        const isAngular = trace._isAngular;
+        const isBullet = trace._isBullet;
 
         // Domain size
-        var domain = trace.domain;
-        var size = {
+        const domain = trace.domain;
+        const size = {
             w: fullLayout._size.w * (domain.x[1] - domain.x[0]),
             h: fullLayout._size.h * (domain.y[1] - domain.y[0]),
             l: fullLayout._size.l + fullLayout._size.w * domain.x[0],
@@ -70,36 +70,36 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
             t: fullLayout._size.t + fullLayout._size.h * (1 - domain.y[1]),
             b: fullLayout._size.b + fullLayout._size.h * (domain.y[0])
         };
-        var centerX = size.l + size.w / 2;
-        var centerY = size.t + size.h / 2;
+        const centerX = size.l + size.w / 2;
+        const centerY = size.t + size.h / 2;
 
         // Angular gauge size
-        var radius = Math.min(size.w / 2, size.h); // fill domain
-        var innerRadius = cn.innerRadius * radius;
+        const radius = Math.min(size.w / 2, size.h); // fill domain
+        const innerRadius = cn.innerRadius * radius;
 
         // Position numbers based on mode and set the scaling logic
-        var numbersX, numbersY, numbersScaler;
-        var numbersAlign = trace.align || 'center';
+        let numbersX, numbersY, numbersScaler;
+        const numbersAlign = trace.align || 'center';
 
         numbersY = centerY;
         if(!hasGauge) {
             numbersX = size.l + position[numbersAlign] * size.w;
-            numbersScaler = function(el) {
+            numbersScaler = function(el: any) {
                 return fitTextInsideBox(el, size.w, size.h);
             };
         } else {
             if(isAngular) {
                 numbersX = centerX;
                 numbersY = centerY + radius / 2;
-                numbersScaler = function(el) {
+                numbersScaler = function(el: any) {
                     return fitTextInsideCircle(el, 0.9 * innerRadius);
                 };
             }
             if(isBullet) {
-                var padding = cn.bulletPadding;
-                var p = (1 - cn.bulletNumberDomainSize) + padding;
+                const padding = cn.bulletPadding;
+                const p = (1 - cn.bulletNumberDomainSize) + padding;
                 numbersX = size.l + (p + (1 - p) * position[numbersAlign]) * size.w;
-                numbersScaler = function(el) {
+                numbersScaler = function(el: any) {
                     return fitTextInsideBox(el, (cn.bulletNumberDomainSize - padding) * size.w, size.h);
                 };
             }
@@ -115,7 +115,7 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         });
 
         // Reexpress our gauge background attributes for drawing
-        var gaugeBg, gaugeOutline;
+        let gaugeBg, gaugeOutline;
         if(hasGauge) {
             gaugeBg = {
                 range: trace.gauge.axis.range,
@@ -139,9 +139,9 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
 
         // Prepare angular gauge layers
-        var angularGauge = plotGroup.selectAll('g.angular').data(isAngular ? cd : []);
+        const angularGauge = plotGroup.selectAll('g.angular').data(isAngular ? cd : []);
         angularGauge.exit().remove();
-        var angularaxisLayer = plotGroup.selectAll('g.angularaxis').data(isAngular ? cd : []);
+        const angularaxisLayer = plotGroup.selectAll('g.angularaxis').data(isAngular ? cd : []);
         angularaxisLayer.exit().remove();
 
         if(isAngular) {
@@ -160,9 +160,9 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
 
         // Prepare bullet layers
-        var bulletGauge = plotGroup.selectAll('g.bullet').data(isBullet ? cd : []);
+        const bulletGauge = plotGroup.selectAll('g.bullet').data(isBullet ? cd : []);
         bulletGauge.exit().remove();
-        var bulletaxisLayer = plotGroup.selectAll('g.bulletaxis').data(isBullet ? cd : []);
+        const bulletaxisLayer = plotGroup.selectAll('g.bulletaxis').data(isBullet ? cd : []);
         bulletaxisLayer.exit().remove();
 
         if(isBullet) {
@@ -178,9 +178,9 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
         }
 
         // title
-        var title = plotGroup.selectAll('text.title').data(cd);
-        title.exit().remove();
-        title.enter().append('text').classed('title', true);
+        const titleJoin = plotGroup.selectAll('text.title').data(cd);
+        titleJoin.exit().remove();
+        const title = titleJoin.enter().append('text').classed('title', true).merge(titleJoin);
         title
             .attr('text-anchor', function() {
                 return isBullet ? anchor.right : anchor[trace.title.align];
@@ -191,15 +191,15 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
 
         // Position title
         title.attr('transform', function() {
-            var titleX = size.l + size.w * position[trace.title.align];
-            var titleY;
-            var titlePadding = cn.titlePadding;
-            var titlebBox = drawingBBox(title.node());
+            let titleX = size.l + size.w * position[trace.title.align];
+            let titleY;
+            const titlePadding = cn.titlePadding;
+            const titlebBox = drawingBBox(title.node());
             if(hasGauge) {
                 if(isAngular) {
                     // position above axis ticks/labels
                     if(trace.gauge.axis.visible) {
-                        var bBox = drawingBBox(angularaxisLayer.node());
+                        const bBox = drawingBBox(angularaxisLayer.node());
                         titleY = (bBox.top - titlePadding) - titlebBox.bottom;
                     } else {
                         titleY = size.t + size.h / 2 - radius / 2 - titlebBox.bottom - titlePadding;
@@ -219,36 +219,38 @@ export default function plot(gd, cdModule, transitionOpts, makeOnCompleteCallbac
     });
 }
 
-function drawBulletGauge(gd, plotGroup, cd, opts) {
-    var trace = cd[0].trace;
+function drawBulletGauge(gd: any, plotGroup: any, cd: any, opts: any) {
+    const trace = cd[0].trace;
 
-    var bullet = opts.gauge;
-    var axisLayer = opts.layer;
-    var gaugeBg = opts.gaugeBg;
-    var gaugeOutline = opts.gaugeOutline;
-    var size = opts.size;
-    var domain = trace.domain;
+    const bullet = opts.gauge;
+    const axisLayer = opts.layer;
+    const gaugeBg = opts.gaugeBg;
+    const gaugeOutline = opts.gaugeOutline;
+    const size = opts.size;
+    const domain = trace.domain;
 
-    var transitionOpts = opts.transitionOpts;
-    var onComplete = opts.onComplete;
+    const transitionOpts = opts.transitionOpts;
+    const onComplete = opts.onComplete;
 
     // preparing axis
-    var ax, vals, transFn, tickSign, shift;
+    let ax: any, vals, transFn, tickSign, shift;
 
     // Enter bullet, axis
-    bullet.enter().append('g').classed('bullet', true);
-    bullet.attr('transform', strTranslate(size.l, size.t));
+    const bulletEnter = bullet.enter().append('g').classed('bullet', true);
+    const bulletMerged = bullet.merge(bulletEnter);
+    bulletMerged.attr('transform', strTranslate(size.l, size.t));
 
-    axisLayer.enter().append('g')
+    const axisLayerEnter = axisLayer.enter().append('g')
         .classed('bulletaxis', true)
         .classed('crisp', true);
-    axisLayer.selectAll('g.' + 'xbulletaxis' + 'tick,path,text').remove();
+    const axisLayerMerged = axisLayer.merge(axisLayerEnter);
+    axisLayerMerged.selectAll('g.' + 'xbulletaxis' + 'tick,path,text').remove();
 
     // Draw bullet
-    var bulletHeight = size.h; // use all vertical domain
-    var innerBulletHeight = trace.gauge.bar.thickness * bulletHeight;
-    var bulletLeft = domain.x[0];
-    var bulletRight = domain.x[0] + (domain.x[1] - domain.x[0]) * ((trace._hasNumber || trace._hasDelta) ? (1 - cn.bulletNumberDomainSize) : 1);
+    const bulletHeight = size.h; // use all vertical domain
+    const innerBulletHeight = trace.gauge.bar.thickness * bulletHeight;
+    const bulletLeft = domain.x[0];
+    const bulletRight = domain.x[0] + (domain.x[1] - domain.x[0]) * ((trace._hasNumber || trace._hasDelta) ? (1 - cn.bulletNumberDomainSize) : 1);
 
     // @ts-expect-error mockAxis called with 2 args (3rd is optional)
     ax = mockAxis(gd, trace.gauge.axis);
@@ -264,39 +266,42 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
     if(ax.visible) {
         Axes.drawTicks(gd, ax, {
             vals: ax.ticks === 'inside' ? Axes.clipEnds(ax, vals) : vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             path: Axes.makeTickPath(ax, shift, tickSign),
             transFn: transFn
         });
 
         Axes.drawLabels(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             transFn: transFn,
             labelFns: Axes.makeLabelFns(ax, shift)
         });
     }
 
-    function drawRect(s) {
+    function drawRect(s: any) {
         s
-            .attr('width', function(d) { return Math.max(0, ax.c2p(d.range[1]) - ax.c2p(d.range[0]));})
-            .attr('x', function(d) { return ax.c2p(d.range[0]);})
-            .attr('y', function(d) { return 0.5 * (1 - d.thickness) * bulletHeight;})
-            .attr('height', function(d) { return d.thickness * bulletHeight; });
+            .attr('width', function(d: any) { return Math.max(0, ax.c2p(d.range[1]) - ax.c2p(d.range[0]));})
+            .attr('x', function(d: any) { return ax.c2p(d.range[0]);})
+            .attr('y', function(d: any) { return 0.5 * (1 - d.thickness) * bulletHeight;})
+            .attr('height', function(d: any) { return d.thickness * bulletHeight; });
     }
 
     // Draw bullet background, steps
-    var boxes = [gaugeBg].concat(trace.gauge.steps);
-    var bgBullet = bullet.selectAll('g.bg-bullet').data(boxes);
-    bgBullet.enter().append('g').classed('bg-bullet', true).append('rect');
-    bgBullet.select('rect')
+    const boxes = [gaugeBg].concat(trace.gauge.steps);
+    const bgBullet = bulletMerged.selectAll('g.bg-bullet').data(boxes);
+    const bgBulletEnter = bgBullet.enter().append('g').classed('bg-bullet', true);
+    bgBulletEnter.append('rect');
+    bgBullet.merge(bgBulletEnter).select('rect')
         .call(drawRect)
         .call(styleShape);
     bgBullet.exit().remove();
 
     // Draw value bar with transitions
-    var fgBullet = bullet.selectAll('g.value-bullet').data([trace.gauge.bar]);
-    fgBullet.enter().append('g').classed('value-bullet', true).append('rect');
+    const fgBulletJoin = bulletMerged.selectAll('g.value-bullet').data([trace.gauge.bar]);
+    const fgBulletEnter = fgBulletJoin.enter().append('g').classed('value-bullet', true);
+    fgBulletEnter.append('rect');
+    const fgBullet = fgBulletJoin.merge(fgBulletEnter);
     fgBullet.select('rect')
         .attr('height', innerBulletHeight)
         .attr('y', (bulletHeight - innerBulletHeight) / 2)
@@ -315,64 +320,66 @@ function drawBulletGauge(gd, plotGroup, cd, opts) {
                 Math.max(0, ax.c2p(Math.min(trace.gauge.axis.range[1], cd[0].y))) :
                 0);
     }
-    fgBullet.exit().remove();
+    fgBulletJoin.exit().remove();
 
-    var data = cd.filter(function() {return trace.gauge.threshold.value || trace.gauge.threshold.value === 0;});
-    var threshold = bullet.selectAll('g.threshold-bullet').data(data);
-    threshold.enter().append('g').classed('threshold-bullet', true).append('line');
-    threshold.select('line')
+    const data = cd.filter(function() {return trace.gauge.threshold.value || trace.gauge.threshold.value === 0;});
+    const thresholdJoin = bulletMerged.selectAll('g.threshold-bullet').data(data);
+    const thresholdEnter = thresholdJoin.enter().append('g').classed('threshold-bullet', true);
+    thresholdEnter.append('line');
+    thresholdJoin.merge(thresholdEnter).select('line')
         .attr('x1', ax.c2p(trace.gauge.threshold.value))
         .attr('x2', ax.c2p(trace.gauge.threshold.value))
         .attr('y1', (1 - trace.gauge.threshold.thickness) / 2 * bulletHeight)
         .attr('y2', (1 - (1 - trace.gauge.threshold.thickness) / 2) * bulletHeight)
         .call(Color.stroke, trace.gauge.threshold.line.color)
         .style('stroke-width', trace.gauge.threshold.line.width);
-    threshold.exit().remove();
+    thresholdJoin.exit().remove();
 
-    var bulletOutline = bullet.selectAll('g.gauge-outline').data([gaugeOutline]);
-    bulletOutline.enter().append('g').classed('gauge-outline', true).append('rect');
-    bulletOutline.select('rect')
+    const bulletOutlineJoin = bulletMerged.selectAll('g.gauge-outline').data([gaugeOutline]);
+    const bulletOutlineEnter = bulletOutlineJoin.enter().append('g').classed('gauge-outline', true);
+    bulletOutlineEnter.append('rect');
+    bulletOutlineJoin.merge(bulletOutlineEnter).select('rect')
         .call(drawRect)
         .call(styleShape);
-    bulletOutline.exit().remove();
+    bulletOutlineJoin.exit().remove();
 }
 
-function drawAngularGauge(gd, plotGroup, cd, opts) {
-    var trace = cd[0].trace;
+function drawAngularGauge(gd: any, plotGroup: any, cd: any, opts: any) {
+    const trace = cd[0].trace;
 
-    var size = opts.size;
-    var radius = opts.radius;
-    var innerRadius = opts.innerRadius;
-    var gaugeBg = opts.gaugeBg;
-    var gaugeOutline = opts.gaugeOutline;
-    var gaugePosition = [size.l + size.w / 2, size.t + size.h / 2 + radius / 2];
-    var gauge = opts.gauge;
-    var axisLayer = opts.layer;
+    const size = opts.size;
+    const radius = opts.radius;
+    const innerRadius = opts.innerRadius;
+    const gaugeBg = opts.gaugeBg;
+    const gaugeOutline = opts.gaugeOutline;
+    const gaugePosition = [size.l + size.w / 2, size.t + size.h / 2 + radius / 2];
+    const gauge = opts.gauge;
+    const axisLayer = opts.layer;
 
-    var transitionOpts = opts.transitionOpts;
-    var onComplete = opts.onComplete;
+    const transitionOpts = opts.transitionOpts;
+    const onComplete = opts.onComplete;
 
     // circular gauge
-    var theta = Math.PI / 2;
-    function valueToAngle(v) {
-        var min = trace.gauge.axis.range[0];
-        var max = trace.gauge.axis.range[1];
-        var angle = (v - min) / (max - min) * Math.PI - theta;
+    const theta = Math.PI / 2;
+    function valueToAngle(v: any) {
+        const min = trace.gauge.axis.range[0];
+        const max = trace.gauge.axis.range[1];
+        const angle = (v - min) / (max - min) * Math.PI - theta;
         if(angle < -theta) return -theta;
         if(angle > theta) return theta;
         return angle;
     }
 
-    function arcPathGenerator(size) {
+    function arcPathGenerator(size: any) {
         return d3Arc()
                   .innerRadius((innerRadius + radius) / 2 - size / 2 * (radius - innerRadius))
                   .outerRadius((innerRadius + radius) / 2 + size / 2 * (radius - innerRadius))
                   .startAngle(-theta);
     }
 
-    function drawArc(p) {
+    function drawArc(p: any) {
         p
-            .attr('d', function(d) {
+            .attr('d', function(d: any) {
                 return arcPathGenerator(d.thickness)
                   .startAngle(valueToAngle(d.range[0]))
                   .endAngle(valueToAngle(d.range[1]))();
@@ -380,16 +387,18 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
     }
 
     // preparing axis
-    var ax, vals, transFn, tickSign;
+    let ax, vals, transFn, tickSign;
 
     // Enter gauge and axis
-    gauge.enter().append('g').classed('angular', true);
-    gauge.attr('transform', strTranslate(gaugePosition[0], gaugePosition[1]));
+    const gaugeEnter = gauge.enter().append('g').classed('angular', true);
+    const gaugeMerged = gauge.merge(gaugeEnter);
+    gaugeMerged.attr('transform', strTranslate(gaugePosition[0], gaugePosition[1]));
 
-    axisLayer.enter().append('g')
+    const axisLayerEnter = axisLayer.enter().append('g')
         .classed('angularaxis', true)
         .classed('crisp', true);
-    axisLayer.selectAll('g.' + 'xangularaxis' + 'tick,path,text').remove();
+    const axisLayerMerged = axisLayer.merge(axisLayerEnter);
+    axisLayerMerged.selectAll('g.' + 'xangularaxis' + 'tick,path,text').remove();
 
     // @ts-expect-error mockAxis called with 2 args (3rd is optional)
     ax = mockAxis(gd, trace.gauge.axis);
@@ -400,78 +409,81 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
     ax.setScale();
 
     // 't'ick to 'g'eometric radians is used all over the place here
-    var t2g = function(d) {
+    const t2g = function(d: any) {
         return (ax.range[0] - d.x) / (ax.range[1] - ax.range[0]) * Math.PI + Math.PI;
     };
 
-    var labelFns: Record<string, any> = {};
-    var out = Axes.makeLabelFns(ax, 0);
-    var labelStandoff = out.labelStandoff;
-    labelFns.xFn = function(d) {
-        var rad = t2g(d);
+    const labelFns: Record<string, any> = {};
+    const out = Axes.makeLabelFns(ax, 0);
+    const labelStandoff = out.labelStandoff;
+    labelFns.xFn = function(d: any) {
+        const rad = t2g(d);
         return Math.cos(rad) * labelStandoff;
     };
-    labelFns.yFn = function(d) {
-        var rad = t2g(d);
-        var ff = Math.sin(rad) > 0 ? 0.2 : 1;
+    labelFns.yFn = function(d: any) {
+        const rad = t2g(d);
+        const ff = Math.sin(rad) > 0 ? 0.2 : 1;
         return -Math.sin(rad) * (labelStandoff + d.fontSize * ff) +
                 Math.abs(Math.cos(rad)) * (d.fontSize * MID_SHIFT);
     };
-    labelFns.anchorFn = function(d) {
-        var rad = t2g(d);
-        var cos = Math.cos(rad);
+    labelFns.anchorFn = function(d: any) {
+        const rad = t2g(d);
+        const cos = Math.cos(rad);
         return Math.abs(cos) < 0.1 ?
                 'middle' :
                 (cos > 0 ? 'start' : 'end');
     };
-    labelFns.heightFn = function(d, a, h) {
-        var rad = t2g(d);
+    labelFns.heightFn = function(d: any, a: any, h: any) {
+        const rad = t2g(d);
         return -0.5 * (1 + Math.sin(rad)) * h;
     };
-    var _transFn = function(rad) {
+    const _transFn = function(rad: any) {
         return strTranslate(
             gaugePosition[0] + radius * Math.cos(rad),
             gaugePosition[1] - radius * Math.sin(rad)
         );
     };
-    transFn = function(d) {
+    transFn = function(d: any) {
         return _transFn(t2g(d));
     };
-    var transFn2 = function(d) {
-        var rad = t2g(d);
+    const transFn2 = function(d: any) {
+        const rad = t2g(d);
         return _transFn(rad) + 'rotate(' + -rad2deg(rad) + ')';
     };
     vals = Axes.calcTicks(ax);
     tickSign = Axes.getTickSigns(ax)[2];
     if(ax.visible) {
         tickSign = ax.ticks === 'inside' ? -1 : 1;
-        var pad = (ax.linewidth || 1) / 2;
+        const pad = (ax.linewidth || 1) / 2;
         Axes.drawTicks(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             path: 'M' + (tickSign * pad) + ',0h' + (tickSign * ax.ticklen),
             transFn: transFn2
         });
         Axes.drawLabels(gd, ax, {
             vals: vals,
-            layer: axisLayer,
+            layer: axisLayerMerged,
             transFn: transFn,
             labelFns: labelFns
         });
     }
 
     // Draw background + steps
-    var arcs = [gaugeBg].concat(trace.gauge.steps);
-    var bgArc = gauge.selectAll('g.bg-arc').data(arcs);
-    bgArc.enter().append('g').classed('bg-arc', true).append('path');
-    bgArc.select('path').call(drawArc).call(styleShape);
-    bgArc.exit().remove();
+    let arcs = [gaugeBg].concat(trace.gauge.steps);
+    const bgArcJoin = gaugeMerged.selectAll('g.bg-arc').data(arcs);
+    const bgArcEnter = bgArcJoin.enter().append('g').classed('bg-arc', true);
+    bgArcEnter.append('path');
+    bgArcJoin.merge(bgArcEnter).select('path').call(drawArc).call(styleShape);
+    bgArcJoin.exit().remove();
 
     // Draw foreground with transition
-    var valueArcPathGenerator = arcPathGenerator(trace.gauge.bar.thickness);
-    var valueArc = gauge.selectAll('g.value-arc').data([trace.gauge.bar]);
-    valueArc.enter().append('g').classed('value-arc', true).append('path');
-    var valueArcPath = valueArc.select('path');
+    const valueArcPathGenerator = arcPathGenerator(trace.gauge.bar.thickness);
+    const valueArcJoin = gaugeMerged.selectAll('g.value-arc').data([trace.gauge.bar]);
+    const valueArcEnter = valueArcJoin.enter().append('g').classed('value-arc', true);
+    valueArcEnter.append('path');
+    const valueArc = valueArcJoin.merge(valueArcEnter);
+    const valueArcPath = valueArc.select('path');
     if(hasTransition(transitionOpts)) {
         valueArcPath
             .transition()
@@ -487,11 +499,11 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
             'M0,0Z');
     }
     valueArcPath.call(styleShape);
-    valueArc.exit().remove();
+    valueArcJoin.exit().remove();
 
     // Draw threshold
     arcs = [];
-    var v = trace.gauge.threshold.value;
+    const v = trace.gauge.threshold.value;
     if(v || v === 0) {
         arcs.push({
             range: [v, v],
@@ -503,44 +515,46 @@ function drawAngularGauge(gd, plotGroup, cd, opts) {
             thickness: trace.gauge.threshold.thickness
         });
     }
-    var thresholdArc = gauge.selectAll('g.threshold-arc').data(arcs);
-    thresholdArc.enter().append('g').classed('threshold-arc', true).append('path');
-    thresholdArc.select('path').call(drawArc).call(styleShape);
-    thresholdArc.exit().remove();
+    const thresholdArcJoin = gaugeMerged.selectAll('g.threshold-arc').data(arcs);
+    const thresholdArcEnter = thresholdArcJoin.enter().append('g').classed('threshold-arc', true);
+    thresholdArcEnter.append('path');
+    thresholdArcJoin.merge(thresholdArcEnter).select('path').call(drawArc).call(styleShape);
+    thresholdArcJoin.exit().remove();
 
     // Draw border last
-    var gaugeBorder = gauge.selectAll('g.gauge-outline').data([gaugeOutline]);
-    gaugeBorder.enter().append('g').classed('gauge-outline', true).append('path');
-    gaugeBorder.select('path').call(drawArc).call(styleShape);
-    gaugeBorder.exit().remove();
+    const gaugeBorderJoin = gaugeMerged.selectAll('g.gauge-outline').data([gaugeOutline]);
+    const gaugeBorderEnter = gaugeBorderJoin.enter().append('g').classed('gauge-outline', true);
+    gaugeBorderEnter.append('path');
+    gaugeBorderJoin.merge(gaugeBorderEnter).select('path').call(drawArc).call(styleShape);
+    gaugeBorderJoin.exit().remove();
 }
 
-function drawNumbers(gd, plotGroup, cd, opts) {
-    var trace = cd[0].trace;
+function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
+    const trace = cd[0].trace;
 
-    var numbersX = opts.numbersX;
-    var numbersY = opts.numbersY;
-    var numbersAlign = trace.align || 'center';
-    var numbersAnchor = anchor[numbersAlign];
+    const numbersX = opts.numbersX;
+    const numbersY = opts.numbersY;
+    const numbersAlign = trace.align || 'center';
+    const numbersAnchor = anchor[numbersAlign];
 
-    var transitionOpts = opts.transitionOpts;
-    var onComplete = opts.onComplete;
+    const transitionOpts = opts.transitionOpts;
+    const onComplete = opts.onComplete;
 
-    var numbers = Lib.ensureSingle(plotGroup, 'g', 'numbers');
-    var bignumberbBox, deltabBox;
-    var numbersbBox;
+    const numbers = Lib.ensureSingle(plotGroup, 'g', 'numbers');
+    let bignumberbBox: any, deltabBox: any;
+    let numbersbBox: any;
 
-    var data = [];
+    const data: any[] = [];
     if(trace._hasNumber) data.push('number');
     if(trace._hasDelta) {
         data.push('delta');
         if(trace.delta.position === 'left') data.reverse();
     }
-    var sel = numbers.selectAll('text').data(data);
-    sel.enter().append('text');
+    const selJoin = numbers.selectAll('text').data(data);
+    const sel = selJoin.enter().append('text').merge(selJoin);
     sel
         .attr('text-anchor', function() {return numbersAnchor;})
-        .attr('class', function(d) { return d;})
+        .attr('class', function(d: any) { return d;})
         .attr('x', null)
         .attr('y', null)
         .attr('dx', null)
@@ -548,16 +562,16 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     sel.exit().remove();
 
     // Function to override the number formatting used during transitions
-    function transitionFormat(valueformat, fmt, from, to) {
+    function transitionFormat(valueformat: any, fmt: any, from: any, to: any) {
         // For now, do not display SI prefix if start and end value do not have any
         if(valueformat.match('s') && // If using SI prefix
             (from >= 0 !== to >= 0) && // If sign change
             (!fmt(from).slice(-1).match(SI_PREFIX) && !fmt(to).slice(-1).match(SI_PREFIX)) // Has no SI prefix
         ) {
-            var transitionValueFormat = valueformat.slice().replace('s', 'f').replace(/\d+/, function(m) { return parseInt(m) - 1;});
+            const transitionValueFormat = valueformat.slice().replace('s', 'f').replace(/\d+/, function(m: any) { return parseInt(m) - 1;});
             // @ts-expect-error mockAxis called with 2 args (3rd is optional)
-            var transitionAx = mockAxis(gd, {tickformat: transitionValueFormat});
-            return function(v) {
+            const transitionAx = mockAxis(gd, {tickformat: transitionValueFormat});
+            return function(v: any) {
                 // Switch to fixed precision if number is smaller than one
                 if(Math.abs(v) < 1) return Axes.tickText(transitionAx, v).text;
                 return fmt(v);
@@ -568,18 +582,18 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     }
 
     function drawBignumber() {
-        var bignumberAx = mockAxis(gd, {tickformat: trace.number.valueformat}, trace._range);
+        const bignumberAx = mockAxis(gd, {tickformat: trace.number.valueformat}, trace._range);
         bignumberAx.setScale();
         Axes.prepTicks(bignumberAx);
 
-        var bignumberFmt = function(v) { return Axes.tickText(bignumberAx, v).text;};
-        var bignumberSuffix = trace.number.suffix;
-        var bignumberPrefix = trace.number.prefix;
+        const bignumberFmt = function(v: any) { return Axes.tickText(bignumberAx, v).text;};
+        const bignumberSuffix = trace.number.suffix;
+        const bignumberPrefix = trace.number.prefix;
 
-        var number = numbers.select('text.number');
+        const number = numbers.select('text.number');
 
         function writeNumber() {
-            var txt = typeof cd[0].y === 'number' ?
+            const txt = typeof cd[0].y === 'number' ?
                 bignumberPrefix + bignumberFmt(cd[0].y) + bignumberSuffix :
                 '-';
             number.text(txt)
@@ -594,13 +608,13 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .ease(transitionOpts.easing)
                 .on('end', function() { writeNumber(); onComplete && onComplete(); })
                 .on('interrupt', function() { writeNumber(); onComplete && onComplete(); })
-                .attrTween('text', function() {
-                    var that = select(this);
-                    var interpolator = interpolateNumber(cd[0].lastY, cd[0].y);
+                .attrTween('text', function(this: any) {
+                    const that = select(this);
+                    const interpolator = interpolateNumber(cd[0].lastY, cd[0].y);
                     trace._lastValue = cd[0].y;
 
-                    var transitionFmt = transitionFormat(trace.number.valueformat, bignumberFmt, cd[0].lastY, cd[0].y);
-                    return function(t) {
+                    const transitionFmt = transitionFormat(trace.number.valueformat, bignumberFmt, cd[0].lastY, cd[0].y);
+                    return function(t: any) {
                         that.text(bignumberPrefix + transitionFmt(interpolator(t)) + bignumberSuffix);
                     };
                 });
@@ -613,29 +627,29 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     }
 
     function drawDelta() {
-        var deltaAx = mockAxis(gd, {tickformat: trace.delta.valueformat}, trace._range);
+        const deltaAx = mockAxis(gd, {tickformat: trace.delta.valueformat}, trace._range);
         deltaAx.setScale();
         Axes.prepTicks(deltaAx);
 
-        var deltaFmt = function(v) { return Axes.tickText(deltaAx, v).text;};
-        var deltaSuffix = trace.delta.suffix;
-        var deltaPrefix = trace.delta.prefix;
+        const deltaFmt = function(v: any) { return Axes.tickText(deltaAx, v).text;};
+        const deltaSuffix = trace.delta.suffix;
+        const deltaPrefix = trace.delta.prefix;
 
-        var deltaValue = function(d) {
-            var value = trace.delta.relative ? d.relativeDelta : d.delta;
+        const deltaValue = function(d: any) {
+            const value = trace.delta.relative ? d.relativeDelta : d.delta;
             return value;
         };
-        var deltaFormatText = function(value, numberFmt) {
+        const deltaFormatText = function(value: any, numberFmt: any) {
             if(value === 0 || typeof value !== 'number' || isNaN(value)) return '-';
             return (value > 0 ? trace.delta.increasing.symbol : trace.delta.decreasing.symbol) + deltaPrefix + numberFmt(value) + deltaSuffix;
         };
-        var deltaFill = function(d) {
+        const deltaFill = function(d: any) {
             return d.delta >= 0 ? trace.delta.increasing.color : trace.delta.decreasing.color;
         };
         if(trace._deltaLastValue === undefined) {
             trace._deltaLastValue = deltaValue(cd[0]);
         }
-        var delta = numbers.select('text.delta');
+        const delta = numbers.select('text.delta');
         delta
             .call(font, trace.delta.font)
             .call(Color.fill, deltaFill({delta: trace._deltaLastValue}));
@@ -651,14 +665,14 @@ function drawNumbers(gd, plotGroup, cd, opts) {
                 .transition()
                 .duration(transitionOpts.duration)
                 .ease(transitionOpts.easing)
-                .tween('text', function() {
-                    var that = select(this);
-                    var to = deltaValue(cd[0]);
-                    var from = trace._deltaLastValue;
-                    var transitionFmt = transitionFormat(trace.delta.valueformat, deltaFmt, from, to);
-                    var interpolator = interpolateNumber(from, to);
+                .tween('text', function(this: any) {
+                    const that = select(this);
+                    const to = deltaValue(cd[0]);
+                    const from = trace._deltaLastValue;
+                    const transitionFmt = transitionFormat(trace.delta.valueformat, deltaFmt, from, to);
+                    const interpolator = interpolateNumber(from, to);
                     trace._deltaLastValue = to;
-                    return function(t) {
+                    return function(t: any) {
                         that.text(deltaFormatText(interpolator(t), transitionFmt));
                         that.call(Color.fill, deltaFill({delta: interpolator(t)}));
                     };
@@ -673,8 +687,8 @@ function drawNumbers(gd, plotGroup, cd, opts) {
         return delta;
     }
 
-    var key = trace.mode + trace.align;
-    var delta;
+    let key = trace.mode + trace.align;
+    let delta;
     if(trace._hasDelta) {
         delta = drawDelta();
         key += trace.delta.position + trace.delta.font.size + trace.delta.font.family + trace.delta.valueformat;
@@ -689,17 +703,17 @@ function drawNumbers(gd, plotGroup, cd, opts) {
 
     // Position delta relative to bignumber
     if(trace._hasDelta && trace._hasNumber) {
-        var bignumberCenter = [
+        const bignumberCenter = [
             (bignumberbBox.left + bignumberbBox.right) / 2,
             (bignumberbBox.top + bignumberbBox.bottom) / 2
         ];
-        var deltaCenter = [
+        const deltaCenter = [
             (deltabBox.left + deltabBox.right) / 2,
             (deltabBox.top + deltabBox.bottom) / 2
         ];
 
-        var dx, dy;
-        var padding = 0.75 * trace.delta.font.size;
+        let dx, dy;
+        const padding = 0.75 * trace.delta.font.size;
         if(trace.delta.position === 'left') {
             dx = cache(trace, 'deltaPos', 0, -1 * (bignumberbBox.width * (position[trace.align]) + deltabBox.width * (1 - position[trace.align]) + padding), key, Math.min);
             dy = bignumberCenter[1] - deltaCenter[1];
@@ -753,16 +767,18 @@ function drawNumbers(gd, plotGroup, cd, opts) {
             };
         }
 
-        delta.attr({dx: dx, dy: dy});
+        delta
+            .attr('dx', dx)
+            .attr('dy', dy);
     }
 
     // Resize numbers to fit within space and position
     if(trace._hasNumber || trace._hasDelta) {
         numbers.attr('transform', function() {
-            var m = opts.numbersScaler(numbersbBox);
+            const m = opts.numbersScaler(numbersbBox);
             key += m[2];
-            var scaleRatio = cache(trace, 'numbersScale', 1, m[0], key, Math.min);
-            var translateY;
+            let scaleRatio = cache(trace, 'numbersScale', 1, m[0], key, Math.min);
+            let translateY;
             if(!trace._scaleNumbers) scaleRatio = 1;
             if(trace._isAngular) {
                 // align vertically to bottom
@@ -775,9 +791,9 @@ function drawNumbers(gd, plotGroup, cd, opts) {
             // Stash the top position of numbersbBox for title positioning
             trace._numbersTop = scaleRatio * (numbersbBox.top) + translateY;
 
-            var ref = numbersbBox[numbersAlign];
+            let ref = numbersbBox[numbersAlign];
             if(numbersAlign === 'center') ref = (numbersbBox.left + numbersbBox.right) / 2;
-            var translateX = numbersX - scaleRatio * ref;
+            let translateX = numbersX - scaleRatio * ref;
 
             // Stash translateX
             translateX = cache(trace, 'numbersTranslate', 0, translateX, key, Math.max);
@@ -787,41 +803,41 @@ function drawNumbers(gd, plotGroup, cd, opts) {
 }
 
 // Apply fill, stroke, stroke-width to SVG shape
-function styleShape(p) {
+function styleShape(p: any) {
     p
-        .each(function(d) { Color.stroke(select(this), d.line.color);})
-        .each(function(d) { Color.fill(select(this), d.color);})
-        .style('stroke-width', function(d) { return d.line.width;});
+        .each(function(this: any, d: any) { Color.stroke(select(this), d.line.color);})
+        .each(function(this: any, d: any) { Color.fill(select(this), d.color);})
+        .style('stroke-width', function(d: any) { return d.line.width;});
 }
 
 // Returns a tween for a transition’s "d" attribute, transitioning any selected
 // arcs from their current angle to the specified new angle.
-function arcTween(arc, endAngle, newAngle) {
+function arcTween(arc: any, endAngle: any, newAngle: any) {
     return function() {
-        var interp = interpolate(endAngle, newAngle);
-        return function(t) {
+        const interp = interpolate(endAngle, newAngle);
+        return function(t: any) {
             return arc.endAngle(interp(t))();
         };
     };
 }
 
 // mocks our axis
-function mockAxis(gd, opts, zrange) {
-    var fullLayout = gd._fullLayout;
+function mockAxis(gd: any, opts: any, zrange: any) {
+    const fullLayout = gd._fullLayout;
 
-    var axisIn = Lib.extendFlat({
+    const axisIn = Lib.extendFlat({
         type: 'linear',
         ticks: 'outside',
         range: zrange,
         showline: true
     }, opts);
 
-    var axisOut: Record<string, any> = {
+    const axisOut: Record<string, any> = {
         type: 'linear',
         _id: 'x' + opts._id
     };
 
-    var axisOptions = {
+    const axisOptions = {
         letter: 'x',
         font: fullLayout.font,
         noAutotickangles: true,
@@ -839,22 +855,22 @@ function mockAxis(gd, opts, zrange) {
     return axisOut;
 }
 
-function fitTextInsideBox(textBB, width, height) {
+function fitTextInsideBox(textBB: any, width: any, height: any) {
     // compute scaling ratio to have text fit within specified width and height
-    var ratio = Math.min(width / textBB.width, height / textBB.height);
+    const ratio = Math.min(width / textBB.width, height / textBB.height);
     return [ratio, textBB, width + 'x' + height];
 }
 
-function fitTextInsideCircle(textBB, radius) {
+function fitTextInsideCircle(textBB: any, radius: any) {
     // compute scaling ratio to have text fit within specified radius
-    var elRadius = Math.sqrt((textBB.width / 2) * (textBB.width / 2) + textBB.height * textBB.height);
-    var ratio = radius / elRadius;
+    const elRadius = Math.sqrt((textBB.width / 2) * (textBB.width / 2) + textBB.height * textBB.height);
+    const ratio = radius / elRadius;
     return [ratio, textBB, radius];
 }
 
-function measureText(txt, font, textAnchor, gd) {
-    var element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    var sel = select(element);
+function measureText(txt: any, font: any, textAnchor: any, gd: any) {
+    const element = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    const sel = select(element);
     sel.text(txt)
       .attr('x', 0)
       .attr('y', 0)
@@ -865,12 +881,12 @@ function measureText(txt, font, textAnchor, gd) {
     return drawingBBox(sel.node());
 }
 
-function cache(trace, name, initialValue, value, key, fn) {
-    var objName = '_cache' + name;
+function cache(trace: any, name: any, initialValue: any, value: any, key: any, fn: any) {
+    const objName = '_cache' + name;
     if(!(trace[objName] && trace[objName].key === key)) {
         trace[objName] = {key: key, value: initialValue};
     }
-    var v = Lib.aggNums(fn, null, [trace[objName].value, value], 2);
+    const v = Lib.aggNums(fn, null, [trace[objName].value, value], 2);
     trace[objName].value = v;
 
     return v;

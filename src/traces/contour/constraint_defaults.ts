@@ -5,18 +5,18 @@ import Color from '../../components/color/index.js';
 import filterOps from '../../constants/filter_ops.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
-var addOpacity = Color.addOpacity;
-var opacity = Color.opacity;
+const addOpacity = Color.addOpacity;
+const opacity = Color.opacity;
 
-var CONSTRAINT_REDUCTION = filterOps.CONSTRAINT_REDUCTION;
-var COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
+const CONSTRAINT_REDUCTION = filterOps.CONSTRAINT_REDUCTION;
+const COMPARISON_OPS2 = filterOps.COMPARISON_OPS2;
 
 export default function handleConstraintDefaults(traceIn: InputTrace, traceOut: FullTrace, coerce: any, layout: FullLayout, defaultColor: string, opts?: any) {
-    var contours = traceOut.contours;
-    var showLines, lineColor, fillColor;
+    const contours = traceOut.contours;
+    let showLines, lineColor, fillColor;
 
-    var operation = coerce('contours.operation');
-    contours._operation = CONSTRAINT_REDUCTION[operation];
+    const operation = coerce('contours.operation');
+    contours._operation = (CONSTRAINT_REDUCTION as any)[operation];
 
     handleConstraintValueDefaults(coerce, contours);
 
@@ -30,7 +30,7 @@ export default function handleConstraintDefaults(traceIn: InputTrace, traceOut: 
     }
 
     if(showLines) {
-        var lineDfltColor = fillColor && opacity(fillColor) ?
+        const lineDfltColor = fillColor && opacity(fillColor) ?
             addOpacity(traceOut.fillcolor, 1) :
             defaultColor;
         lineColor = coerce('line.color', lineDfltColor);
@@ -43,8 +43,8 @@ export default function handleConstraintDefaults(traceIn: InputTrace, traceOut: 
     handleLabelDefaults(coerce, layout, lineColor, opts);
 }
 
-function handleConstraintValueDefaults(coerce,  contours) {
-    var zvalue;
+function handleConstraintValueDefaults(coerce: any,  contours: any) {
+    let zvalue;
 
     if(COMPARISON_OPS2.indexOf(contours.operation) === -1) {
         // Requires an array of two numbers:

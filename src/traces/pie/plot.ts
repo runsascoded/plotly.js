@@ -13,26 +13,26 @@ import helpers from './helpers.js';
 import eventData from './event_data.js';
 import _index from '../../lib/index.js';
 const { isValidTextValue } = _index;
-var strScale = Lib.strScale;
-var strTranslate = Lib.strTranslate;
-var recordMinTextSize = uniformText.recordMinTextSize;
-var clearMinTextSize = uniformText.clearMinTextSize;
+const strScale = Lib.strScale;
+const strTranslate = Lib.strTranslate;
+const recordMinTextSize = uniformText.recordMinTextSize;
+const clearMinTextSize = uniformText.clearMinTextSize;
 
 function plot(gd: GraphDiv, cdModule: any[]): any {
-    var isStatic = gd._context.staticPlot;
+    const isStatic = gd._context.staticPlot;
 
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
 
     clearMinTextSize('pie', fullLayout);
 
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, gs);
 
-    var plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+    const plotGroups = Lib.makeTraceGroups(fullLayout._pielayer, cdModule, 'trace').each(function (this: any, cd: any) {
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
         setCoords(cd);
 
@@ -40,19 +40,20 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
         // maybe miter with a small-ish stroke-miterlimit?
         plotGroup.attr('stroke-linejoin', 'round');
 
-        plotGroup.each(function () {
-            var slices = select(this).selectAll('g.slice').data(cd);
+        plotGroup.each(function (this: any) {
+            const slices = select(this).selectAll('g.slice').data(cd);
 
-            slices.enter().append('g').classed('slice', true);
+            const slicesEnter = slices.enter().append('g').classed('slice', true);
             slices.exit().remove();
+            const slicesMerged = slices.merge(slicesEnter);
 
-            var quadrants = [
+            const quadrants: any[][][] = [
                 [[], []], // y<0: x<0, x>=0
                 [[], []] // y>=0: x<0, x>=0
             ];
-            var hasOutsideText = false;
+            let hasOutsideText = false;
 
-            slices.each(function (pt, i) {
+            slicesMerged.each(function (this: any, pt: any, i: any) {
                 if (pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -62,23 +63,24 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 pt.pointNumber = pt.i;
                 pt.curveNumber = trace.index;
 
-                quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push(pt);
+                quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push((pt as any));
 
-                var cx = cd0.cx;
-                var cy = cd0.cy;
-                var sliceTop = select(this);
-                var slicePath = sliceTop.selectAll('path.surface').data([pt]);
+                let cx = cd0.cx;
+                let cy = cd0.cy;
+                const sliceTop = select(this);
+                const slicePathJoin = sliceTop.selectAll('path.surface').data([pt]);
 
-                slicePath
+                const slicePath = slicePathJoin
                     .enter()
                     .append('path')
                     .classed('surface', true)
-                    .style({ 'pointer-events': isStatic ? 'none' : 'all' });
+                    .style('pointer-events', isStatic ? 'none' : 'all')
+                    .merge(slicePathJoin);
 
                 sliceTop.call(attachFxHandlers, gd, cd);
 
                 if (trace.pull) {
-                    var pull = +helpers.castOption(trace.pull, pt.pts) || 0;
+                    const pull = +helpers.castOption(trace.pull, pt.pts) || 0;
                     if (pull > 0) {
                         cx += pull * pt.pxmid[0];
                         cy += pull * pt.pxmid[1];
@@ -88,9 +90,9 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 pt.cxFinal = cx;
                 pt.cyFinal = cy;
 
-                function arc(start, finish, cw, scale) {
-                    var dx = scale * (finish[0] - start[0]);
-                    var dy = scale * (finish[1] - start[1]);
+                function arc(start: any, finish: any, cw: any, scale: any) {
+                    const dx = scale * (finish[0] - start[0]);
+                    const dy = scale * (finish[1] - start[1]);
 
                     return (
                         'a' +
@@ -106,10 +108,10 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                     );
                 }
 
-                var hole = trace.hole;
+                const hole = trace.hole;
                 if (pt.v === cd0.vTotal) {
                     // 100% fails bcs arc start and end are identical
-                    var outerCircle =
+                    const outerCircle =
                         'M' +
                         (cx + pt.px0[0]) +
                         ',' +
@@ -131,10 +133,10 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                         );
                     } else slicePath.attr('d', outerCircle);
                 } else {
-                    var outerArc = arc(pt.px0, pt.px1, true, 1);
+                    const outerArc = arc(pt.px0, pt.px1, true, 1);
 
                     if (hole) {
-                        var rim = 1 - hole;
+                        const rim = 1 - hole;
                         slicePath.attr(
                             'd',
                             'M' +
@@ -156,48 +158,46 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
                 // add text
                 formatSliceLabel(gd, pt, cd0);
-                var textPosition = helpers.castOption(trace.textposition, pt.pts);
-                var sliceTextGroup = sliceTop
+                const textPosition = helpers.castOption(trace.textposition, pt.pts);
+                const sliceTextGroup = sliceTop
                     .selectAll('g.slicetext')
                     .data(pt.text && textPosition !== 'none' ? [0] : []);
 
-                sliceTextGroup.enter().append('g').classed('slicetext', true);
+                const sliceTextGroupEnter = sliceTextGroup.enter().append('g').classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function () {
-                    var sliceText = Lib.ensureSingle(select(this), 'text', '', function (s) {
+                sliceTextGroup.merge(sliceTextGroupEnter).each(function (this: any) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
                     });
 
-                    var font = Lib.ensureUniformFontSize(
+                    const font = Lib.ensureUniformFontSize(
                         gd,
                         textPosition === 'outside'
-                            ? determineOutsideTextFont(trace, pt, fullLayout.font)
-                            : determineInsideTextFont(trace, pt, fullLayout.font)
+                            ? determineOutsideTextFont(trace, pt, (fullLayout.font as any))
+                            : determineInsideTextFont(trace, pt, (fullLayout.font as any))
                     );
 
                     sliceText
                         .text(pt.text)
-                        .attr({
-                            class: 'slicetext',
-                            transform: '',
-                            'text-anchor': 'middle'
-                        })
+                        .attr('class', 'slicetext')
+                        .attr('transform', '')
+                        .attr('text-anchor', 'middle')
                         .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
-                    var textBB = bBox(sliceText.node());
-                    var transform;
+                    let textBB = bBox(sliceText.node());
+                    let transform;
 
                     if (textPosition === 'outside') {
                         transform = transformOutsideText(textBB, pt);
                     } else {
                         transform = transformInsideText(textBB, pt, cd0);
                         if (textPosition === 'auto' && transform.scale < 1) {
-                            var newFont = Lib.ensureUniformFontSize(gd, trace.outsidetextfont);
+                            const newFont = Lib.ensureUniformFontSize(gd, trace.outsidetextfont);
 
                             sliceText.call(drawingFont, newFont);
                             textBB = bBox(sliceText.node());
@@ -206,15 +206,15 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                         }
                     }
 
-                    var textPosAngle = transform.textPosAngle;
-                    var textXY = textPosAngle === undefined ? pt.pxmid : getCoords(cd0.r, textPosAngle);
+                    const textPosAngle = transform.textPosAngle;
+                    const textXY = textPosAngle === undefined ? pt.pxmid : getCoords(cd0.r, textPosAngle);
                     transform.targetX = cx + textXY[0] * transform.rCenter + (transform.x || 0);
                     transform.targetY = cy + textXY[1] * transform.rCenter + (transform.y || 0);
                     computeTransform(transform, textBB);
 
                     // save some stuff to use later ensure no labels overlap
                     if (transform.outside) {
-                        var targetY = transform.targetY;
+                        const targetY = transform.targetY;
                         pt.yLabelMin = targetY - textBB.height / 2;
                         pt.yLabelMid = targetY;
                         pt.yLabelMax = targetY + textBB.height / 2;
@@ -232,35 +232,33 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             });
 
             // add the title
-            var titleTextGroup = select(this)
+            const titleTextGroup = select(this)
                 .selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
-            titleTextGroup.enter().append('g').classed('titletext', true);
+            const titleTextGroupEnter = titleTextGroup.enter().append('g').classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function () {
-                var titleText = Lib.ensureSingle(select(this), 'text', '', function (s) {
+            titleTextGroup.merge(titleTextGroupEnter).each(function (this: any) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function (this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
 
-                var txt = trace.title.text;
+                let txt = trace.title.text;
                 if (trace._meta) {
                     txt = Lib.templateString(txt, trace._meta);
                 }
 
                 titleText
                     .text(txt)
-                    .attr({
-                        class: 'titletext',
-                        transform: '',
-                        'text-anchor': 'middle'
-                    })
+                    .attr('class', 'titletext')
+                    .attr('transform', '')
+                    .attr('text-anchor', 'middle')
                     .call(drawingFont, trace.title.font)
                     .call(svgTextUtils.convertToTspans, gd);
 
-                var transform;
+                let transform;
 
                 if (trace.title.position === 'middle center') {
                     transform = positionTitleInside(cd0);
@@ -285,13 +283,13 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 // TODO if we ever want to improve perf,
                 // we could reuse the textBB computed above together
                 // with the sliceText transform info
-                var traceBbox = bBox(plotGroup.node());
+                const traceBbox = bBox(plotGroup.node());
 
-                var domain = trace.domain;
-                var vpw = gs.w * (domain.x[1] - domain.x[0]);
-                var vph = gs.h * (domain.y[1] - domain.y[0]);
-                var xgap = (0.5 * vpw - cd0.r) / gs.w;
-                var ygap = (0.5 * vph - cd0.r) / gs.h;
+                const domain = trace.domain;
+                const vpw = gs.w * (domain.x[1] - domain.x[0]);
+                const vph = gs.h * (domain.y[1] - domain.y[0]);
+                const xgap = (0.5 * vpw - cd0.r) / gs.w;
+                const ygap = (0.5 * vph - cd0.r) / gs.h;
 
                 Plots.autoMargin(gd, 'pie.' + trace.uid + '.automargin', {
                     xl: domain.x[0] - xgap,
@@ -315,8 +313,8 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
     // I have no idea why we haven't seen this in other contexts. Also, sometimes
     // it gets the initial draw correct but on redraw it gets confused.
     setTimeout(function () {
-        plotGroups.selectAll('tspan').each(function () {
-            var s = select(this);
+        plotGroups.selectAll('tspan').each(function (this: any) {
+            const s = select(this);
             if (s.attr('dy')) s.attr('dy', s.attr('dy'));
         });
     }, 0);
@@ -324,8 +322,8 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
 
 // TODO add support for transition
 function plotTextLines(slices: any, trace: FullTrace): void {
-    slices.each(function (pt) {
-        var sliceTop = select(this);
+    slices.each(function (this: any, pt: any) {
+        const sliceTop = select(this);
 
         if (!pt.labelExtraX && !pt.labelExtraY) {
             sliceTop.select('path.textline').remove();
@@ -333,7 +331,7 @@ function plotTextLines(slices: any, trace: FullTrace): void {
         }
 
         // first move the text to its new location
-        var sliceText = sliceTop.select('g.slicetext text');
+        const sliceText = sliceTop.select('g.slicetext text');
 
         pt.transform.targetX += pt.labelExtraX;
         pt.transform.targetY += pt.labelExtraY;
@@ -341,14 +339,14 @@ function plotTextLines(slices: any, trace: FullTrace): void {
         Lib.setTransormAndDisplay(sliceText, pt.transform);
 
         // then add a line to the new location
-        var lineStartX = pt.cxFinal + pt.pxmid[0];
-        var lineStartY = pt.cyFinal + pt.pxmid[1];
-        var textLinePath = 'M' + lineStartX + ',' + lineStartY;
-        var finalX = ((pt.yLabelMax - pt.yLabelMin) * (pt.pxmid[0] < 0 ? -1 : 1)) / 4;
+        const lineStartX = pt.cxFinal + pt.pxmid[0];
+        const lineStartY = pt.cyFinal + pt.pxmid[1];
+        let textLinePath = 'M' + lineStartX + ',' + lineStartY;
+        const finalX = ((pt.yLabelMax - pt.yLabelMin) * (pt.pxmid[0] < 0 ? -1 : 1)) / 4;
 
         if (pt.labelExtraX) {
-            var yFromX = (pt.labelExtraX * pt.pxmid[1]) / pt.pxmid[0];
-            var yNet = pt.yLabelMid + pt.labelExtraY - (pt.cyFinal + pt.pxmid[1]);
+            const yFromX = (pt.labelExtraX * pt.pxmid[1]) / pt.pxmid[0];
+            const yNet = pt.yLabelMid + pt.labelExtraY - (pt.cyFinal + pt.pxmid[1]);
 
             if (Math.abs(yFromX) > Math.abs(yNet)) {
                 textLinePath +=
@@ -367,20 +365,18 @@ function plotTextLines(slices: any, trace: FullTrace): void {
 
         Lib.ensureSingle(sliceTop, 'path', 'textline')
             .call(Color.stroke, trace.outsidetextfont.color)
-            .attr({
-                'stroke-width': Math.min(2, trace.outsidetextfont.size / 8),
-                d: textLinePath,
-                fill: 'none'
-            });
+            .attr('stroke-width', Math.min(2, trace.outsidetextfont.size / 8))
+            .attr('d', textLinePath)
+            .attr('fill', 'none');
     });
 }
 
 function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
-    var cd0 = cd[0];
-    var cx = cd0.cx;
-    var cy = cd0.cy;
-    var trace = cd0.trace;
-    var isFunnelArea = trace.type === 'funnelarea';
+    const cd0 = cd[0];
+    const cx = cd0.cx;
+    const cy = cd0.cy;
+    const trace = cd0.trace;
+    const isFunnelArea = trace.type === 'funnelarea';
 
     // hover state vars
     // have we drawn a hover label, so it should be cleared later
@@ -393,12 +389,12 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
 
     sliceTop.on('mouseover', function (event: any, pt: any) {
         // in case fullLayout or fullData has changed without a replot
-        var fullLayout2 = gd._fullLayout;
-        var trace2 = gd._fullData[trace.index];
+        const fullLayout2 = gd._fullLayout;
+        const trace2 = gd._fullData[trace.index];
 
         if (gd._dragging || fullLayout2.hovermode === false) return;
 
-        var hoverinfo = trace2.hoverinfo;
+        let hoverinfo = trace2.hoverinfo;
         if (Array.isArray(hoverinfo)) {
             // super hacky: we need to pull out the *first* hoverinfo from
             // pt.pts, then put it back into an array in a dummy trace
@@ -420,16 +416,16 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         // in case we dragged over the pie from another subplot,
         // or if hover is turned off
         if (trace2.hovertemplate || (hoverinfo !== 'none' && hoverinfo !== 'skip' && hoverinfo)) {
-            var rInscribed = pt.rInscribed || 0;
-            var hoverCenterX = cx + pt.pxmid[0] * (1 - rInscribed);
-            var hoverCenterY = cy + pt.pxmid[1] * (1 - rInscribed);
-            var separators = fullLayout2.separators;
-            var text = [];
+            const rInscribed = pt.rInscribed || 0;
+            const hoverCenterX = cx + pt.pxmid[0] * (1 - rInscribed);
+            const hoverCenterY = cy + pt.pxmid[1] * (1 - rInscribed);
+            const separators = fullLayout2.separators;
+            const text: any[] = [];
 
             if (hoverinfo && hoverinfo.indexOf('label') !== -1) text.push(pt.label);
             pt.text = helpers.castOption(trace2.hovertext || trace2.text, pt.pts);
             if (hoverinfo && hoverinfo.indexOf('text') !== -1) {
-                var tx = pt.text;
+                const tx = pt.text;
                 if (Lib.isValidTextValue(tx)) text.push(tx);
             }
             pt.value = pt.v;
@@ -439,10 +435,10 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
             pt.percentLabel = helpers.formatPiePercent(pt.percent, separators);
             if (hoverinfo && hoverinfo.indexOf('percent') !== -1) text.push(pt.percentLabel);
 
-            var hoverLabel = trace2.hoverlabel;
-            var hoverFont = hoverLabel.font;
+            const hoverLabel = trace2.hoverlabel;
+            const hoverFont = hoverLabel.font;
 
-            var bbox = [];
+            const bbox: any[] = [];
             Fx.loneHover(
                 {
                     trace: trace,
@@ -486,10 +482,10 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         });
     });
 
-    sliceTop.on('mouseout', function (evt) {
-        var fullLayout2 = gd._fullLayout;
-        var trace2 = gd._fullData[trace.index];
-        var pt = select(this).datum();
+    sliceTop.on('mouseout', function (this: any, evt: any) {
+        const fullLayout2 = gd._fullLayout;
+        const trace2 = gd._fullData[trace.index];
+        const pt = select(this).datum();
 
         if (trace._hasHoverEvent) {
             evt.originalEvent = event;
@@ -512,8 +508,8 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         // map subplot event binding. Or perhaps better, make a simple wrapper with the
         // right mousedown, mousemove, and mouseup handlers just for a left/right click
         // map subplots would use this too.
-        var fullLayout2 = gd._fullLayout;
-        var trace2 = gd._fullData[trace.index];
+        const fullLayout2 = gd._fullLayout;
+        const trace2 = gd._fullData[trace.index];
 
         if (gd._dragging || fullLayout2.hovermode === false) return;
 
@@ -523,47 +519,47 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
 }
 
 function determineOutsideTextFont(trace: FullTrace, pt: any, layoutFont: Partial<Font>): any {
-    var color =
+    const color =
         helpers.castOption(trace.outsidetextfont.color, pt.pts) ||
         helpers.castOption(trace.textfont.color, pt.pts) ||
         layoutFont.color;
 
-    var family =
+    const family =
         helpers.castOption(trace.outsidetextfont.family, pt.pts) ||
         helpers.castOption(trace.textfont.family, pt.pts) ||
         layoutFont.family;
 
-    var size =
+    const size =
         helpers.castOption(trace.outsidetextfont.size, pt.pts) ||
         helpers.castOption(trace.textfont.size, pt.pts) ||
         layoutFont.size;
 
-    var weight =
+    const weight =
         helpers.castOption(trace.outsidetextfont.weight, pt.pts) ||
         helpers.castOption(trace.textfont.weight, pt.pts) ||
         layoutFont.weight;
 
-    var style =
+    const style =
         helpers.castOption(trace.outsidetextfont.style, pt.pts) ||
         helpers.castOption(trace.textfont.style, pt.pts) ||
         layoutFont.style;
 
-    var variant =
+    const variant =
         helpers.castOption(trace.outsidetextfont.variant, pt.pts) ||
         helpers.castOption(trace.textfont.variant, pt.pts) ||
         layoutFont.variant;
 
-    var textcase =
+    const textcase =
         helpers.castOption(trace.outsidetextfont.textcase, pt.pts) ||
         helpers.castOption(trace.textfont.textcase, pt.pts) ||
         layoutFont.textcase;
 
-    var lineposition =
+    const lineposition =
         helpers.castOption(trace.outsidetextfont.lineposition, pt.pts) ||
         helpers.castOption(trace.textfont.lineposition, pt.pts) ||
         layoutFont.lineposition;
 
-    var shadow =
+    const shadow =
         helpers.castOption(trace.outsidetextfont.shadow, pt.pts) ||
         helpers.castOption(trace.textfont.shadow, pt.pts) ||
         layoutFont.shadow;
@@ -582,7 +578,7 @@ function determineOutsideTextFont(trace: FullTrace, pt: any, layoutFont: Partial
 }
 
 function determineInsideTextFont(trace: FullTrace, pt: any, layoutFont: Partial<Font>): any {
-    var customColor = helpers.castOption(trace.insidetextfont.color, pt.pts);
+    let customColor = helpers.castOption(trace.insidetextfont.color, pt.pts);
     if (!customColor && trace._input.textfont) {
         // Why not simply using trace.textfont? Because if not set, it
         // defaults to layout.font which has a default color. But if
@@ -591,42 +587,42 @@ function determineInsideTextFont(trace: FullTrace, pt: any, layoutFont: Partial<
         customColor = helpers.castOption(trace._input.textfont.color, pt.pts);
     }
 
-    var family =
+    const family =
         helpers.castOption(trace.insidetextfont.family, pt.pts) ||
         helpers.castOption(trace.textfont.family, pt.pts) ||
         layoutFont.family;
 
-    var size =
+    const size =
         helpers.castOption(trace.insidetextfont.size, pt.pts) ||
         helpers.castOption(trace.textfont.size, pt.pts) ||
         layoutFont.size;
 
-    var weight =
+    const weight =
         helpers.castOption(trace.insidetextfont.weight, pt.pts) ||
         helpers.castOption(trace.textfont.weight, pt.pts) ||
         layoutFont.weight;
 
-    var style =
+    const style =
         helpers.castOption(trace.insidetextfont.style, pt.pts) ||
         helpers.castOption(trace.textfont.style, pt.pts) ||
         layoutFont.style;
 
-    var variant =
+    const variant =
         helpers.castOption(trace.insidetextfont.variant, pt.pts) ||
         helpers.castOption(trace.textfont.variant, pt.pts) ||
         layoutFont.variant;
 
-    var textcase =
+    const textcase =
         helpers.castOption(trace.insidetextfont.textcase, pt.pts) ||
         helpers.castOption(trace.textfont.textcase, pt.pts) ||
         layoutFont.textcase;
 
-    var lineposition =
+    const lineposition =
         helpers.castOption(trace.insidetextfont.lineposition, pt.pts) ||
         helpers.castOption(trace.textfont.lineposition, pt.pts) ||
         layoutFont.lineposition;
 
-    var shadow =
+    const shadow =
         helpers.castOption(trace.insidetextfont.shadow, pt.pts) ||
         helpers.castOption(trace.textfont.shadow, pt.pts) ||
         layoutFont.shadow;
@@ -645,29 +641,29 @@ function determineInsideTextFont(trace: FullTrace, pt: any, layoutFont: Partial<
 }
 
 function prerenderTitles(cdModule: any[], gd: GraphDiv): void {
-    var cd0, trace;
+    let cd0, trace;
 
     // Determine the width and height of the title for each pie.
-    for (var i = 0; i < cdModule.length; i++) {
+    for (let i = 0; i < cdModule.length; i++) {
         cd0 = cdModule[i][0];
         trace = cd0.trace;
 
         if (trace.title.text) {
-            var txt = trace.title.text;
+            let txt = trace.title.text;
             if (trace._meta) {
                 txt = Lib.templateString(txt, trace._meta);
             }
 
-            var dummyTitle = tester
+            const dummyTitle = tester
                 .append('text')
                 .attr('data-notex', 1)
                 .text(txt)
                 .call(drawingFont, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
-            var bBox = bBox(dummyTitle.node(), true);
+            const bb = bBox(dummyTitle.node(), true);
             cd0.titleBox = {
-                width: bBox.width,
-                height: bBox.height
+                width: bb.width,
+                height: bb.height
             };
             dummyTitle.remove();
         }
@@ -675,10 +671,10 @@ function prerenderTitles(cdModule: any[], gd: GraphDiv): void {
 }
 
 function transformInsideText(textBB: any, pt: any, cd0: any): any {
-    var r = cd0.r || pt.rpx1;
-    var rInscribed = pt.rInscribed;
+    const r = cd0.r || pt.rpx1;
+    const rInscribed = pt.rInscribed;
 
-    var isEmpty = pt.startangle === pt.stopangle;
+    const isEmpty = pt.startangle === pt.stopangle;
     if (isEmpty) {
         return {
             rCenter: 1 - rInscribed,
@@ -688,30 +684,30 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
         };
     }
 
-    var ring = pt.ring;
-    var isCircle = ring === 1 && Math.abs(pt.startangle - pt.stopangle) === Math.PI * 2;
+    const ring = pt.ring;
+    const isCircle = ring === 1 && Math.abs(pt.startangle - pt.stopangle) === Math.PI * 2;
 
-    var halfAngle = pt.halfangle;
-    var midAngle = pt.midangle;
+    const halfAngle = pt.halfangle;
+    const midAngle = pt.midangle;
 
-    var orientation = cd0.trace.insidetextorientation;
-    var isHorizontal = orientation === 'horizontal';
-    var isTangential = orientation === 'tangential';
-    var isRadial = orientation === 'radial';
-    var isAuto = orientation === 'auto';
+    const orientation = cd0.trace.insidetextorientation;
+    const isHorizontal = orientation === 'horizontal';
+    const isTangential = orientation === 'tangential';
+    const isRadial = orientation === 'radial';
+    const isAuto = orientation === 'auto';
 
-    var allTransforms = [];
-    var newT;
+    const allTransforms: any[] = [];
+    let newT: any;
 
     if (!isAuto) {
         // max size if text is placed (horizontally) at the top or bottom of the arc
 
-        var considerCrossing = function (angle, key) {
+        const considerCrossing = function (angle: any, key: any) {
             if (isCrossing(pt, angle)) {
-                var dStart = Math.abs(angle - pt.startangle);
-                var dStop = Math.abs(angle - pt.stopangle);
+                const dStart = Math.abs(angle - pt.startangle);
+                const dStop = Math.abs(angle - pt.stopangle);
 
-                var closestEdge = dStart < dStop ? dStart : dStop;
+                const closestEdge = dStart < dStop ? dStart : dStop;
 
                 if (key === 'tan') {
                     newT = calcTanTransform(textBB, r, ring, closestEdge, 0);
@@ -726,7 +722,7 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
         };
 
         // to cover all cases with trace.rotation added
-        var i;
+        let i;
         if (isHorizontal || isTangential) {
             // top
             for (i = 4; i >= -4; i -= 2) considerCrossing(Math.PI * i, 'tan');
@@ -746,7 +742,7 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
         // this inscribes the text rectangle in a circle, which is then inscribed
         // in the slice, so it will be an underestimate, which some day we may want
         // to improve so this case can get more use
-        var textDiameter = Math.sqrt(textBB.width * textBB.width + textBB.height * textBB.height);
+        const textDiameter = Math.sqrt(textBB.width * textBB.width + textBB.height * textBB.height);
 
         newT = {
             scale: (rInscribed * r * 2) / textDiameter,
@@ -774,10 +770,10 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
         allTransforms.push(newT);
     }
 
-    var id = 0;
-    var maxScale = 0;
-    for (var k = 0; k < allTransforms.length; k++) {
-        var s = allTransforms[k].scale;
+    let id = 0;
+    let maxScale = 0;
+    for (let k = 0; k < allTransforms.length; k++) {
+        const s = (allTransforms[k] as any).scale;
         if (maxScale < s) {
             maxScale = s;
             id = k;
@@ -792,8 +788,8 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
 }
 
 function isCrossing(pt: any, angle: number): boolean {
-    var start = pt.startangle;
-    var stop = pt.stopangle;
+    const start = pt.startangle;
+    const stop = pt.stopangle;
     return (start > angle && angle > stop) || (start < angle && angle < stop);
 }
 
@@ -801,8 +797,8 @@ function calcRadTransform(textBB: any, r: number, ring: number, halfAngle: numbe
     r = Math.max(0, r - 2 * TEXTPAD);
 
     // max size if text is rotated radially
-    var a = textBB.width / textBB.height;
-    var s = calcMaxHalfSize(a, halfAngle, r, ring);
+    const a = textBB.width / textBB.height;
+    const s = calcMaxHalfSize(a, halfAngle, r, ring);
     return {
         scale: (s * 2) / textBB.height,
         rCenter: calcRCenter(a, s / r),
@@ -814,8 +810,8 @@ function calcTanTransform(textBB: any, r: number, ring: number, halfAngle: numbe
     r = Math.max(0, r - 2 * TEXTPAD);
 
     // max size if text is rotated tangentially
-    var a = textBB.height / textBB.width;
-    var s = calcMaxHalfSize(a, halfAngle, r, ring);
+    const a = textBB.height / textBB.width;
+    const s = calcMaxHalfSize(a, halfAngle, r, ring);
     return {
         scale: (s * 2) / textBB.width,
         rCenter: calcRCenter(a, s / r),
@@ -832,7 +828,7 @@ function calcRotate(t: number): number {
 }
 
 function calcMaxHalfSize(a: number, halfAngle: number, r: number, ring: number): number {
-    var q = a + 1 / (2 * Math.tan(halfAngle));
+    const q = a + 1 / (2 * Math.tan(halfAngle));
     return r * Math.min(1 / (Math.sqrt(q * q + 0.5) + q), ring / (Math.sqrt(a * a + ring / 2) + a));
 }
 
@@ -843,10 +839,10 @@ function getInscribedRadiusFraction(pt: any, cd0: any): number {
 }
 
 function transformOutsideText(textBB: any, pt: any): any {
-    var x = pt.pxmid[0];
-    var y = pt.pxmid[1];
-    var dx = textBB.width / 2;
-    var dy = textBB.height / 2;
+    const x = pt.pxmid[0];
+    const y = pt.pxmid[1];
+    let dx = textBB.width / 2;
+    let dy = textBB.height / 2;
 
     if (x < 0) dx *= -1;
     if (y < 0) dy *= -1;
@@ -862,7 +858,7 @@ function transformOutsideText(textBB: any, pt: any): any {
 }
 
 function positionTitleInside(cd0: any): any {
-    var textDiameter = Math.sqrt(cd0.titleBox.width * cd0.titleBox.width + cd0.titleBox.height * cd0.titleBox.height);
+    const textDiameter = Math.sqrt(cd0.titleBox.width * cd0.titleBox.width + cd0.titleBox.height * cd0.titleBox.height);
     return {
         x: cd0.cx,
         y: cd0.cy,
@@ -873,20 +869,20 @@ function positionTitleInside(cd0: any): any {
 }
 
 function positionTitleOutside(cd0: any, plotSize: LayoutSize): any {
-    var scaleX = 1;
-    var scaleY = 1;
-    var maxPull;
+    let scaleX = 1;
+    let scaleY = 1;
+    let maxPull;
 
-    var trace = cd0.trace;
+    const trace = cd0.trace;
     // position of the baseline point of the text box in the plot, before scaling.
     // we anchored the text in the middle, so the baseline is on the bottom middle
     // of the first line of text.
-    var topMiddle = {
+    const topMiddle = {
         x: cd0.cx,
         y: cd0.cy
     };
     // relative translation of the text box after scaling
-    var translate = {
+    const translate = {
         tx: 0,
         ty: 0
     };
@@ -904,9 +900,9 @@ function positionTitleOutside(cd0: any, plotSize: LayoutSize): any {
         topMiddle.y += (1 + maxPull) * cd0.r;
     }
 
-    var rx = applyAspectRatio(cd0.r, cd0.trace.aspectratio);
+    const rx = applyAspectRatio(cd0.r, cd0.trace.aspectratio);
 
-    var maxWidth = (plotSize.w * (trace.domain.x[1] - trace.domain.x[0])) / 2;
+    let maxWidth = (plotSize.w * (trace.domain.x[1] - trace.domain.x[0])) / 2;
     if (trace.title.position.indexOf('left') !== -1) {
         // we start the text at the left edge of the pie
         maxWidth = maxWidth + rx;
@@ -935,17 +931,17 @@ function applyAspectRatio(x: number, aspectratio: number | undefined): number {
 }
 
 function getTitleSpace(cd0: any, plotSize: LayoutSize): number {
-    var trace = cd0.trace;
-    var pieBoxHeight = plotSize.h * (trace.domain.y[1] - trace.domain.y[0]);
+    const trace = cd0.trace;
+    const pieBoxHeight = plotSize.h * (trace.domain.y[1] - trace.domain.y[0]);
     // use at most half of the plot for the title
     return Math.min(cd0.titleBox.height, pieBoxHeight / 2);
 }
 
 function getMaxPull(trace: FullTrace): number {
-    var maxPull = trace.pull;
+    let maxPull = trace.pull;
     if (!maxPull) return 0;
 
-    var j;
+    let j;
     if (Lib.isArrayOrTypedArray(maxPull)) {
         maxPull = 0;
         for (j = 0; j < trace.pull.length; j++) {
@@ -956,37 +952,37 @@ function getMaxPull(trace: FullTrace): number {
 }
 
 function scootLabels(quadrants: any[][], trace: FullTrace): any {
-    var xHalf,
-        yHalf,
+    let xHalf,
+        yHalf: any,
         equatorFirst,
-        farthestX,
-        farthestY,
-        xDiffSign,
-        yDiffSign,
+        farthestX: any,
+        farthestY: any,
+        xDiffSign: any,
+        yDiffSign: any,
         thisQuad,
         oppositeQuad,
-        wholeSide,
+        wholeSide: any,
         i,
         thisQuadOutside,
         firstOppositeOutsidePt;
 
-    function topFirst(a, b) {
+    function topFirst(a: any, b: any) {
         return a.pxmid[1] - b.pxmid[1];
     }
-    function bottomFirst(a, b) {
+    function bottomFirst(a: any, b: any) {
         return b.pxmid[1] - a.pxmid[1];
     }
 
-    function scootOneLabel(thisPt, prevPt) {
+    function scootOneLabel(thisPt: any, prevPt: any) {
         if (!prevPt) prevPt = {};
 
-        var prevOuterY = prevPt.labelExtraY + (yHalf ? prevPt.yLabelMax : prevPt.yLabelMin);
-        var thisInnerY = yHalf ? thisPt.yLabelMin : thisPt.yLabelMax;
-        var thisOuterY = yHalf ? thisPt.yLabelMax : thisPt.yLabelMin;
-        var thisSliceOuterY = thisPt.cyFinal + farthestY(thisPt.px0[1], thisPt.px1[1]);
-        var newExtraY = prevOuterY - thisInnerY;
+        const prevOuterY = prevPt.labelExtraY + (yHalf ? prevPt.yLabelMax : prevPt.yLabelMin);
+        const thisInnerY = yHalf ? thisPt.yLabelMin : thisPt.yLabelMax;
+        const thisOuterY = yHalf ? thisPt.yLabelMax : thisPt.yLabelMin;
+        const thisSliceOuterY = thisPt.cyFinal + farthestY(thisPt.px0[1], thisPt.px1[1]);
+        let newExtraY = prevOuterY - thisInnerY;
 
-        var xBuffer, i, otherPt, otherOuterY, otherOuterX, newExtraX;
+        let xBuffer, i, otherPt, otherOuterY, otherOuterX, newExtraX;
 
         // make sure this label doesn't overlap other labels
         // this *only* has us move these labels vertically
@@ -1063,7 +1059,7 @@ function scootLabels(quadrants: any[][], trace: FullTrace): any {
 
             // each needs to avoid the previous
             for (i = 0; i < thisQuadOutside.length; i++) {
-                var prevPt = i && thisQuadOutside[i - 1];
+                let prevPt = i && thisQuadOutside[i - 1];
                 // bottom half needs to avoid the first label of the top half
                 // top half we still need to call scootOneLabel on the first slice
                 // so we can avoid other slices, but we don't pass a prevPt
@@ -1075,23 +1071,23 @@ function scootLabels(quadrants: any[][], trace: FullTrace): any {
 }
 
 function layoutAreas(cdModule: any[], plotSize: LayoutSize): void {
-    var scaleGroups = [];
+    const scaleGroups: any[] = [];
 
     // figure out the center and maximum radius
-    for (var i = 0; i < cdModule.length; i++) {
-        var cd0 = cdModule[i][0];
-        var trace = cd0.trace;
+    for (let i = 0; i < cdModule.length; i++) {
+        const cd0 = cdModule[i][0];
+        const trace = cd0.trace;
 
-        var domain = trace.domain;
-        var width = plotSize.w * (domain.x[1] - domain.x[0]);
-        var height = plotSize.h * (domain.y[1] - domain.y[0]);
+        const domain = trace.domain;
+        const width = plotSize.w * (domain.x[1] - domain.x[0]);
+        let height = plotSize.h * (domain.y[1] - domain.y[0]);
         // leave some space for the title, if it will be displayed outside
         if (trace.title.text && trace.title.position !== 'middle center') {
             height -= getTitleSpace(cd0, plotSize);
         }
 
-        var rx = width / 2;
-        var ry = height / 2;
+        const rx = width / 2;
+        let ry = height / 2;
         if (trace.type === 'funnelarea' && !trace.scalegroup) {
             ry /= trace.aspectratio;
         }
@@ -1113,23 +1109,23 @@ function layoutAreas(cdModule: any[], plotSize: LayoutSize): void {
 }
 
 function groupScale(cdModule: any[], scaleGroups: string[]): void {
-    var cd0, i, trace;
+    let cd0, i, trace;
 
     // scale those that are grouped
-    for (var k = 0; k < scaleGroups.length; k++) {
-        var min = Infinity;
-        var g = scaleGroups[k];
+    for (let k = 0; k < scaleGroups.length; k++) {
+        let min = Infinity;
+        const g = scaleGroups[k];
 
         for (i = 0; i < cdModule.length; i++) {
             cd0 = cdModule[i][0];
             trace = cd0.trace;
 
             if (trace.scalegroup === g) {
-                var area;
+                let area: any;
                 if (trace.type === 'pie') {
                     area = cd0.r * cd0.r;
                 } else if (trace.type === 'funnelarea') {
-                    var rx, ry;
+                    let rx, ry;
 
                     if (trace.aspectratio > 1) {
                         rx = cd0.r;
@@ -1152,7 +1148,7 @@ function groupScale(cdModule: any[], scaleGroups: string[]): void {
             cd0 = cdModule[i][0];
             trace = cd0.trace;
             if (trace.scalegroup === g) {
-                var v = min * cd0.vTotal;
+                let v = min * cd0.vTotal;
                 if (trace.type === 'funnelarea') {
                     v /= (1 + trace.baseratio) / 2;
                     v /= trace.aspectratio;
@@ -1165,15 +1161,15 @@ function groupScale(cdModule: any[], scaleGroups: string[]): void {
 }
 
 function setCoords(cd: any[]): void {
-    var cd0 = cd[0];
-    var r = cd0.r;
-    var trace = cd0.trace;
-    var currentAngle = helpers.getRotationAngle(trace.rotation);
-    var angleFactor = (2 * Math.PI) / cd0.vTotal;
-    var firstPt = 'px0';
-    var lastPt = 'px1';
+    const cd0 = cd[0];
+    const r = cd0.r;
+    const trace = cd0.trace;
+    let currentAngle = helpers.getRotationAngle(trace.rotation);
+    let angleFactor = (2 * Math.PI) / cd0.vTotal;
+    let firstPt = 'px0';
+    let lastPt = 'px1';
 
-    var i, cdi, currentCoords;
+    let i, cdi, currentCoords;
 
     if (trace.direction === 'counterclockwise') {
         for (i = 0; i < cd.length; i++) {
@@ -1218,29 +1214,29 @@ function getCoords(r: number, angle: number): [number, number] {
 }
 
 function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
-    var fullLayout = gd._fullLayout;
-    var trace = cd0.trace;
+    const fullLayout = gd._fullLayout;
+    const trace = cd0.trace;
     // look for textemplate
-    var texttemplate = trace.texttemplate;
+    const texttemplate = trace.texttemplate;
 
     // now insert text
-    var textinfo = trace.textinfo;
+    const textinfo = trace.textinfo;
     if (!texttemplate && textinfo && textinfo !== 'none') {
-        var parts = textinfo.split('+');
-        var hasFlag = function (flag) {
+        const parts = textinfo.split('+');
+        const hasFlag = function (flag: any) {
             return parts.indexOf(flag) !== -1;
         };
-        var hasLabel = hasFlag('label');
-        var hasText = hasFlag('text');
-        var hasValue = hasFlag('value');
-        var hasPercent = hasFlag('percent');
+        const hasLabel = hasFlag('label');
+        const hasText = hasFlag('text');
+        const hasValue = hasFlag('value');
+        const hasPercent = hasFlag('percent');
 
-        var separators = fullLayout.separators;
-        var text;
+        const separators = fullLayout.separators;
+        let text;
 
         text = hasLabel ? [pt.label] : [];
         if (hasText) {
-            var tx = helpers.getFirstFilled(trace.text, pt.pts);
+            const tx = helpers.getFirstFilled(trace.text, pt.pts);
             if (isValidTextValue(tx)) text.push(tx);
         }
         if (hasValue) text.push(helpers.formatPieValue(pt.v, separators));
@@ -1248,7 +1244,7 @@ function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
         pt.text = text.join('<br>');
     }
 
-    function makeTemplateVariables(pt) {
+    function makeTemplateVariables(pt: any) {
         return {
             label: pt.label,
             value: pt.v,
@@ -1262,12 +1258,12 @@ function formatSliceLabel(gd: GraphDiv, pt: any, cd0: any): any {
     }
 
     if (texttemplate) {
-        var txt = Lib.castOption(trace, pt.i, 'texttemplate');
+        const txt = Lib.castOption(trace, pt.i, 'texttemplate');
         if (!txt) {
             pt.text = '';
         } else {
-            var obj = makeTemplateVariables(pt);
-            var ptTx = helpers.getFirstFilled(trace.text, pt.pts);
+            const obj = makeTemplateVariables(pt);
+            const ptTx = helpers.getFirstFilled(trace.text, pt.pts);
             if (isValidTextValue(ptTx) || ptTx === '') obj.text = ptTx;
             pt.text = Lib.texttemplateString({
                 data: [obj, trace._meta],
@@ -1284,11 +1280,11 @@ function computeTransform(
     transform: any, // inout
     textBB: any // in
 ): void {
-    var a = (transform.rotate * Math.PI) / 180;
-    var cosA = Math.cos(a);
-    var sinA = Math.sin(a);
-    var midX = (textBB.left + textBB.right) / 2;
-    var midY = (textBB.top + textBB.bottom) / 2;
+    const a = (transform.rotate * Math.PI) / 180;
+    const cosA = Math.cos(a);
+    const sinA = Math.sin(a);
+    const midX = (textBB.left + textBB.right) / 2;
+    const midY = (textBB.top + textBB.bottom) / 2;
     transform.textX = midX * cosA - midY * sinA;
     transform.textY = midX * sinA + midY * cosA;
     transform.noCenter = true;

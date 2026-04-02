@@ -4,11 +4,11 @@ interface ThrottleCache {
     onDone?: (() => void) | null;
 }
 
-var timerCache: Record<string, ThrottleCache> = {};
+const timerCache: Record<string, ThrottleCache> = {};
 
-export var throttle = function throttle(id: string, minInterval: number, callback: () => void): void {
-    var cache = timerCache[id];
-    var now = Date.now();
+export const throttle = function throttle(id: string, minInterval: number, callback: () => void): void {
+    let cache = timerCache[id];
+    const now = Date.now();
 
     if(!cache) {
         /*
@@ -16,7 +16,7 @@ export var throttle = function throttle(id: string, minInterval: number, callbac
          * getting overgrown, for example from old plots that have been replaced.
          * 1 minute age is arbitrary.
          */
-        for(var idi in timerCache) {
+        for(const idi in timerCache) {
             if(timerCache[idi].ts < now - 60000) {
                 delete timerCache[idi];
             }
@@ -46,12 +46,12 @@ export var throttle = function throttle(id: string, minInterval: number, callbac
     }, minInterval);
 };
 
-export var done = function(id: string): Promise<void> {
-    var cache = timerCache[id];
+export const done = function(id: string): Promise<void> {
+    const cache = timerCache[id];
     if(!cache || !cache.timer) return Promise.resolve();
 
     return new Promise(function(resolve) {
-        var previousOnDone = cache.onDone;
+        const previousOnDone = cache.onDone;
         cache.onDone = function onDone() {
             if(previousOnDone) previousOnDone();
             resolve();
@@ -60,12 +60,12 @@ export var done = function(id: string): Promise<void> {
     });
 };
 
-export var clear = function(id?: string): void {
+export const clear = function(id?: string): void {
     if(id) {
         _clearTimeout(timerCache[id]);
         delete timerCache[id];
     } else {
-        for(var idi in timerCache) clear(idi);
+        for(const idi in timerCache) clear(idi);
     }
 };
 

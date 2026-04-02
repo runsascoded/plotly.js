@@ -1,4 +1,4 @@
-import { selection } from 'd3-selection';
+import { select, selection } from 'd3-selection';
 import { utcFormat } from 'd3-time-format';
 import { format as d3Format } from 'd3-format';
 import isNumeric from 'fast-isnumeric';
@@ -26,61 +26,61 @@ import { throttle, done as throttleDone, clear as clearThrottle } from './thrott
 export { throttle, throttleDone, clearThrottle };
 
 import _nestedProperty from './nested_property.js';
-export var nestedProperty: any = _nestedProperty;
+export const nestedProperty: any = _nestedProperty;
 
 import _keyedContainer from './keyed_container.js';
-export var keyedContainer: any = _keyedContainer;
+export const keyedContainer: any = _keyedContainer;
 
 import _relativeAttr from './relative_attr.js';
-export var relativeAttr: any = _relativeAttr;
+export const relativeAttr: any = _relativeAttr;
 
 import _isPlainObject from './is_plain_object.js';
-export var isPlainObject: any = _isPlainObject;
+export const isPlainObject: any = _isPlainObject;
 
 import _toLogRange from './to_log_range.js';
-export var toLogRange: any = _toLogRange;
+export const toLogRange: any = _toLogRange;
 
 import _relinkPrivateKeys from './relink_private.js';
-export var relinkPrivateKeys: any = _relinkPrivateKeys;
+export const relinkPrivateKeys: any = _relinkPrivateKeys;
 
 import _sortObjectKeys from './sort_object_keys.js';
-export var sortObjectKeys: any = _sortObjectKeys;
+export const sortObjectKeys: any = _sortObjectKeys;
 
 import _clearResponsive from './clear_responsive.js';
-export var clearResponsive: any = _clearResponsive;
+export const clearResponsive: any = _clearResponsive;
 
 import _preserveDrawingBuffer from './preserve_drawing_buffer.js';
-export var preserveDrawingBuffer: any = _preserveDrawingBuffer;
+export const preserveDrawingBuffer: any = _preserveDrawingBuffer;
 
 import _makeTraceGroups from './make_trace_groups.js';
-export var makeTraceGroups: any = _makeTraceGroups;
+export const makeTraceGroups: any = _makeTraceGroups;
 
 import _localize from './localize.js';
 export { _localize as _ };
 
 import _notifier from './notifier.js';
-export var notifier: any = _notifier;
+export const notifier: any = _notifier;
 
 import _filterUnique from './filter_unique.js';
-export var filterUnique: any = _filterUnique;
+export const filterUnique: any = _filterUnique;
 
 import _filterVisible from './filter_visible.js';
-export var filterVisible: any = _filterVisible;
+export const filterVisible: any = _filterVisible;
 
 import _pushUnique from './push_unique.js';
-export var pushUnique: any = _pushUnique;
+export const pushUnique: any = _pushUnique;
 
 import _increment from './increment.js';
-export var increment: any = _increment;
+export const increment: any = _increment;
 
 import _cleanNumber from './clean_number.js';
-export var cleanNumber: any = _cleanNumber;
+export const cleanNumber: any = _cleanNumber;
 
 import _noop from './noop.js';
-export var noop: any = _noop;
+export const noop: any = _noop;
 
 import _identity from './identity.js';
-export var identity: any = _identity;
+export const identity: any = _identity;
 
 // Re-import modules needed by inline functions
 import { isArrayOrTypedArray, isTypedArray } from './array.js';
@@ -88,9 +88,14 @@ import { extendFlat, extendDeepNoArrays } from './extend.js';
 import { warn } from './loggers.js';
 import { formatDate, dateTime2ms } from './dates.js';
 
-var MAX_SAFE: number = numConstants.FP_SAFE;
-var MIN_SAFE: number = -MAX_SAFE;
-var BADNUM: number = numConstants.BADNUM;
+const MAX_SAFE: number = numConstants.FP_SAFE;
+const MIN_SAFE: number = -MAX_SAFE;
+const BADNUM: number = (numConstants.BADNUM as any);
+
+export function setAttrs(sel: any, attrs: Record<string, any>): any {
+    for(const k in attrs) sel.attr(k, attrs[k]);
+    return sel;
+}
 
 export function adjustFormat(formatStr: string): string {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
@@ -105,9 +110,9 @@ export function adjustFormat(formatStr: string): string {
     return formatStr;
 }
 
-var seenBadFormats: Record<string, number> = {};
+const seenBadFormats: Record<string, number> = {};
 export function warnBadFormat(f: any): void {
-    var key = String(f);
+    const key = String(f);
     if (!seenBadFormats[key]) {
         seenBadFormats[key] = 1;
         warn('encountered bad format: "' + key + '"');
@@ -119,7 +124,7 @@ export function noFormat(value: any): string {
 }
 
 export function numberFormat(formatStr: string): (v: any) => string {
-    var fn: (v: any) => string;
+    let fn: (v: any) => string;
     try {
         fn = d3Format(adjustFormat(formatStr));
     } catch (e) {
@@ -157,8 +162,8 @@ export function isIndex(v: any, len?: number): boolean {
  * @return {array}
  */
 export function repeat(v: any, cnt: number): any[] {
-    var out = new Array(cnt);
-    for (var i = 0; i < cnt; i++) {
+    const out = new Array(cnt);
+    for (let i = 0; i < cnt; i++) {
         out[i] = v;
     }
     return out;
@@ -172,11 +177,11 @@ export function repeat(v: any, cnt: number): any[] {
 export function swapAttrs(cont: any, attrList: string[], part1?: string, part2?: string): void {
     if (!part1) part1 = 'x';
     if (!part2) part2 = 'y';
-    for (var i = 0; i < attrList.length; i++) {
-        var attr = attrList[i];
-        var xp = nestedProperty(cont, attr.replace('?', part1));
-        var yp = nestedProperty(cont, attr.replace('?', part2));
-        var temp = xp.get();
+    for (let i = 0; i < attrList.length; i++) {
+        const attr = attrList[i];
+        const xp = nestedProperty(cont, attr.replace('?', part1));
+        const yp = nestedProperty(cont, attr.replace('?', part2));
+        const temp = xp.get();
         xp.set(yp.get());
         yp.set(temp);
     }
@@ -222,9 +227,9 @@ export function bBoxIntersect(a: any, b: any, pad?: number): boolean {
  * x1, x2: optional extra args
  */
 export function simpleMap(array: any[], func: any, x1?: any, x2?: any, opts?: any): any[] {
-    var len = array.length;
-    var out = new Array(len);
-    for (var i = 0; i < len; i++) out[i] = func(array[i], x1, x2, opts);
+    const len = array.length;
+    const out = new Array(len);
+    for (let i = 0; i < len; i++) out[i] = func(array[i], x1, x2, opts);
     return out;
 }
 
@@ -243,15 +248,15 @@ export function randstr(existing?: any, bits?: number, base?: number, _recursion
     if (bits === undefined) bits = 24;
     if (bits <= 0) return '0';
 
-    var digits = Math.log(Math.pow(2, bits)) / Math.log(base);
-    var res = '';
-    var i: number, b: number, x: string;
+    let digits = Math.log(Math.pow(2, bits)) / Math.log(base);
+    let res = '';
+    let i: number, b: number, x: string;
 
     for (i = 2; digits === Infinity; i *= 2) {
         digits = (Math.log(Math.pow(2, bits / i)) / Math.log(base)) * i;
     }
 
-    var rem = digits - Math.floor(digits);
+    const rem = digits - Math.floor(digits);
 
     for (i = 0; i < Math.floor(digits); i++) {
         x = Math.floor(Math.random() * base).toString(base);
@@ -264,7 +269,7 @@ export function randstr(existing?: any, bits?: number, base?: number, _recursion
         res = x + res;
     }
 
-    var parsed = parseInt(res, base);
+    const parsed = parseInt(res, base);
     if ((existing && existing[res]) || (parsed !== Infinity && parsed >= Math.pow(2, bits))) {
         if (_recursion! > 10) {
             warn('randstr failed uniqueness');
@@ -287,7 +292,7 @@ export function OptionControl(opt?: any, optname?: string): any {
     if (!opt) opt = {};
     if (!optname) optname = 'opt';
 
-    var self: any = {};
+    const self: any = {};
     self.optionList = [];
 
     self._newoption = function (optObj: any) {
@@ -309,15 +314,15 @@ export function smooth(arrayIn: number[], FWHM: number): number[] {
     FWHM = Math.round(FWHM) || 0; // only makes sense for integers
     if (FWHM < 2) return arrayIn;
 
-    var alen = arrayIn.length;
-    var alen2 = 2 * alen;
-    var wlen = 2 * FWHM - 1;
-    var w = new Array(wlen);
-    var arrayOut = new Array(alen);
-    var i: number;
-    var j: number;
-    var k: number;
-    var v: number;
+    const alen = arrayIn.length;
+    const alen2 = 2 * alen;
+    const wlen = 2 * FWHM - 1;
+    const w = new Array(wlen);
+    const arrayOut = new Array(alen);
+    let i: number;
+    let j: number;
+    let k: number;
+    let v: number;
 
     // first make the window array
     for (i = 0; i < wlen; i++) {
@@ -358,7 +363,7 @@ export function smooth(arrayIn: number[], FWHM: number): number[] {
  * that it gets reported
  */
 export function syncOrAsync(sequence: any[], arg?: any, finalStep?: any): any {
-    var ret: any, fni: any;
+    let ret: any, fni: any;
 
     function continueAsync(): any {
         return syncOrAsync(sequence, arg, finalStep);
@@ -393,10 +398,10 @@ export function noneOrAll(containerIn: any, containerOut: any, attrList: string[
      */
     if (!containerIn) return;
 
-    var hasAny = false;
-    var hasAll = true;
-    var i: number;
-    var val: any;
+    let hasAny = false;
+    let hasAll = true;
+    let i: number;
+    let val: any;
 
     for (i = 0; i < attrList.length; i++) {
         val = containerIn[attrList[i]];
@@ -421,11 +426,11 @@ export function noneOrAll(containerIn: any, containerOut: any, attrList: string[
  * @param {string} cdAttr : calcdata key
  */
 export function mergeArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: any) => any): void {
-    var hasFn = typeof fn === 'function';
+    const hasFn = typeof fn === 'function';
     if (isArrayOrTypedArray(traceAttr)) {
-        var imax = Math.min(traceAttr.length, cd.length);
-        for (var i = 0; i < imax; i++) {
-            var v = traceAttr[i];
+        const imax = Math.min(traceAttr.length, cd.length);
+        for (let i = 0; i < imax; i++) {
+            const v = traceAttr[i];
             cd[i][cdAttr] = hasFn ? fn!(v) : v;
         }
     }
@@ -434,7 +439,7 @@ export function mergeArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: a
 // cast numbers to positive numbers, returns 0 if not greater than 0
 export function mergeArrayCastPositive(traceAttr: any, cd: any[], cdAttr: string): void {
     return mergeArray(traceAttr, cd, cdAttr, function (v: any) {
-        var w = +v;
+        const w = +v;
         return !isFinite(w) ? 0 : w > 0 ? w : 0;
     });
 }
@@ -453,8 +458,8 @@ export function fillArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: an
     fn = fn || identity;
 
     if (isArrayOrTypedArray(traceAttr)) {
-        for (var i = 0; i < cd.length; i++) {
-            cd[i][cdAttr] = fn(traceAttr[i]);
+        for (let i = 0; i < cd.length; i++) {
+            cd[i][cdAttr] = fn!(traceAttr[i]);
         }
     }
 }
@@ -471,13 +476,13 @@ export function fillArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: an
 export function castOption(trace: any, ptNumber: any, astr: string, fn?: (v: any) => any): any {
     fn = fn || identity;
 
-    var val = nestedProperty(trace, astr).get();
+    const val = nestedProperty(trace, astr).get();
 
     if (isArrayOrTypedArray(val)) {
         if (Array.isArray(ptNumber) && isArrayOrTypedArray(val[ptNumber[0]])) {
-            return fn(val[ptNumber[0]][ptNumber[1]]);
+            return fn!(val[ptNumber[0]][ptNumber[1]]);
         } else {
-            return fn(val[ptNumber]);
+            return fn!(val[ptNumber]);
         }
     } else {
         return val;
@@ -500,15 +505,15 @@ export function extractOption(calcPt: any, trace: any, calcKey: string, traceKey
     //   must check if value isn't itself an array
     //   which means the trace attribute has a corresponding
     //   calcdata key, but its value is falsy
-    var traceVal = nestedProperty(trace, traceKey).get();
+    const traceVal = nestedProperty(trace, traceKey).get();
     if (!Array.isArray(traceVal)) return traceVal;
 }
 
 function makePtIndex2PtNumber(indexToPoints: any): Record<string, number> {
-    var ptIndex2ptNumber: Record<string, number> = {};
-    for (var k in indexToPoints) {
-        var pts = indexToPoints[k];
-        for (var j = 0; j < pts.length; j++) {
+    const ptIndex2ptNumber: Record<string, number> = {};
+    for (const k in indexToPoints) {
+        const pts = indexToPoints[k];
+        for (let j = 0; j < pts.length; j++) {
             ptIndex2ptNumber[pts[j]] = +k;
         }
     }
@@ -529,9 +534,9 @@ function makePtIndex2PtNumber(indexToPoints: any): Record<string, number> {
  *  calcdata item index correspondence (e.g. histogram)
  */
 export function tagSelected(calcTrace: any[], trace: any, ptNumber2cdIndex?: any): void {
-    var selectedpoints = trace.selectedpoints;
-    var indexToPoints = trace._indexToPoints;
-    var ptIndex2ptNumber: any;
+    const selectedpoints = trace.selectedpoints;
+    const indexToPoints = trace._indexToPoints;
+    let ptIndex2ptNumber: any;
 
     // make pt index-to-number map object, which takes care of transformed traces
     if (indexToPoints) {
@@ -542,15 +547,15 @@ export function tagSelected(calcTrace: any[], trace: any, ptNumber2cdIndex?: any
         return v !== undefined && v < calcTrace.length;
     }
 
-    for (var i = 0; i < selectedpoints.length; i++) {
-        var ptIndex = selectedpoints[i];
+    for (let i = 0; i < selectedpoints.length; i++) {
+        const ptIndex = selectedpoints[i];
 
         if (
             isIndex(ptIndex) ||
             (isArrayOrTypedArray(ptIndex) && isIndex(ptIndex[0]) && isIndex(ptIndex[1]))
         ) {
-            var ptNumber = ptIndex2ptNumber ? ptIndex2ptNumber[ptIndex] : ptIndex;
-            var cdIndex = ptNumber2cdIndex ? ptNumber2cdIndex[ptNumber] : ptNumber;
+            const ptNumber = ptIndex2ptNumber ? ptIndex2ptNumber[ptIndex] : ptIndex;
+            const cdIndex = ptNumber2cdIndex ? ptNumber2cdIndex[ptNumber] : ptNumber;
 
             if (isCdIndexValid(cdIndex)) {
                 calcTrace[cdIndex].selected = 1;
@@ -560,17 +565,17 @@ export function tagSelected(calcTrace: any[], trace: any, ptNumber2cdIndex?: any
 }
 
 export function selIndices2selPoints(trace: any): any {
-    var selectedpoints = trace.selectedpoints;
-    var indexToPoints = trace._indexToPoints;
+    const selectedpoints = trace.selectedpoints;
+    const indexToPoints = trace._indexToPoints;
 
     if (indexToPoints) {
-        var ptIndex2ptNumber = makePtIndex2PtNumber(indexToPoints);
-        var out: any[] = [];
+        const ptIndex2ptNumber = makePtIndex2PtNumber(indexToPoints);
+        const out: any[] = [];
 
-        for (var i = 0; i < selectedpoints.length; i++) {
-            var ptIndex = selectedpoints[i];
+        for (let i = 0; i < selectedpoints.length; i++) {
+            const ptIndex = selectedpoints[i];
             if (isIndex(ptIndex)) {
-                var ptNumber = ptIndex2ptNumber[ptIndex];
+                const ptNumber = ptIndex2ptNumber[ptIndex];
                 if (isIndex(ptNumber)) {
                     out.push(ptNumber);
                 }
@@ -594,10 +599,10 @@ export function selIndices2selPoints(trace: any): any {
  * @return {array or false} : the target array (NOT a copy!!) or false if invalid
  */
 export function getTargetArray(trace: any, transformOpts: any): any[] | false {
-    var target = transformOpts.target;
+    const target = transformOpts.target;
 
     if (typeof target === 'string' && target) {
-        var array = nestedProperty(trace, target).get();
+        const array = nestedProperty(trace, target).get();
         return isArrayOrTypedArray(array) ? array : false;
     } else if (isArrayOrTypedArray(target)) {
         return target;
@@ -613,13 +618,13 @@ export function getTargetArray(trace: any, transformOpts: any): any[] | false {
  * obj2 is assumed to already be clean of these things (including no arrays)
  */
 export function minExtend(obj1: any, obj2: any, opt?: string): any {
-    var objOut: any = {};
+    const objOut: any = {};
     if (typeof obj2 !== 'object') obj2 = {};
 
-    var arrayLen = opt === 'pieLike' ? -1 : 3;
+    const arrayLen = opt === 'pieLike' ? -1 : 3;
 
-    var keys = Object.keys(obj1);
-    var i: number, k: string, v: any;
+    let keys = Object.keys(obj1);
+    let i: number, k: string, v: any;
 
     for (i = 0; i < keys.length; i++) {
         k = keys[i];
@@ -659,18 +664,18 @@ export function titleCase(s: string): string {
 }
 
 export function containsAny(s: string, fragments: string[]): boolean {
-    for (var i = 0; i < fragments.length; i++) {
+    for (let i = 0; i < fragments.length; i++) {
         if (s.indexOf(fragments[i]) !== -1) return true;
     }
     return false;
 }
 
-var IS_SAFARI_REGEX = /Version\/[\d\.]+.*Safari/;
+const IS_SAFARI_REGEX = /Version\/[\d\.]+.*Safari/;
 export function isSafari(): boolean {
     return IS_SAFARI_REGEX.test(window.navigator.userAgent);
 }
 
-var IS_IOS_REGEX = /iPad|iPhone|iPod/;
+const IS_IOS_REGEX = /iPad|iPhone|iPod/;
 export function isIOS(): boolean {
     return IS_IOS_REGEX.test(window.navigator.userAgent);
 }
@@ -679,13 +684,13 @@ export function isIOS(): boolean {
 // for a UA string like this:
 // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)
 const IS_MAC_WKWEBVIEW_REGEX = /Macintosh.+AppleWebKit.+Gecko\)$/;
-export var isMacWKWebView = (): boolean => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
+export const isMacWKWebView = (): boolean => IS_MAC_WKWEBVIEW_REGEX.test(window.navigator.userAgent);
 
-var FIREFOX_VERSION_REGEX = /Firefox\/(\d+)\.\d+/;
+const FIREFOX_VERSION_REGEX = /Firefox\/(\d+)\.\d+/;
 export function getFirefoxVersion(): number | null {
-    var match = FIREFOX_VERSION_REGEX.exec(window.navigator.userAgent);
+    const match = FIREFOX_VERSION_REGEX.exec(window.navigator.userAgent);
     if (match && match.length === 2) {
-        var versionInt = parseInt(match[1]);
+        const versionInt = parseInt(match[1]);
         if (!isNaN(versionInt)) {
             return versionInt;
         }
@@ -709,7 +714,7 @@ export function isD3Selection(obj: any): boolean {
  * Previously, we were using the following pattern:
  *
  * ```
- * var sel = parent.selectAll('.' + className)
+ * const sel = parent.selectAll('.' + className)
  *     .data([0]);
  *
  * sel.enter().append(nodeType)
@@ -726,10 +731,13 @@ export function isD3Selection(obj: any): boolean {
  *
  */
 export function ensureSingle(parent: any, nodeType: string, className?: string, enterFn?: any): any {
-    var sel = parent.select(nodeType + (className ? '.' + className : ''));
-    if (sel.size()) return sel;
+    // Use querySelector instead of d3 .select() to avoid data propagation
+    const node = parent.node();
+    const selector = nodeType + (className ? '.' + className : '');
+    const existing = node && node.querySelector(':scope > ' + selector);
+    if (existing) return select(existing);
 
-    var layer = parent.append(nodeType);
+    const layer = parent.append(nodeType);
     if (className) layer.classed(className, true);
     if (enterFn) layer.call(enterFn);
 
@@ -747,10 +755,11 @@ export function ensureSingle(parent: any, nodeType: string, className?: string, 
  * @return {d3 selection} selection of new layer
  */
 export function ensureSingleById(parent: any, nodeType: string, id: string, enterFn?: any): any {
-    var sel = parent.select(nodeType + '#' + id);
-    if (sel.size()) return sel;
+    const node = parent.node();
+    const existing = node && node.querySelector(':scope > ' + nodeType + '#' + id);
+    if (existing) return select(existing);
 
-    var layer = parent.append(nodeType).attr('id', id);
+    const layer = parent.append(nodeType).attr('id', id);
     if (enterFn) layer.call(enterFn);
 
     return layer;
@@ -772,15 +781,15 @@ export function ensureSingleById(parent: any, nodeType: string, id: string, ente
  * @return {Object} the constructed object with a full nested path
  */
 export function objectFromPath(path: string, value: any): any {
-    var keys = path.split('.');
-    var tmpObj: any;
-    var obj: any = (tmpObj = {});
+    const keys = path.split('.');
+    let tmpObj: any;
+    const obj: any = (tmpObj = {});
 
-    for (var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        var el: any = null;
+    for (let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        let el: any = null;
 
-        var parts = keys[i].match(/(.*)\[([0-9]+)\]/);
+        const parts = keys[i].match(/(.*)\[([0-9]+)\]/);
 
         if (parts) {
             key = parts[1];
@@ -837,8 +846,8 @@ export function objectFromPath(path: string, value: any): any {
 // many times for animations. Could maybe be inside the function. Not sure about
 // scoping vs. recompilation tradeoff, but at least it's not just inlining it into
 // the inner loop.
-var dottedPropertyRegex = /^([^\[\.]+)\.(.+)?/;
-var indexedPropertyRegex = /^([^\.]+)\[([0-9]+)\](\.)?(.+)?/;
+const dottedPropertyRegex = /^([^\[\.]+)\.(.+)?/;
+const indexedPropertyRegex = /^([^\.]+)\[([0-9]+)\](\.)?(.+)?/;
 
 function notValid(prop: string): boolean {
     // guard against polluting __proto__ and other internals getters and setters
@@ -846,7 +855,7 @@ function notValid(prop: string): boolean {
 }
 
 export function expandObjectPaths(data: any): any {
-    var match: any, key: string, prop: string, datum: any, idx: number, dest: any, trailingPath: string;
+    let match: any, key: string, prop: string, datum: any, idx: number, dest: any, trailingPath: string;
     if (typeof data === 'object' && !Array.isArray(data)) {
         for (key in data) {
             if (data.hasOwnProperty(key)) {
@@ -942,13 +951,13 @@ export function numSeparate(value: string | number, separators: string, separate
         value = String(value);
     }
 
-    var thousandsRe = /(\d+)(\d{3})/;
-    var decimalSep = separators.charAt(0);
-    var thouSep = separators.charAt(1);
+    const thousandsRe = /(\d+)(\d{3})/;
+    const decimalSep = separators.charAt(0);
+    const thouSep = separators.charAt(1);
 
-    var x = value.split('.');
-    var x1 = x[0];
-    var x2 = x.length > 1 ? decimalSep + x[1] : '';
+    const x = value.split('.');
+    let x1 = x[0];
+    const x2 = x.length > 1 ? decimalSep + x[1] : '';
 
     // Years are ignored for thousands separators
     if (thouSep && (x.length > 1 || x1.length > 4 || separatethousands)) {
@@ -960,8 +969,8 @@ export function numSeparate(value: string | number, separators: string, separate
     return x1 + x2;
 }
 
-export var TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
-var SIMPLE_PROPERTY_REGEX = /^\w*$/;
+export const TEMPLATE_STRING_REGEX = /%{([^\s%{}:]*)([:|\|][^}]*)?}/g;
+const SIMPLE_PROPERTY_REGEX = /^\w*$/;
 
 /**
  * Substitute values from an object into a string
@@ -978,10 +987,10 @@ var SIMPLE_PROPERTY_REGEX = /^\w*$/;
 export function templateString(string: string, obj: any): string {
     // Not all that useful, but cache nestedProperty instantiation
     // just in case it speeds things up *slightly*:
-    var getterCache: Record<string, any> = {};
+    const getterCache: Record<string, any> = {};
 
     return string.replace(TEMPLATE_STRING_REGEX, function (dummy: string, key: string) {
-        var v: any;
+        let v: any;
         if (SIMPLE_PROPERTY_REGEX.test(key)) {
             v = obj[key];
         } else {
@@ -997,34 +1006,34 @@ const hovertemplateWarnings = {
     count: 0,
     name: 'hovertemplate'
 };
-export var hovertemplateString = (params: any): string => templateFormatString({ ...params, opts: hovertemplateWarnings });
+export const hovertemplateString = (params: any): string => templateFormatString({ ...params, opts: hovertemplateWarnings });
 
 const texttemplateWarnings = {
     max: 10,
     count: 0,
     name: 'texttemplate'
 };
-export var texttemplateString = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarnings });
+export const texttemplateString = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarnings });
 
 // Regex for parsing multiplication and division operations applied to a template key
 // Used for shape.label.texttemplate
 // Matches a key name (non-whitespace characters), followed by a * or / character, followed by a number
 // For example, the following strings are matched: `x0*2`, `slope/1.60934`, `y1*2.54`
-var MULT_DIV_REGEX = /^(\S+)([\*\/])(-?\d+(\.\d+)?)$/;
+const MULT_DIV_REGEX = /^(\S+)([\*\/])(-?\d+(\.\d+)?)$/;
 function multDivParser(inputStr: string): { key: string; op: string | null; number: number | null } {
-    var match = inputStr.match(MULT_DIV_REGEX);
+    const match = inputStr.match(MULT_DIV_REGEX);
     if (match) return { key: match[1], op: match[2], number: Number(match[3]) };
     return { key: inputStr, op: null, number: null };
 }
-var texttemplateWarningsForShapes = {
+const texttemplateWarningsForShapes = {
     max: 10,
     count: 0,
     name: 'texttemplate',
     parseMultDiv: true
 };
-export var texttemplateStringForShapes = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
+export const texttemplateStringForShapes = (params: any): string => templateFormatString({ ...params, opts: texttemplateWarningsForShapes });
 
-var TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
+const TEMPLATE_STRING_FORMAT_SEPARATOR = /^[:|\|]/;
 /**
  * Substitute values from an object into a string and optionally formats them using d3-format,
  * or fallback to associated labels.
@@ -1063,7 +1072,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
         let parsedOp: string | null = null;
         let parsedNumber: number | null = null;
         if (opts.parseMultDiv) {
-            var _match = multDivParser(key);
+            const _match = multDivParser(key);
             key = _match.key;
             parsedOp = _match.op;
             parsedNumber = _match.number;
@@ -1112,7 +1121,7 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
         if (parsedOp === '/') value /= parsedNumber!;
 
         if (format) {
-            var fmt: any;
+            let fmt: any;
             if (format[0] === ':') {
                 fmt = locale ? locale.numberFormat : numberFormat;
                 if (value !== '') {
@@ -1123,11 +1132,11 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
 
             if (format[0] === '|') {
                 fmt = locale ? locale.timeFormat : utcFormat;
-                var ms = dateTime2ms(value);
+                const ms = dateTime2ms(value);
                 value = formatDate(ms, format.replace(TEMPLATE_STRING_FORMAT_SEPARATOR, ''), false, fmt);
             }
         } else {
-            var keyLabel = key + 'Label';
+            const keyLabel = key + 'Label';
             if (labels.hasOwnProperty(keyLabel)) value = labels[keyLabel];
         }
 
@@ -1144,17 +1153,17 @@ function templateFormatString({ data = [], locale, fallback, labels = {}, opts, 
 /*
  * alphanumeric string sort, tailored for subplot IDs like scene2, scene10, x10y13 etc
  */
-var char0 = 48;
-var char9 = 57;
+const char0 = 48;
+const char9 = 57;
 export function subplotSort(a: string, b: string): number {
-    var l = Math.min(a.length, b.length) + 1;
-    var numA = 0;
-    var numB = 0;
-    for (var i = 0; i < l; i++) {
-        var charA = a.charCodeAt(i) || 0;
-        var charB = b.charCodeAt(i) || 0;
-        var isNumA = charA >= char0 && charA <= char9;
-        var isNumB = charB >= char0 && charB <= char9;
+    const l = Math.min(a.length, b.length) + 1;
+    let numA = 0;
+    let numB = 0;
+    for (let i = 0; i < l; i++) {
+        const charA = a.charCodeAt(i) || 0;
+        const charB = b.charCodeAt(i) || 0;
+        const isNumA = charA >= char0 && charA <= char9;
+        const isNumB = charB >= char0 && charB <= char9;
 
         if (isNumA) numA = 10 * numA + charA - char0;
         if (isNumB) numB = 10 * numB + charB - char0;
@@ -1168,14 +1177,14 @@ export function subplotSort(a: string, b: string): number {
 }
 
 // repeatable pseudorandom generator
-var randSeed = 2000000000;
+let randSeed = 2000000000;
 
 export function seedPseudoRandom(): void {
     randSeed = 2000000000;
 }
 
 export function pseudoRandom(): number {
-    var lastVal = randSeed;
+    const lastVal = randSeed;
     randSeed = (69069 * randSeed + 1) % 4294967296;
     // don't let consecutive vals be too close together
     // gets away from really trying to be random, in favor of better local uniformity
@@ -1197,7 +1206,7 @@ export function pseudoRandom(): number {
  *  @param {object || array} contOut (mutated here)
  */
 export function fillText(calcPt: any, trace: any, contOut: any): any {
-    var fill = Array.isArray(contOut)
+    const fill = Array.isArray(contOut)
         ? function (v: any) {
               contOut.push(v);
           }
@@ -1205,10 +1214,10 @@ export function fillText(calcPt: any, trace: any, contOut: any): any {
               contOut.text = v;
           };
 
-    var htx = extractOption(calcPt, trace, 'htx', 'hovertext');
+    const htx = extractOption(calcPt, trace, 'htx', 'hovertext');
     if (isValidTextValue(htx)) return fill(htx);
 
-    var tx = extractOption(calcPt, trace, 'tx', 'text');
+    const tx = extractOption(calcPt, trace, 'tx', 'text');
     if (isValidTextValue(tx)) return fill(tx);
 }
 
@@ -1223,8 +1232,8 @@ export function isValidTextValue(v: any): boolean {
  */
 export function formatPercent(ratio: number, n?: number): string {
     n = n || 0;
-    var str = (Math.round(100 * ratio * Math.pow(10, n)) * Math.pow(0.1, n)).toFixed(n) + '%';
-    for (var i = 0; i < n; i++) {
+    let str = (Math.round(100 * ratio * Math.pow(10, n)) * Math.pow(0.1, n)).toFixed(n) + '%';
+    for (let i = 0; i < n; i++) {
         if (str.indexOf('.') !== -1) {
             str = str.replace('0%', '%');
             str = str.replace('.%', '%');
@@ -1234,7 +1243,7 @@ export function formatPercent(ratio: number, n?: number): string {
 }
 
 export function isHidden(gd: GraphDiv): boolean {
-    var display = window.getComputedStyle(gd).display;
+    const display = window.getComputedStyle(gd).display;
     return !display || display === 'none';
 }
 
@@ -1263,15 +1272,15 @@ export function strScale(s: number): string {
  *  - noCenter: when defined no extra arguments needed in rotation
  */
 export function getTextTransform(transform: any): string {
-    var noCenter = transform.noCenter;
-    var textX = transform.textX;
-    var textY = transform.textY;
-    var targetX = transform.targetX;
-    var targetY = transform.targetY;
-    var anchorX = transform.anchorX || 0;
-    var anchorY = transform.anchorY || 0;
-    var rotate = transform.rotate;
-    var scale = transform.scale;
+    const noCenter = transform.noCenter;
+    const textX = transform.textX;
+    const textY = transform.textY;
+    const targetX = transform.targetX;
+    const targetY = transform.targetY;
+    const anchorX = transform.anchorX || 0;
+    const anchorY = transform.anchorY || 0;
+    const rotate = transform.rotate;
+    let scale = transform.scale;
     if (!scale) scale = 0;
     else if (scale > 1) scale = 1;
 
@@ -1288,7 +1297,7 @@ export function setTransormAndDisplay(s: any, transform: any): void {
 }
 
 export function ensureUniformFontSize(gd: GraphDiv, baseFont: any): any {
-    var out = extendFlat({}, baseFont);
+    const out = extendFlat({}, baseFont);
     out.size = Math.max(baseFont.size, gd._fullLayout.uniformtext.minsize || 0);
     return out;
 }
@@ -1303,7 +1312,7 @@ export function ensureUniformFontSize(gd: GraphDiv, baseFont: any): any {
  * @return {string} : joined list
  */
 export function join2(arr: any[], mainSeparator: string, lastSeparator: string): string {
-    var len = arr.length;
+    const len = arr.length;
     if (len > 1) {
         return arr.slice(0, -1).join(mainSeparator) + lastSeparator + arr[len - 1];
     }
@@ -1314,9 +1323,9 @@ export function bigFont(size: number): number {
     return Math.round(1.2 * size);
 }
 
-var firefoxVersion = getFirefoxVersion();
+const firefoxVersion = getFirefoxVersion();
 // see https://bugzilla.mozilla.org/show_bug.cgi?id=1684973
-var isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
+const isProblematicFirefox = firefoxVersion !== null && firefoxVersion < 86;
 
 /**
  * Return the mouse position from the last event registered by D3.
@@ -1333,7 +1342,7 @@ export function getPositionFromD3Event(event: any): number[] {
 }
 
 // Backward-compatible default export with all methods
-var lib: any = {};
+const lib: any = {};
 
 lib.adjustFormat = adjustFormat;
 lib.warnBadFormat = warnBadFormat;
@@ -1653,5 +1662,6 @@ lib.ensureUniformFontSize = ensureUniformFontSize;
 lib.join2 = join2;
 lib.bigFont = bigFont;
 lib.getPositionFromD3Event = getPositionFromD3Event;
+lib.setAttrs = setAttrs;
 
 export default lib;

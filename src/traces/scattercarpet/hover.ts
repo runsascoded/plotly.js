@@ -3,11 +3,11 @@ import scatterHover from '../scatter/hover.js';
 import _index from '../../lib/index.js';
 const { fillText } = _index;
 
-export default function hoverPoints(pointData, xval, yval, hovermode) {
-    var scatterPointData = scatterHover(pointData, xval, yval, hovermode);
+export default function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
+    const scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
-    var newPointData = scatterPointData[0];
+    const newPointData = scatterPointData[0];
 
     // if hovering on a fill, we don't show any point data so the label is
     // unchanged from what scatter gives us - except that it needs to
@@ -20,16 +20,16 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     // so easy and anyway we lost the information we would have needed to do
     // this inside scatterHover.
     if(newPointData.index === undefined) {
-        var yFracUp = 1 - (newPointData.y0 / pointData.ya._length);
-        var xLen = pointData.xa._length;
-        var xMin = xLen * yFracUp / 2;
-        var xMax = xLen - xMin;
+        const yFracUp = 1 - (newPointData.y0 / pointData.ya._length);
+        const xLen = pointData.xa._length;
+        const xMin = xLen * yFracUp / 2;
+        const xMax = xLen - xMin;
         newPointData.x0 = Math.max(Math.min(newPointData.x0, xMax), xMin);
         newPointData.x1 = Math.max(Math.min(newPointData.x1, xMax), xMin);
         return scatterPointData;
     }
 
-    var cdi = newPointData.cd[newPointData.index];
+    const cdi = newPointData.cd[newPointData.index];
 
     newPointData.a = cdi.a;
     newPointData.b = cdi.b;
@@ -38,17 +38,17 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     newPointData.yLabelVal = undefined;
     // TODO: nice formatting, and label by axis title, for a, b, and c?
 
-    var trace = newPointData.trace;
-    var carpet = trace._carpet;
+    const trace = newPointData.trace;
+    const carpet = trace._carpet;
 
-    var labels = trace._module.formatLabels(cdi, trace);
+    const labels = trace._module.formatLabels(cdi, trace);
     newPointData.yLabel = labels.yLabel;
 
     delete newPointData.text;
-    var text = [];
+    const text: any[] = [];
 
-    function textPart(ax: FullAxis, val) {
-        var prefix;
+    function textPart(ax: FullAxis, val: any) {
+        let prefix;
 
         if(ax.labelprefix && ax.labelprefix.length > 0) {
             prefix = ax.labelprefix.replace(/ = $/, '');
@@ -60,8 +60,8 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     }
 
     if(!trace.hovertemplate) {
-        var hoverinfo = cdi.hi || trace.hoverinfo;
-        var parts = hoverinfo.split('+');
+        const hoverinfo = cdi.hi || trace.hoverinfo;
+        let parts = hoverinfo.split('+');
 
         if(parts.indexOf('all') !== -1) parts = ['a', 'b', 'text'];
         if(parts.indexOf('a') !== -1) textPart(carpet.aaxis, cdi.a);

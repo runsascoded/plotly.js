@@ -5,48 +5,48 @@ import _gup from '../../lib/gup.js';
 const { wrap } = _gup;
 import Colorscale from '../../components/colorscale/index.js';
 
-var isArrayOrTypedArray = Lib.isArrayOrTypedArray;
-var isIndex = Lib.isIndex;
+const isArrayOrTypedArray = Lib.isArrayOrTypedArray;
+const isIndex = Lib.isIndex;
 
 function convertToD3Sankey(trace: FullTrace) {
-    var nodeSpec = trace.node;
-    var linkSpec = trace.link;
+    const nodeSpec = trace.node;
+    const linkSpec = trace.link;
 
-    var links = [];
-    var hasLinkColorArray = isArrayOrTypedArray(linkSpec.color);
-    var hasLinkHoverColorArray = isArrayOrTypedArray(linkSpec.hovercolor);
-    var hasLinkCustomdataArray = isArrayOrTypedArray(linkSpec.customdata);
-    var linkedNodes: any = {};
+    const links: any[] = [];
+    const hasLinkColorArray = isArrayOrTypedArray(linkSpec.color);
+    const hasLinkHoverColorArray = isArrayOrTypedArray(linkSpec.hovercolor);
+    const hasLinkCustomdataArray = isArrayOrTypedArray(linkSpec.customdata);
+    const linkedNodes: any = {};
 
-    var components: any = {};
-    var componentCount = linkSpec.colorscales.length;
-    var i;
+    const components: any = {};
+    const componentCount = linkSpec.colorscales.length;
+    let i;
     for(i = 0; i < componentCount; i++) {
-        var cscale = linkSpec.colorscales[i];
+        const cscale = linkSpec.colorscales[i];
         // @ts-expect-error extractScale accepts optional 2nd arg
-        var specs = Colorscale.extractScale(cscale, {cLetter: 'c'});
-        var scale = Colorscale.makeColorScaleFunc(specs);
+        const specs = Colorscale.extractScale(cscale, {cLetter: 'c'});
+        const scale = Colorscale.makeColorScaleFunc(specs);
         components[cscale.label] = scale;
     }
 
-    var maxNodeId = 0;
+    let maxNodeId = 0;
     for(i = 0; i < linkSpec.value.length; i++) {
         if(linkSpec.source[i] > maxNodeId) maxNodeId = linkSpec.source[i];
         if(linkSpec.target[i] > maxNodeId) maxNodeId = linkSpec.target[i];
     }
-    var nodeCount = maxNodeId + 1;
+    const nodeCount = maxNodeId + 1;
     trace.node._count = nodeCount;
 
     // Group nodes
-    var j;
-    var groups = trace.node.groups;
-    var groupLookup: any = {};
+    let j;
+    const groups = trace.node.groups;
+    const groupLookup: any = {};
     for(i = 0; i < groups.length; i++) {
-        var group = groups[i];
+        const group = groups[i];
         // Build a lookup table to quickly find in which group a node is
         for(j = 0; j < group.length; j++) {
-            var nodeIndex = group[j];
-            var groupIndex = nodeCount + i;
+            const nodeIndex = group[j];
+            const groupIndex = nodeCount + i;
             if(groupLookup.hasOwnProperty(nodeIndex)) {
                 Lib.warn('Node ' + nodeIndex + ' is already part of a group.');
             } else {
@@ -56,15 +56,15 @@ function convertToD3Sankey(trace: FullTrace) {
     }
 
     // Process links
-    var groupedLinks = {
+    const groupedLinks: { source: any[]; target: any[] } = {
         source: [],
         target: []
     };
     for(i = 0; i < linkSpec.value.length; i++) {
-        var val = linkSpec.value[i];
+        const val = linkSpec.value[i];
         // remove negative values, but keep zeros with special treatment
-        var source = linkSpec.source[i];
-        var target = linkSpec.target[i];
+        let source = linkSpec.source[i];
+        let target = linkSpec.target[i];
         if(!(val > 0 && isIndex(source, nodeCount) && isIndex(target, nodeCount))) {
             continue;
         }
@@ -88,10 +88,10 @@ function convertToD3Sankey(trace: FullTrace) {
         target = +target;
         linkedNodes[source] = linkedNodes[target] = true;
 
-        var label = '';
+        let label = '';
         if(linkSpec.label && linkSpec.label[i]) label = linkSpec.label[i];
 
-        var concentrationscale = null;
+        let concentrationscale = null;
         if(label && components.hasOwnProperty(label)) concentrationscale = components[label];
 
         links.push({
@@ -106,18 +106,18 @@ function convertToD3Sankey(trace: FullTrace) {
             value: +val
         });
 
-        groupedLinks.source.push(source);
-        groupedLinks.target.push(target);
+        groupedLinks.source.push((source as any));
+        groupedLinks.target.push((target as any));
     }
 
     // Process nodes
-    var totalCount = nodeCount + groups.length;
-    var hasNodeColorArray = isArrayOrTypedArray(nodeSpec.color);
-    var hasNodeCustomdataArray = isArrayOrTypedArray(nodeSpec.customdata);
-    var nodes = [];
+    const totalCount = nodeCount + groups.length;
+    const hasNodeColorArray = isArrayOrTypedArray(nodeSpec.color);
+    const hasNodeCustomdataArray = isArrayOrTypedArray(nodeSpec.customdata);
+    const nodes: any[] = [];
     for(i = 0; i < totalCount; i++) {
         if(!linkedNodes[i]) continue;
-        var l = nodeSpec.label[i];
+        const l = nodeSpec.label[i];
 
         nodes.push({
             group: (i > nodeCount - 1),
@@ -130,7 +130,7 @@ function convertToD3Sankey(trace: FullTrace) {
     }
 
     // Check if we have circularity on the resulting graph
-    var circular = false;
+    let circular = false;
     if(circularityPresent(totalCount, groupedLinks.source, groupedLinks.target)) {
         circular = true;
     }
@@ -147,9 +147,9 @@ function convertToD3Sankey(trace: FullTrace) {
 }
 
 function circularityPresent(nodeLen: number, sources: number[], targets: number[]) {
-    var nodes = Lib.init2dArray(nodeLen, 0);
+    const nodes = Lib.init2dArray(nodeLen, 0);
 
-    for(var i = 0; i < Math.min(sources.length, targets.length); i++) {
+    for(let i = 0; i < Math.min(sources.length, targets.length); i++) {
         if(Lib.isIndex(sources[i], nodeLen) && Lib.isIndex(targets[i], nodeLen)) {
             if(sources[i] === targets[i]) {
                 return true; // self-link which is also a scc of one
@@ -158,17 +158,17 @@ function circularityPresent(nodeLen: number, sources: number[], targets: number[
         }
     }
 
-    var scc = tarjan(nodes);
+    const scc = tarjan(nodes);
 
     // Tarján's strongly connected components algorithm coded by Mikola Lysenko
     // returns at least one non-singular component if there's circularity in the graph
-    return scc.components.some(function(c) {
+    return scc.components.some(function(c: any) {
         return c.length > 1;
     });
 }
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var result = convertToD3Sankey(trace);
+    const result = convertToD3Sankey(trace);
 
     return wrap({
         circular: result.circular,

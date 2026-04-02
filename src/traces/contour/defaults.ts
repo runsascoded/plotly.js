@@ -17,7 +17,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
         return Lib.coerce2(traceIn, traceOut, attributes, attr);
     }
 
-    var len = handleXYZDefaults(traceIn, traceOut, coerce, layout);
+    const len = handleXYZDefaults(traceIn, traceOut, coerce, layout);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -33,7 +33,7 @@ export default function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var isConstraint = coerce('contours.type') === 'constraint';
+    const isConstraint = coerce('contours.type') === 'constraint';
     coerce('connectgaps', Lib.isArray1D(traceOut.z));
 
     if (isConstraint) {

@@ -7,18 +7,18 @@ import calcSelection from '../scatter/calc_selection.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
-function isAbsolute(a) {
+function isAbsolute(a: any) {
     return (a === 'a' || a === 'absolute');
 }
 
-function isTotal(a) {
+function isTotal(a: any) {
     return (a === 't' || a === 'total');
 }
 
 export default function calc(gd: GraphDiv,  trace: FullTrace) {
-    var xa = Axes.getFromId(gd, trace.xaxis || 'x');
-    var ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    var size, pos, origPos, pObj, hasPeriod, pLetter;
+    const xa = Axes.getFromId(gd, trace.xaxis || 'x');
+    const ya = Axes.getFromId(gd, trace.yaxis || 'y');
+    let size, pos, origPos, pObj, hasPeriod, pLetter;
 
     if(trace.orientation === 'h') {
         size = xa.makeCalcdata(trace, 'x');
@@ -36,26 +36,26 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     pos = pObj.vals;
 
     // create the "calculated data" to plot
-    var serieslen = Math.min(pos.length, size.length);
-    var cd = new Array(serieslen);
+    const serieslen = Math.min(pos.length, size.length);
+    const cd = new Array(serieslen);
 
     // set position and size (as well as for waterfall total size)
-    var previousSum = 0;
-    var newSize;
+    let previousSum = 0;
+    let newSize;
     // trace-wide flags
-    var hasTotals = false;
+    let hasTotals = false;
 
-    for(var i = 0; i < serieslen; i++) {
-        var amount = size[i] || 0;
+    for(let i = 0; i < serieslen; i++) {
+        const amount = size[i] || 0;
 
-        var connectToNext = false;
+        let connectToNext = false;
         if(size[i] !== BADNUM || isTotal(trace.measure[i]) || isAbsolute(trace.measure[i])) {
             if(i + 1 < serieslen && (size[i + 1] !== BADNUM || isTotal(trace.measure[i + 1]) || isAbsolute(trace.measure[i + 1]))) {
                 connectToNext = true;
             }
         }
 
-        var cdi: any = cd[i] = {
+        const cdi: any = cd[i] = {
             i: i,
             p: pos[i],
             s: amount,

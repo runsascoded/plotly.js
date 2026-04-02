@@ -8,33 +8,31 @@ const { LINE_SPACING } = _alignment;
 
 // text converter
 
-var FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
+const FIND_TEX = /([^$]*)([$]+[^$]*[$]+)([^$]*)/;
 
-export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: any): any {
-    var str = _context.text();
+export const convertToTspans = function(_context: any, gd: GraphDiv, _callback?: any): any {
+    const str = _context.text();
 
     // Until we get tex integrated more fully (so it can be used along with non-tex)
     // allow some elements to prohibit it by attaching 'data-notex' to the original
-    var tex = (!_context.attr('data-notex')) &&
+    const tex = (!_context.attr('data-notex')) &&
         gd && gd._context.typesetMath &&
         (typeof MathJax !== 'undefined') &&
         str.match(FIND_TEX);
 
-    var parent = select(_context.node().parentNode);
+    const parent = select(_context.node().parentNode);
     if(parent.empty()) return;
-    var svgClass = (_context.attr('class')) ? _context.attr('class').split(' ')[0] : 'text';
+    let svgClass = (_context.attr('class')) ? _context.attr('class').split(' ')[0] : 'text';
     svgClass += '-math';
     parent.selectAll('svg.' + svgClass).remove();
     parent.selectAll('g.' + svgClass + '-group').remove();
     _context.style('display', null)
-        .attr({
-            // some callers use data-unformatted *from the <text> element* in 'cancel'
-            // so we need it here even if we're going to turn it into math
-            // these two (plus style and text-anchor attributes) form the key we're
-            // going to use for Drawing.bBox
-            'data-unformatted': str,
-            'data-math': 'N'
-        });
+        // some callers use data-unformatted *from the <text> element* in 'cancel'
+        // so we need it here even if we're going to turn it into math
+        // these two (plus style and text-anchor attributes) form the key we're
+        // going to use for Drawing.bBox
+        .attr('data-unformatted', str)
+        .attr('data-math', 'N');
 
     function showText(): void {
         if(!parent.empty()) {
@@ -44,7 +42,7 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
         _context.text('')
             .style('white-space', 'pre');
 
-        var hasLink = buildSVGText(_context.node(), str);
+        const hasLink = buildSVGText(_context.node(), str);
 
         if(hasLink) {
             // at least in Chrome, pointer-events does not seem
@@ -62,27 +60,25 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
     if(tex) {
         ((gd && gd._promises) || []).push(new Promise(function(resolve: any) {
             _context.style('display', 'none');
-            var fontSize = parseInt(_context.node().style.fontSize, 10);
-            var config: any = {fontSize: fontSize};
+            const fontSize = parseInt(_context.node().style.fontSize, 10);
+            const config: any = {fontSize: fontSize};
 
             texToSVG(tex[2], config, function(_svgEl: any, _glyphDefs: any, _svgBBox: any) {
                 parent.selectAll('svg.' + svgClass).remove();
                 parent.selectAll('g.' + svgClass + '-group').remove();
 
-                var newSvg = _svgEl && _svgEl.select('svg');
+                const newSvg = _svgEl && _svgEl.select('svg');
                 if(!newSvg || !newSvg.node()) {
                     showText();
                     resolve();
                     return;
                 }
 
-                var mathjaxGroup = parent.append('g')
+                const mathjaxGroup = parent.append('g')
                     .classed(svgClass + '-group', true)
-                    .attr({
-                        'pointer-events': 'none',
-                        'data-unformatted': str,
-                        'data-math': 'Y'
-                    });
+                    .attr('pointer-events', 'none')
+                    .attr('data-unformatted', str)
+                    .attr('data-math', 'Y');
 
                 mathjaxGroup.node().appendChild(newSvg.node());
 
@@ -92,23 +88,25 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
                                                newSvg.node().firstChild);
                 }
 
-                var w0 = _svgBBox.width;
-                var h0 = _svgBBox.height;
+                const w0 = _svgBBox.width;
+                const h0 = _svgBBox.height;
 
-                newSvg.attr({
-                    class: svgClass,
-                    height: h0,
-                    preserveAspectRatio: 'xMinYMin meet'
-                })
-                .style({overflow: 'visible', 'pointer-events': 'none'});
+                newSvg
+                    .attr('class', svgClass)
+                    .attr('height', h0)
+                    .attr('preserveAspectRatio', 'xMinYMin meet')
+                .style('overflow', 'visible')
+                .style('pointer-events', 'none');
 
-                var fill = _context.node().style.fill || 'black';
-                var g = newSvg.select('g');
-                g.attr({fill: fill, stroke: fill});
+                const fill = _context.node().style.fill || 'black';
+                const g = newSvg.select('g');
+                g
+                    .attr('fill', fill)
+                    .attr('stroke', fill);
 
-                var bb = g.node().getBoundingClientRect();
-                var w = bb.width;
-                var h = bb.height;
+                let bb = g.node().getBoundingClientRect();
+                let w = bb.width;
+                let h = bb.height;
 
                 if(w > w0 || h > h0) {
                     // this happen in firefox v82+ | see https://bugzilla.mozilla.org/show_bug.cgi?id=1709251 addressed
@@ -119,25 +117,23 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
                     h = bb.height;
                 }
 
-                var x = +_context.attr('x');
-                var y = +_context.attr('y');
+                let x = +_context.attr('x');
+                let y = +_context.attr('y');
 
                 // font baseline is about 1/4 fontSize below centerline
-                var textHeight = fontSize || _context.node().getBoundingClientRect().height;
-                var dy = -textHeight / 4;
+                const textHeight = fontSize || _context.node().getBoundingClientRect().height;
+                const dy = -textHeight / 4;
 
                 if(svgClass[0] === 'y') {
-                    mathjaxGroup.attr({
-                        transform: 'rotate(' + [-90, x, y] +
-                        ')' + strTranslate(-w / 2, dy - h / 2)
-                    });
+                    mathjaxGroup.attr('transform', 'rotate(' + [-90, x, y] +
+                        ')' + strTranslate(-w / 2, dy - h / 2));
                 } else if(svgClass[0] === 'l') {
                     y = dy - h / 2;
                 } else if(svgClass[0] === 'a' && svgClass.indexOf('atitle') !== 0) {
                     x = 0;
                     y = dy;
                 } else {
-                    var anchor = _context.attr('text-anchor');
+                    const anchor = _context.attr('text-anchor');
 
                     x = x - w * (
                         anchor === 'middle' ? 0.5 :
@@ -146,10 +142,9 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
                     y = y + dy - h / 2;
                 }
 
-                newSvg.attr({
-                    x: x,
-                    y: y
-                });
+                newSvg
+                    .attr('x', x)
+                    .attr('y', y);
 
                 if(_callback) _callback.call(_context, mathjaxGroup);
                 resolve(mathjaxGroup);
@@ -162,18 +157,18 @@ export var convertToTspans = function(_context: any, gd: GraphDiv, _callback?: a
 
 // MathJax
 
-var LT_MATCH = /(<|&lt;|&#60;)/g;
-var GT_MATCH = /(>|&gt;|&#62;)/g;
+const LT_MATCH = /(<|&lt;|&#60;)/g;
+const GT_MATCH = /(>|&gt;|&#62;)/g;
 
 function cleanEscapesForTex(s: string): string {
     return s.replace(LT_MATCH, '\\lt ')
         .replace(GT_MATCH, '\\gt ');
 }
 
-var inlineMath = [['$', '$'], ['\\(', '\\)']];
+const inlineMath = [['$', '$'], ['\\(', '\\)']];
 
 function texToSVG(_texString: string, _config: any, _callback: any): void {
-    var MathJaxVersion = parseInt(
+    const MathJaxVersion = parseInt(
         ((MathJax as any).version || '').split('.')[0]
     );
 
@@ -185,12 +180,12 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         return;
     }
 
-    var originalRenderer: any,
+    let originalRenderer: any,
         originalConfig: any,
         originalProcessSectionDelay: any,
         tmpDiv: any;
 
-    var setConfig2 = function() {
+    const setConfig2 = function() {
         originalConfig = extendDeepAll({}, (MathJax as any).Hub.config);
 
         originalProcessSectionDelay = (MathJax as any).Hub.processSectionDelay;
@@ -208,7 +203,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         });
     };
 
-    var setConfig3 = function() {
+    const setConfig3 = function() {
         originalConfig = extendDeepAll({}, (MathJax as any).config);
 
         if(!(MathJax as any).config.tex) {
@@ -218,50 +213,48 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         (MathJax as any).config.tex.inlineMath = inlineMath;
     };
 
-    var setRenderer2 = function() {
+    const setRenderer2 = function() {
         originalRenderer = (MathJax as any).Hub.config.menuSettings.renderer;
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer('SVG');
         }
     };
 
-    var setRenderer3 = function() {
+    const setRenderer3 = function() {
         originalRenderer = (MathJax as any).config.startup.output;
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = 'svg';
         }
     };
 
-    var initiateMathJax = function() {
-        var randomID = 'math-output-' + randstr({}, 64);
+    const initiateMathJax = function() {
+        const randomID = 'math-output-' + randstr({}, 64);
         tmpDiv = select('body').append('div')
-            .attr({id: randomID})
-            .style({
-                visibility: 'hidden',
-                position: 'absolute',
-                'font-size': _config.fontSize + 'px'
-            })
+            .attr('id', randomID)
+            .style('visibility', 'hidden')
+            .style('position', 'absolute')
+            .style('font-size', _config.fontSize + 'px')
             .text(cleanEscapesForTex(_texString));
 
-        var tmpNode = tmpDiv.node();
+        const tmpNode = tmpDiv.node();
 
         return MathJaxVersion === 2 ?
             (MathJax as any).Hub.Typeset(tmpNode) :
             (MathJax as any).typeset([tmpNode]);
     };
 
-    var finalizeMathJax = function() {
-        var sel = tmpDiv.select(
+    const finalizeMathJax = function() {
+        const sel = tmpDiv.select(
             MathJaxVersion === 2 ? '.MathJax_SVG' : '.MathJax'
         );
 
-        var node = !sel.empty() && tmpDiv.select('svg').node();
+        const node = !sel.empty() && tmpDiv.select('svg').node();
         if(!node) {
             log('There was an error in the tex syntax.', _texString);
             _callback();
         } else {
-            var nodeBBox = node.getBoundingClientRect();
-            var glyphDefs: any;
+            const nodeBBox = node.getBoundingClientRect();
+            let glyphDefs: any;
             if(MathJaxVersion === 2) {
                 glyphDefs = select('body').select('#MathJax_SVG_glyphs');
             } else {
@@ -273,26 +266,26 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
         tmpDiv.remove();
     };
 
-    var resetRenderer2 = function() {
+    const resetRenderer2 = function() {
         if(originalRenderer !== 'SVG') {
             return (MathJax as any).Hub.setRenderer(originalRenderer);
         }
     };
 
-    var resetRenderer3 = function() {
+    const resetRenderer3 = function() {
         if(originalRenderer !== 'svg') {
             (MathJax as any).config.startup.output = originalRenderer;
         }
     };
 
-    var resetConfig2 = function() {
+    const resetConfig2 = function() {
         if(originalProcessSectionDelay !== undefined) {
             (MathJax as any).Hub.processSectionDelay = originalProcessSectionDelay;
         }
         return (MathJax as any).Hub.Config(originalConfig);
     };
 
-    var resetConfig3 = function() {
+    const resetConfig3 = function() {
         (MathJax as any).config = originalConfig;
     };
 
@@ -320,7 +313,7 @@ function texToSVG(_texString: string, _config: any, _callback: any): void {
     }
 }
 
-var TAG_STYLES: Record<string, string> = {
+const TAG_STYLES: Record<string, string> = {
     // would like to use baseline-shift for sub/sup but FF doesn't support it
     // so we need to use dy along with the uber hacky shift-back-to
     // baseline below
@@ -336,17 +329,17 @@ var TAG_STYLES: Record<string, string> = {
 };
 
 // baseline shifts for sub and sup
-var SHIFT_DY: Record<string, string> = {
+const SHIFT_DY: Record<string, string> = {
     sub: '0.3em',
     sup: '-0.6em'
 };
 // reset baseline by adding a tspan (empty except for a zero-width space)
 // with dy of -70% * SHIFT_DY (because font-size=70%)
-var RESET_DY: Record<string, string> = {
+const RESET_DY: Record<string, string> = {
     sub: '-0.21em',
     sup: '0.42em'
 };
-var ZERO_WIDTH_SPACE = '\u200b';
+const ZERO_WIDTH_SPACE = '\u200b';
 
 /*
  * Whitelist of protocols in user-supplied urls. Mostly we want to avoid javascript
@@ -354,16 +347,16 @@ var ZERO_WIDTH_SPACE = '\u200b';
  * versions treats relative paths as having different flavors of no protocol, while
  * other browsers have these explicitly inherit the protocol of the page they're in.
  */
-var PROTOCOLS: (string | undefined)[] = ['http:', 'https:', 'mailto:', '', undefined, ':'];
+const PROTOCOLS: (string | undefined)[] = ['http:', 'https:', 'mailto:', '', undefined, ':'];
 
-export var NEWLINES = /(\r\n?|\n)/g;
+export const NEWLINES = /(\r\n?|\n)/g;
 
-var SPLIT_TAGS = /(<[^<>]*>)/;
+const SPLIT_TAGS = /(<[^<>]*>)/;
 
-var ONE_TAG = /<(\/?)([^ >]*)(\s+(.*))?>/i;
+const ONE_TAG = /<(\/?)([^ >]*)(\s+(.*))?>/i;
 
-var BR_TAG = /<br(\s+.*)?>/i;
-export var BR_TAG_ALL = /<br(\s+.*)?>/gi;
+const BR_TAG = /<br(\s+.*)?>/i;
+export const BR_TAG_ALL = /<br(\s+.*)?>/gi;
 
 /*
  * style and href: pull them out of either single or double quotes. Also
@@ -390,40 +383,40 @@ export var BR_TAG_ALL = /<br(\s+.*)?>/gi;
  * > p.innerHTML
  * <- '<span styl&#x65;="font-color:red;">Hi</span>'
  */
-var STYLEMATCH = /(^|[\s"'])style\s*=\s*("([^"]*);?"|'([^']*);?')/i;
-var HREFMATCH = /(^|[\s"'])href\s*=\s*("([^"]*)"|'([^']*)')/i;
-var TARGETMATCH = /(^|[\s"'])target\s*=\s*("([^"\s]*)"|'([^'\s]*)')/i;
-var POPUPMATCH = /(^|[\s"'])popup\s*=\s*("([\w=,]*)"|'([\w=,]*)')/i;
+const STYLEMATCH = /(^|[\s"'])style\s*=\s*("([^"]*);?"|'([^']*);?')/i;
+const HREFMATCH = /(^|[\s"'])href\s*=\s*("([^"]*)"|'([^']*)')/i;
+const TARGETMATCH = /(^|[\s"'])target\s*=\s*("([^"\s]*)"|'([^'\s]*)')/i;
+const POPUPMATCH = /(^|[\s"'])popup\s*=\s*("([\w=,]*)"|'([\w=,]*)')/i;
 
 // dedicated matcher for these quoted regexes, that can return their results
 // in two different places
 function getQuotedMatch(_str: string, re: RegExp): string | null {
     if(!_str) return null;
-    var match = _str.match(re);
-    var result = match && (match[3] || match[4]);
+    const match = _str.match(re);
+    const result = match && (match[3] || match[4]);
     return result && convertEntities(result);
 }
 
-var COLORMATCH = /(^|;)\s*color:/;
+const COLORMATCH = /(^|;)\s*color:/;
 
-export var plainText = function(_str: string, opts?: any): string {
+export const plainText = function(_str: string, opts?: any): string {
     opts = opts || {};
 
-    var len = (opts.len !== undefined && opts.len !== -1) ? opts.len : Infinity;
-    var allowedTags: string[] = opts.allowedTags !== undefined ? opts.allowedTags : ['br'];
+    const len = (opts.len !== undefined && opts.len !== -1) ? opts.len : Infinity;
+    const allowedTags: string[] = opts.allowedTags !== undefined ? opts.allowedTags : ['br'];
 
-    var ellipsis = '...';
-    var eLen = ellipsis.length;
+    const ellipsis = '...';
+    const eLen = ellipsis.length;
 
-    var oldParts = _str.split(SPLIT_TAGS);
-    var newParts: string[] = [];
-    var prevTag = '';
-    var l = 0;
+    const oldParts = _str.split(SPLIT_TAGS);
+    const newParts: string[] = [];
+    let prevTag = '';
+    let l = 0;
 
-    for(var i = 0; i < oldParts.length; i++) {
-        var p = oldParts[i];
-        var match = p.match(ONE_TAG);
-        var tagType = match && match[2].toLowerCase();
+    for(let i = 0; i < oldParts.length; i++) {
+        const p = oldParts[i];
+        const match = p.match(ONE_TAG);
+        const tagType = match && match[2].toLowerCase();
 
         if(tagType) {
             // N.B. tags do not count towards string length
@@ -432,13 +425,13 @@ export var plainText = function(_str: string, opts?: any): string {
                 prevTag = tagType;
             }
         } else {
-            var pLen = p.length;
+            const pLen = p.length;
 
             if((l + pLen) < len) {
                 newParts.push(p);
                 l += pLen;
             } else if(l < len) {
-                var pLen2 = len - l;
+                const pLen2 = len - l;
 
                 if(prevTag && (prevTag !== 'br' || pLen2 <= eLen || pLen <= eLen)) {
                     newParts.pop();
@@ -474,7 +467,7 @@ export var plainText = function(_str: string, opts?: any): string {
  * chars <, >, and &, because these ones can trigger special processing if not
  * replaced by the corresponding entity.
  */
-var entityToUnicode: Record<string, string> = {
+const entityToUnicode: Record<string, string> = {
     mu: '\u03bc',
     amp: '&',
     lt: '<',
@@ -487,10 +480,10 @@ var entityToUnicode: Record<string, string> = {
 
 // NOTE: in general entities can contain uppercase too (so [a-zA-Z]) but all the
 // ones we support use only lowercase. If we ever change that, update the regex.
-var ENTITY_MATCH = /&(#\d+|#x[\da-fA-F]+|[a-z]+);/g;
+const ENTITY_MATCH = /&(#\d+|#x[\da-fA-F]+|[a-z]+);/g;
 function convertEntities(_str: string): string {
     return _str.replace(ENTITY_MATCH, function(fullMatch: string, innerMatch: string) {
-        var outChar: string | undefined;
+        let outChar: string | undefined;
         if(innerMatch.charAt(0) === '#') {
             // cannot use String.fromCodePoint in IE
             outChar = fromCodePoint(
@@ -511,12 +504,12 @@ function fromCodePoint(code: number): string | undefined {
     // Don't allow overflow. In Chrome this turns into \ufffd but I feel like it's
     // more useful to just not convert it at all.
     if(code > 0x10FFFF) return;
-    var stringFromCodePoint = String.fromCodePoint;
+    const stringFromCodePoint = String.fromCodePoint;
     if(stringFromCodePoint) return stringFromCodePoint(code);
 
     // IE doesn't have String.fromCodePoint
     // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint
-    var stringFromCharCode = String.fromCharCode;
+    const stringFromCharCode = String.fromCharCode;
     if(code <= 0xFFFF) return stringFromCharCode(code);
     return stringFromCharCode(
         (code >> 10) + 0xD7C0,
@@ -544,47 +537,46 @@ function buildSVGText(containerNode: any, str: string): boolean {
      */
     str = str.replace(NEWLINES, ' ');
 
-    var hasLink = false;
+    let hasLink = false;
 
     // as we're building the text, keep track of what elements we're nested inside
     // nodeStack will be an array of {node, type, style, href, target, popup}
     // where only type: 'a' gets the last 3 and node is only added when it's created
-    var nodeStack: any[] = [];
-    var currentNode: any;
-    var currentLine = -1;
+    let nodeStack: any[] = [];
+    let currentNode: any;
+    let currentLine = -1;
 
     function newLine(): void {
         currentLine++;
 
-        var lineNode = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
-        select(lineNode).attr({
-            class: 'line',
-            dy: (currentLine * LINE_SPACING) + 'em'
-        });
+        const lineNode = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
+        select(lineNode)
+            .attr('class', 'line')
+            .attr('dy', (currentLine * LINE_SPACING) + 'em');
         containerNode.appendChild(lineNode);
 
         currentNode = lineNode;
 
-        var oldNodeStack = nodeStack;
+        const oldNodeStack = nodeStack;
         nodeStack = [{node: lineNode}];
 
         if(oldNodeStack.length > 1) {
-            for(var i = 1; i < oldNodeStack.length; i++) {
+            for(let i = 1; i < oldNodeStack.length; i++) {
                 enterNode(oldNodeStack[i]);
             }
         }
     }
 
     function enterNode(nodeSpec: any): void {
-        var type = nodeSpec.type;
-        var nodeAttrs: any = {};
-        var nodeType: string;
+        const type = nodeSpec.type;
+        let nodeAttrs: any = {};
+        let nodeType: string;
 
         if(type === 'a') {
             nodeType = 'a';
-            var target = nodeSpec.target;
-            var href = nodeSpec.href;
-            var popup = nodeSpec.popup;
+            const target = nodeSpec.target;
+            const href = nodeSpec.href;
+            const popup = nodeSpec.popup;
             if(href) {
                 nodeAttrs = {
                     'xlink:xlink:show': (target === '_blank' || target.charAt(0) !== '_') ? 'new' : 'replace',
@@ -602,13 +594,13 @@ function buildSVGText(containerNode: any, str: string): boolean {
 
         if(nodeSpec.style) nodeAttrs.style = nodeSpec.style;
 
-        var newNode = document.createElementNS(xmlnsNamespaces.svg, nodeType);
+        const newNode = document.createElementNS(xmlnsNamespaces.svg, nodeType);
 
         if(type === 'sup' || type === 'sub') {
             addTextNode(currentNode, ZERO_WIDTH_SPACE);
             currentNode.appendChild(newNode);
 
-            var resetter = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
+            const resetter = document.createElementNS(xmlnsNamespaces.svg, 'tspan');
             addTextNode(resetter, ZERO_WIDTH_SPACE);
             select(resetter).attr('dy', RESET_DY[type]);
             nodeAttrs.dy = SHIFT_DY[type];
@@ -619,7 +611,8 @@ function buildSVGText(containerNode: any, str: string): boolean {
             currentNode.appendChild(newNode);
         }
 
-        select(newNode).attr(nodeAttrs);
+        const newNodeSel = select(newNode);
+        for(const k in nodeAttrs) newNodeSel.attr(k, nodeAttrs[k]);
 
         currentNode = nodeSpec.node = newNode;
         nodeStack.push(nodeSpec);
@@ -637,7 +630,7 @@ function buildSVGText(containerNode: any, str: string): boolean {
             return;
         }
 
-        var innerNode = nodeStack.pop();
+        const innerNode = nodeStack.pop();
 
         if(type !== innerNode.type) {
             log('Start tag <' + innerNode.type + '> doesnt match end tag <' +
@@ -646,7 +639,7 @@ function buildSVGText(containerNode: any, str: string): boolean {
         currentNode = nodeStack[nodeStack.length - 1].node;
     }
 
-    var hasLines = BR_TAG.test(str);
+    const hasLines = BR_TAG.test(str);
 
     if(hasLines) newLine();
     else {
@@ -654,12 +647,12 @@ function buildSVGText(containerNode: any, str: string): boolean {
         nodeStack = [{node: containerNode}];
     }
 
-    var parts = str.split(SPLIT_TAGS);
-    for(var i = 0; i < parts.length; i++) {
-        var parti = parts[i];
-        var match = parti.match(ONE_TAG);
-        var tagType = match && match[2].toLowerCase();
-        var tagStyle = TAG_STYLES[tagType as string];
+    const parts = str.split(SPLIT_TAGS);
+    for(let i = 0; i < parts.length; i++) {
+        const parti = parts[i];
+        const match = parti.match(ONE_TAG);
+        const tagType = match && match[2].toLowerCase();
+        const tagStyle = TAG_STYLES[tagType as string];
 
         if(tagType === 'br') {
             newLine();
@@ -670,14 +663,14 @@ function buildSVGText(containerNode: any, str: string): boolean {
             if(match![1]) {
                 exitNode(tagType as string);
             } else {
-                var extra = match![4];
+                const extra = match![4];
 
-                var nodeSpec: any = {type: tagType};
+                const nodeSpec: any = {type: tagType};
 
                 // now add style, from both the tag name and any extra css
                 // Most of the svg css that users will care about is just like html,
                 // but font color is different (uses fill). Let our users ignore this.
-                var css = getQuotedMatch(extra, STYLEMATCH);
+                let css = getQuotedMatch(extra, STYLEMATCH);
                 if(css) {
                     css = css.replace(COLORMATCH, '$1 fill:');
                     if(tagStyle) css += ';' + tagStyle;
@@ -688,10 +681,10 @@ function buildSVGText(containerNode: any, str: string): boolean {
                 if(tagType === 'a') {
                     hasLink = true;
 
-                    var href = getQuotedMatch(extra, HREFMATCH);
+                    const href = getQuotedMatch(extra, HREFMATCH);
 
                     if(href) {
-                        var safeHref = sanitizeHref(href);
+                        const safeHref = sanitizeHref(href);
                         if(safeHref) {
                             nodeSpec.href = safeHref;
                             nodeSpec.target = getQuotedMatch(extra, TARGETMATCH) || '_blank';
@@ -709,14 +702,14 @@ function buildSVGText(containerNode: any, str: string): boolean {
 }
 
 function sanitizeHref(href: string): string {
-    var decodedHref = encodeURI(decodeURI(href));
-    var dummyAnchor1 = document.createElement('a');
-    var dummyAnchor2 = document.createElement('a');
+    const decodedHref = encodeURI(decodeURI(href));
+    const dummyAnchor1 = document.createElement('a');
+    const dummyAnchor2 = document.createElement('a');
     dummyAnchor1.href = href;
     dummyAnchor2.href = decodedHref;
 
-    var p1 = dummyAnchor1.protocol;
-    var p2 = dummyAnchor2.protocol;
+    const p1 = dummyAnchor1.protocol;
+    const p2 = dummyAnchor2.protocol;
 
     // check safe protocols
     if(
@@ -729,18 +722,18 @@ function sanitizeHref(href: string): string {
     }
 }
 
-export var sanitizeHTML = function sanitizeHTML(str: string): string {
+export const sanitizeHTML = function sanitizeHTML(str: string): string {
     str = str.replace(NEWLINES, ' ');
 
-    var rootNode = document.createElement('p');
-    var currentNode: any = rootNode;
-    var nodeStack: any[] = [];
+    const rootNode = document.createElement('p');
+    let currentNode: any = rootNode;
+    const nodeStack: any[] = [];
 
-    var parts = str.split(SPLIT_TAGS);
-    for(var i = 0; i < parts.length; i++) {
-        var parti = parts[i];
-        var match = parti.match(ONE_TAG);
-        var tagType = match && match[2].toLowerCase();
+    const parts = str.split(SPLIT_TAGS);
+    for(let i = 0; i < parts.length; i++) {
+        const parti = parts[i];
+        const match = parti.match(ONE_TAG);
+        const tagType = match && match[2].toLowerCase();
 
         if(tagType && tagType in TAG_STYLES) {
             if(match![1]) {
@@ -748,19 +741,19 @@ export var sanitizeHTML = function sanitizeHTML(str: string): string {
                     currentNode = nodeStack.pop();
                 }
             } else {
-                var extra = match![4];
+                const extra = match![4];
 
-                var css = getQuotedMatch(extra, STYLEMATCH);
-                var nodeAttrs: any = css ? {style: css} : {};
+                const css = getQuotedMatch(extra, STYLEMATCH);
+                const nodeAttrs: any = css ? {style: css} : {};
 
                 if(tagType === 'a') {
-                    var href = getQuotedMatch(extra, HREFMATCH);
+                    const href = getQuotedMatch(extra, HREFMATCH);
 
                     if(href) {
-                        var safeHref = sanitizeHref(href);
+                        const safeHref = sanitizeHref(href);
                         if(safeHref) {
                             nodeAttrs.href = safeHref;
-                            var target = getQuotedMatch(extra, TARGETMATCH);
+                            const target = getQuotedMatch(extra, TARGETMATCH);
                             if(target) {
                                 nodeAttrs.target = target;
                             }
@@ -768,9 +761,10 @@ export var sanitizeHTML = function sanitizeHTML(str: string): string {
                     }
                 }
 
-                var newNode = document.createElement(tagType);
+                const newNode = document.createElement(tagType);
                 currentNode.appendChild(newNode);
-                select(newNode).attr(nodeAttrs);
+                const newNodeSel = select(newNode);
+                for(const k in nodeAttrs) newNodeSel.attr(k, nodeAttrs[k]);
 
                 currentNode = newNode;
                 nodeStack.push(newNode);
@@ -781,17 +775,17 @@ export var sanitizeHTML = function sanitizeHTML(str: string): string {
             );
         }
     }
-    var key = 'innerHTML'; // i.e. to avoid pass test-syntax
+    const key = 'innerHTML'; // i.e. to avoid pass test-syntax
     return rootNode[key];
 };
 
-export var lineCount = function lineCount(s: any): number {
+export const lineCount = function lineCount(s: any): number {
     return s.selectAll('tspan.line').size() || 1;
 };
 
-export var positionText = function positionText(s: any, x?: number, y?: number): void {
+export const positionText = function positionText(s: any, x?: number, y?: number): void {
     return s.each(function(this: any) {
-        var text = select(this);
+        const text = select(this);
 
         function setOrGet(attr: string, val?: number): number {
             if(val === undefined) {
@@ -804,23 +798,25 @@ export var positionText = function positionText(s: any, x?: number, y?: number):
             return val as number;
         }
 
-        var thisX = setOrGet('x', x);
-        var thisY = setOrGet('y', y);
+        const thisX = setOrGet('x', x);
+        const thisY = setOrGet('y', y);
 
         if(this.nodeName === 'text') {
-            text.selectAll('tspan.line').attr({x: thisX, y: thisY});
+            text.selectAll('tspan.line')
+                .attr('x', thisX)
+                .attr('y', thisY);
         }
     });
 };
 
 function alignHTMLWith(_base: any, container: any, options: any): (this: any) => any {
-    var alignH = options.horizontalAlign;
-    var alignV = options.verticalAlign || 'top';
-    var bRect = _base.node().getBoundingClientRect();
-    var cRect = container.node().getBoundingClientRect();
-    var thisRect: any;
-    var getTop: () => number;
-    var getLeft: () => number;
+    const alignH = options.horizontalAlign;
+    const alignV = options.verticalAlign || 'top';
+    const bRect = _base.node().getBoundingClientRect();
+    const cRect = container.node().getBoundingClientRect();
+    let thisRect: any;
+    let getTop: () => number;
+    let getLeft: () => number;
 
     if(alignV === 'bottom') {
         getTop = function() { return bRect.bottom - thisRect.height; };
@@ -841,114 +837,111 @@ function alignHTMLWith(_base: any, container: any, options: any): (this: any) =>
     return function(this: any) {
         thisRect = this.node().getBoundingClientRect();
 
-        var x0 = getLeft() - cRect.left;
-        var y0 = getTop() - cRect.top;
-        var gd = options.gd || {};
+        let x0 = getLeft() - cRect.left;
+        let y0 = getTop() - cRect.top;
+        const gd = options.gd || {};
         if(options.gd) {
             gd._fullLayout._calcInverseTransform(gd);
-            var transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
+            const transformedCoords = apply3DTransform(gd._fullLayout._invTransform)(x0, y0);
             x0 = transformedCoords[0];
             y0 = transformedCoords[1];
         }
 
-        this.style({
-            top: y0 + 'px',
-            left: x0 + 'px',
-            'z-index': 1000
-        });
+        this
+            .style('top', y0 + 'px')
+            .style('left', x0 + 'px')
+            .style('z-index', 1000);
         return this;
     };
 }
 
-var onePx = '1px ';
+const onePx = '1px ';
 
-export var makeTextShadow = function(color: string): string {
-    var x = onePx;
-    var y = onePx;
-    var b = onePx;
+export const makeTextShadow = function(color: string): string {
+    const x = onePx;
+    const y = onePx;
+    const b = onePx;
     return x + y + b + color + ', ' +
         '-' + x + '-' + y + b + color + ', ' +
         x + '-' + y + b + color + ', ' +
         '-' + x + y + b + color;
 };
 
-export var makeEditable = function(context: any, options: any): any {
-    var gd = options.gd;
-    var _delegate = options.delegate;
-    var d = dispatch('edit', 'input', 'cancel');
-    var handlerElement = _delegate || context;
+export const makeEditable = function(context: any, options: any): any {
+    const gd = options.gd;
+    const _delegate = options.delegate;
+    const d = dispatch('edit', 'input', 'cancel');
+    const handlerElement = _delegate || context;
 
-    context.style({'pointer-events': _delegate ? 'none' : 'all'});
+    context.style('pointer-events', _delegate ? 'none' : 'all');
 
     if(context.size() !== 1) throw new Error('boo');
 
     function handleClick(): void {
         appendEditable();
-        context.style({opacity: 0});
+        context.style('opacity', 0);
         // also hide any mathjax svg
-        var svgClass = handlerElement.attr('class');
-        var mathjaxClass: string;
+        const svgClass = handlerElement.attr('class');
+        let mathjaxClass: string;
         if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
         else mathjaxClass = '[class*=-math-group]';
         if(mathjaxClass) {
-            select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+            select(context.node().parentNode).select(mathjaxClass).style('opacity', 0);
         }
     }
 
     function selectElementContents(_el: any): void {
-        var el = _el.node();
-        var range = document.createRange();
+        const el = _el.node();
+        const range = document.createRange();
         range.selectNodeContents(el);
-        var sel = window.getSelection();
+        const sel = window.getSelection();
         sel!.removeAllRanges();
         sel!.addRange(range);
         el.focus();
     }
 
     function appendEditable(): any {
-        var plotDiv = select(gd);
-        var container = plotDiv.select('.svg-container');
-        var div = container.append('div');
-        var cStyle = context.node().style;
-        var fontSize = parseFloat(cStyle.fontSize || 12);
+        const plotDiv = select(gd);
+        const container = plotDiv.select('.svg-container');
+        const div = container.append('div');
+        const cStyle = context.node().style;
+        const fontSize = parseFloat(cStyle.fontSize || 12);
 
-        var initialText = options.text;
+        let initialText = options.text;
         if(initialText === undefined) initialText = context.attr('data-unformatted');
 
         div.classed('plugin-editable editable', true)
-            .style({
-                position: 'absolute',
-                'font-family': cStyle.fontFamily || 'Arial',
-                'font-size': fontSize,
-                color: options.fill || cStyle.fill || 'black',
-                opacity: 1,
-                'background-color': options.background || 'transparent',
-                outline: '#ffffff33 1px solid',
-                margin: [-fontSize / 8 + 1, 0, 0, -1].join('px ') + 'px',
-                padding: '0',
-                'box-sizing': 'border-box'
-            })
-            .attr({contenteditable: true})
+            .style('position', 'absolute')
+            .style('font-family', cStyle.fontFamily || 'Arial')
+            .style('font-size', fontSize)
+            .style('color', options.fill || cStyle.fill || 'black')
+            .style('opacity', 1)
+            .style('background-color', options.background || 'transparent')
+            .style('outline', '#ffffff33 1px solid')
+            .style('margin', [-fontSize / 8 + 1, 0, 0, -1].join('px ') + 'px')
+            .style('padding', '0')
+            .style('box-sizing', 'border-box')
+            .attr('contenteditable', true)
             .text(initialText)
             .call(alignHTMLWith(context, container, options))
             .on('blur', function(this: any, event: any) {
                 gd._editing = false;
                 context.text(this.textContent)
-                    .style({opacity: 1});
-                var svgClass = select(this).attr('class');
-                var mathjaxClass: string;
+                    .style('opacity', 1);
+                const svgClass = select(this).attr('class');
+                let mathjaxClass: string;
                 if(svgClass) mathjaxClass = '.' + svgClass.split(' ')[0] + '-math-group';
                 else mathjaxClass = '[class*=-math-group]';
                 if(mathjaxClass) {
-                    select(context.node().parentNode).select(mathjaxClass).style({opacity: 0});
+                    select(context.node().parentNode).select(mathjaxClass).style('opacity', 0);
                 }
-                var text = this.textContent;
+                const text = this.textContent;
                 select(this).transition().duration(0).remove();
                 select(document).on('mouseup', null);
                 d.call('edit', context, text);
             })
             .on('focus', function(this: any, event: any) {
-                var editDiv = this;
+                const editDiv = this;
                 gd._editing = true;
                 select(document).on('mouseup', function(event: any) {
                     if(event.target === editDiv) return false;
@@ -958,9 +951,9 @@ export var makeEditable = function(context: any, options: any): any {
             .on('keyup', function(this: any, event: any) {
                 if(event.which === 27) {
                     gd._editing = false;
-                    context.style({opacity: 1});
+                    context.style('opacity', 1);
                     select(this)
-                        .style({opacity: 0})
+                        .style('opacity', 0)
                         .on('blur', function(event: any) { return false; })
                         .transition().remove();
                     d.call('cancel', context, this.textContent);

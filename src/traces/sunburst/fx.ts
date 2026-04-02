@@ -8,15 +8,15 @@ import Events from '../../lib/events.js';
 import helpers from './helpers.js';
 import pieHelpers from '../pie/helpers.js';
 
-var formatValue = pieHelpers.formatPieValue;
+const formatValue = pieHelpers.formatPieValue;
 
 export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv, cd: any[], opts: any) {
-    var cd0 = cd[0];
-    var trace = cd0.trace;
-    var hierarchy = cd0.hierarchy;
+    const cd0 = cd[0];
+    const trace = cd0.trace;
+    const hierarchy = cd0.hierarchy;
 
-    var isSunburst = trace.type === 'sunburst';
-    var isTreemapOrIcicle =
+    const isSunburst = trace.type === 'sunburst';
+    const isTreemapOrIcicle =
         trace.type === 'treemap' ||
         trace.type === 'icicle';
 
@@ -29,32 +29,32 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
     // in the same slice that you moused up in
     if(!('_hasHoverEvent' in trace)) trace._hasHoverEvent = false;
 
-    var onMouseOver = function(pt) {
-        var fullLayoutNow = gd._fullLayout;
+    const onMouseOver = function(pt: any) {
+        const fullLayoutNow = gd._fullLayout;
 
         if(gd._dragging || fullLayoutNow.hovermode === false) return;
 
-        var traceNow = gd._fullData[trace.index];
-        var cdi = pt.data.data;
-        var ptNumber = cdi.i;
-        var isRoot = helpers.isHierarchyRoot(pt);
-        var parent = helpers.getParent(hierarchy, pt);
+        const traceNow = gd._fullData[trace.index];
+        const cdi = pt.data.data;
+        const ptNumber = cdi.i;
+        const isRoot = helpers.isHierarchyRoot(pt);
+        const parent = helpers.getParent(hierarchy, pt);
 
-        var val = helpers.getValue(pt);
+        const val = helpers.getValue(pt);
 
-        var _cast = function(astr) {
+        const _cast = function(astr: any) {
             return Lib.castOption(traceNow, ptNumber, astr);
         };
 
-        var hovertemplate = _cast('hovertemplate');
-        var hoverinfo = Fx.castHoverinfo(traceNow, fullLayoutNow, ptNumber);
-        var separators = fullLayoutNow.separators;
+        const hovertemplate = _cast('hovertemplate');
+        const hoverinfo = Fx.castHoverinfo(traceNow, fullLayoutNow, ptNumber);
+        const separators = fullLayoutNow.separators;
 
-        var eventData;
+        let eventData;
 
         if(hovertemplate || (hoverinfo && hoverinfo !== 'none' && hoverinfo !== 'skip')) {
-            var hoverCenterX;
-            var hoverCenterY;
+            let hoverCenterX;
+            let hoverCenterY;
             if(isSunburst) {
                 hoverCenterX = cd0.cx + pt.pxmid[0] * (1 - pt.rInscribed);
                 hoverCenterY = cd0.cy + pt.pxmid[1] * (1 - pt.rInscribed);
@@ -64,10 +64,10 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
                 hoverCenterY = pt._hoverY;
             }
 
-            var hoverPt: Record<string, any> = {};
-            var parts = [];
-            var thisText = [];
-            var hasFlag = function(flag) { return parts.indexOf(flag) !== -1; };
+            const hoverPt: Record<string, any> = {};
+            let parts: any[] = [];
+            const thisText: any[] = [];
+            const hasFlag = function(flag: any) { return parts.indexOf(flag) !== -1; };
 
             if(hoverinfo) {
                 parts = hoverinfo === 'all' ?
@@ -89,9 +89,9 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
                 thisText.push(hoverPt.currentPath);
             }
 
-            var tx;
-            var allPercents = [];
-            var insertPercent = function() {
+            let tx: any;
+            const allPercents: any[] = [];
+            const insertPercent = function() {
                 if(allPercents.indexOf(tx) === -1) { // no need to add redundant info
                     thisText.push(tx);
                     allPercents.push(tx);
@@ -127,7 +127,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 
             eventData = [makeEventData(pt, traceNow, opts.eventDataKeys)];
 
-            var hoverItems: Record<string, any> = {
+            const hoverItems: Record<string, any> = {
                 trace: traceNow,
                 y: hoverCenterY,
                 _x0: pt._x0,
@@ -161,7 +161,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
                 hoverItems.idealAlign = hoverCenterX < 0 ? 'left' : 'right';
             }
 
-            var bbox = [];
+            const bbox: any[] = [];
             Fx.loneHover(hoverItems, {
                 container: fullLayoutNow._hoverlayer.node(),
                 outerContainer: fullLayoutNow._paper.node(),
@@ -174,7 +174,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         }
 
         if(isTreemapOrIcicle) {
-            var slice = sliceTop.select('path.surface');
+            const slice = sliceTop.select('path.surface');
             opts.styleOne(slice, pt, traceNow, gd, {
                 hovered: true
             });
@@ -187,10 +187,10 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         });
     };
 
-    var onMouseOut = function(evt) {
-        var fullLayoutNow = gd._fullLayout;
-        var traceNow = gd._fullData[trace.index];
-        var pt = select(this).datum();
+    const onMouseOut = function(this: any, evt: any) {
+        const fullLayoutNow = gd._fullLayout;
+        const traceNow = gd._fullData[trace.index];
+        const pt = select(this).datum();
 
         if(trace._hasHoverEvent) {
             evt.originalEvent = event;
@@ -207,37 +207,37 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         }
 
         if(isTreemapOrIcicle) {
-            var slice = sliceTop.select('path.surface');
+            const slice = sliceTop.select('path.surface');
             opts.styleOne(slice, pt, traceNow, gd, {
                 hovered: false
             });
         }
     };
 
-    var onClick = function(pt) {
+    const onClick = function(pt: any) {
         // TODO: this does not support right-click. If we want to support it, we
         // would likely need to change pie to use dragElement instead of straight
         // map subplots event binding. Or perhaps better, make a simple wrapper with the
         // right mousedown, mousemove, and mouseup handlers just for a left/right click
         // map subplots would use this too.
-        var fullLayoutNow = gd._fullLayout;
-        var traceNow = gd._fullData[trace.index];
+        const fullLayoutNow = gd._fullLayout;
+        const traceNow = gd._fullData[trace.index];
 
-        var noTransition = isSunburst && (helpers.isHierarchyRoot(pt) || helpers.isLeaf(pt));
+        const noTransition = isSunburst && (helpers.isHierarchyRoot(pt) || helpers.isLeaf(pt));
 
-        var id = helpers.getPtId(pt);
-        var nextEntry = helpers.isEntry(pt) ?
+        const id = helpers.getPtId(pt);
+        const nextEntry = helpers.isEntry(pt) ?
             helpers.findEntryWithChild(hierarchy, id) :
             helpers.findEntryWithLevel(hierarchy, id);
-        var nextLevel = helpers.getPtId(nextEntry);
+        const nextLevel = helpers.getPtId(nextEntry);
 
-        var typeClickEvtData: Record<string, any> = {
+        const typeClickEvtData: Record<string, any> = {
             points: [makeEventData(pt, traceNow, opts.eventDataKeys)],
             event: event
         };
         if(!noTransition) typeClickEvtData.nextLevel = nextLevel;
 
-        var clickVal = Events.triggerHandler(gd, 'plotly_' + trace.type + 'click', typeClickEvtData);
+        const clickVal = Events.triggerHandler(gd, 'plotly_' + trace.type + 'click', typeClickEvtData);
 
         if(clickVal !== false && fullLayoutNow.hovermode) {
             gd._hoverdata = [makeEventData(pt, traceNow, opts.eventDataKeys)];
@@ -263,12 +263,12 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
             level: traceNow.level
         });
 
-        var frame = {
+        const frame = {
             data: [{level: nextLevel}],
             traces: [trace.index]
         };
 
-        var animOpts = {
+        const animOpts = {
             frame: {
                 redraw: false,
                 duration: opts.transitionTime
@@ -291,17 +291,17 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
 }
 
 function makeEventData(pt: any, trace: FullTrace, keys: string[]) {
-    var cdi = pt.data.data;
+    const cdi = pt.data.data;
 
-    var out: Record<string, any> = {
+    const out: Record<string, any> = {
         curveNumber: trace.index,
         pointNumber: cdi.i,
         data: trace._input,
         fullData: trace,
     };
 
-    for(var i = 0; i < keys.length; i++) {
-        var key = keys[i];
+    for(let i = 0; i < keys.length; i++) {
+        const key = keys[i];
         if(key in pt) out[key] = pt[key];
     }
     // handle special case of parent

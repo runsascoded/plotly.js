@@ -4,21 +4,21 @@ import colorscaleDefaults from '../../components/colorscale/defaults.js';
 import attributes from './attributes.js';
 import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 
-var MIN = 0.1; // Note: often we don't want the data cube to be disappeared
+const MIN = 0.1; // Note: often we don't want the data cube to be disappeared
 
-function createWave(n, minOpacity) {
-    var arr = [];
-    var steps = 32; // Max: 256
-    for (var i = 0; i < steps; i++) {
-        var u = i / (steps - 1);
-        var v = minOpacity + (1 - minOpacity) * (1 - Math.pow(Math.sin(n * u * Math.PI), 2));
+function createWave(n: any, minOpacity: any) {
+    const arr: any[] = [];
+    const steps = 32; // Max: 256
+    for (let i = 0; i < steps; i++) {
+        const u = i / (steps - 1);
+        const v = minOpacity + (1 - minOpacity) * (1 - Math.pow(Math.sin(n * u * Math.PI), 2));
         arr.push([u, Math.max(0, Math.min(1, v))]);
     }
     return arr;
 }
 
-function isValidScaleArray(scl) {
-    var highestVal = 0;
+function isValidScaleArray(scl: any) {
+    let highestVal = 0;
 
     if (!Array.isArray(scl) || scl.length < 2) return false;
 
@@ -26,8 +26,8 @@ function isValidScaleArray(scl) {
 
     if (+scl[0][0] !== 0 || +scl[scl.length - 1][0] !== 1) return false;
 
-    for (var i = 0; i < scl.length; i++) {
-        var si = scl[i];
+    for (let i = 0; i < scl.length; i++) {
+        const si = scl[i];
 
         if (si.length !== 2 || +si[0] < highestVal) {
             return false;
@@ -40,16 +40,16 @@ function isValidScaleArray(scl) {
 }
 
 function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    var i, j;
+    let i, j;
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var x = coerce('x');
-    var y = coerce('y');
+    const x = coerce('x');
+    const y = coerce('y');
 
-    var z = coerce('z');
+    const z = coerce('z');
     if (!z || !z.length || (x ? x.length < 1 : false) || (y ? y.length < 1 : false)) {
         traceOut.visible = false;
         return;
@@ -58,7 +58,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._xlength = Array.isArray(x) && Lib.isArrayOrTypedArray(x[0]) ? z.length : z[0].length;
     traceOut._ylength = z.length;
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     coerce('text');
@@ -86,13 +86,13 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         coerce(x);
     });
 
-    var surfaceColor = coerce('surfacecolor');
+    const surfaceColor = coerce('surfacecolor');
 
-    var dims = ['x', 'y', 'z'];
+    const dims = ['x', 'y', 'z'];
     for (i = 0; i < 3; ++i) {
-        var contourDim = 'contours.' + dims[i];
-        var show = coerce(contourDim + '.show');
-        var highlight = coerce(contourDim + '.highlight');
+        const contourDim = 'contours.' + dims[i];
+        const show = coerce(contourDim + '.show');
+        const highlight = coerce(contourDim + '.highlight');
 
         if (show || highlight) {
             for (j = 0; j < 3; ++j) {
@@ -128,8 +128,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     traceOut._length = null;
 }
 
-function opacityscaleDefaults(traceIn, traceOut, layout, coerce) {
-    var opacityscale = coerce('opacityscale');
+function opacityscaleDefaults(traceIn: any, traceOut: any, layout: any, coerce: any) {
+    const opacityscale = coerce('opacityscale');
     if (opacityscale === 'max') {
         traceOut.opacityscale = [
             [0, MIN],

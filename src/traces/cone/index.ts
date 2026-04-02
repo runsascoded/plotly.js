@@ -18,7 +18,7 @@ export default {
     },
     calc: _req3,
     plot: _req4,
-    eventData: function(out, pt) {
+    eventData: function(out: any, pt: any) {
         out.norm = pt.traceCoordinate[6];
         return out;
     },

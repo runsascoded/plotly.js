@@ -1,9 +1,9 @@
 import str2RgbaArray from '../../../lib/str2rgbarray.js';
 import Lib from '../../../lib/index.js';
 
-var AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
+const AXES_NAMES = ['xaxis', 'yaxis', 'zaxis'];
 
-function AxesOptions() {
+function AxesOptions(this: any) {
     this.bounds = [
         [-10, -10, -10],
         [10, 10, 10]
@@ -60,12 +60,12 @@ function AxesOptions() {
     this._defaultLineTickLength = this.lineTickLength.slice();
 }
 
-var proto = AxesOptions.prototype;
+const proto = AxesOptions.prototype;
 
-proto.merge = function(fullLayout, sceneLayout) {
-    var opts = this;
-    for(var i = 0; i < 3; ++i) {
-        var axes = sceneLayout[AXES_NAMES[i]];
+proto.merge = function(fullLayout: any, sceneLayout: any) {
+    const opts = this;
+    for(let i = 0; i < 3; ++i) {
+        const axes = sceneLayout[AXES_NAMES[i]];
 
         if(!axes.visible) {
             opts.tickEnable[i] = false;
@@ -155,8 +155,9 @@ proto.merge = function(fullLayout, sceneLayout) {
     }
 };
 
-function createAxesOptions(fullLayout, sceneLayout) {
-    var result = new AxesOptions();
+function createAxesOptions(fullLayout: any, sceneLayout: any) {
+    // @ts-ignore TS7009
+    const result: any = (new AxesOptions() as any);
     result.merge(fullLayout, sceneLayout);
     return result;
 }

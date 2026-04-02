@@ -1,20 +1,20 @@
 import type { FullAxis, FullTrace, PlotInfo } from '../../../types/core';
 import scatterHover from '../scatter/hover.js';
 
-function hoverPoints(pointData, xval, yval, hovermode) {
-    var scatterPointData = scatterHover(pointData, xval, yval, hovermode);
+function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
+    const scatterPointData = scatterHover(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
-    var newPointData = scatterPointData[0];
+    const newPointData = scatterPointData[0];
 
     // hovering on fill case
     if(newPointData.index === undefined) {
         return scatterPointData;
     }
 
-    var subplot = pointData.subplot;
-    var cdi = newPointData.cd[newPointData.index];
-    var trace = newPointData.trace;
+    const subplot = pointData.subplot;
+    const cdi = newPointData.cd[newPointData.index];
+    const trace = newPointData.trace;
 
     if(!subplot.isPtInside(cdi)) return;
 
@@ -25,26 +25,26 @@ function hoverPoints(pointData, xval, yval, hovermode) {
     return scatterPointData;
 }
 
-function makeHoverPointText(cdi, trace: FullTrace, subplot: PlotInfo, pointData) {
-    var radialAxis = subplot.radialAxis;
-    var angularAxis = subplot.angularAxis;
+function makeHoverPointText(cdi: any, trace: FullTrace, subplot: PlotInfo, pointData: any) {
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
     radialAxis._hovertitle = 'r';
     angularAxis._hovertitle = 'θ';
 
-    var fullLayout: any = {};
+    const fullLayout: any = {};
     fullLayout[trace.subplot] = {_subplot: subplot};
-    var labels = trace._module.formatLabels(cdi, trace, fullLayout);
+    const labels = trace._module.formatLabels(cdi, trace, fullLayout);
     pointData.rLabel = labels.rLabel;
     pointData.thetaLabel = labels.thetaLabel;
 
-    var hoverinfo = cdi.hi || trace.hoverinfo;
-    var text = [];
-    function textPart(ax: FullAxis, val) {
+    const hoverinfo = cdi.hi || trace.hoverinfo;
+    const text: any[] = [];
+    function textPart(ax: FullAxis, val: any) {
         text.push(ax._hovertitle + ': ' + val);
     }
 
     if(!trace.hovertemplate) {
-        var parts = hoverinfo.split('+');
+        let parts = hoverinfo.split('+');
 
         if(parts.indexOf('all') !== -1) parts = ['r', 'theta', 'text'];
         if(parts.indexOf('r') !== -1) textPart(radialAxis, pointData.rLabel);

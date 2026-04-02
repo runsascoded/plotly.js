@@ -5,32 +5,32 @@ const { parseColorScale } = _gl_format_color;
 import _index from '../../components/colorscale/index.js';
 const { extractOpts } = _index;
 import zip3 from '../../plots/gl3d/zip3.js';
-var createTubeMesh = tube2mesh.createTubeMesh;
+const createTubeMesh = tube2mesh.createTubeMesh;
 
-var axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
+const axisName2scaleIndex = {xaxis: 0, yaxis: 1, zaxis: 2};
 
-function Streamtube(scene, uid) {
+function Streamtube(this: any, scene: any, uid: any) {
     this.scene = scene;
     this.uid = uid;
     this.mesh = null;
     this.data = null;
 }
 
-var proto = Streamtube.prototype;
+const proto = Streamtube.prototype;
 
-proto.handlePick = function(selection) {
-    var sceneLayout = this.scene.fullSceneLayout;
-    var dataScale = this.scene.dataScale;
+proto.handlePick = function(selection: any) {
+    const sceneLayout = this.scene.fullSceneLayout;
+    const dataScale = this.scene.dataScale;
 
-    function fromDataScale(v, axisName) {
-        var ax = sceneLayout[axisName];
-        var scale = dataScale[axisName2scaleIndex[axisName]];
+    function fromDataScale(v: any, axisName: any) {
+        const ax = sceneLayout[axisName];
+        const scale = dataScale[(axisName2scaleIndex as any)[axisName]];
         return ax.l2c(v) / scale;
     }
 
     if(selection.object === this.mesh) {
-        var pos = selection.data.position;
-        var uvx = selection.data.velocity;
+        const pos = selection.data.position;
+        const uvx = selection.data.velocity;
 
         selection.traceCoordinate = [
             fromDataScale(pos[0], 'xaxis'),
@@ -53,9 +53,9 @@ proto.handlePick = function(selection) {
     }
 };
 
-function getDfltStartingPositions(vec) {
-    var len = vec.length;
-    var s;
+function getDfltStartingPositions(vec: any) {
+    const len = vec.length;
+    let s;
 
     if(len > 2) {
         s = vec.slice(1, len - 1);
@@ -67,8 +67,8 @@ function getDfltStartingPositions(vec) {
     return s;
 }
 
-function getBoundPads(vec) {
-    var len = vec.length;
+function getBoundPads(vec: any) {
+    const len = vec.length;
     if(len === 1) {
         return [0.5, 0.5];
     } else {
@@ -76,16 +76,16 @@ function getBoundPads(vec) {
     }
 }
 
-function convert(scene, trace) {
-    var sceneLayout = scene.fullSceneLayout;
-    var dataScale = scene.dataScale;
-    var len = trace._len;
-    var tubeOpts: any = {};
+function convert(scene: any, trace: any) {
+    const sceneLayout = scene.fullSceneLayout;
+    const dataScale = scene.dataScale;
+    const len = trace._len;
+    const tubeOpts: any = {};
 
-    function toDataCoords(arr, axisName) {
-        var ax = sceneLayout[axisName];
-        var scale = dataScale[axisName2scaleIndex[axisName]];
-        return Lib.simpleMap(arr, function(v) { return ax.d2l(v) * scale; });
+    function toDataCoords(arr: any, axisName: any) {
+        const ax = sceneLayout[axisName];
+        const scale = dataScale[(axisName2scaleIndex as any)[axisName]];
+        return Lib.simpleMap(arr, function(v: any) { return ax.d2l(v) * scale; });
     }
 
     tubeOpts.vectors = zip3(
@@ -103,14 +103,14 @@ function convert(scene, trace) {
         };
     }
 
-    var meshx = toDataCoords(trace._Xs, 'xaxis');
-    var meshy = toDataCoords(trace._Ys, 'yaxis');
-    var meshz = toDataCoords(trace._Zs, 'zaxis');
+    const meshx = toDataCoords(trace._Xs, 'xaxis');
+    const meshy = toDataCoords(trace._Ys, 'yaxis');
+    const meshz = toDataCoords(trace._Zs, 'zaxis');
 
     tubeOpts.meshgrid = [meshx, meshy, meshz];
     tubeOpts.gridFill = trace._gridFill;
 
-    var slen = trace._slen;
+    const slen = trace._slen;
     if(slen) {
         tubeOpts.startingPositions = zip3(
             toDataCoords(trace._startsX, 'xaxis'),
@@ -127,14 +127,14 @@ function convert(scene, trace) {
         // if len=2, take position halfway between two the pts,
         //
         // if len=1, take that pt
-        var sy0 = meshy[0];
-        var sx = getDfltStartingPositions(meshx);
-        var sz = getDfltStartingPositions(meshz);
-        var startingPositions = new Array(sx.length * sz.length);
-        var m = 0;
+        const sy0 = meshy[0];
+        const sx = getDfltStartingPositions(meshx);
+        const sz = getDfltStartingPositions(meshz);
+        const startingPositions = new Array(sx.length * sz.length);
+        let m = 0;
 
-        for(var i = 0; i < sx.length; i++) {
-            for(var k = 0; k < sz.length; k++) {
+        for(let i = 0; i < sx.length; i++) {
+            for(let k = 0; k < sz.length; k++) {
                 startingPositions[m++] = [sx[i], sy0, sz[k]];
             }
         }
@@ -148,28 +148,28 @@ function convert(scene, trace) {
     // add some padding around the bounds
     // to e.g. allow tubes starting from a slice of the x/y/z mesh
     // to go beyond bounds a little bit w/o getting clipped
-    var xbnds = toDataCoords(trace._xbnds, 'xaxis');
-    var ybnds = toDataCoords(trace._ybnds, 'yaxis');
-    var zbnds = toDataCoords(trace._zbnds, 'zaxis');
-    var xpads = getBoundPads(meshx);
-    var ypads = getBoundPads(meshy);
-    var zpads = getBoundPads(meshz);
+    const xbnds = toDataCoords(trace._xbnds, 'xaxis');
+    const ybnds = toDataCoords(trace._ybnds, 'yaxis');
+    const zbnds = toDataCoords(trace._zbnds, 'zaxis');
+    const xpads = getBoundPads(meshx);
+    const ypads = getBoundPads(meshy);
+    const zpads = getBoundPads(meshz);
 
-    var bounds = [
+    const bounds = [
         [xbnds[0] - xpads[0], ybnds[0] - ypads[0], zbnds[0] - zpads[0]],
         [xbnds[1] + xpads[1], ybnds[1] + ypads[1], zbnds[1] + zpads[1]]
     ];
 
-    var meshData = tube2mesh(tubeOpts, bounds);
+    const meshData = tube2mesh(tubeOpts, bounds);
 
     // N.B. cmin/cmax correspond to the min/max vector norm
     // in the u/v/w arrays, which in general is NOT equal to max
     // intensity that colors the tubes.
-    var cOpts = extractOpts(trace);
+    const cOpts = extractOpts(trace);
     meshData.vertexIntensityBounds = [cOpts.min / trace._normMax, cOpts.max / trace._normMax];
 
     // pass gl-mesh3d lighting attributes
-    var lp = trace.lightposition;
+    const lp = trace.lightposition;
     meshData.lightPosition = [lp.x, lp.y, lp.z];
     meshData.ambient = trace.lighting.ambient;
     meshData.diffuse = trace.lighting.diffuse;
@@ -184,10 +184,10 @@ function convert(scene, trace) {
     return meshData;
 }
 
-proto.update = function(data) {
+proto.update = function(data: any) {
     this.data = data;
 
-    var meshData = convert(this.scene, data);
+    const meshData = convert(this.scene, data);
     this.mesh.update(meshData);
 };
 
@@ -196,13 +196,14 @@ proto.dispose = function() {
     this.mesh.dispose();
 };
 
-function createStreamtubeTrace(scene, data) {
-    var gl = scene.glplot.gl;
+function createStreamtubeTrace(scene: any, data: any) {
+    const gl = scene.glplot.gl;
 
-    var meshData = convert(scene, data);
-    var mesh = createTubeMesh(gl, meshData);
+    const meshData = convert(scene, data);
+    const mesh = createTubeMesh(gl, meshData);
 
-    var streamtube = new Streamtube(scene, data.uid);
+    // @ts-ignore TS7009
+    const streamtube: any = (new Streamtube(scene, data.uid) as any);
     streamtube.mesh = mesh;
     streamtube.data = data;
     mesh._trace = streamtube;

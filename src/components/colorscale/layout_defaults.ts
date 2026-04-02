@@ -13,15 +13,15 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     coerce('colorscale.sequentialminus');
     coerce('colorscale.diverging');
 
-    var colorAxes = layoutOut._colorAxes;
-    var colorAxIn: any, colorAxOut: any;
+    const colorAxes = layoutOut._colorAxes;
+    let colorAxIn: any, colorAxOut: any;
 
     function coerceAx(attr: string, dflt?: any): any {
         return Lib.coerce(colorAxIn, colorAxOut, colorScaleAttrs.coloraxis, attr, dflt);
     }
 
-    for(var k in colorAxes) {
-        var stash = colorAxes[k];
+    for(const k in colorAxes) {
+        const stash = colorAxes[k];
 
         if(stash[0]) {
             colorAxIn = layoutIn[k] || {};
@@ -29,7 +29,7 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
             colorAxOut._name = k;
             colorScaleDefaults(colorAxIn, colorAxOut, layoutOut, coerceAx, {prefix: '', cLetter: 'c'});
         } else {
-            for(var i = 0; i < stash[2].length; i++) {
+            for(let i = 0; i < stash[2].length; i++) {
                 stash[2][i]();
             }
             delete layoutOut._colorAxes[k];

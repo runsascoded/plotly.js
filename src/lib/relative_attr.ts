@@ -1,13 +1,13 @@
 // ASCEND: chop off the last nesting level - either [<n>] or .<key> - to ascend
 // the attribute tree. the remaining attrString is in match[1]
-var ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
+const ASCEND = /^(.*)(\.[^\.\[\]]+|\[\d\])$/;
 
 // SIMPLEATTR: is this an un-nested attribute? (no dots or brackets)
-var SIMPLEATTR = /^[^\.\[\]]+$/;
+const SIMPLEATTR = /^[^\.\[\]]+$/;
 
 export default function(baseAttr: string, relativeAttr: string): string {
     while(relativeAttr) {
-        var match = baseAttr.match(ASCEND);
+        const match = baseAttr.match(ASCEND);
 
         if(match) baseAttr = match[1];
         else if(baseAttr.match(SIMPLEATTR)) baseAttr = '';

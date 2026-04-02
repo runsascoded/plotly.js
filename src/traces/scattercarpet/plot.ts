@@ -3,16 +3,16 @@ import scatterPlot from '../scatter/plot.js';
 import Axes from '../../plots/cartesian/axes.js';
 import { setClipUrl } from '../../components/drawing/index.js';
 
-export default function plot(gd: GraphDiv, plotinfoproxy, data, layer) {
-    var i, trace, node;
+export default function plot(gd: GraphDiv, plotinfoproxy: any, data: any, layer: any) {
+    let i, trace, node;
 
-    var carpet = data[0][0].carpet;
+    const carpet = data[0][0].carpet;
 
-    var xaxis = Axes.getFromId(gd, carpet.xaxis || 'x');
-    var yaxis = Axes.getFromId(gd, carpet.yaxis || 'y');
+    const xaxis = Axes.getFromId(gd, carpet.xaxis || 'x');
+    const yaxis = Axes.getFromId(gd, carpet.yaxis || 'y');
 
     // mimic cartesian plotinfo
-    var plotinfo: any = {
+    const plotinfo: any = {
         xaxis: xaxis,
         yaxis: yaxis,
         plot: plotinfoproxy.plot,

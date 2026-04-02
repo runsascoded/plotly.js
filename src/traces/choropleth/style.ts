@@ -3,20 +3,20 @@ import Color from '../../components/color/index.js';
 import { dashLine, selectedPointStyle } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 
-function style(gd, calcTrace) {
+function style(gd: any, calcTrace: any) {
     if(calcTrace) styleTrace(gd, calcTrace);
 }
 
-function styleTrace(gd, calcTrace) {
-    var trace = calcTrace[0].trace;
-    var s = calcTrace[0].node3;
-    var locs = s.selectAll('.choroplethlocation');
-    var marker = trace.marker || {};
-    var markerLine = marker.line || {};
+function styleTrace(gd: any, calcTrace: any) {
+    const trace = calcTrace[0].trace;
+    const s = calcTrace[0].node3;
+    const locs = s.selectAll('.choroplethlocation');
+    const marker = trace.marker || {};
+    const markerLine = marker.line || {};
 
-    var sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
+    const sclFunc = Colorscale.makeColorScaleFuncFromTrace(trace);
 
-    locs.each(function(d) {
+    locs.each(function(this: any, d: any) {
         select(this)
             .attr('fill', sclFunc(d.z))
             .call(Color.stroke, d.mlc || markerLine.color)
@@ -27,9 +27,9 @@ function styleTrace(gd, calcTrace) {
     selectedPointStyle(locs, trace);
 }
 
-function styleOnSelect(gd, calcTrace) {
-    var s = calcTrace[0].node3;
-    var trace = calcTrace[0].trace;
+function styleOnSelect(gd: any, calcTrace: any) {
+    const s = calcTrace[0].node3;
+    const trace = calcTrace[0].trace;
 
     if(trace.selectedpoints) {
         selectedPointStyle(s.selectAll('.choroplethlocation'), trace);

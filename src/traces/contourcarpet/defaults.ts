@@ -11,7 +11,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    function coerce2(attr) {
+    function coerce2(attr: any) {
         return Lib.coerce2(traceIn, traceOut, attributes, attr);
     }
 
@@ -33,7 +33,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     // attribute name to match the property name -- except '_a' !== 'a' so that is not
     // straightforward.
     if(traceIn.a && traceIn.b) {
-        var len = handleXYZDefaults(traceIn, traceOut, coerce, layout, 'a', 'b');
+        const len = handleXYZDefaults(traceIn, traceOut, coerce, layout, 'a', 'b');
 
         if(!len) {
             traceOut.visible = false;
@@ -41,7 +41,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         }
 
         coerce('text');
-        var isConstraint = (coerce('contours.type') === 'constraint');
+        const isConstraint = (coerce('contours.type') === 'constraint');
 
         if(isConstraint) {
             handleConstraintDefaults(traceIn, traceOut, coerce, layout, defaultColor, {hasHover: false});

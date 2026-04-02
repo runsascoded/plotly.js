@@ -2,30 +2,30 @@ import type { GraphDiv } from '../../../../types/core';
 import parseSvgPath from 'parse-svg-path';
 import constants from './constants.js';
 import cartesianHelpers from '../../selections/helpers.js';
-var CIRCLE_SIDES = constants.CIRCLE_SIDES;
-var SQRT2 = constants.SQRT2;
+const CIRCLE_SIDES = constants.CIRCLE_SIDES;
+const SQRT2 = constants.SQRT2;
 
-var p2r = cartesianHelpers.p2r;
-var r2p = cartesianHelpers.r2p;
+const p2r = cartesianHelpers.p2r;
+const r2p = cartesianHelpers.r2p;
 
-var iC = [0, 3, 4, 5, 6, 1, 2];
-var iQS = [0, 3, 4, 1, 2];
+const iC = [0, 3, 4, 5, 6, 1, 2];
+const iQS = [0, 3, 4, 1, 2];
 
-export var writePaths = function(polygons: any) {
-    var nI = polygons.length;
+export const writePaths = function(polygons: any) {
+    const nI = polygons.length;
     if(!nI) return 'M0,0Z';
 
-    var str = '';
-    for(var i = 0; i < nI; i++) {
-        var nJ = polygons[i].length;
-        for(var j = 0; j < nJ; j++) {
-            var w = polygons[i][j][0];
+    let str = '';
+    for(let i = 0; i < nI; i++) {
+        const nJ = polygons[i].length;
+        for(let j = 0; j < nJ; j++) {
+            const w = polygons[i][j][0];
             if(w === 'Z') {
                 str += 'Z';
             } else {
-                var nK = polygons[i][j].length;
-                for(var k = 0; k < nK; k++) {
-                    var realK = k;
+                const nK = polygons[i][j].length;
+                for(let k = 0; k < nK; k++) {
+                    let realK = k;
                     if(w === 'Q' || w === 'S') {
                         realK = iQS[k];
                     } else if(w === 'C') {
@@ -44,34 +44,34 @@ export var writePaths = function(polygons: any) {
     return str;
 };
 
-export var readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
-    var cmd = parseSvgPath(str);
+export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
+    const cmd = parseSvgPath(str);
 
-    var polys = [];
-    var n = -1;
-    var newPoly = function() {
+    const polys: any[] = [];
+    let n = -1;
+    const newPoly = function() {
         n++;
         polys[n] = [];
     };
 
-    var k;
-    var x = 0;
-    var y = 0;
-    var initX;
-    var initY;
-    var recStart = function() {
+    let k;
+    let x = 0;
+    let y = 0;
+    let initX;
+    let initY;
+    const recStart = function() {
         initX = x;
         initY = y;
     };
 
     recStart();
-    for(var i = 0; i < cmd.length; i++) {
-        var newPos = [];
+    for(let i = 0; i < cmd.length; i++) {
+        const newPos: any[] = [];
 
-        var x1, x2, y1, y2; // i.e. extra params for curves
+        let x1, x2, y1, y2; // i.e. extra params for curves
 
-        var c = cmd[i][0];
-        var w = c;
+        const c = cmd[i][0];
+        let w = c;
         switch(c) {
             case 'M':
                 newPoly();
@@ -122,17 +122,17 @@ export var readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActive
 
             case 'A':
                 w = 'L'; // convert to line to handle circle
-                var rx = +cmd[i][1];
-                var ry = +cmd[i][2];
+                let rx = +cmd[i][1];
+                let ry = +cmd[i][2];
                 if(!+cmd[i][4]) {
                     rx = -rx;
                     ry = -ry;
                 }
 
-                var cenX = x - rx;
-                var cenY = y;
+                const cenX = x - rx;
+                const cenY = y;
                 for(k = 1; k <= CIRCLE_SIDES / 2; k++) {
-                    var t = 2 * Math.PI * k / CIRCLE_SIDES;
+                    const t = 2 * Math.PI * k / CIRCLE_SIDES;
                     newPos.push([
                         w,
                         cenX + rx * Math.cos(t),
@@ -143,23 +143,23 @@ export var readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActive
 
             case 'Z':
                 if(x !== initX || y !== initY) {
-                    x = initX;
-                    y = initY;
+                    x = initX as any;
+                    y = initY as any;
                     newPos.push([w, x, y]);
                 }
                 break;
         }
 
-        var domain = (plotinfo || {}).domain;
-        var size = gd._fullLayout._size;
-        var xPixelSized = plotinfo && plotinfo.xsizemode === 'pixel';
-        var yPixelSized = plotinfo && plotinfo.ysizemode === 'pixel';
-        var noOffset = isActiveShape === false;
+        const domain = (plotinfo || {}).domain;
+        const size = gd._fullLayout._size;
+        const xPixelSized = plotinfo && plotinfo.xsizemode === 'pixel';
+        const yPixelSized = plotinfo && plotinfo.ysizemode === 'pixel';
+        const noOffset = isActiveShape === false;
 
-        for(var j = 0; j < newPos.length; j++) {
+        for(let j = 0; j < newPos.length; j++) {
             for(k = 0; k + 2 < 7; k += 2) {
-                var _x = newPos[j][k + 1];
-                var _y = newPos[j][k + 2];
+                let _x = newPos[j][k + 1];
+                let _y = newPos[j][k + 2];
 
                 if(_x === undefined || _y === undefined) continue;
                 // keep track of end point for Z
@@ -197,8 +197,8 @@ export var readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActive
                 newPos[j][k + 1] = _x;
                 newPos[j][k + 2] = _y;
             }
-            polys[n].push(
-                newPos[j].slice()
+            (polys[n] as any).push(
+                (newPos[j] as any).slice()
             );
         }
     }
@@ -211,26 +211,26 @@ function almostEq(a: any, b: any) {
 }
 
 function dist(a: any, b: any) {
-    var dx = b[1] - a[1];
-    var dy = b[2] - a[2];
+    const dx = b[1] - a[1];
+    const dy = b[2] - a[2];
     return Math.sqrt(
         dx * dx +
         dy * dy
     );
 }
 
-export var pointsOnRectangle = function(cell: any) {
-    var len = cell.length;
+export const pointsOnRectangle = function(cell: any) {
+    const len = cell.length;
     if(len !== 5) return false;
 
-    for(var j = 1; j < 3; j++) {
-        var e01 = cell[0][j] - cell[1][j];
-        var e32 = cell[3][j] - cell[2][j];
+    for(let j = 1; j < 3; j++) {
+        const e01 = cell[0][j] - cell[1][j];
+        const e32 = cell[3][j] - cell[2][j];
 
         if(!almostEq(e01, e32)) return false;
 
-        var e03 = cell[0][j] - cell[3][j];
-        var e12 = cell[1][j] - cell[2][j];
+        const e03 = cell[0][j] - cell[3][j];
+        const e12 = cell[1][j] - cell[2][j];
         if(!almostEq(e03, e12)) return false;
     }
 
@@ -247,17 +247,17 @@ export var pointsOnRectangle = function(cell: any) {
     );
 };
 
-export var pointsOnEllipse = function(cell: any) {
-    var len = cell.length;
+export const pointsOnEllipse = function(cell: any) {
+    let len = cell.length;
     if(len !== CIRCLE_SIDES + 1) return false;
 
     // opposite diagonals should be the same
     len = CIRCLE_SIDES;
-    for(var i = 0; i < len; i++) {
-        var k = (len * 2 - i) % len;
+    for(let i = 0; i < len; i++) {
+        const k = (len * 2 - i) % len;
 
-        var k2 = (len / 2 + k) % len;
-        var i2 = (len / 2 + i) % len;
+        const k2 = (len / 2 + k) % len;
+        const i2 = (len / 2 + i) % len;
 
         if(!almostEq(
             dist(cell[i], cell[i2]),
@@ -267,28 +267,28 @@ export var pointsOnEllipse = function(cell: any) {
     return true;
 };
 
-export var handleEllipse = function(isEllipse: any, start: any, end: any) {
+export const handleEllipse = function(isEllipse: any, start: any, end: any) {
     if(!isEllipse) return [start, end]; // i.e. case of line
 
-    var pos = ellipseOver({
+    const pos = ellipseOver({
         x0: start[0],
         y0: start[1],
         x1: end[0],
         y1: end[1]
     });
 
-    var cx = (pos.x1 + pos.x0) / 2;
-    var cy = (pos.y1 + pos.y0) / 2;
-    var rx = (pos.x1 - pos.x0) / 2;
-    var ry = (pos.y1 - pos.y0) / 2;
+    const cx = (pos.x1 + pos.x0) / 2;
+    const cy = (pos.y1 + pos.y0) / 2;
+    let rx = (pos.x1 - pos.x0) / 2;
+    let ry = (pos.y1 - pos.y0) / 2;
 
     // make a circle when one dimension is zero
     if(!rx) rx = ry = ry / SQRT2;
     if(!ry) ry = rx = rx / SQRT2;
 
-    var cell = [];
-    for(var i = 0; i < CIRCLE_SIDES; i++) {
-        var t = i * 2 * Math.PI / CIRCLE_SIDES;
+    const cell: any[] = [];
+    for(let i = 0; i < CIRCLE_SIDES; i++) {
+        const t = i * 2 * Math.PI / CIRCLE_SIDES;
         cell.push([
             cx + rx * Math.cos(t),
             cy + ry * Math.sin(t),
@@ -297,22 +297,22 @@ export var handleEllipse = function(isEllipse: any, start: any, end: any) {
     return cell;
 };
 
-export var ellipseOver = function(pos: any) {
-    var x0 = pos.x0;
-    var y0 = pos.y0;
-    var x1 = pos.x1;
-    var y1 = pos.y1;
+export const ellipseOver = function(pos: any) {
+    let x0 = pos.x0;
+    let y0 = pos.y0;
+    const x1 = pos.x1;
+    const y1 = pos.y1;
 
-    var dx = x1 - x0;
-    var dy = y1 - y0;
+    let dx = x1 - x0;
+    let dy = y1 - y0;
 
     x0 -= dx;
     y0 -= dy;
 
-    var cx = (x0 + x1) / 2;
-    var cy = (y0 + y1) / 2;
+    const cx = (x0 + x1) / 2;
+    const cy = (y0 + y1) / 2;
 
-    var scale = SQRT2;
+    const scale = SQRT2;
     dx *= scale;
     dy *= scale;
 
@@ -324,14 +324,14 @@ export var ellipseOver = function(pos: any) {
     };
 };
 
-export var fixDatesForPaths = function(polygons: any, xaxis: any, yaxis: any) {
-    var xIsDate = xaxis.type === 'date';
-    var yIsDate = yaxis.type === 'date';
+export const fixDatesForPaths = function(polygons: any, xaxis: any, yaxis: any) {
+    const xIsDate = xaxis.type === 'date';
+    const yIsDate = yaxis.type === 'date';
     if(!xIsDate && !yIsDate) return polygons;
 
-    for(var i = 0; i < polygons.length; i++) {
-        for(var j = 0; j < polygons[i].length; j++) {
-            for(var k = 0; k + 2 < polygons[i][j].length; k += 2) {
+    for(let i = 0; i < polygons.length; i++) {
+        for(let j = 0; j < polygons[i].length; j++) {
+            for(let k = 0; k + 2 < polygons[i][j].length; k += 2) {
                 if(xIsDate) polygons[i][j][k + 1] = polygons[i][j][k + 1].replace(' ', '_');
                 if(yIsDate) polygons[i][j][k + 2] = polygons[i][j][k + 2].replace(' ', '_');
             }

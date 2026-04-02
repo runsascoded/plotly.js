@@ -3,14 +3,14 @@ import Registry from '../registry.js';
 import Axes from '../plots/cartesian/axes.js';
 import { pointsAccessorFunction } from './helpers.js';
 import filterOps from '../constants/filter_ops.js';
-var COMPARISON_OPS = filterOps.COMPARISON_OPS;
-var INTERVAL_OPS = filterOps.INTERVAL_OPS;
-var SET_OPS = filterOps.SET_OPS;
+const COMPARISON_OPS = filterOps.COMPARISON_OPS;
+const INTERVAL_OPS = filterOps.INTERVAL_OPS;
+const SET_OPS = filterOps.SET_OPS;
 
-export var moduleType = 'transform';
-export var name = 'filter';
+export const moduleType = 'transform';
+export const name = 'filter';
 
-export var attributes = {
+export const attributes = {
     enabled: {
         valType: 'boolean',
         dflt: true,
@@ -41,9 +41,9 @@ export var attributes = {
     operation: {
         valType: 'enumerated',
         values: []
-            .concat(COMPARISON_OPS)
-            .concat(INTERVAL_OPS)
-            .concat(SET_OPS),
+            .concat((COMPARISON_OPS as any))
+            .concat((INTERVAL_OPS as any))
+            .concat((SET_OPS as any)),
         dflt: '=',
         editType: 'calc',
         description: [
@@ -111,17 +111,17 @@ export var attributes = {
     editType: 'calc'
 };
 
-export var supplyDefaults = function(transformIn) {
-    var transformOut: any = {};
+export const supplyDefaults = function(transformIn: any) {
+    const transformOut: any = {};
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(transformIn, transformOut, attributes, attr, dflt);
     }
 
-    var enabled = coerce('enabled');
+    const enabled = coerce('enabled');
 
     if(enabled) {
-        var target = coerce('target');
+        const target = coerce('target');
 
         if(Lib.isArrayOrTypedArray(target) && target.length === 0) {
             transformOut.enabled = false;
@@ -132,7 +132,7 @@ export var supplyDefaults = function(transformIn) {
         coerce('operation');
         coerce('value');
 
-        var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
+        const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleDefaults');
         handleCalendarDefaults(transformIn, transformOut, 'valuecalendar', null);
         handleCalendarDefaults(transformIn, transformOut, 'targetcalendar', null);
     }
@@ -140,59 +140,59 @@ export var supplyDefaults = function(transformIn) {
     return transformOut;
 };
 
-export var calcTransform = function(gd, trace, opts) {
+export const calcTransform = function(gd: any, trace: any, opts: any) {
     if(!opts.enabled) return;
 
-    var targetArray = Lib.getTargetArray(trace, opts);
+    const targetArray = Lib.getTargetArray(trace, opts);
     if(!targetArray) return;
 
-    var target = opts.target;
+    const target = opts.target;
 
-    var len = targetArray.length;
+    let len = targetArray.length;
     if(trace._length) len = Math.min(len, trace._length);
 
-    var targetCalendar = opts.targetcalendar;
-    var arrayAttrs = trace._arrayAttrs;
-    var preservegaps = opts.preservegaps;
+    let targetCalendar = opts.targetcalendar;
+    const arrayAttrs = trace._arrayAttrs;
+    const preservegaps = opts.preservegaps;
 
     // even if you provide targetcalendar, if target is a string and there
     // is a calendar attribute matching target it will get used instead.
     if(typeof target === 'string') {
-        var attrTargetCalendar = Lib.nestedProperty(trace, target + 'calendar').get();
+        const attrTargetCalendar = Lib.nestedProperty(trace, target + 'calendar').get();
         if(attrTargetCalendar) targetCalendar = attrTargetCalendar;
     }
 
-    var d2c = Axes.getDataToCoordFunc(gd, trace, target, targetArray);
-    var filterFunc = getFilterFunc(opts, d2c, targetCalendar);
-    var originalArrays: any = {};
-    var indexToPoints: any = {};
-    var index = 0;
+    const d2c = Axes.getDataToCoordFunc(gd, trace, target, targetArray);
+    const filterFunc = getFilterFunc(opts, d2c, targetCalendar);
+    const originalArrays: any = {};
+    const indexToPoints: any = {};
+    let index = 0;
 
     function forAllAttrs(fn: any, index?: any) {
-        for(var j = 0; j < arrayAttrs.length; j++) {
-            var np = Lib.nestedProperty(trace, arrayAttrs[j]);
+        for(let j = 0; j < arrayAttrs.length; j++) {
+            const np = Lib.nestedProperty(trace, arrayAttrs[j]);
             fn(np, index);
         }
     }
 
-    var initFn;
-    var fillFn;
+    let initFn;
+    let fillFn;
     if(preservegaps) {
-        initFn = function(np) {
+        initFn = function(np: any) {
             originalArrays[np.astr] = Lib.extendDeep([], np.get());
             np.set(new Array(len));
         };
-        fillFn = function(np, index) {
-            var val = originalArrays[np.astr][index];
+        fillFn = function(np: any, index: any) {
+            const val = originalArrays[np.astr][index];
             np.get()[index] = val;
         };
     } else {
-        initFn = function(np) {
+        initFn = function(np: any) {
             originalArrays[np.astr] = Lib.extendDeep([], np.get());
             np.set([]);
         };
-        fillFn = function(np, index) {
-            var val = originalArrays[np.astr][index];
+        fillFn = function(np: any, index: any) {
+            const val = originalArrays[np.astr][index];
             np.get().push(val);
         };
     }
@@ -200,11 +200,11 @@ export var calcTransform = function(gd, trace, opts) {
     // copy all original array attribute values, and clear arrays in trace
     forAllAttrs(initFn);
 
-    var originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
+    const originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
 
     // loop through filter array, fill trace arrays if passed
-    for(var i = 0; i < len; i++) {
-        var passed = filterFunc(targetArray[i]);
+    for(let i = 0; i < len; i++) {
+        const passed = filterFunc!(targetArray[i]);
         if(passed) {
             forAllAttrs(fillFn, i);
             indexToPoints[index++] = originalPointsAccessor(i);
@@ -215,19 +215,19 @@ export var calcTransform = function(gd, trace, opts) {
     trace._length = index;
 };
 
-function getFilterFunc(opts, d2c, targetCalendar) {
-    var operation = opts.operation;
-    var value = opts.value;
-    var hasArrayValue = Lib.isArrayOrTypedArray(value);
+function getFilterFunc(opts: any, d2c: any, targetCalendar: any) {
+    const operation = opts.operation;
+    const value = opts.value;
+    const hasArrayValue = Lib.isArrayOrTypedArray(value);
 
-    function isOperationIn(array) {
+    function isOperationIn(array: any) {
         return array.indexOf(operation) !== -1;
     }
 
-    var d2cValue = function(v) { return d2c(v, 0, opts.valuecalendar); };
-    var d2cTarget = function(v) { return d2c(v, 0, targetCalendar); };
+    const d2cValue = function(v: any) { return d2c(v, 0, opts.valuecalendar); };
+    const d2cTarget = function(v: any) { return d2c(v, 0, targetCalendar); };
 
-    var coercedValue;
+    let coercedValue: any;
 
     if(isOperationIn(COMPARISON_OPS)) {
         coercedValue = hasArrayValue ? d2cValue(value[0]) : d2cValue(value);
@@ -241,78 +241,78 @@ function getFilterFunc(opts, d2c, targetCalendar) {
 
     switch(operation) {
         case '=':
-            return function(v) { return d2cTarget(v) === coercedValue; };
+            return function(v: any) { return d2cTarget(v) === coercedValue; };
 
         case '!=':
-            return function(v) { return d2cTarget(v) !== coercedValue; };
+            return function(v: any) { return d2cTarget(v) !== coercedValue; };
 
         case '<':
-            return function(v) { return d2cTarget(v) < coercedValue; };
+            return function(v: any) { return d2cTarget(v) < coercedValue; };
 
         case '<=':
-            return function(v) { return d2cTarget(v) <= coercedValue; };
+            return function(v: any) { return d2cTarget(v) <= coercedValue; };
 
         case '>':
-            return function(v) { return d2cTarget(v) > coercedValue; };
+            return function(v: any) { return d2cTarget(v) > coercedValue; };
 
         case '>=':
-            return function(v) { return d2cTarget(v) >= coercedValue; };
+            return function(v: any) { return d2cTarget(v) >= coercedValue; };
 
         case '[]':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv >= coercedValue[0] && cv <= coercedValue[1];
             };
 
         case '()':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv > coercedValue[0] && cv < coercedValue[1];
             };
 
         case '[)':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv >= coercedValue[0] && cv < coercedValue[1];
             };
 
         case '(]':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv > coercedValue[0] && cv <= coercedValue[1];
             };
 
         case '][':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv <= coercedValue[0] || cv >= coercedValue[1];
             };
 
         case ')(':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv < coercedValue[0] || cv > coercedValue[1];
             };
 
         case '](':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv <= coercedValue[0] || cv > coercedValue[1];
             };
 
         case ')[':
-            return function(v) {
-                var cv = d2cTarget(v);
+            return function(v: any) {
+                const cv = d2cTarget(v);
                 return cv < coercedValue[0] || cv >= coercedValue[1];
             };
 
         case '{}':
-            return function(v) {
+            return function(v: any) {
                 return coercedValue.indexOf(d2cTarget(v)) !== -1;
             };
 
         case '}{':
-            return function(v) {
+            return function(v: any) {
                 return coercedValue.indexOf(d2cTarget(v)) === -1;
             };
     }

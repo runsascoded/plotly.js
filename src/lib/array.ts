@@ -1,10 +1,10 @@
 import { decode as b64decode } from 'base64-arraybuffer';
 import isPlainObject from './is_plain_object.js';
 
-var isArray = Array.isArray;
+const isArray = Array.isArray;
 
-var ab = ArrayBuffer;
-var dv = DataView;
+const ab = ArrayBuffer;
+const dv = DataView;
 
 function isTypedArray(a: any): boolean {
     return ab.isView(a) && !(a instanceof dv);
@@ -29,7 +29,7 @@ function isArray1D(a: any): boolean {
 }
 export { isArray1D };
 
-export var ensureArray = function(out: any, n: number): any[] {
+export const ensureArray = function(out: any, n: number): any[] {
     // TODO: typed array support here? This is only used in
     // traces/carpet/compute_control_points
     if(!isArray(out)) out = [];
@@ -41,7 +41,7 @@ export var ensureArray = function(out: any, n: number): any[] {
     return out;
 };
 
-var typedArrays: Record<string, any> = {
+const typedArrays: Record<string, any> = {
     u1c: typeof Uint8ClampedArray === 'undefined' ? undefined :
                 Uint8ClampedArray, // not supported in numpy?
 
@@ -94,33 +94,33 @@ function isArrayBuffer(a: any): boolean {
 }
 export { isArrayBuffer };
 
-export var decodeTypedArraySpec = function(vIn: any): any {
-    var out: any = [];
-    var v = coerceTypedArraySpec(vIn);
-    var dtype = v.dtype;
+export const decodeTypedArraySpec = function(vIn: any): any {
+    let out: any = [];
+    const v = coerceTypedArraySpec(vIn);
+    const dtype = v.dtype;
 
-    var T = typedArrays[dtype];
+    const T = typedArrays[dtype];
     if(!T) throw new Error('Error in dtype: "' + dtype + '"');
-    var BYTES_PER_ELEMENT: number = T.BYTES_PER_ELEMENT;
+    const BYTES_PER_ELEMENT: number = T.BYTES_PER_ELEMENT;
 
-    var buffer = v.bdata;
+    let buffer = v.bdata;
     if(!isArrayBuffer(buffer)) {
         buffer = b64decode(buffer);
     }
-    var shape: any[] = v.shape === undefined ?
+    const shape: any[] = v.shape === undefined ?
         // detect 1-d length
         [buffer.byteLength / BYTES_PER_ELEMENT] :
         // convert number to string and split to array
         ('' + v.shape).split(',');
 
     shape.reverse(); // i.e. to match numpy order
-    var ndim = shape.length;
+    const ndim = shape.length;
 
-    var nj: number, j: number;
-    var ni = +shape[0];
+    let nj: number, j: number;
+    const ni = +shape[0];
 
-    var rowBytes = BYTES_PER_ELEMENT * ni;
-    var pos = 0;
+    const rowBytes = BYTES_PER_ELEMENT * ni;
+    let pos = 0;
 
     if(ndim === 1) {
         out = new T(buffer);
@@ -132,8 +132,8 @@ export var decodeTypedArraySpec = function(vIn: any): any {
         }
     } else if(ndim === 3) {
         nj = +shape[1];
-        var nk = +shape[2];
-        for(var k = 0; k < nk; k++) {
+        const nk = +shape[2];
+        for(let k = 0; k < nk; k++) {
             out[k] = [];
             for(j = 0; j < nj; j++) {
                 out[k][j] = new T(buffer, pos, ni);
@@ -154,7 +154,7 @@ export var decodeTypedArraySpec = function(vIn: any): any {
     return out;
 };
 
-export var isTypedArraySpec = function(v: any): boolean {
+export const isTypedArraySpec = function(v: any): boolean {
     return (
         isPlainObject(v) &&
         v.hasOwnProperty('dtype') && (typeof v.dtype === 'string') &&
@@ -175,12 +175,12 @@ function coerceTypedArraySpec(v: any): { bdata: any; dtype: string; shape: any }
     };
 }
 
-export var concat = function(...arrays: any[]): any {
-    var args: any[] = [];
-    var allArray = true;
-    var totalLen = 0;
+export const concat = function(...arrays: any[]): any {
+    const args: any[] = [];
+    let allArray = true;
+    let totalLen = 0;
 
-    var _constructor: any, arg0: any, i: number, argi: any, posi: number, leni: number, out: any, j: number;
+    let _constructor: any, arg0: any, i: number, argi: any, posi: number, leni: number, out: any, j: number;
 
     for(i = 0; i < arrays.length; i++) {
         argi = arrays[i];
@@ -236,19 +236,19 @@ export var concat = function(...arrays: any[]): any {
     return out;
 };
 
-export var maxRowLength = function(z: any): number {
+export const maxRowLength = function(z: any): number {
     return _rowLength(z, Math.max, 0);
 };
 
-export var minRowLength = function(z: any): number {
+export const minRowLength = function(z: any): number {
     return _rowLength(z, Math.min, Infinity);
 };
 
 function _rowLength(z: any, fn: (a: number, b: number) => number, len0: number): number {
     if(isArrayOrTypedArray(z)) {
         if(isArrayOrTypedArray(z[0])) {
-            var len = len0;
-            for(var i = 0; i < z.length; i++) {
+            let len = len0;
+            for(let i = 0; i < z.length; i++) {
                 len = fn(len, z[i].length);
             }
             return len;

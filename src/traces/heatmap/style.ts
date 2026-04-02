@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 
 export default function style(gd: GraphDiv) {
     select(gd).selectAll('.hm image')
-        .style('opacity', function(d) {
+        .style('opacity', function(d: any) {
             return d.trace.opacity;
         });
 }

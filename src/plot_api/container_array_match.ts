@@ -1,15 +1,15 @@
 import Registry from '../registry.js';
 
 export default function containerArrayMatch(astr?: any): any {
-    var rootContainers = Registry.layoutArrayContainers;
-    var regexpContainers = Registry.layoutArrayRegexes;
-    var rootPart = astr.split('[')[0];
-    var arrayStr;
-    var match;
+    const rootContainers = Registry.layoutArrayContainers;
+    const regexpContainers = Registry.layoutArrayRegexes;
+    const rootPart = astr.split('[')[0];
+    let arrayStr;
+    let match;
 
     // look for regexp matches first, because they may be nested inside root matches
     // eg updatemenus[i].buttons is nested inside updatemenus
-    for(var i = 0; i < regexpContainers.length; i++) {
+    for(let i = 0; i < regexpContainers.length; i++) {
         match = astr.match(regexpContainers[i]);
         if(match && match.index === 0) {
             arrayStr = match[0];
@@ -22,7 +22,7 @@ export default function containerArrayMatch(astr?: any): any {
 
     if(!arrayStr) return false;
 
-    var tail = astr.slice(arrayStr.length);
+    const tail = astr.slice(arrayStr.length);
     if(!tail) return {array: arrayStr, index: '', property: ''};
 
     match = tail.match(/^\[(0|[1-9][0-9]*)\](\.(.+))?$/);

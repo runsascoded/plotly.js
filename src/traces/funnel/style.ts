@@ -7,21 +7,21 @@ const { DESELECTDIM } = _interactions;
 import barStyle from '../bar/style.js';
 import _uniform_text from '../bar/uniform_text.js';
 const { resizeText } = _uniform_text;
-var styleTextPoints = barStyle.styleTextPoints;
+const styleTextPoints = barStyle.styleTextPoints;
 
-function style(gd: GraphDiv,  cd,  sel) {
-    var s = sel ? sel : select(gd).selectAll('g[class^="funnellayer"]').selectAll('g.trace');
+function style(gd: GraphDiv,  cd: any,  sel: any) {
+    const s = sel ? sel : select(gd).selectAll('g[class^="funnellayer"]').selectAll('g.trace');
     resizeText(gd, s, 'funnel');
 
-    s.style('opacity', function(d) { return d[0].trace.opacity; });
+    s.style('opacity', function(d: any) { return d[0].trace.opacity; });
 
-    s.each(function(d) {
-        var gTrace = select(this);
-        var trace = d[0].trace;
+    s.each(function(this: any, d: any) {
+        const gTrace = select(this);
+        const trace = d[0].trace;
 
-        gTrace.selectAll('.point > path').each(function(di) {
+        gTrace.selectAll('.point > path').each(function(this: any, di: any) {
             if(!di.isBlank) {
-                var cont = trace.marker;
+                const cont = trace.marker;
 
                 select(this)
                     .call(Color.fill, di.mc || cont.color)
@@ -33,12 +33,12 @@ function style(gd: GraphDiv,  cd,  sel) {
 
         styleTextPoints(gTrace, trace, gd);
 
-        gTrace.selectAll('.regions').each(function() {
+        gTrace.selectAll('.regions').each(function(this: any) {
             select(this).selectAll('path').style('stroke-width', 0).call(Color.fill, trace.connector.fillcolor);
         });
 
-        gTrace.selectAll('.lines').each(function() {
-            var cont = trace.connector.line;
+        gTrace.selectAll('.lines').each(function(this: any) {
+            const cont = trace.connector.line;
 
             lineGroupStyle(
                 select(this).selectAll('path'),

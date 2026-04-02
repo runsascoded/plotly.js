@@ -6,7 +6,7 @@ const { idRegex: cartesianIdRegex } = _constants;
 import Template from '../../plot_api/plot_template.js';
 import type { FullLayout } from '../../../types/core';
 
-var gridAttrs = {
+const gridAttrs = {
     rows: {
         valType: 'integer',
         min: 1,
@@ -148,8 +148,8 @@ var gridAttrs = {
 };
 
 function getAxes(layout: any, grid: any, axLetter: any) {
-    var gridVal = grid[axLetter + 'axes'];
-    var splomVal = Object.keys((layout._splomAxes || {})[axLetter] || {});
+    const gridVal = grid[axLetter + 'axes'];
+    const splomVal = Object.keys((layout._splomAxes || {})[axLetter] || {});
 
     if(Array.isArray(gridVal)) return gridVal;
     if(splomVal.length) return splomVal;
@@ -158,21 +158,21 @@ function getAxes(layout: any, grid: any, axLetter: any) {
 // the shape of the grid - this needs to be done BEFORE supplyDataDefaults
 // so that non-subplot traces can place themselves in the grid
 function sizeDefaults(layoutIn: any, layoutOut: FullLayout) {
-    var gridIn = layoutIn.grid || {};
-    var xAxes = getAxes(layoutOut, gridIn, 'x');
-    var yAxes = getAxes(layoutOut, gridIn, 'y');
+    const gridIn = layoutIn.grid || {};
+    const xAxes = getAxes(layoutOut, gridIn, 'x');
+    const yAxes = getAxes(layoutOut, gridIn, 'y');
 
     if(!layoutIn.grid && !xAxes && !yAxes) return;
 
-    var hasSubplotGrid = Array.isArray(gridIn.subplots) && Array.isArray(gridIn.subplots[0]);
-    var hasXaxes = Array.isArray(xAxes);
-    var hasYaxes = Array.isArray(yAxes);
-    var isSplomGenerated = (
+    let hasSubplotGrid = Array.isArray(gridIn.subplots) && Array.isArray(gridIn.subplots[0]);
+    const hasXaxes = Array.isArray(xAxes);
+    const hasYaxes = Array.isArray(yAxes);
+    const isSplomGenerated = (
         hasXaxes && xAxes !== gridIn.xaxes &&
         hasYaxes && yAxes !== gridIn.yaxes
     );
 
-    var dfltRows, dfltColumns;
+    let dfltRows, dfltColumns;
 
     if(hasSubplotGrid) {
         dfltRows = gridIn.subplots.length;
@@ -182,14 +182,14 @@ function sizeDefaults(layoutIn: any, layoutOut: FullLayout) {
         if(hasXaxes) dfltColumns = xAxes.length;
     }
 
-    var gridOut = Template.newContainer(layoutOut, 'grid');
+    const gridOut = Template.newContainer(layoutOut, 'grid');
 
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(gridIn, gridOut, gridAttrs, attr, dflt);
     }
 
-    var rows = coerce('rows', dfltRows);
-    var columns = coerce('columns', dfltColumns);
+    const rows = coerce('rows', dfltRows);
+    const columns = coerce('columns', dfltColumns);
 
     if(!(rows * columns > 1)) {
         delete layoutOut.grid;
@@ -197,18 +197,18 @@ function sizeDefaults(layoutIn: any, layoutOut: FullLayout) {
     }
 
     if(!hasSubplotGrid && !hasXaxes && !hasYaxes) {
-        var useDefaultSubplots = coerce('pattern') === 'independent';
+        const useDefaultSubplots = coerce('pattern') === 'independent';
         if(useDefaultSubplots) hasSubplotGrid = true;
     }
     gridOut._hasSubplotGrid = hasSubplotGrid;
 
-    var rowOrder = coerce('roworder');
-    var reversed = rowOrder === 'top to bottom';
+    const rowOrder = coerce('roworder');
+    const reversed = rowOrder === 'top to bottom';
 
-    var dfltGapX = hasSubplotGrid ? 0.2 : 0.1;
-    var dfltGapY = hasSubplotGrid ? 0.3 : 0.1;
+    const dfltGapX = hasSubplotGrid ? 0.2 : 0.1;
+    const dfltGapY = hasSubplotGrid ? 0.3 : 0.1;
 
-    var dfltSideX, dfltSideY;
+    let dfltSideX, dfltSideY;
     if(isSplomGenerated && layoutOut._splomGridDflt) {
         dfltSideX = layoutOut._splomGridDflt.xside;
         dfltSideY = layoutOut._splomGridDflt.yside;
@@ -222,16 +222,16 @@ function sizeDefaults(layoutIn: any, layoutOut: FullLayout) {
 
 // coerce x or y sizing attributes and return an array of domains for this direction
 function fillGridPositions(axLetter: any, coerce: any, dfltGap: any, dfltSide: any, len: any, reversed?: any) {
-    var dirGap = coerce(axLetter + 'gap', dfltGap);
-    var domain = coerce('domain.' + axLetter);
+    const dirGap = coerce(axLetter + 'gap', dfltGap);
+    const domain = coerce('domain.' + axLetter);
     coerce(axLetter + 'side', dfltSide);
 
-    var out = new Array(len);
-    var start = domain[0];
-    var step = (domain[1] - start) / (len - dirGap);
-    var cellDomain = step * (1 - dirGap);
-    for(var i = 0; i < len; i++) {
-        var cellStart = start + step * i;
+    const out = new Array(len);
+    const start = domain[0];
+    const step = (domain[1] - start) / (len - dirGap);
+    const cellDomain = step * (1 - dirGap);
+    for(let i = 0; i < len; i++) {
+        const cellStart = start + step * i;
         out[reversed ? (len - 1 - i) : i] = [cellStart, cellStart + cellDomain];
     }
     return out;
@@ -240,29 +240,29 @@ function fillGridPositions(axLetter: any, coerce: any, dfltGap: any, dfltSide: a
 // the (cartesian) contents of the grid - this needs to happen AFTER supplyDataDefaults
 // so that we know what cartesian subplots are available
 function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
-    var gridOut = layoutOut.grid;
+    const gridOut = layoutOut.grid;
     // make sure we got to the end of handleGridSizing
     if(!gridOut || !gridOut._domains) return;
 
-    var gridIn = layoutIn.grid || {};
-    var subplots = layoutOut._subplots;
-    var hasSubplotGrid = gridOut._hasSubplotGrid;
-    var rows = gridOut.rows;
-    var columns = gridOut.columns;
-    var useDefaultSubplots = gridOut.pattern === 'independent';
+    const gridIn = layoutIn.grid || {};
+    const subplots = layoutOut._subplots;
+    const hasSubplotGrid = gridOut._hasSubplotGrid;
+    const rows = gridOut.rows;
+    const columns = gridOut.columns;
+    const useDefaultSubplots = gridOut.pattern === 'independent';
 
-    var i, j, xId, yId, subplotId, subplotsOut, yPos;
+    let i, j, xId, yId, subplotId, subplotsOut: any, yPos;
 
-    var axisMap = gridOut._axisMap = {};
+    const axisMap = gridOut._axisMap = {};
 
     if(hasSubplotGrid) {
-        var subplotsIn = gridIn.subplots || [];
+        const subplotsIn = gridIn.subplots || [];
         subplotsOut = gridOut.subplots = new Array(rows);
-        var index = 1;
+        let index = 1;
 
         for(i = 0; i < rows; i++) {
-            var rowOut = subplotsOut[i] = new Array(columns);
-            var rowIn = subplotsIn[i] || [];
+            const rowOut = subplotsOut[i] = new Array(columns);
+            const rowIn: any = subplotsIn[i] || [];
             for(j = 0; j < columns; j++) {
                 if(useDefaultSubplots) {
                     subplotId = (index === 1) ? 'xy' : ('x' + index + 'y' + index);
@@ -275,38 +275,38 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                     yPos = subplotId.indexOf('y');
                     xId = subplotId.slice(0, yPos);
                     yId = subplotId.slice(yPos);
-                    if((axisMap[xId] !== undefined && axisMap[xId] !== j) ||
-                        (axisMap[yId] !== undefined && axisMap[yId] !== i)
+                    if(((axisMap as any)[xId] !== undefined && (axisMap as any)[xId] !== j) ||
+                        ((axisMap as any)[yId] !== undefined && (axisMap as any)[yId] !== i)
                     ) {
                         continue;
                     }
 
                     rowOut[j] = subplotId;
-                    axisMap[xId] = j;
-                    axisMap[yId] = i;
+                    (axisMap as any)[xId] = j;
+                    (axisMap as any)[yId] = i;
                 }
             }
         }
     } else {
-        var xAxes = getAxes(layoutOut, gridIn, 'x');
-        var yAxes = getAxes(layoutOut, gridIn, 'y');
+        const xAxes = getAxes(layoutOut, gridIn, 'x');
+        const yAxes = getAxes(layoutOut, gridIn, 'y');
         gridOut.xaxes = fillGridAxes(xAxes, subplots.xaxis, columns, axisMap, 'x');
         gridOut.yaxes = fillGridAxes(yAxes, subplots.yaxis, rows, axisMap, 'y');
     }
 
-    var anchors = gridOut._anchors = {};
-    var reversed = gridOut.roworder === 'top to bottom';
+    const anchors = gridOut._anchors = {};
+    const reversed = gridOut.roworder === 'top to bottom';
 
-    for(var axisId in axisMap) {
-        var axLetter = axisId.charAt(0);
-        var side = gridOut[axLetter + 'side'];
+    for(const axisId in axisMap) {
+        const axLetter = axisId.charAt(0);
+        const side = gridOut[axLetter + 'side'];
 
-        var i0, inc, iFinal;
+        let i0, inc, iFinal;
 
         if(side.length < 8) {
             // grid edge -  ie not "* plot" - make these as free axes
             // since we're not guaranteed to have a subplot there at all
-            anchors[axisId] = 'free';
+            (anchors as any)[axisId] = 'free';
         } else if(axLetter === 'x') {
             if((side.charAt(0) === 't') === reversed) {
                 i0 = 0;
@@ -318,13 +318,13 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 iFinal = -1;
             }
             if(hasSubplotGrid) {
-                var column = axisMap[axisId];
+                const column = (axisMap as any)[axisId];
                 for(i = i0; i !== iFinal; i += inc) {
                     subplotId = subplotsOut[i][column];
                     if(!subplotId) continue;
                     yPos = subplotId.indexOf('y');
                     if(subplotId.slice(0, yPos) === axisId) {
-                        anchors[axisId] = subplotId.slice(yPos);
+                        (anchors as any)[axisId] = subplotId.slice(yPos);
                         break;
                     }
                 }
@@ -332,7 +332,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 for(i = i0; i !== iFinal; i += inc) {
                     yId = gridOut.yaxes[i];
                     if(subplots.cartesian.indexOf(axisId + yId) !== -1) {
-                        anchors[axisId] = yId;
+                        (anchors as any)[axisId] = yId;
                         break;
                     }
                 }
@@ -348,13 +348,13 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 iFinal = -1;
             }
             if(hasSubplotGrid) {
-                var row = axisMap[axisId];
+                const row = (axisMap as any)[axisId];
                 for(i = i0; i !== iFinal; i += inc) {
                     subplotId = subplotsOut[row][i];
                     if(!subplotId) continue;
                     yPos = subplotId.indexOf('y');
                     if(subplotId.slice(yPos) === axisId) {
-                        anchors[axisId] = subplotId.slice(0, yPos);
+                        (anchors as any)[axisId] = subplotId.slice(0, yPos);
                         break;
                     }
                 }
@@ -362,7 +362,7 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
                 for(i = i0; i !== iFinal; i += inc) {
                     xId = gridOut.xaxes[i];
                     if(subplots.cartesian.indexOf(xId + axisId) !== -1) {
-                        anchors[axisId] = xId;
+                        (anchors as any)[axisId] = xId;
                         break;
                     }
                 }
@@ -372,8 +372,8 @@ function contentDefaults(layoutIn: any, layoutOut: FullLayout) {
 }
 
 function fillGridAxes(axesIn: any, axesAllowed: any, len: any, axisMap: any, axLetter: any) {
-    var out = new Array(len);
-    var i;
+    const out = new Array(len);
+    let i;
 
     function fillOneAxis(i: any, axisId: any) {
         if(axesAllowed.indexOf(axisId) !== -1 && axisMap[axisId] === undefined) {

@@ -10,7 +10,7 @@ import matrix, { mat4Multiply } from './matrix.js';
  * @returns the DOM element of the graph
  */
 function getGraphDiv(gd: HTMLDivElement | string): HTMLDivElement {
-    var gdElement: HTMLDivElement | null;
+    let gdElement: HTMLDivElement | null;
 
     if(typeof gd === 'string') {
         gdElement = document.getElementById(gd) as HTMLDivElement | null;
@@ -29,14 +29,14 @@ function getGraphDiv(gd: HTMLDivElement | string): HTMLDivElement {
 }
 
 function isPlotDiv(el: any): boolean {
-    var el3 = select(el);
+    const el3 = select(el);
     return el3.node() instanceof HTMLElement &&
         el3.size() &&
         el3.classed('js-plotly-plot');
 }
 
 function removeElement(el: Element | null): void {
-    var elParent = el && el.parentNode;
+    const elParent = el && el.parentNode;
     if(elParent) elParent.removeChild(el!);
 }
 
@@ -54,8 +54,8 @@ function addStyleRule(selector: string, styleString: string): void {
  * to a stylesheet uniquely identified by a uid
  */
 function addRelatedStyleRule(uid: string, selector: string, styleString: string): void {
-    var id = 'plotly.js-style-' + uid;
-    var style: HTMLStyleElement | null = document.getElementById(id) as HTMLStyleElement | null;
+    const id = 'plotly.js-style-' + uid;
+    let style: HTMLStyleElement | null = document.getElementById(id) as HTMLStyleElement | null;
     if(style && style.matches('.no-inline-styles')) {
         // Do not proceed if user disable inline styles explicitly...
         return;
@@ -67,7 +67,7 @@ function addRelatedStyleRule(uid: string, selector: string, styleString: string)
         style.appendChild(document.createTextNode(''));
         document.head.appendChild(style);
     }
-    var styleSheet = style.sheet;
+    const styleSheet = style.sheet;
 
     if(!styleSheet) {
         loggers.warn('Cannot addRelatedStyleRule, probably due to strict CSP...');
@@ -82,8 +82,8 @@ function addRelatedStyleRule(uid: string, selector: string, styleString: string)
  * to remove from the page a stylesheet identified by a given uid
  */
 function deleteRelatedStyleRule(uid: string): void {
-    var id = 'plotly.js-style-' + uid;
-    var style = document.getElementById(id);
+    const id = 'plotly.js-style-' + uid;
+    const style = document.getElementById(id);
     if(style) removeElement(style);
 }
 
@@ -99,9 +99,9 @@ function deleteRelatedStyleRule(uid: string): void {
  * @param element optional root element to query within
  */
 function setStyleOnHover(selector: string, activeSelector: string, childSelector: string, activeStyle: string, inactiveStyle: string, element?: Document | Element): void {
-    var activeStyleParts = activeStyle.split(':');
-    var inactiveStyleParts = inactiveStyle.split(':');
-    var eventAddedAttrName = 'data-btn-style-event-added';
+    const activeStyleParts = activeStyle.split(':');
+    const inactiveStyleParts = inactiveStyle.split(':');
+    const eventAddedAttrName = 'data-btn-style-event-added';
     if (!element) {
         element = document;
     }
@@ -110,13 +110,13 @@ function setStyleOnHover(selector: string, activeSelector: string, childSelector
             // Emulate ":hover" CSS style using JS event handlers to set the
             // style in a strict CSP-compliant manner.
             el.addEventListener('mouseenter', function(this: any) {
-                var childEl = this.querySelector(childSelector) as HTMLElement | null;
+                const childEl = this.querySelector(childSelector) as HTMLElement | null;
                 if(childEl) {
                     (childEl.style as any)[activeStyleParts[0]] = activeStyleParts[1];
                 }
             });
             el.addEventListener('mouseleave', function(this: any) {
-                var childEl = this.querySelector(childSelector) as HTMLElement | null;
+                const childEl = this.querySelector(childSelector) as HTMLElement | null;
                 if(childEl) {
                     if(activeSelector && this.matches(activeSelector)) {
                         (childEl.style as any)[activeStyleParts[0]] = activeStyleParts[1];
@@ -131,18 +131,18 @@ function setStyleOnHover(selector: string, activeSelector: string, childSelector
 }
 
 function getFullTransformMatrix(element: Element): number[] {
-    var allElements = getElementAndAncestors(element);
+    const allElements = getElementAndAncestors(element);
     // the identity matrix
-    var out: number[] = [
+    let out: number[] = [
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
         0, 0, 0, 1
     ];
     allElements.forEach(function(e) {
-        var t = getElementTransformMatrix(e);
+        const t = getElementTransformMatrix(e);
         if(t) {
-            var m = matrix.convertCssMatrix(t);
+            const m = matrix.convertCssMatrix(t);
             out = mat4Multiply(out, out, m);
         }
     });
@@ -153,8 +153,8 @@ function getFullTransformMatrix(element: Element): number[] {
  * extracts and parses the 2d css style transform matrix from some element
  */
 function getElementTransformMatrix(element: Element): number[] | null {
-    var style = window.getComputedStyle(element, null);
-    var transform = (
+    const style = window.getComputedStyle(element, null);
+    const transform = (
       style.getPropertyValue('-webkit-transform') ||
       style.getPropertyValue('-moz-transform') ||
       style.getPropertyValue('-ms-transform') ||
@@ -175,7 +175,7 @@ function getElementTransformMatrix(element: Element): number[] | null {
  * retrieve all DOM elements that are ancestors of the specified one (including itself)
  */
 function getElementAndAncestors(element: Element | Node): Element[] {
-    var allElements: Element[] = [];
+    const allElements: Element[] = [];
     while(isTransformableElement(element)) {
         allElements.push(element as Element);
         element = (element as Element).parentNode!;

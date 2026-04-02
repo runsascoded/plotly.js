@@ -38,7 +38,7 @@ import localeEn from './locale-en.js';
 import localeEnUs from './locale-en-us.js';
 
 // API methods needed for runtime (excludes toImage, validate, etc.)
-var apiMethodNames = [
+const apiMethodNames = [
     'newPlot', 'react', 'restyle', 'relayout', 'redraw', 'update',
     'extendTraces', 'prependTraces', 'addTraces', 'deleteTraces', 'moveTraces',
     'purge', 'addFrames', 'deleteFrames', 'animate', 'setPlotConfig',
@@ -46,18 +46,18 @@ var apiMethodNames = [
 ];
 
 export function createPlotly({ traces = [], components = [], Icons, Snapshot, PlotSchema }: any = {}) {
-    var register = Registry.register;
-    var Plotly: any = { version, register };
+    const register = Registry.register;
+    const Plotly: any = { version, register };
     if(Icons) Plotly.Icons = Icons;
     if(Snapshot) Plotly.Snapshot = Snapshot;
     if(PlotSchema) Plotly.PlotSchema = PlotSchema;
 
     // Register API methods
-    for(var i = 0; i < apiMethodNames.length; i++) {
-        var name = apiMethodNames[i];
-        if(!main[name]) continue;
-        if(name.charAt(0) !== '_') Plotly[name] = main[name];
-        register({ moduleType: 'apiMethod', name: name, fn: main[name] });
+    for(let i = 0; i < apiMethodNames.length; i++) {
+        const name = apiMethodNames[i];
+        if(!(main as any)[name]) continue;
+        if(name.charAt(0) !== '_') Plotly[name] = (main as any)[name];
+        register({ moduleType: 'apiMethod', name: name, fn: (main as any)[name] });
     }
 
     // Register essentials (scatter is the default trace type, always needed)
@@ -65,8 +65,8 @@ export function createPlotly({ traces = [], components = [], Icons, Snapshot, Pl
     register([colorscale, fx]);
 
     // Register user-chosen traces and components
-    for(var t = 0; t < traces.length; t++) register(traces[t]);
-    for(var c = 0; c < components.length; c++) register(components[c]);
+    for(let t = 0; t < traces.length; t++) register(traces[t]);
+    for(let c = 0; c < components.length; c++) register(components[c]);
 
     // Register locales
     register([localeEn, localeEnUs]);

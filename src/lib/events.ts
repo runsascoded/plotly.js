@@ -14,7 +14,7 @@ class MiniEmitter {
     }
 
     on(event: string, fn: EventHandler): this {
-        var handlers = this._events[event];
+        const handlers = this._events[event];
         if(!handlers) this._events[event] = fn;
         else if(typeof handlers === 'function') this._events[event] = [handlers, fn];
         else (handlers as EventHandler[]).push(fn);
@@ -22,7 +22,7 @@ class MiniEmitter {
     }
 
     once(event: string, fn: EventHandler): this {
-        var self = this;
+        const self = this;
         function wrapper(this: any) {
             self.removeListener(event, wrapper);
             fn.apply(this, arguments as any);
@@ -32,12 +32,12 @@ class MiniEmitter {
     }
 
     removeListener(event: string, fn: EventHandler): this {
-        var handlers = this._events[event];
+        const handlers = this._events[event];
         if(!handlers) return this;
         if(typeof handlers === 'function') {
             if(handlers === fn || (handlers as WrappedHandler).listener === fn) delete this._events[event];
         } else {
-            for(var i = (handlers as EventHandler[]).length - 1; i >= 0; i--) {
+            for(let i = (handlers as EventHandler[]).length - 1; i >= 0; i--) {
                 if((handlers as EventHandler[])[i] === fn || ((handlers as EventHandler[])[i] as WrappedHandler).listener === fn) {
                     (handlers as EventHandler[]).splice(i, 1);
                     break;
@@ -56,24 +56,24 @@ class MiniEmitter {
     }
 
     emit(event: string, data?: any): boolean {
-        var handlers = this._events[event];
+        const handlers = this._events[event];
         if(!handlers) return false;
         if(typeof handlers === 'function') (handlers as EventHandler).call(this, data);
         else {
-            var arr = (handlers as EventHandler[]).slice();
-            for(var i = 0; i < arr.length; i++) arr[i].call(this, data);
+            const arr = (handlers as EventHandler[]).slice();
+            for(let i = 0; i < arr.length; i++) arr[i].call(this, data);
         }
         return true;
     }
 }
 
-var Events = {
+const Events = {
 
     init: function(plotObj: any): any {
         if(plotObj._ev instanceof MiniEmitter) return plotObj;
 
-        var ev = new MiniEmitter();
-        var internalEv = new MiniEmitter();
+        const ev = new MiniEmitter();
+        const internalEv = new MiniEmitter();
 
         /*
          * Assign to plot._ev while we still live in a land
@@ -144,15 +144,15 @@ var Events = {
      * of the LAST handler.
      */
     triggerHandler: function(plotObj: any, event: string, data?: any): any {
-        var nodeEventHandlerValue: any;
+        let nodeEventHandlerValue: any;
 
         /*
          * Now run all the node style event handlers
          */
-        var ev: MiniEmitter = plotObj._ev;
+        const ev: MiniEmitter = plotObj._ev;
         if(!ev) return;
 
-        var handlers: any = ev._events[event];
+        let handlers: any = ev._events[event];
         if(!handlers) return;
 
         // making sure 'this' is the EventEmitter instance
@@ -176,7 +176,7 @@ var Events = {
         // handlers can be function or an array of functions
         handlers = Array.isArray(handlers) ? handlers : [handlers];
 
-        var i: number;
+        let i: number;
         for(i = 0; i < handlers.length - 1; i++) {
             apply(handlers[i]);
         }

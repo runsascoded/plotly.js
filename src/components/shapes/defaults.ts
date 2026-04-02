@@ -32,10 +32,10 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
 
     shapeOut._isShape = true;
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
     if (!visible) return;
 
-    var showlegend = coerce('showlegend');
+    const showlegend = coerce('showlegend');
     if (showlegend) {
         coerce('legend');
         coerce('legendwidth');
@@ -45,10 +45,10 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
         coerce('legendrank');
     }
 
-    var path = coerce('path');
-    var dfltType = path ? 'path' : 'rect';
-    var shapeType = coerce('type', dfltType);
-    var noPath = shapeType !== 'path';
+    const path = coerce('path');
+    const dfltType = path ? 'path' : 'rect';
+    const shapeType = coerce('type', dfltType);
+    const noPath = shapeType !== 'path';
     if (noPath) delete shapeOut.path;
 
     coerce('editable');
@@ -56,29 +56,29 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
     coerce('opacity');
     coerce('fillcolor');
     coerce('fillrule');
-    var lineWidth = coerce('line.width');
+    const lineWidth = coerce('line.width');
     if (lineWidth) {
         coerce('line.color');
         coerce('line.dash');
     }
 
-    var xSizeMode = coerce('xsizemode');
-    var ySizeMode = coerce('ysizemode');
+    const xSizeMode = coerce('xsizemode');
+    const ySizeMode = coerce('ysizemode');
 
     // positioning
-    var axLetters = ['x', 'y'];
-    for (var i = 0; i < 2; i++) {
-        var axLetter = axLetters[i];
-        var attrAnchor = axLetter + 'anchor';
-        var sizeMode = axLetter === 'x' ? xSizeMode : ySizeMode;
-        var gdMock = { _fullLayout: fullLayout };
-        var ax;
-        var pos2r;
-        var r2pos;
+    const axLetters = ['x', 'y'];
+    for (let i = 0; i < 2; i++) {
+        const axLetter = axLetters[i];
+        const attrAnchor = axLetter + 'anchor';
+        const sizeMode = axLetter === 'x' ? xSizeMode : ySizeMode;
+        const gdMock = { _fullLayout: fullLayout };
+        let ax;
+        let pos2r;
+        let r2pos;
 
         // xref, yref
-        var axRef = Axes.coerceRef(shapeIn, shapeOut, gdMock, axLetter, undefined, 'paper');
-        var axRefType = Axes.getRefType(axRef);
+        const axRef = Axes.coerceRef(shapeIn, shapeOut, gdMock, axLetter, undefined, 'paper');
+        const axRefType = Axes.getRefType(axRef);
 
         if (axRefType === 'range') {
             ax = Axes.getFromId(gdMock, axRef);
@@ -95,17 +95,17 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
 
         // Coerce x0, x1, y0, y1
         if (noPath) {
-            var dflt0 = 0.25;
-            var dflt1 = 0.75;
+            const dflt0 = 0.25;
+            const dflt1 = 0.75;
 
             // hack until V3.0 when log has regular range behavior - make it look like other
             // ranges to send to coerce, then put it back after
             // this is all to give reasonable default position behavior on log axes, which is
             // a pretty unimportant edge case so we could just ignore this.
-            var attr0 = axLetter + '0';
-            var attr1 = axLetter + '1';
-            var in0 = shapeIn[attr0];
-            var in1 = shapeIn[attr1];
+            const attr0 = axLetter + '0';
+            const attr1 = axLetter + '1';
+            const in0 = shapeIn[attr0];
+            const in1 = shapeIn[attr1];
             shapeIn[attr0] = pos2r(shapeIn[attr0], true);
             shapeIn[attr1] = pos2r(shapeIn[attr1], true);
 
@@ -127,7 +127,7 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
         // Coerce xanchor and yanchor
         if (sizeMode === 'pixel') {
             // Hack for log axis described above
-            var inAnchor = shapeIn[attrAnchor];
+            const inAnchor = shapeIn[attrAnchor];
             shapeIn[attrAnchor] = pos2r(shapeIn[attrAnchor], true);
 
             Axes.coercePosition(shapeOut, gdMock, coerce, axRef, attrAnchor, 0.25);
@@ -143,8 +143,8 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
     }
 
     // Label options
-    var isLine = shapeType === 'line';
-    var labelTextTemplate, labelText;
+    const isLine = shapeType === 'line';
+    let labelTextTemplate, labelText;
     if (noPath) {
         labelTextTemplate = coerce('label.texttemplate');
         coerce('label.texttemplatefallback');
@@ -154,7 +154,7 @@ function handleShapeDefaults(shapeIn: any, shapeOut: any, fullLayout: FullLayout
     }
     if (labelText || labelTextTemplate) {
         coerce('label.textangle');
-        var labelTextPosition = coerce('label.textposition', isLine ? 'middle' : 'middle center');
+        const labelTextPosition = coerce('label.textposition', isLine ? 'middle' : 'middle center');
         coerce('label.xanchor');
         coerce('label.yanchor', dfltLabelYanchor(isLine, labelTextPosition));
         coerce('label.padding');

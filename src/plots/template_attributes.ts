@@ -28,7 +28,7 @@ export { templateFormatStringDescription };
 function describeVariables({ description, keys = [] }: any): any {
     let descPart = description ? ' ' : '';
     if (keys.length > 0) {
-        const quotedKeys = keys.map((k) => `\`${k}\``);
+        const quotedKeys = keys.map((k: any) => `\`${k}\``);
         descPart += 'Finally, the template string has access to ';
         if (keys.length === 1) {
             descPart += `variable ${quotedKeys[0]}`;
@@ -40,7 +40,7 @@ function describeVariables({ description, keys = [] }: any): any {
     return descPart;
 }
 
-export var hovertemplateAttrs = ({ editType = 'none', arrayOk }: any = {}, extra: any = {}) => ({
+export const hovertemplateAttrs = ({ editType = 'none', arrayOk }: any = {}, extra: any = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -57,7 +57,7 @@ export var hovertemplateAttrs = ({ editType = 'none', arrayOk }: any = {}, extra
     ...(arrayOk !== false ? { arrayOk: true } : {})
 });
 
-export var texttemplateAttrs = ({ editType = 'calc', arrayOk }: any = {}, extra: any = {}) => ({
+export const texttemplateAttrs = ({ editType = 'calc', arrayOk }: any = {}, extra: any = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -71,7 +71,7 @@ export var texttemplateAttrs = ({ editType = 'calc', arrayOk }: any = {}, extra:
     ...(arrayOk !== false ? { arrayOk: true } : {})
 });
 
-export var shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape }: any = {}, extra: any = {}) => ({
+export const shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape }: any = {}, extra: any = {}) => ({
     valType: 'string',
     dflt: '',
     editType,
@@ -95,7 +95,7 @@ export var shapeTexttemplateAttrs = ({ editType = 'arraydraw', newshape }: any =
     ].join(' ')
 });
 
-export var templatefallbackAttrs = ({ editType = 'none' } = {}) => ({
+export const templatefallbackAttrs = ({ editType = 'none' } = {}) => ({
     valType: 'any',
     dflt: '-',
     editType,

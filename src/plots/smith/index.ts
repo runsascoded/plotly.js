@@ -8,11 +8,11 @@ import _req1 from './layout_defaults.js';
 import { toSVG as _req2 } from '../cartesian/index.js';
 import type { FullLayout, FullTrace, GraphDiv } from '../../../types/core';
 
-var attr = constants.attr;
-var name = constants.name;
-var counter = counterRegex(name);
+const attr = constants.attr;
+const name = constants.name;
+const counter = counterRegex(name);
 
-var attributes: any = {};
+const attributes: any = {};
 attributes[attr] = {
     valType: 'subplotid',
     dflt: name,
@@ -26,14 +26,14 @@ attributes[attr] = {
 };
 
 function plot(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcData = gd.calcdata;
-    var subplotIds = fullLayout._subplots[name];
+    const fullLayout = gd._fullLayout;
+    const calcData = gd.calcdata;
+    const subplotIds = fullLayout._subplots[name];
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var id = subplotIds[i];
-        var subplotCalcData = getSubplotCalcData(calcData, name, id);
-        var subplot = fullLayout[id]._subplot;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const id = subplotIds[i];
+        const subplotCalcData = getSubplotCalcData(calcData, name, id);
+        let subplot = fullLayout[id]._subplot;
 
         if(!subplot) {
             subplot = createPolar(gd, id, true);
@@ -45,15 +45,15 @@ function plot(gd: GraphDiv) {
 }
 
 function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
-    var oldIds = oldFullLayout._subplots[name] || [];
-    for(var i = 0; i < oldIds.length; i++) {
-        var id = oldIds[i];
-        var oldSubplot = oldFullLayout[id]._subplot;
+    const oldIds = oldFullLayout._subplots[name] || [];
+    for(let i = 0; i < oldIds.length; i++) {
+        const id = oldIds[i];
+        const oldSubplot = oldFullLayout[id]._subplot;
 
         if(!newFullLayout[id] && !!oldSubplot) {
             oldSubplot.framework.remove();
 
-            for(var k in oldSubplot.clipPaths) {
+            for(const k in oldSubplot.clipPaths) {
                 oldSubplot.clipPaths[k].remove();
             }
         }

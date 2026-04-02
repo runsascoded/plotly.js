@@ -6,19 +6,19 @@ const { hoverOnBars } = _hover;
 import _index2 from '../../lib/index.js';
 const { formatPercent } = _index2;
 
-export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) {
-    var point = hoverOnBars(pointData, xval, yval, hovermode, opts);
+export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hovermode: any,  opts: any) {
+    const point = hoverOnBars(pointData, xval, yval, hovermode, opts);
     if(!point) return;
 
-    var cd = point.cd;
-    var trace = cd[0].trace;
-    var isHorizontal = (trace.orientation === 'h');
+    const cd = point.cd;
+    const trace = cd[0].trace;
+    const isHorizontal = (trace.orientation === 'h');
 
     // the closest data point
-    var index = point.index;
-    var di = cd[index];
+    const index = point.index;
+    const di = cd[index];
 
-    var sizeLetter = isHorizontal ? 'x' : 'y';
+    const sizeLetter = isHorizontal ? 'x' : 'y';
     point[sizeLetter + 'LabelVal'] = di.s;
 
     point.percentInitial = di.begR;
@@ -30,13 +30,13 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     point.percentTotal = di.sumR;
     point.percentTotalLabel = formatPercent(di.sumR, 1);
 
-    var hoverinfo = di.hi || trace.hoverinfo;
-    var text = [];
+    const hoverinfo = di.hi || trace.hoverinfo;
+    const text: any[] = [];
     if(hoverinfo && hoverinfo !== 'none' && hoverinfo !== 'skip') {
-        var isAll = (hoverinfo === 'all');
-        var parts = hoverinfo.split('+');
+        const isAll = (hoverinfo === 'all');
+        const parts = hoverinfo.split('+');
 
-        var hasFlag = function(flag) { return isAll || parts.indexOf(flag) !== -1; };
+        const hasFlag = function(flag: any) { return isAll || parts.indexOf(flag) !== -1; };
 
         if(hasFlag('percent initial')) {
             text.push(point.percentInitialLabel + ' of initial');
@@ -55,11 +55,11 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     return [point];
 }
 
-function getTraceColor(trace: FullTrace,  di) {
-    var cont = trace.marker;
-    var mc = di.mc || cont.color;
-    var mlc = di.mlc || cont.line.color;
-    var mlw = di.mlw || cont.line.width;
+function getTraceColor(trace: FullTrace,  di: any) {
+    const cont = trace.marker;
+    const mc = di.mc || cont.color;
+    const mlc = di.mlc || cont.line.color;
+    const mlw = di.mlw || cont.line.width;
     if(opacity(mc)) return mc;
     else if(opacity(mlc) && mlw) return mlc;
 }

@@ -7,37 +7,37 @@ const { isValid: isValidScale } = _scales;
 import { traceIs } from '../../registry.js';
 
 function npMaybe(parentCont: any, prefix: string): any {
-    var containerStr = prefix.slice(0, prefix.length - 1);
+    const containerStr = prefix.slice(0, prefix.length - 1);
     return prefix ?
         nestedProperty(parentCont, containerStr).get() || {} :
         parentCont;
 }
 
 export default function colorScaleDefaults(parentContIn: any, parentContOut: any, layout: any, coerce: any, opts: any): void {
-    var prefix = opts.prefix;
-    var cLetter = opts.cLetter;
-    var inTrace = '_module' in parentContOut;
-    var containerIn = npMaybe(parentContIn, prefix);
-    var containerOut = npMaybe(parentContOut, prefix);
-    var template = npMaybe(parentContOut._template || {}, prefix) || {};
+    const prefix = opts.prefix;
+    const cLetter = opts.cLetter;
+    const inTrace = '_module' in parentContOut;
+    const containerIn = npMaybe(parentContIn, prefix);
+    const containerOut = npMaybe(parentContOut, prefix);
+    const template = npMaybe(parentContOut._template || {}, prefix) || {};
 
-    var thisFn = function(): any {
+    const thisFn = function(): any {
         delete parentContIn.coloraxis;
         delete parentContOut.coloraxis;
         return colorScaleDefaults(parentContIn, parentContOut, layout, coerce, opts);
     };
 
     if(inTrace) {
-        var colorAxes = layout._colorAxes || {};
-        var colorAx = coerce(prefix + 'coloraxis');
+        const colorAxes = layout._colorAxes || {};
+        const colorAx = coerce(prefix + 'coloraxis');
 
         if(colorAx) {
-            var colorbarVisuals = (
+            const colorbarVisuals = (
                 traceIs(parentContOut, 'contour') &&
                 nestedProperty(parentContOut, 'contours.coloring').get()
             ) || 'heatmap';
 
-            var stash = colorAxes[colorAx];
+            const stash = colorAxes[colorAx];
 
             if(stash) {
                 stash[2].push(thisFn);
@@ -56,10 +56,10 @@ export default function colorScaleDefaults(parentContIn: any, parentContOut: any
         }
     }
 
-    var minIn = containerIn[cLetter + 'min'];
-    var maxIn = containerIn[cLetter + 'max'];
-    var validMinMax = isNumeric(minIn) && isNumeric(maxIn) && (minIn < maxIn);
-    var auto = coerce(prefix + cLetter + 'auto', !validMinMax);
+    const minIn = containerIn[cLetter + 'min'];
+    const maxIn = containerIn[cLetter + 'max'];
+    const validMinMax = isNumeric(minIn) && isNumeric(maxIn) && (minIn < maxIn);
+    const auto = coerce(prefix + cLetter + 'auto', !validMinMax);
 
     if(auto) {
         coerce(prefix + cLetter + 'mid');
@@ -68,9 +68,9 @@ export default function colorScaleDefaults(parentContIn: any, parentContOut: any
         coerce(prefix + cLetter + 'max');
     }
 
-    var sclIn = containerIn.colorscale;
-    var sclTemplate = template.colorscale;
-    var autoColorscaleDflt;
+    const sclIn = containerIn.colorscale;
+    const sclTemplate = template.colorscale;
+    let autoColorscaleDflt;
     if(sclIn !== undefined) autoColorscaleDflt = !isValidScale(sclIn);
     if(sclTemplate !== undefined) autoColorscaleDflt = !isValidScale(sclTemplate);
     coerce(prefix + 'autocolorscale', autoColorscaleDflt);
@@ -79,10 +79,10 @@ export default function colorScaleDefaults(parentContIn: any, parentContOut: any
     coerce(prefix + 'reversescale');
 
     if(prefix !== 'marker.line.') {
-        var showScaleDflt;
+        let showScaleDflt;
         if(prefix && inTrace) showScaleDflt = hasColorbar(containerIn);
 
-        var showScale = coerce(prefix + 'showscale', showScaleDflt);
+        const showScale = coerce(prefix + 'showscale', showScaleDflt);
         if(showScale) {
             if(prefix && template) containerOut._template = template;
             colorbarDefaults(containerIn, containerOut, layout);

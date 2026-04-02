@@ -6,9 +6,9 @@ import colorScaleAttrs from '../../components/colorscale/attributes.js';
 import { dash } from '../../components/drawing/attributes.js';
 import { extendFlat } from '../../lib/extend.js';
 
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterLineAttrs = scatterAttrs.line;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterLineAttrs = scatterAttrs.line;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
 export default {
     a: {

@@ -11,11 +11,11 @@ const { PTS_LINESONLY } = _constants;
 import attributes from './attributes.js';
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleRealImagDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleRealImagDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -45,7 +45,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    var dfltHoverOn = [];
+    const dfltHoverOn: any[] = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');
@@ -68,10 +68,10 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     Lib.coerceSelectionMarkerOpacity(traceOut, coerce);
 }
 
-function handleRealImagDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce) {
-    var real = coerce('real');
-    var imag = coerce('imag');
-    var len;
+function handleRealImagDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: any) {
+    let real = coerce('real');
+    let imag = coerce('imag');
+    let len;
 
     if (real && imag) {
         len = Math.min(real.length, imag.length);

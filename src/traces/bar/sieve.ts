@@ -15,22 +15,22 @@ export default Sieve;
  *  - @param {boolean} [overlapNoMerge]
  *     If true, then don't merge overlapping bars into a single bar
  */
-function Sieve(traces: any[], opts: any) {
+function Sieve(this: any, traces: any[], opts: any) {
     this.traces = traces;
     this.sepNegVal = opts.sepNegVal;
     this.overlapNoMerge = opts.overlapNoMerge;
 
     // for single-bin histograms - see histogram/calc
-    var width1 = Infinity;
+    let width1 = Infinity;
 
-    var axLetter = opts.posAxis._id.charAt(0);
+    const axLetter = opts.posAxis._id.charAt(0);
 
-    var positions = [];
-    for(var i = 0; i < traces.length; i++) {
-        var trace = traces[i];
-        for(var j = 0; j < trace.length; j++) {
-            var bar = trace[j];
-            var pos = bar.p;
+    const positions: any[] = [];
+    for(let i = 0; i < traces.length; i++) {
+        const trace = traces[i];
+        for(let j = 0; j < trace.length; j++) {
+            const bar = trace[j];
+            let pos = bar.p;
             if(pos === undefined) {
                 pos = bar[axLetter];
             }
@@ -42,13 +42,13 @@ function Sieve(traces: any[], opts: any) {
     }
     this.positions = positions;
 
-    var dv = distinctVals(positions);
+    const dv = distinctVals(positions);
 
     this.distinctPositions = dv.vals;
     if(dv.vals.length === 1 && width1 !== Infinity) this.minDiff = width1;
     else this.minDiff = Math.min(dv.minDiff, width1);
 
-    var type = (opts.posAxis || {}).type;
+    const type = (opts.posAxis || {}).type;
     if(type === 'category' || type === 'multicategory') {
         this.minDiff = 1;
     }
@@ -68,8 +68,8 @@ function Sieve(traces: any[], opts: any) {
  * @returns {number} Previous bin value
  */
 Sieve.prototype.put = function put(position: number, group: number, value: number): number {
-    var label = this.getLabel(position, group, value);
-    var oldValue = this.bins[label] || 0;
+    const label = this.getLabel(position, group, value);
+    const oldValue = this.bins[label] || 0;
 
     this.bins[label] = oldValue + value;
 
@@ -87,7 +87,7 @@ Sieve.prototype.put = function put(position: number, group: number, value: numbe
  * @returns {number} Current bin value
  */
 Sieve.prototype.get = function get(position: number, group: number, value?: number): number {
-    var label = this.getLabel(position, group, value);
+    const label = this.getLabel(position, group, value);
     return this.bins[label] || 0;
 };
 
@@ -104,8 +104,8 @@ Sieve.prototype.get = function get(position: number, group: number, value?: numb
  * true; otherwise prefixed with '^')
  */
 Sieve.prototype.getLabel = function getLabel(position: number, group: number, value?: number): string {
-    var prefix = (value < 0 && this.sepNegVal) ? 'v' : '^';
-    var label = (this.overlapNoMerge) ?
+    const prefix = (value! < 0 && this.sepNegVal) ? 'v' : '^';
+    const label = (this.overlapNoMerge) ?
         position :
         Math.round(position / this.binWidth);
     return prefix + label + 'g' + group;

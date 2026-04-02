@@ -4,11 +4,11 @@ import attributes from './attributes.js';
 import constants from './constants.js';
 import type { FullLayout } from '../../../types/core';
 
-var name = constants.name;
-var buttonAttrs = attributes.buttons;
+const name = constants.name;
+const buttonAttrs = attributes.buttons;
 
 export default function updateMenusDefaults(layoutIn: any, layoutOut: FullLayout) {
-    var opts = {
+    const opts = {
         name: name,
         handleItemDefaults: menuDefaults
     };
@@ -21,12 +21,12 @@ function menuDefaults(menuIn: any, menuOut: any, layoutOut: FullLayout) {
         return Lib.coerce(menuIn, menuOut, attributes, attr, dflt);
     }
 
-    var buttons = handleArrayContainerDefaults(menuIn, menuOut, {
+    const buttons = handleArrayContainerDefaults(menuIn, menuOut, {
         name: 'buttons',
         handleItemDefaults: buttonDefaults
     });
 
-    var visible = coerce('visible', buttons.length > 0);
+    const visible = coerce('visible', buttons.length > 0);
     if(!visible) return;
 
     coerce('active');
@@ -58,7 +58,7 @@ function buttonDefaults(buttonIn: any, buttonOut: any) {
         return Lib.coerce(buttonIn, buttonOut, buttonAttrs, attr, dflt);
     }
 
-    var visible = coerce('visible',
+    const visible = coerce('visible',
         (buttonIn.method === 'skip' || Array.isArray(buttonIn.args)));
     if(visible) {
         coerce('method');

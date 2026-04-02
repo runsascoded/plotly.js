@@ -8,31 +8,31 @@ import calcSelection from '../scatter/calc_selection.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray, _ } = _index;
 
-function isNonBlankString(v) {
+function isNonBlankString(v: any) {
     return v && typeof v === 'string';
 }
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var hasLocationData = isArrayOrTypedArray(trace.locations);
-    var len = hasLocationData ? trace.locations.length : trace._length;
-    var calcTrace = new Array(len);
+    const hasLocationData = isArrayOrTypedArray(trace.locations);
+    const len = hasLocationData ? trace.locations.length : trace._length;
+    const calcTrace = new Array(len);
 
-    var isValidLoc;
+    let isValidLoc;
     if(trace.geojson) {
-        isValidLoc = function(v) { return isNonBlankString(v) || isNumeric(v); };
+        isValidLoc = function(v: any) { return isNonBlankString(v) || isNumeric(v); };
     } else {
         isValidLoc = isNonBlankString;
     }
 
-    for(var i = 0; i < len; i++) {
-        var calcPt: any = calcTrace[i] = {};
+    for(let i = 0; i < len; i++) {
+        const calcPt: any = calcTrace[i] = {};
 
         if(hasLocationData) {
-            var loc = trace.locations[i];
+            const loc = trace.locations[i];
             calcPt.loc = isValidLoc(loc) ? loc : null;
         } else {
-            var lon = trace.lon[i];
-            var lat = trace.lat[i];
+            const lon = trace.lon[i];
+            const lat = trace.lat[i];
 
             if(isNumeric(lon) && isNumeric(lat)) calcPt.lonlat = [+lon, +lat];
             else calcPt.lonlat = [BADNUM, BADNUM];

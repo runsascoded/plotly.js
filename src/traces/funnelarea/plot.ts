@@ -7,45 +7,45 @@ import barPlot from '../bar/plot.js';
 import uniformText from '../bar/uniform_text.js';
 import pieHelpers from '../pie/helpers.js';
 import piePlot from '../pie/plot.js';
-var strScale = Lib.strScale;
-var strTranslate = Lib.strTranslate;
-var toMoveInsideBar = barPlot.toMoveInsideBar;
-var recordMinTextSize = uniformText.recordMinTextSize;
-var clearMinTextSize = uniformText.clearMinTextSize;
+const strScale = Lib.strScale;
+const strTranslate = Lib.strTranslate;
+const toMoveInsideBar = barPlot.toMoveInsideBar;
+const recordMinTextSize = uniformText.recordMinTextSize;
+const clearMinTextSize = uniformText.clearMinTextSize;
 
-var attachFxHandlers = piePlot.attachFxHandlers;
-var determineInsideTextFont = piePlot.determineInsideTextFont;
+const attachFxHandlers = piePlot.attachFxHandlers;
+const determineInsideTextFont = piePlot.determineInsideTextFont;
 
-var layoutAreas = piePlot.layoutAreas;
-var prerenderTitles = piePlot.prerenderTitles;
-var positionTitleOutside = piePlot.positionTitleOutside;
-var formatSliceLabel = piePlot.formatSliceLabel;
+const layoutAreas = piePlot.layoutAreas;
+const prerenderTitles = piePlot.prerenderTitles;
+const positionTitleOutside = piePlot.positionTitleOutside;
+const formatSliceLabel = piePlot.formatSliceLabel;
 
-export default function plot(gd: GraphDiv,  cdModule) {
-    var isStatic = gd._context.staticPlot;
+export default function plot(gd: GraphDiv,  cdModule: any) {
+    const isStatic = gd._context.staticPlot;
 
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     clearMinTextSize('funnelarea', fullLayout);
 
     prerenderTitles(cdModule, gd);
     layoutAreas(cdModule, fullLayout._size);
 
-    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(cd) {
-        var plotGroup = select(this);
-        var cd0 = cd[0];
-        var trace = cd0.trace;
+    Lib.makeTraceGroups(fullLayout._funnelarealayer, cdModule, 'trace').each(function(this: any, cd: any) {
+        const plotGroup = select(this);
+        const cd0 = cd[0];
+        const trace = cd0.trace;
 
         setCoords(cd);
 
-        plotGroup.each(function() {
-            var slices = select(this).selectAll('g.slice').data(cd);
+        plotGroup.each(function(this: any) {
+            const slices = select(this).selectAll('g.slice').data(cd);
 
-            slices.enter().append('g')
+            const slicesEnter = slices.enter().append('g')
                 .classed('slice', true);
             slices.exit().remove();
 
-            slices.each(function(pt, i) {
+            slices.merge(slicesEnter).each(function(this: any, pt: any, i: any) {
                 if(pt.hidden) {
                     select(this).selectAll('path,g').remove();
                     return;
@@ -55,61 +55,59 @@ export default function plot(gd: GraphDiv,  cdModule) {
                 pt.pointNumber = pt.i;
                 pt.curveNumber = trace.index;
 
-                var cx = cd0.cx;
-                var cy = cd0.cy;
-                var sliceTop = select(this);
-                var slicePath = sliceTop.selectAll('path.surface').data([pt]);
+                const cx = cd0.cx;
+                const cy = cd0.cy;
+                const sliceTop = select(this);
+                const slicePath = sliceTop.selectAll('path.surface').data([pt]);
 
-                slicePath.enter().append('path')
+                const slicePathEnter = slicePath.enter().append('path')
                     .classed('surface', true)
-                    .style({'pointer-events': isStatic ? 'none' : 'all'});
+                    .style('pointer-events', isStatic ? 'none' : 'all');
 
                 sliceTop.call(attachFxHandlers, gd, cd);
 
-                var shape =
+                const shape =
                     'M' + (cx + pt.TR[0]) + ',' + (cy + pt.TR[1]) +
                     line(pt.TR, pt.BR) +
                     line(pt.BR, pt.BL) +
                     line(pt.BL, pt.TL) +
                     'Z';
 
-                slicePath.attr('d', shape);
+                slicePath.merge(slicePathEnter).attr('d', shape);
 
                 // add text
                 formatSliceLabel(gd, pt, cd0);
-                var textPosition = pieHelpers.castOption(trace.textposition, pt.pts);
-                var sliceTextGroup = sliceTop.selectAll('g.slicetext')
+                const textPosition = pieHelpers.castOption(trace.textposition, pt.pts);
+                const sliceTextGroup = sliceTop.selectAll('g.slicetext')
                     .data(pt.text && (textPosition !== 'none') ? [0] : []);
 
-                sliceTextGroup.enter().append('g')
+                const sliceTextGroupEnter = sliceTextGroup.enter().append('g')
                     .classed('slicetext', true);
                 sliceTextGroup.exit().remove();
 
-                sliceTextGroup.each(function() {
-                    var sliceText = Lib.ensureSingle(select(this), 'text', '', function(s) {
+                sliceTextGroup.merge(sliceTextGroupEnter).each(function(this: any) {
+                    const sliceText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                         // prohibit tex interpretation until we can handle
                         // tex and regular text together
                         s.attr('data-notex', 1);
                     });
 
-                    var font = Lib.ensureUniformFontSize(gd, determineInsideTextFont(trace, pt, fullLayout.font));
+                    const font = Lib.ensureUniformFontSize(gd, determineInsideTextFont(trace, pt, (fullLayout.font as any)));
 
                     sliceText.text(pt.text)
-                        .attr({
-                            class: 'slicetext',
-                            transform: '',
-                            'text-anchor': 'middle'
-                        })
+                        .attr('class', 'slicetext')
+                        .attr('transform', '')
+                        .attr('text-anchor', 'middle')
                         .call(drawingFont, font)
                         .call(svgTextUtils.convertToTspans, gd);
 
                     // position the text relative to the slice
-                    var textBB = bBox(sliceText.node());
-                    var transform;
+                    const textBB = bBox(sliceText.node());
+                    let transform;
 
-                    var x0, x1;
-                    var y0 = Math.min(pt.BL[1], pt.BR[1]) + cy;
-                    var y1 = Math.max(pt.TL[1], pt.TR[1]) + cy;
+                    let x0, x1;
+                    const y0 = Math.min(pt.BL[1], pt.BR[1]) + cy;
+                    const y1 = Math.max(pt.TL[1], pt.TR[1]) + cy;
 
                     x0 = Math.max(pt.TL[0], pt.BL[0]) + cx;
                     x1 = Math.min(pt.TR[0], pt.BR[0]) + cx;
@@ -130,34 +128,32 @@ export default function plot(gd: GraphDiv,  cdModule) {
             });
 
             // add the title
-            var titleTextGroup = select(this).selectAll('g.titletext')
+            const titleTextGroup = select(this).selectAll('g.titletext')
                 .data(trace.title.text ? [0] : []);
 
-            titleTextGroup.enter().append('g')
+            const titleTextGroupEnter = titleTextGroup.enter().append('g')
                 .classed('titletext', true);
             titleTextGroup.exit().remove();
 
-            titleTextGroup.each(function() {
-                var titleText = Lib.ensureSingle(select(this), 'text', '', function(s) {
+            titleTextGroup.merge(titleTextGroupEnter).each(function(this: any) {
+                const titleText = Lib.ensureSingle(select(this), 'text', '', function(this: any, s: any) {
                     // prohibit tex interpretation as above
                     s.attr('data-notex', 1);
                 });
 
-                var txt = trace.title.text;
+                let txt = trace.title.text;
                 if(trace._meta) {
                     txt = Lib.templateString(txt, trace._meta);
                 }
 
                 titleText.text(txt)
-                    .attr({
-                        class: 'titletext',
-                        transform: '',
-                        'text-anchor': 'middle',
-                    })
+                    .attr('class', 'titletext')
+                    .attr('transform', '')
+                    .attr('text-anchor', 'middle')
                 .call(drawingFont, trace.title.font)
                 .call(svgTextUtils.convertToTspans, gd);
 
-                var transform = positionTitleOutside(cd0, fullLayout._size);
+                const transform = positionTitleOutside(cd0, fullLayout._size);
 
                 titleText.attr('transform',
                     strTranslate(transform.x, transform.y) +
@@ -168,40 +164,40 @@ export default function plot(gd: GraphDiv,  cdModule) {
     });
 }
 
-function line(a,  b) {
-    var dx = b[0] - a[0];
-    var dy = b[1] - a[1];
+function line(a: any,  b: any) {
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
 
     return 'l' + dx + ',' + dy;
 }
 
-function getBetween(a,  b) {
+function getBetween(a: any,  b: any) {
     return [
         0.5 * (a[0] + b[0]),
         0.5 * (a[1] + b[1])
     ];
 }
 
-function setCoords(cd) {
+function setCoords(cd: any) {
     if(!cd.length) return;
 
-    var cd0 = cd[0];
-    var trace = cd0.trace;
+    const cd0 = cd[0];
+    const trace = cd0.trace;
 
-    var aspectratio = trace.aspectratio;
+    const aspectratio = trace.aspectratio;
 
-    var h = trace.baseratio;
+    let h = trace.baseratio;
     if(h > 0.999) h = 0.999; // TODO: may handle this case separately
-    var h2 = Math.pow(h, 2);
+    const h2 = Math.pow(h, 2);
 
-    var v1 = cd0.vTotal;
-    var v0 = v1 * h2 / (1 - h2);
+    const v1 = cd0.vTotal;
+    const v0 = v1 * h2 / (1 - h2);
 
-    var totalValues = v1;
-    var sumSteps = v0 / v1;
+    const totalValues = v1;
+    let sumSteps = v0 / v1;
 
     function calcPos() {
-        var q = Math.sqrt(sumSteps);
+        const q = Math.sqrt(sumSteps);
         return {
             x: q,
             y: -q
@@ -209,27 +205,27 @@ function setCoords(cd) {
     }
 
     function getPoint() {
-        var pos = calcPos();
+        const pos = calcPos();
         return [pos.x, pos.y];
     }
 
-    var p;
-    var allPoints = [];
+    let p;
+    const allPoints: any[] = [];
     allPoints.push(getPoint());
 
-    var i, cdi;
+    let i, cdi;
     for(i = cd.length - 1; i > -1; i--) {
         cdi = cd[i];
         if(cdi.hidden) continue;
 
-        var step = cdi.v / totalValues;
+        const step = cdi.v / totalValues;
         sumSteps += step;
 
         allPoints.push(getPoint());
     }
 
-    var minY = Infinity;
-    var maxY = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
     for(i = 0; i < allPoints.length; i++) {
         p = allPoints[i];
         minY = Math.min(minY, p[1]);
@@ -241,14 +237,14 @@ function setCoords(cd) {
         allPoints[i][1] -= (maxY + minY) / 2;
     }
 
-    var lastX = allPoints[allPoints.length - 1][0];
+    const lastX = allPoints[allPoints.length - 1][0];
 
     // get pie r
-    var r = cd0.r;
+    const r = cd0.r;
 
-    var rY = (maxY - minY) / 2;
-    var scaleX = r / lastX;
-    var scaleY = r / rY * aspectratio;
+    const rY = (maxY - minY) / 2;
+    const scaleX = r / lastX;
+    const scaleY = r / rY * aspectratio;
 
     // set funnelarea r
     cd0.r = scaleY * rY;
@@ -261,17 +257,17 @@ function setCoords(cd) {
 
     // record first position
     p = allPoints[0];
-    var prevLeft = [-p[0], p[1]];
-    var prevRight = [p[0], p[1]];
+    let prevLeft = [-p[0], p[1]];
+    let prevRight = [p[0], p[1]];
 
-    var n = 0; // note we skip the very first point.
+    let n = 0; // note we skip the very first point.
     for(i = cd.length - 1; i > -1; i--) {
         cdi = cd[i];
         if(cdi.hidden) continue;
 
         n += 1;
-        var x = allPoints[n][0];
-        var y = allPoints[n][1];
+        const x = allPoints[n][0];
+        const y = allPoints[n][1];
 
         cdi.TL = [-x, y];
         cdi.TR = [x, y];

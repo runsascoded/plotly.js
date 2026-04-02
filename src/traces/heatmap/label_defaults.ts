@@ -1,11 +1,11 @@
 import type { FullLayout } from '../../../types/core';
 import Lib from '../../lib/index.js';
 
-export default function handleHeatmapLabelDefaults(coerce,  layout: FullLayout) {
+export default function handleHeatmapLabelDefaults(coerce: any,  layout: FullLayout) {
     coerce('texttemplate');
     coerce('texttemplatefallback');
 
-    var fontDflt = Lib.extendFlat({}, layout.font, {
+    const fontDflt = Lib.extendFlat({}, layout.font, {
         color: 'auto',
         size: 'auto'
     });

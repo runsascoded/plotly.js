@@ -4,18 +4,18 @@ import alignPeriod from '../../plots/cartesian/align_period.js';
 import _calc from '../ohlc/calc.js';
 const { calcCommon } = _calc;
 
-export default function(gd, trace) {
-    var fullLayout = gd._fullLayout;
-    var xa = Axes.getFromId(gd, trace.xaxis);
-    var ya = Axes.getFromId(gd, trace.yaxis);
+export default function(gd: any, trace: any) {
+    const fullLayout = gd._fullLayout;
+    const xa = Axes.getFromId(gd, trace.xaxis);
+    const ya = Axes.getFromId(gd, trace.yaxis);
 
-    var origX = xa.makeCalcdata(trace, 'x');
-    var x = alignPeriod(trace, xa, 'x', origX).vals;
+    const origX = xa.makeCalcdata(trace, 'x');
+    const x = alignPeriod(trace, xa, 'x', origX).vals;
 
-    var cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
+    const cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
 
     if(cd.length) {
-        Lib.extendFlat(cd[0].t, {
+        Lib.extendFlat((cd[0] as any).t, {
             num: fullLayout._numBoxes,
             dPos: Lib.distinctVals(x).minDiff / 2,
             posLetter: 'x',
@@ -29,7 +29,7 @@ export default function(gd, trace) {
     }
 }
 
-function ptFunc(o, h, l, c) {
+function ptFunc(o: any, h: any, l: any, c: any) {
     return {
         min: l,
         q1: Math.min(o, c),

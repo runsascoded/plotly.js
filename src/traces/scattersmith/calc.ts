@@ -9,19 +9,19 @@ import _calc from '../scatter/calc.js';
 const { calcMarkerSize } = _calc;
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
-    var fullLayout = gd._fullLayout;
-    var subplotId = trace.subplot;
-    var realAxis = fullLayout[subplotId].realaxis;
-    var imaginaryAxis = fullLayout[subplotId].imaginaryaxis;
-    var realArray = realAxis.makeCalcdata(trace, 'real');
-    var imagArray = imaginaryAxis.makeCalcdata(trace, 'imag');
-    var len = trace._length;
-    var cd = new Array(len);
+    const fullLayout = gd._fullLayout;
+    const subplotId = trace.subplot;
+    const realAxis = fullLayout[subplotId].realaxis;
+    const imaginaryAxis = fullLayout[subplotId].imaginaryaxis;
+    const realArray = realAxis.makeCalcdata(trace, 'real');
+    const imagArray = imaginaryAxis.makeCalcdata(trace, 'imag');
+    const len = trace._length;
+    const cd = new Array(len);
 
-    for(var i = 0; i < len; i++) {
-        var real = realArray[i];
-        var imag = imagArray[i];
-        var cdi: any = cd[i] = {};
+    for(let i = 0; i < len; i++) {
+        const real = realArray[i];
+        const imag = imagArray[i];
+        const cdi: any = cd[i] = {};
 
         if(isNumeric(real) && isNumeric(imag)) {
             cdi.real = real;

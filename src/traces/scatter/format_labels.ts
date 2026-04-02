@@ -2,16 +2,16 @@ import type { CalcDatum, FullLayout, FullTrace } from '../../../types/core';
 import Axes from '../../plots/cartesian/axes.js';
 
 export default function formatLabels(cdi: CalcDatum, trace: FullTrace, fullLayout: FullLayout): any {
-    var labels: any = {};
+    const labels: any = {};
 
-    var mockGd = {_fullLayout: fullLayout};
-    var xa = Axes.getFromTrace(mockGd, trace, 'x');
-    var ya = Axes.getFromTrace(mockGd, trace, 'y');
+    const mockGd = {_fullLayout: fullLayout};
+    const xa = Axes.getFromTrace(mockGd, trace, 'x');
+    const ya = Axes.getFromTrace(mockGd, trace, 'y');
 
-    var x = cdi.orig_x;
+    let x = cdi.orig_x;
     if(x === undefined) x = cdi.x;
 
-    var y = cdi.orig_y;
+    let y = cdi.orig_y;
     if(y === undefined) y = cdi.y;
 
     labels.xLabel = Axes.tickText(xa, xa.c2l(x), true).text;

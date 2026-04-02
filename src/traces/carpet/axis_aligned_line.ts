@@ -1,55 +1,55 @@
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function(carpet, carpetcd, a, b) {
-    var idx, tangent, tanIsoIdx, tanIsoPar, segment, refidx;
-    var p0, p1, v0, v1, start, end, range;
+export default function(carpet: any, carpetcd: any, a: any, b: any) {
+    let idx, tangent, tanIsoIdx: any, tanIsoPar: any, segment, refidx;
+    let p0, p1, v0, v1, start, end, range;
 
-    var axis = isArrayOrTypedArray(a) ? 'a' : 'b';
-    var ax = axis === 'a' ? carpet.aaxis : carpet.baxis;
-    var smoothing = ax.smoothing;
-    var toIdx = axis === 'a' ? carpet.a2i : carpet.b2j;
-    var pt = axis === 'a' ? a : b;
-    var iso = axis === 'a' ? b : a;
-    var n = axis === 'a' ? carpetcd.a.length : carpetcd.b.length;
-    var m = axis === 'a' ? carpetcd.b.length : carpetcd.a.length;
-    var isoIdx = Math.floor(axis === 'a' ? carpet.b2j(iso) : carpet.a2i(iso));
+    const axis = isArrayOrTypedArray(a) ? 'a' : 'b';
+    const ax = axis === 'a' ? carpet.aaxis : carpet.baxis;
+    const smoothing = ax.smoothing;
+    const toIdx = axis === 'a' ? carpet.a2i : carpet.b2j;
+    const pt = axis === 'a' ? a : b;
+    const iso = axis === 'a' ? b : a;
+    const n = axis === 'a' ? carpetcd.a.length : carpetcd.b.length;
+    const m = axis === 'a' ? carpetcd.b.length : carpetcd.a.length;
+    const isoIdx = Math.floor(axis === 'a' ? carpet.b2j(iso) : carpet.a2i(iso));
 
-    var xy = axis === 'a' ? function(value) {
+    const xy = axis === 'a' ? function(value: any) {
         return carpet.evalxy([], value, isoIdx);
-    } : function(value) {
+    } : function(value: any) {
         return carpet.evalxy([], isoIdx, value);
     };
 
     if(smoothing) {
         tanIsoIdx = Math.max(0, Math.min(m - 2, isoIdx));
         tanIsoPar = isoIdx - tanIsoIdx;
-        tangent = axis === 'a' ? function(i, ti) {
+        tangent = axis === 'a' ? function(i: any, ti: any) {
             return carpet.dxydi([], i, tanIsoIdx, ti, tanIsoPar);
-        } : function(j, tj) {
+        } : function(j: any, tj: any) {
             return carpet.dxydj([], tanIsoIdx, j, tanIsoPar, tj);
         };
     }
 
-    var vstart = toIdx(pt[0]);
-    var vend = toIdx(pt[1]);
+    const vstart = toIdx(pt[0]);
+    const vend = toIdx(pt[1]);
 
     // So that we can make this work in two directions, flip all of the
     // math functions if the direction is from higher to lower indices:
     //
     // Note that the tolerance is directional!
-    var dir = vstart < vend ? 1 : -1;
-    var tol = (vend - vstart) * 1e-8;
-    var dirfloor = dir > 0 ? Math.floor : Math.ceil;
-    var dirceil = dir > 0 ? Math.ceil : Math.floor;
-    var dirmin = dir > 0 ? Math.min : Math.max;
-    var dirmax = dir > 0 ? Math.max : Math.min;
+    const dir = vstart < vend ? 1 : -1;
+    const tol = (vend - vstart) * 1e-8;
+    const dirfloor = dir > 0 ? Math.floor : Math.ceil;
+    const dirceil = dir > 0 ? Math.ceil : Math.floor;
+    const dirmin = dir > 0 ? Math.min : Math.max;
+    const dirmax = dir > 0 ? Math.max : Math.min;
 
-    var idx0 = dirfloor(vstart + tol);
-    var idx1 = dirceil(vend - tol);
+    const idx0 = dirfloor(vstart + tol);
+    const idx1 = dirceil(vend - tol);
 
     p0 = xy(vstart);
-    var segments = [[p0]];
+    const segments = [[p0]];
 
     for(idx = idx0; idx * dir < idx1 * dir; idx += dir) {
         segment = [];
@@ -65,8 +65,8 @@ export default function(carpet, carpetcd, a, b) {
 
         p1 = xy(end);
         if(smoothing) {
-            v0 = tangent(refidx, start - refidx);
-            v1 = tangent(refidx, end - refidx);
+            v0 = tangent!(refidx, start - refidx);
+            v1 = tangent!(refidx, end - refidx);
 
             segment.push([
                 p0[0] + v0[0] / 3 * range,

@@ -2,24 +2,24 @@ import hover from '../scattergl/hover.js';
 import _hover from '../scatterpolar/hover.js';
 const { makeHoverPointText } = _hover;
 
-function hoverPoints(pointData, xval, yval, hovermode) {
-    var cd = pointData.cd;
-    var stash = cd[0].t;
-    var rArray = stash.r;
-    var thetaArray = stash.theta;
+function hoverPoints(pointData: any, xval: any, yval: any, hovermode: any) {
+    const cd = pointData.cd;
+    const stash = cd[0].t;
+    const rArray = stash.r;
+    const thetaArray = stash.theta;
 
-    var scatterPointData = hover.hoverPoints(pointData, xval, yval, hovermode);
+    const scatterPointData = hover.hoverPoints(pointData, xval, yval, hovermode);
     if(!scatterPointData || scatterPointData[0].index === false) return;
 
-    var newPointData = scatterPointData[0];
+    const newPointData = scatterPointData[0];
 
     if(newPointData.index === undefined) {
         return scatterPointData;
     }
 
-    var subplot = pointData.subplot;
-    var cdi = newPointData.cd[newPointData.index];
-    var trace = newPointData.trace;
+    const subplot = pointData.subplot;
+    const cdi = newPointData.cd[newPointData.index];
+    const trace = newPointData.trace;
 
     // augment pointData with r/theta param
     cdi.r = rArray[newPointData.index];

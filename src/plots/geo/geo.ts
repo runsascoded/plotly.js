@@ -18,12 +18,12 @@ import constants from './constants.js';
 import geoUtils from '../../lib/geo_location_utils.js';
 import topojsonUtils from '../../lib/topojson_utils.js';
 import { feature as topojsonFeature } from 'topojson-client';
-declare var PlotlyGeoAssets: any;
-var geoPath = geo.geoPath;
-var geoDistance = geo.geoDistance;
-var strTranslate = Lib.strTranslate;
+declare let PlotlyGeoAssets: any;
+const geoPath = geo.geoPath;
+const geoDistance = geo.geoDistance;
+const strTranslate = Lib.strTranslate;
 
-function Geo(opts) {
+function Geo(this: any, opts: any) {
     this.id = opts.id;
     this.graphDiv = opts.graphDiv;
     this.container = opts.container;
@@ -55,50 +55,51 @@ function Geo(opts) {
     this.makeFramework();
 }
 
-var proto = Geo.prototype;
+const proto = Geo.prototype;
 
-export default function createGeo(opts) {
-    return new Geo(opts);
+export default function createGeo(opts: any) {
+    // @ts-ignore TS7009
+    return (new Geo(opts) as any);
 }
 
-proto.plot = function(geoCalcData, fullLayout, promises, replot) {
-    var _this = this;
+proto.plot = function(geoCalcData: any, fullLayout: any, promises: any, replot: any) {
+    const _this = this;
     if(replot) return _this.update(geoCalcData, fullLayout, true);
 
     _this._geoCalcData = geoCalcData;
     _this._fullLayout = fullLayout;
 
-    var geoLayout = fullLayout[this.id];
-    var geoPromises = [];
+    const geoLayout = fullLayout[this.id];
+    let geoPromises: any[] = [];
 
-    var needsTopojson = false;
-    for(var k in constants.layerNameToAdjective) {
+    let needsTopojson = false;
+    for(const k in constants.layerNameToAdjective) {
         if(k !== 'frame' && geoLayout['show' + k]) {
             needsTopojson = true;
             break;
         }
     }
 
-    var hasMarkerAngles = false;
-    for(var i = 0; i < geoCalcData.length; i++) {
-        var trace = geoCalcData[0][0].trace;
+    let hasMarkerAngles = false;
+    for(let i = 0; i < geoCalcData.length; i++) {
+        const trace = geoCalcData[0][0].trace;
         trace._geo = _this;
 
         if(trace.locationmode) {
             needsTopojson = true;
         }
 
-        var marker = trace.marker;
+        const marker = trace.marker;
         if(marker) {
-            var angle = marker.angle;
-            var angleref = marker.angleref;
+            const angle = marker.angle;
+            const angleref = marker.angleref;
             if(angle || angleref === 'north' || angleref === 'previous') hasMarkerAngles = true;
         }
     }
     this._hasMarkerAngles = hasMarkerAngles;
 
     if(needsTopojson) {
-        var topojsonNameNew = topojsonUtils.getTopojsonName(geoLayout);
+        const topojsonNameNew = topojsonUtils.getTopojsonName(geoLayout);
         if(_this.topojson === null || topojsonNameNew !== _this.topojsonName) {
             _this.topojsonName = topojsonNameNew;
 
@@ -108,7 +109,7 @@ proto.plot = function(geoCalcData, fullLayout, promises, replot) {
         }
     }
 
-    geoPromises = geoPromises.concat(geoUtils.fetchTraceGeoData(geoCalcData));
+    geoPromises = geoPromises.concat((geoUtils.fetchTraceGeoData(geoCalcData) as any));
 
     promises.push(new Promise<void>(function(resolve, reject) {
         Promise.all(geoPromises).then(function() {
@@ -121,8 +122,8 @@ proto.plot = function(geoCalcData, fullLayout, promises, replot) {
 };
 
 proto.fetchTopojson = function() {
-    var _this = this;
-    var topojsonPath = topojsonUtils.getTopojsonPath(_this.topojsonURL, _this.topojsonName);
+    const _this = this;
+    const topojsonPath = topojsonUtils.getTopojsonPath(_this.topojsonURL, _this.topojsonName);
 
     return new Promise<void>(function(resolve, reject) {
         window.fetch(topojsonPath).then(function(r) {
@@ -149,15 +150,15 @@ proto.fetchTopojson = function() {
     });
 };
 
-proto.update = function(geoCalcData, fullLayout, replot) {
-    var geoLayout = fullLayout[this.id];
+proto.update = function(geoCalcData: any, fullLayout: any, replot: any) {
+    const geoLayout = fullLayout[this.id];
 
     // important: maps with choropleth traces have a different layer order
     this.hasChoropleth = false;
 
-    for(var i = 0; i < geoCalcData.length; i++) {
-        var calcTrace = geoCalcData[i];
-        var trace = calcTrace[0].trace;
+    for(let i = 0; i < geoCalcData.length; i++) {
+        const calcTrace = geoCalcData[i];
+        const trace = calcTrace[0].trace;
 
         if(trace.type === 'choropleth') {
             this.hasChoropleth = true;
@@ -168,7 +169,7 @@ proto.update = function(geoCalcData, fullLayout, replot) {
     }
 
     if(!replot) {
-        var hasInvalidBounds = this.updateProjection(geoCalcData, fullLayout);
+        const hasInvalidBounds = this.updateProjection(geoCalcData, fullLayout);
         if(hasInvalidBounds) return;
 
         if(!this.viewInitial || this.scope !== geoLayout.scope) {
@@ -183,33 +184,33 @@ proto.update = function(geoCalcData, fullLayout, replot) {
 
     Plots.generalUpdatePerTraceModule(this.graphDiv, this, geoCalcData, geoLayout);
 
-    var scatterLayer = this.layers.frontplot.select('.scatterlayer');
+    const scatterLayer = this.layers.frontplot.select('.scatterlayer');
     this.dataPoints.point = scatterLayer.selectAll('.point');
     this.dataPoints.text = scatterLayer.selectAll('text');
     this.dataPaths.line = scatterLayer.selectAll('.js-line');
 
-    var choroplethLayer = this.layers.backplot.select('.choroplethlayer');
+    const choroplethLayer = this.layers.backplot.select('.choroplethlayer');
     this.dataPaths.choropleth = choroplethLayer.selectAll('path');
 
     this._render();
 };
 
-proto.updateProjection = function(geoCalcData, fullLayout) {
-    var gd = this.graphDiv;
-    var geoLayout = fullLayout[this.id];
-    var gs = fullLayout._size;
-    var domain = geoLayout.domain;
-    var projLayout = geoLayout.projection;
+proto.updateProjection = function(geoCalcData: any, fullLayout: any) {
+    const gd = this.graphDiv;
+    const geoLayout = fullLayout[this.id];
+    const gs = fullLayout._size;
+    const domain = geoLayout.domain;
+    const projLayout = geoLayout.projection;
 
-    var lonaxis = geoLayout.lonaxis;
-    var lataxis = geoLayout.lataxis;
-    var axLon = lonaxis._ax;
-    var axLat = lataxis._ax;
+    const lonaxis = geoLayout.lonaxis;
+    const lataxis = geoLayout.lataxis;
+    const axLon = lonaxis._ax;
+    const axLat = lataxis._ax;
 
-    var projection = this.projection = getProjection(geoLayout);
+    const projection = this.projection = getProjection(geoLayout);
 
     // setup subplot extent [[x0,y0], [x1,y1]]
-    var extent = [[
+    const extent = [[
         gs.l + gs.w * domain.x[0],
         gs.t + gs.h * (1 - domain.y[1])
     ], [
@@ -217,10 +218,10 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
         gs.t + gs.h * (1 - domain.y[0])
     ]];
 
-    var center = geoLayout.center || {};
-    var rotation = projLayout.rotation || {};
-    var lonaxisRange = lonaxis.range || [];
-    var lataxisRange = lataxis.range || [];
+    let center = geoLayout.center || {};
+    let rotation = projLayout.rotation || {};
+    let lonaxisRange = lonaxis.range || [];
+    let lataxisRange = lataxis.range || [];
 
     if(geoLayout.fitbounds) {
         axLon._length = extent[1][0] - extent[0][0];
@@ -228,8 +229,8 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
         axLon.range = getAutoRange(gd, axLon);
         axLat.range = getAutoRange(gd, axLat);
 
-        var midLon = (axLon.range[0] + axLon.range[1]) / 2;
-        var midLat = (axLat.range[0] + axLat.range[1]) / 2;
+        const midLon = (axLon.range[0] + axLon.range[1]) / 2;
+        const midLat = (axLat.range[0] + axLat.range[1]) / 2;
 
         if(geoLayout._isScoped) {
             center = {lon: midLon, lat: midLat};
@@ -237,9 +238,9 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
             center = {lon: midLon, lat: midLat};
             rotation = {lon: midLon, lat: midLat, roll: rotation.roll};
 
-            var projType = projLayout.type;
-            var lonHalfSpan = (constants.lonaxisSpan[projType] / 2) || 180;
-            var latHalfSpan = (constants.lataxisSpan[projType] / 2) || 90;
+            const projType = projLayout.type;
+            const lonHalfSpan = ((constants.lonaxisSpan as any)[projType] / 2) || 180;
+            const latHalfSpan = ((constants.lataxisSpan as any)[projType] / 2) || 90;
 
             lonaxisRange = [midLon - lonHalfSpan, midLon + lonHalfSpan];
             lataxisRange = [midLat - latHalfSpan, midLat + latHalfSpan];
@@ -256,16 +257,16 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
         .parallels(projLayout.parallels);
 
     // fit projection 'scale' and 'translate' to set lon/lat ranges
-    var rangeBox = makeRangeBox(lonaxisRange, lataxisRange);
+    const rangeBox = makeRangeBox(lonaxisRange, lataxisRange);
     projection.fitExtent(extent, rangeBox);
 
-    var b = this.bounds = projection.getBounds(rangeBox);
-    var s = this.fitScale = projection.scale();
-    var t = projection.translate();
+    const b = this.bounds = projection.getBounds(rangeBox);
+    const s = this.fitScale = projection.scale();
+    const t = projection.translate();
 
     if(geoLayout.fitbounds) {
-        var b2 = projection.getBounds(makeRangeBox(axLon.range, axLat.range));
-        var k2 = Math.min(
+        const b2 = projection.getBounds(makeRangeBox(axLon.range, axLat.range));
+        const k2 = Math.min(
             (b[1][0] - b[0][0]) / (b2[1][0] - b2[0][0]),
             (b[1][1] - b[0][1]) / (b2[1][1] - b2[0][1])
         );
@@ -282,7 +283,7 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
 
     // px coordinates of view mid-point,
     // useful to update `geo.center` after interactions
-    var midPt = this.midPt = [
+    const midPt = this.midPt = [
         (b[0][0] + b[1][0]) / 2,
         (b[0][1] + b[1][1]) / 2
     ];
@@ -294,8 +295,8 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
     // the 'albers usa' projection does not expose a 'center' method
     // so here's this hack to make it respond to 'geoLayout.center'
     if(geoLayout._isAlbersUsa) {
-        var centerPx = projection([center.lon, center.lat]);
-        var tt = projection.translate();
+        const centerPx = projection([center.lon, center.lat]);
+        const tt = projection.translate();
 
         projection.translate([
             tt[0] - (centerPx[0] - tt[0]),
@@ -304,47 +305,47 @@ proto.updateProjection = function(geoCalcData, fullLayout) {
     }
 };
 
-proto.updateBaseLayers = function(fullLayout, geoLayout) {
-    var _this = this;
-    var topojson = _this.topojson;
-    var layers = _this.layers;
-    var basePaths = _this.basePaths;
+proto.updateBaseLayers = function(fullLayout: any, geoLayout: any) {
+    const _this = this;
+    const topojson = _this.topojson;
+    const layers = _this.layers;
+    const basePaths = _this.basePaths;
 
-    function isAxisLayer(d) {
+    function isAxisLayer(d: any) {
         return (d === 'lonaxis' || d === 'lataxis');
     }
 
-    function isLineLayer(d) {
-        return Boolean(constants.lineLayers[d]);
+    function isLineLayer(d: any) {
+        return Boolean((constants.lineLayers as any)[d]);
     }
 
-    function isFillLayer(d) {
-        return Boolean(constants.fillLayers[d]);
+    function isFillLayer(d: any) {
+        return Boolean((constants.fillLayers as any)[d]);
     }
 
-    var allLayers = this.hasChoropleth ?
+    const allLayers = this.hasChoropleth ?
         constants.layersForChoropleth :
         constants.layers;
 
-    var layerData = allLayers.filter(function(d) {
+    const layerData = allLayers.filter(function(d) {
         return (isLineLayer(d) || isFillLayer(d)) ? geoLayout['show' + d] :
             isAxisLayer(d) ? geoLayout[d].showgrid :
             true;
     });
 
-    var join = _this.framework.selectAll('.layer')
+    const join = _this.framework.selectAll('.layer')
         .data(layerData, String);
 
-    join.exit().each(function(d) {
+    join.exit().each(function(this: any, d: any) {
         delete layers[d];
         delete basePaths[d];
         select(this).remove();
     });
 
-    join.enter().append('g')
-        .attr('class', function(d) { return 'layer ' + d; })
-        .each(function(d) {
-            var layer = layers[d] = select(this);
+    const joinEnter = join.enter().append('g')
+        .attr('class', function(d: any) { return 'layer ' + d; })
+        .each(function(this: any, d: any) {
+            const layer = layers[d] = select(this);
 
             if(d === 'bg') {
                 _this.bgRect = layer.append('rect')
@@ -368,11 +369,12 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
             }
         });
 
-    join.order();
+    const joinMerged = join.merge(joinEnter);
+    joinMerged.order();
 
-    join.each(function(d) {
-        var path = basePaths[d];
-        var adj = constants.layerNameToAdjective[d];
+    joinMerged.each(function(d: any) {
+        const path = basePaths[d];
+        const adj = (constants.layerNameToAdjective as any)[d];
 
         if(d === 'frame') {
             path.datum(constants.sphereSVG);
@@ -393,14 +395,14 @@ proto.updateBaseLayers = function(fullLayout, geoLayout) {
     });
 };
 
-proto.updateDims = function(fullLayout, geoLayout) {
-    var b = this.bounds;
-    var hFrameWidth = (geoLayout.framewidth || 0) / 2;
+proto.updateDims = function(fullLayout: any, geoLayout: any) {
+    const b = this.bounds;
+    const hFrameWidth = (geoLayout.framewidth || 0) / 2;
 
-    var l = b[0][0] - hFrameWidth;
-    var t = b[0][1] - hFrameWidth;
-    var w = b[1][0] - l + hFrameWidth;
-    var h = b[1][1] - t + hFrameWidth;
+    const l = b[0][0] - hFrameWidth;
+    const t = b[0][1] - hFrameWidth;
+    const w = b[1][0] - l + hFrameWidth;
+    const h = b[1][1] - t + hFrameWidth;
 
     setRect(this.clipRect, l, t, w, h);
 
@@ -415,20 +417,20 @@ proto.updateDims = function(fullLayout, geoLayout) {
     this.yaxis._length = h;
 };
 
-proto.updateFx = function(fullLayout, geoLayout) {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var bgRect = _this.bgRect;
-    var dragMode = fullLayout.dragmode;
-    var clickMode = fullLayout.clickmode;
+proto.updateFx = function(fullLayout: any, geoLayout: any) {
+    const _this = this;
+    const gd = _this.graphDiv;
+    const bgRect = _this.bgRect;
+    const dragMode = fullLayout.dragmode;
+    const clickMode = fullLayout.clickmode;
 
     if(_this.isStatic) return;
 
     function zoomReset() {
-        var viewInitial = _this.viewInitial;
-        var updateObj: any = {};
+        const viewInitial = _this.viewInitial;
+        const updateObj: any = {};
 
-        for(var k in viewInitial) {
+        for(const k in viewInitial) {
             updateObj[_this.id + '.' + k] = viewInitial[k];
         }
 
@@ -436,29 +438,29 @@ proto.updateFx = function(fullLayout, geoLayout) {
         gd.emit('plotly_doubleclick', null);
     }
 
-    function invert(lonlat) {
+    function invert(lonlat: any) {
         return _this.projection.invert([
             lonlat[0] + _this.xaxis._offset,
             lonlat[1] + _this.yaxis._offset
         ]);
     }
 
-    var fillRangeItems = function(eventData, poly) {
+    const fillRangeItems = function(eventData: any, poly: any) {
         if(poly.isRect) {
-            var ranges = eventData.range = {};
-            ranges[_this.id] = [
+            const ranges = eventData.range = {};
+            (ranges as any)[_this.id] = [
                 invert([poly.xmin, poly.ymin]),
                 invert([poly.xmax, poly.ymax])
             ];
         } else {
-            var dataPts = eventData.lassoPoints = {};
-            dataPts[_this.id] = poly.map(invert);
+            const dataPts = eventData.lassoPoints = {};
+            (dataPts as any)[_this.id] = poly.map(invert);
         }
     };
 
     // Note: dragOptions is needed to be declared for all dragmodes because
     // it's the object that holds persistent selection state.
-    var dragOptions: any = {
+    const dragOptions: any = {
         element: _this.bgRect.node(),
         gd: gd,
         plotinfo: {
@@ -470,7 +472,7 @@ proto.updateFx = function(fullLayout, geoLayout) {
         xaxes: [_this.xaxis],
         yaxes: [_this.yaxis],
         subplot: _this.id,
-        clickFn: function(numClicks) {
+        clickFn: function(numClicks: any) {
             if(numClicks === 2) {
                 clearOutline(gd);
             }
@@ -487,15 +489,15 @@ proto.updateFx = function(fullLayout, geoLayout) {
     } else if(dragMode === 'select' || dragMode === 'lasso') {
         bgRect.on('.zoom', null);
 
-        dragOptions.prepFn = function(e, startX, startY) {
+        dragOptions.prepFn = function(e: any, startX: any, startY: any) {
             prepSelect(e, startX, startY, dragOptions, dragMode);
         };
 
         dragElement.init(dragOptions);
     }
 
-    bgRect.on('mousemove', function(event) {
-        var lonlat = _this.projection.invert(Lib.getPositionFromD3Event(event));
+    bgRect.on('mousemove', function(event: any) {
+        const lonlat = _this.projection.invert(Lib.getPositionFromD3Event(event));
 
         if(!lonlat) {
             return dragElement.unhover(gd, event);
@@ -507,12 +509,12 @@ proto.updateFx = function(fullLayout, geoLayout) {
         Fx.hover(gd, event, _this.id);
     });
 
-    bgRect.on('mouseout', function(event) {
+    bgRect.on('mouseout', function(event: any) {
         if(gd._dragging) return;
         dragElement.unhover(gd, event);
     });
 
-    bgRect.on('click', function(event) {
+    bgRect.on('click', function(event: any) {
         // For select and lasso the dragElement is handling clicks
         if(dragMode !== 'select' && dragMode !== 'lasso') {
             if(clickMode.indexOf('select') > -1) {
@@ -532,10 +534,10 @@ proto.updateFx = function(fullLayout, geoLayout) {
 };
 
 proto.makeFramework = function() {
-    var _this = this;
-    var gd = _this.graphDiv;
-    var fullLayout = gd._fullLayout;
-    var clipId = 'clip' + fullLayout._uid + _this.id;
+    const _this = this;
+    const gd = _this.graphDiv;
+    const fullLayout = gd._fullLayout;
+    const clipId = 'clip' + fullLayout._uid + _this.id;
 
     _this.clipDef = fullLayout._clips.append('clipPath')
         .attr('id', clipId);
@@ -547,8 +549,8 @@ proto.makeFramework = function() {
         .call(setClipUrl, clipId, gd);
 
     // sane lonlat to px
-    _this.project = function(v) {
-        var px = _this.projection(v);
+    _this.project = function(v: any) {
+        const px = _this.projection(v);
         return px ?
             [px[0] - _this.xaxis._offset, px[1] - _this.yaxis._offset] :
             [null, null];
@@ -556,12 +558,12 @@ proto.makeFramework = function() {
 
     _this.xaxis = {
         _id: 'x',
-        c2p: function(v) { return _this.project(v)[0]; }
+        c2p: function(v: any) { return _this.project(v)[0]; }
     };
 
     _this.yaxis = {
         _id: 'y',
-        c2p: function(v) { return _this.project(v)[1]; }
+        c2p: function(v: any) { return _this.project(v)[1]; }
     };
 
     // mock axis for hover formatting
@@ -573,17 +575,17 @@ proto.makeFramework = function() {
     Axes.setConvert(_this.mockAxis, fullLayout);
 };
 
-proto.saveViewInitial = function(geoLayout) {
-    var center = geoLayout.center || {};
-    var projLayout = geoLayout.projection;
-    var rotation = projLayout.rotation || {};
+proto.saveViewInitial = function(geoLayout: any) {
+    const center = geoLayout.center || {};
+    const projLayout = geoLayout.projection;
+    const rotation = projLayout.rotation || {};
 
     this.viewInitial = {
         fitbounds: geoLayout.fitbounds,
         'projection.scale': projLayout.scale
     };
 
-    var extra;
+    let extra;
     if(geoLayout._isScoped) {
         extra = {
             'center.lon': center.lon,
@@ -605,7 +607,7 @@ proto.saveViewInitial = function(geoLayout) {
     Lib.extendFlat(this.viewInitial, extra);
 };
 
-proto.render = function(mayRedrawOnUpdates) {
+proto.render = function(mayRedrawOnUpdates: any) {
     if(this._hasMarkerAngles && mayRedrawOnUpdates) {
         this.plot(this._geoCalcData, this._fullLayout, [], true);
     } else {
@@ -615,18 +617,18 @@ proto.render = function(mayRedrawOnUpdates) {
 
 // [hot code path] (re)draw all paths which depend on the projection
 proto._render = function() {
-    var projection = this.projection;
-    var pathFn = projection.getPath();
-    var k;
+    const projection = this.projection;
+    const pathFn = projection.getPath();
+    let k;
 
-    function translatePoints(d) {
-        var lonlatPx = projection(d.lonlat);
+    function translatePoints(d: any) {
+        const lonlatPx = projection(d.lonlat);
         return lonlatPx ?
             strTranslate(lonlatPx[0], lonlatPx[1]) :
              null;
     }
 
-    function hideShowPoints(d) {
+    function hideShowPoints(d: any) {
         return projection.isLonLatOverEdges(d.lonlat) ? 'none' : null;
     }
 
@@ -635,7 +637,7 @@ proto._render = function() {
     }
 
     for(k in this.dataPaths) {
-        this.dataPaths[k].attr('d', function(d) { return pathFn(d.geojson); });
+        this.dataPaths[k].attr('d', function(d: any) { return pathFn(d.geojson); });
     }
 
     for(k in this.dataPoints) {
@@ -655,39 +657,39 @@ proto._render = function() {
 //   on the projection type to a dummy 'd3-esque' function,
 //
 // This wrapper alleviates subsequent code of (many) annoying if-statements.
-function getProjection(geoLayout) {
-    var projLayout = geoLayout.projection;
-    var projType = projLayout.type;
+function getProjection(geoLayout: any) {
+    const projLayout = geoLayout.projection;
+    const projType = projLayout.type;
 
-    var projName = constants.projNames[projType];
+    let projName = (constants.projNames as any)[projType];
     // uppercase the first letter and add geo to the start of method name
     projName = 'geo' + Lib.titleCase(projName);
-    var projFn = geo[projName] || geoProjection[projName];
-    var projection = projFn();
+    const projFn = geo[projName] || geoProjection[projName];
+    const projection = projFn();
 
-    var clipAngle =
+    const clipAngle =
         geoLayout._isSatellite ? Math.acos(1 / projLayout.distance) * 180 / Math.PI :
-        geoLayout._isClipped ? constants.lonaxisSpan[projType] / 2 : null;
+        geoLayout._isClipped ? (constants.lonaxisSpan as any)[projType] / 2 : null;
 
-    var methods = ['center', 'rotate', 'parallels', 'clipExtent'];
-    var dummyFn = function(_) { return _ ? projection : []; };
+    const methods = ['center', 'rotate', 'parallels', 'clipExtent'];
+    const dummyFn = function(_: any) { return _ ? projection : []; };
 
-    for(var i = 0; i < methods.length; i++) {
-        var m = methods[i];
+    for(let i = 0; i < methods.length; i++) {
+        const m = methods[i];
         if(typeof projection[m] !== 'function') {
             projection[m] = dummyFn;
         }
     }
 
-    projection.isLonLatOverEdges = function(lonlat) {
+    projection.isLonLatOverEdges = function(lonlat: any) {
         if(projection(lonlat) === null) {
             return true;
         }
 
         if(clipAngle) {
-            var r = projection.rotate();
-            var angle = geoDistance(lonlat, [-r[0], -r[1]]);
-            var maxAngle = clipAngle * Math.PI / 180;
+            const r = projection.rotate();
+            const angle = geoDistance(lonlat, [-r[0], -r[1]]);
+            const maxAngle = clipAngle * Math.PI / 180;
             return angle > maxAngle;
         } else {
             return false;
@@ -698,7 +700,7 @@ function getProjection(geoLayout) {
         return geoPath().projection(projection);
     };
 
-    projection.getBounds = function(object) {
+    projection.getBounds = function(object: any) {
         return projection.getPath().bounds(object);
     };
 
@@ -715,29 +717,29 @@ function getProjection(geoLayout) {
     return projection;
 }
 
-function makeGraticule(axisName, geoLayout, fullLayout) {
+function makeGraticule(axisName: any, geoLayout: any, fullLayout: any) {
     // equivalent to the d3 "ε"
-    var epsilon = 1e-6;
+    const epsilon = 1e-6;
     // same as the geoGraticule default
-    var precision = 2.5;
+    const precision = 2.5;
 
-    var axLayout = geoLayout[axisName];
-    var scopeDefaults = constants.scopeDefaults[geoLayout.scope];
-    var rng;
-    var oppRng;
-    var coordFn;
+    const axLayout = geoLayout[axisName];
+    const scopeDefaults = (constants.scopeDefaults as any)[geoLayout.scope];
+    let rng;
+    let oppRng;
+    let coordFn;
 
     if(axisName === 'lonaxis') {
         rng = scopeDefaults.lonaxisRange;
         oppRng = scopeDefaults.lataxisRange;
-        coordFn = function(v, l) { return [v, l]; };
+        coordFn = function(v: any, l: any) { return [v, l]; };
     } else if(axisName === 'lataxis') {
         rng = scopeDefaults.lataxisRange;
         oppRng = scopeDefaults.lonaxisRange;
-        coordFn = function(v, l) { return [l, v]; };
+        coordFn = function(v: any, l: any) { return [l, v]; };
     }
 
-    var dummyAx = {
+    const dummyAx = {
         type: 'linear',
         range: [rng[0], rng[1] - epsilon],
         tick0: axLayout.tick0,
@@ -745,21 +747,21 @@ function makeGraticule(axisName, geoLayout, fullLayout) {
     };
 
     Axes.setConvert(dummyAx, fullLayout);
-    var vals = Axes.calcTicks(dummyAx);
+    const vals = Axes.calcTicks(dummyAx);
 
     // remove duplicate on antimeridian
     if(!geoLayout.isScoped && axisName === 'lonaxis') {
         vals.pop();
     }
 
-    var len = vals.length;
-    var coords = new Array(len);
+    const len = vals.length;
+    const coords = new Array(len);
 
-    for(var i = 0; i < len; i++) {
-        var v = vals[i].x;
-        var line = coords[i] = [];
-        for(var l = oppRng[0]; l < oppRng[1] + precision; l += precision) {
-            line.push(coordFn(v, l));
+    for(let i = 0; i < len; i++) {
+        const v = vals[i].x;
+        const line = coords[i] = [] as any[];
+        for(let l = oppRng[0]; l < oppRng[1] + precision; l += precision) {
+            line.push((coordFn!(v, l) as any));
         }
     }
 
@@ -773,17 +775,17 @@ function makeGraticule(axisName, geoLayout, fullLayout) {
 // with well-defined direction
 //
 // Note that clipPad padding is added around range to avoid aliasing.
-function makeRangeBox(lon, lat) {
-    var clipPad = constants.clipPad;
-    var lon0 = lon[0] + clipPad;
-    var lon1 = lon[1] - clipPad;
-    var lat0 = lat[0] + clipPad;
-    var lat1 = lat[1] - clipPad;
+function makeRangeBox(lon: any, lat: any) {
+    const clipPad = constants.clipPad;
+    const lon0 = lon[0] + clipPad;
+    let lon1 = lon[1] - clipPad;
+    const lat0 = lat[0] + clipPad;
+    const lat1 = lat[1] - clipPad;
 
     // to cross antimeridian w/o ambiguity
     if(lon0 > 0 && lon1 < 0) lon1 += 360;
 
-    var dlon4 = (lon1 - lon0) / 4;
+    const dlon4 = (lon1 - lon0) / 4;
 
     return {
         type: 'Polygon',

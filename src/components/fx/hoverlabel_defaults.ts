@@ -5,7 +5,7 @@ import { isUnifiedHover } from './helpers.js';
 export default function handleHoverLabelDefaults(contIn: any, contOut: any, coerce: (attr: string, dflt?: any) => any, opts?: any): void {
     opts = opts || {};
 
-    var hasLegend = contOut.legend;
+    const hasLegend = contOut.legend;
 
     function inheritFontAttr(attr: string): void {
         if(!opts.font[attr]) {

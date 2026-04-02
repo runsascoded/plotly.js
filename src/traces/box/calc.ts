@@ -5,22 +5,22 @@ import alignPeriod from '../../plots/cartesian/align_period.js';
 import Lib from '../../lib/index.js';
 import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
-var _ = Lib._;
+const _ = Lib._;
 
 export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    var fullLayout = gd._fullLayout;
-    var xa = Axes.getFromId(gd, trace.xaxis || 'x');
-    var ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    var cd = [];
+    const fullLayout = gd._fullLayout;
+    const xa = Axes.getFromId(gd, trace.xaxis || 'x');
+    const ya = Axes.getFromId(gd, trace.yaxis || 'y');
+    const cd: any[] = [];
 
     // N.B. violin reuses same Box.calc
-    var numKey = trace.type === 'violin' ? '_numViolins' : '_numBoxes';
+    const numKey = trace.type === 'violin' ? '_numViolins' : '_numBoxes';
 
-    var i, j;
-    var valAxis, valLetter;
-    var posAxis, posLetter;
+    let i: any, j;
+    let valAxis, valLetter;
+    let posAxis, posLetter;
 
-    var hasPeriod;
+    let hasPeriod;
     if(trace.orientation === 'h') {
         valAxis = xa;
         valLetter = 'x';
@@ -35,40 +35,40 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
         hasPeriod = !!trace.xperiodalignment;
     }
 
-    var allPosArrays = getPosArrays(trace, posLetter, posAxis, fullLayout[numKey]);
-    var posArray = allPosArrays[0];
-    var origPos = allPosArrays[1];
-    var dv = Lib.distinctVals(posArray, posAxis);
-    var posDistinct = dv.vals;
-    var dPos = dv.minDiff / 2;
+    const allPosArrays = getPosArrays(trace, posLetter, posAxis, fullLayout[numKey]);
+    const posArray = allPosArrays[0];
+    const origPos = allPosArrays[1];
+    const dv = Lib.distinctVals(posArray, posAxis);
+    const posDistinct = dv.vals;
+    const dPos = dv.minDiff / 2;
 
     // item in trace calcdata
-    var cdi;
+    let cdi: any;
     // array of {v: v, i, i} sample pts
-    var pts;
+    let pts;
     // values of the `pts` array of objects
-    var boxVals;
+    let boxVals;
     // length of sample
-    var N;
+    let N;
     // single sample point
-    var pt;
+    let pt;
     // single sample value
-    var v;
+    let v;
 
     // filter function for outlier pts
     // outlier definition based on http://www.physics.csbsju.edu/stats/box2.html
-    var ptFilterFn = (trace.boxpoints || trace.points) === 'all' ?
+    const ptFilterFn = (trace.boxpoints || trace.points) === 'all' ?
         Lib.identity :
-        function(pt) { return (pt.v < cdi.lf || pt.v > cdi.uf); };
+        function(pt: any) { return (pt.v < cdi.lf || pt.v > cdi.uf); };
 
     if(trace._hasPreCompStats) {
-        var valArrayRaw = trace[valLetter];
-        var d2c = function(k) { return valAxis.d2c((trace[k] || [])[i]); };
-        var minVal = Infinity;
-        var maxVal = -Infinity;
+        const valArrayRaw = trace[valLetter];
+        const d2c = function(k: any) { return valAxis.d2c((trace[k] || [])[i]); };
+        let minVal = Infinity;
+        let maxVal = -Infinity;
 
         for(i = 0; i < trace._length; i++) {
-            var posi = posArray[i];
+            const posi = posArray[i];
             if(!isNumeric(posi)) continue;
 
             cdi = {};
@@ -99,22 +99,22 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
             if(cdi.med !== BADNUM && cdi.q1 !== BADNUM && cdi.q3 !== BADNUM &&
                 cdi.med >= cdi.q1 && cdi.q3 >= cdi.med
             ) {
-                var lf = d2c('lowerfence');
+                const lf = d2c('lowerfence');
                 cdi.lf = (lf !== BADNUM && lf <= cdi.q1) ?
                     lf :
                     computeLowerFence(cdi, boxVals, N);
 
-                var uf = d2c('upperfence');
+                const uf = d2c('upperfence');
                 cdi.uf = (uf !== BADNUM && uf >= cdi.q3) ?
                     uf :
                     computeUpperFence(cdi, boxVals, N);
 
-                var mean = d2c('mean');
+                const mean = d2c('mean');
                 cdi.mean = (mean !== BADNUM) ?
                     mean :
                     (N ? Lib.mean(boxVals, N) : (cdi.q1 + cdi.q3) / 2);
 
-                var sd = d2c('sd');
+                const sd = d2c('sd');
                 cdi.sd = (mean !== BADNUM && sd >= 0) ?
                     sd :
                     (N ? Lib.stdev(boxVals, N, cdi.mean) : (cdi.q3 - cdi.q1));
@@ -122,13 +122,13 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
                 cdi.lo = computeLowerOutlierBound(cdi);
                 cdi.uo = computeUpperOutlierBound(cdi);
 
-                var ns = d2c('notchspan');
+                let ns = d2c('notchspan');
                 ns = (ns !== BADNUM && ns > 0) ? ns : computeNotchSpan(cdi, N);
                 cdi.ln = cdi.med - ns;
                 cdi.un = cdi.med + ns;
 
-                var imin = cdi.lf;
-                var imax = cdi.uf;
+                let imin = cdi.lf;
+                let imax = cdi.uf;
                 if(trace.boxpoints && boxVals.length) {
                     imin = Math.min(imin, boxVals[0]);
                     imax = Math.max(imax, boxVals[N - 1]);
@@ -147,7 +147,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
                     'q3 = ' + cdi.q3
                 ].join('\n'));
 
-                var v0;
+                let v0;
                 if(cdi.med !== BADNUM) {
                     v0 = cdi.med;
                 } else if(cdi.q1 !== BADNUM) {
@@ -181,17 +181,17 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
             {padded: true}
         );
     } else {
-        var valArray = valAxis.makeCalcdata(trace, valLetter);
-        var posBins = makeBins(posDistinct, dPos);
-        var pLen = posDistinct.length;
-        var ptsPerBin = initNestedArray(pLen);
+        let valArray = valAxis.makeCalcdata(trace, valLetter);
+        const posBins = makeBins(posDistinct, dPos);
+        const pLen = posDistinct.length;
+        const ptsPerBin = initNestedArray(pLen);
 
         // bin pts info per position bins
         for(i = 0; i < trace._length; i++) {
             v = valArray[i];
             if(!isNumeric(v)) continue;
 
-            var n = Lib.findBin(posArray[i], posBins);
+            const n = Lib.findBin(posArray[i], posBins);
             if(n >= 0 && n < pLen) {
                 pt = {v: v, i: i};
                 arraysToCalcdata(pt, trace, i);
@@ -199,12 +199,12 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
             }
         }
 
-        var minLowerNotch = Infinity;
-        var maxUpperNotch = -Infinity;
+        let minLowerNotch = Infinity;
+        let maxUpperNotch = -Infinity;
 
-        var quartilemethod = trace.quartilemethod;
-        var usesExclusive = quartilemethod === 'exclusive';
-        var usesInclusive = quartilemethod === 'inclusive';
+        const quartilemethod = trace.quartilemethod;
+        const usesExclusive = quartilemethod === 'exclusive';
+        const usesInclusive = quartilemethod === 'inclusive';
 
         // build calcdata trace items, one item per distinct position
         for(i = 0; i < pLen; i++) {
@@ -223,8 +223,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
                 cdi.med = Lib.interp(boxVals, 0.5);
 
                 if((N % 2) && (usesExclusive || usesInclusive)) {
-                    var lower;
-                    var upper;
+                    let lower;
+                    let upper;
 
                     if(usesExclusive) {
                         // do NOT include the median in either half
@@ -252,7 +252,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
                 cdi.uo = computeUpperOutlierBound(cdi);
 
                 // lower and upper notches
-                var mci = computeNotchSpan(cdi, N);
+                const mci = computeNotchSpan(cdi, N);
                 cdi.ln = cdi.med - mci;
                 cdi.un = cdi.med + mci;
                 minLowerNotch = Math.min(minLowerNotch, cdi.ln);
@@ -274,7 +274,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     calcSelection(cd, trace);
 
     if(cd.length > 0) {
-        cd[0].t = {
+        (cd[0] as any).t = {
             num: fullLayout[numKey],
             dPos: dPos,
             posLetter: posLetter,
@@ -306,17 +306,17 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
 // per trace, set x0 (y0) to the x (y) value or category for this trace
 // (or set x (y) to a constant array matching y (x))
 function getPosArrays(trace: FullTrace, posLetter: string, posAxis: FullAxis, num: number): any[] {
-    var hasPosArray = posLetter in trace;
-    var hasPos0 = posLetter + '0' in trace;
-    var hasPosStep = 'd' + posLetter in trace;
+    const hasPosArray = posLetter in trace;
+    const hasPos0 = posLetter + '0' in trace;
+    const hasPosStep = 'd' + posLetter in trace;
 
     if(hasPosArray || (hasPos0 && hasPosStep)) {
-        var origPos = posAxis.makeCalcdata(trace, posLetter);
-        var pos = alignPeriod(trace, posAxis, posLetter, origPos).vals;
+        const origPos = posAxis.makeCalcdata(trace, posLetter);
+        const pos = alignPeriod(trace, posAxis, posLetter, origPos).vals;
         return [pos, origPos];
     }
 
-    var pos0;
+    let pos0;
     if(hasPos0) {
         pos0 = trace[posLetter + '0'];
     } else if('name' in trace && (
@@ -333,22 +333,22 @@ function getPosArrays(trace: FullTrace, posLetter: string, posAxis: FullAxis, nu
         pos0 = num;
     }
 
-    var pos0c = posAxis.type === 'multicategory' ?
+    const pos0c = posAxis.type === 'multicategory' ?
         posAxis.r2c_just_indices(pos0) :
         posAxis.d2c(pos0, 0, trace[posLetter + 'calendar']);
 
-    var len = trace._length;
-    var out = new Array(len);
-    for(var i = 0; i < len; i++) out[i] = pos0c;
+    const len = trace._length;
+    const out = new Array(len);
+    for(let i = 0; i < len; i++) out[i] = pos0c;
 
     return [out];
 }
 
 function makeBins(x: number[], dx: number): number[] {
-    var len = x.length;
-    var bins = new Array(len + 1);
+    const len = x.length;
+    const bins = new Array(len + 1);
 
-    for(var i = 0; i < len; i++) {
+    for(let i = 0; i < len; i++) {
         bins[i] = x[i] - dx;
     }
     bins[len] = x[len - 1] + dx;
@@ -357,20 +357,20 @@ function makeBins(x: number[], dx: number): number[] {
 }
 
 function initNestedArray(len: number): any[][] {
-    var arr = new Array(len);
-    for(var i = 0; i < len; i++) {
+    const arr = new Array(len);
+    for(let i = 0; i < len; i++) {
         arr[i] = [];
     }
     return arr;
 }
 
-var TRACE_TO_CALC: any = {
+const TRACE_TO_CALC: any = {
     text: 'tx',
     hovertext: 'htx'
 };
 
 function arraysToCalcdata(pt: any, trace: FullTrace, ptNumber: number | number[]): void {
-    for(var k in TRACE_TO_CALC) {
+    for(const k in TRACE_TO_CALC) {
         if(Lib.isArrayOrTypedArray(trace[k])) {
             if(Array.isArray(ptNumber)) {
                 if(Lib.isArrayOrTypedArray(trace[k][ptNumber[0]])) {
@@ -385,11 +385,11 @@ function arraysToCalcdata(pt: any, trace: FullTrace, ptNumber: number | number[]
 
 function calcSelection(cd: any[], trace: FullTrace): void {
     if(Lib.isArrayOrTypedArray(trace.selectedpoints)) {
-        for(var i = 0; i < cd.length; i++) {
-            var pts = cd[i].pts || [];
-            var ptNumber2cdIndex: any = {};
+        for(let i = 0; i < cd.length; i++) {
+            const pts = cd[i].pts || [];
+            const ptNumber2cdIndex: any = {};
 
-            for(var j = 0; j < pts.length; j++) {
+            for(let j = 0; j < pts.length; j++) {
                 ptNumber2cdIndex[pts[j].i] = j;
             }
 

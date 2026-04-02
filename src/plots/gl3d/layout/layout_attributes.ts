@@ -4,7 +4,7 @@ import { extendFlat } from '../../../lib/extend.js';
 import _index from '../../../lib/index.js';
 const { counterRegex } = _index;
 
-function makeCameraVector(x, y, z) {
+function makeCameraVector(x: any, y: any, z: any) {
     return {
         x: {
             valType: 'number',

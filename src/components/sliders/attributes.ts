@@ -7,7 +7,7 @@ import animationAttrs from '../../plots/animation_attributes.js';
 import { templatedArray } from '../../plot_api/plot_template.js';
 import constants from './constants.js';
 
-var stepsAttrs = templatedArray('step', {
+const stepsAttrs = templatedArray('step', {
     visible: {
         valType: 'boolean',
         dflt: true,

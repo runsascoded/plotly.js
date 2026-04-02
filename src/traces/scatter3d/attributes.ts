@@ -12,11 +12,11 @@ import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 import sortObjectKeys from '../../lib/sort_object_keys.js';
 
-var scatterLineAttrs = scatterAttrs.line;
-var scatterMarkerAttrs = scatterAttrs.marker;
-var scatterMarkerLineAttrs = scatterMarkerAttrs.line;
+const scatterLineAttrs = scatterAttrs.line;
+const scatterMarkerAttrs = scatterAttrs.marker;
+const scatterMarkerLineAttrs = scatterMarkerAttrs.line;
 
-var lineAttrs = extendFlat(
+const lineAttrs = extendFlat(
     {
         width: scatterLineAttrs.width,
         dash: {
@@ -29,7 +29,7 @@ var lineAttrs = extendFlat(
     colorAttributes('line')
 );
 
-function makeProjectionAttr(axLetter) {
+function makeProjectionAttr(axLetter: any) {
     return {
         show: {
             valType: 'boolean',
@@ -53,7 +53,7 @@ function makeProjectionAttr(axLetter) {
     };
 }
 
-var attrs = overrideAll(
+const attrs = overrideAll(
     {
         x: scatterAttrs.x,
         y: scatterAttrs.y,

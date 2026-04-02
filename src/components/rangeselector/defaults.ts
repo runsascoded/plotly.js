@@ -6,22 +6,22 @@ import attributes from './attributes.js';
 import constants from './constants.js';
 
 export default function handleDefaults(containerIn: any, containerOut: any, layout: any, counterAxes: any, calendar: any) {
-    var selectorIn = containerIn.rangeselector || {};
-    var selectorOut = Template.newContainer(containerOut, 'rangeselector');
+    const selectorIn = containerIn.rangeselector || {};
+    const selectorOut = Template.newContainer(containerOut, 'rangeselector');
 
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(selectorIn, selectorOut, attributes, attr, dflt);
     }
 
-    var buttons = handleArrayContainerDefaults(selectorIn, selectorOut, {
+    const buttons = handleArrayContainerDefaults(selectorIn, selectorOut, {
         name: 'buttons',
         handleItemDefaults: buttonDefaults,
         calendar: calendar
     });
 
-    var visible = coerce('visible', buttons.length > 0);
+    const visible = coerce('visible', buttons.length > 0);
     if(visible) {
-        var posDflt = getPosDflt(containerOut, layout, counterAxes);
+        const posDflt = getPosDflt(containerOut, layout, counterAxes);
         coerce('x', posDflt[0]);
         coerce('y', posDflt[1]);
         Lib.noneOrAll(containerIn, containerOut, ['x', 'y']);
@@ -31,7 +31,7 @@ export default function handleDefaults(containerIn: any, containerOut: any, layo
 
         Lib.coerceFont(coerce, 'font', layout.font);
 
-        var bgColor = coerce('bgcolor');
+        const bgColor = coerce('bgcolor');
         coerce('activecolor', Color.contrast(bgColor, constants.lightAmount, constants.darkAmount));
         coerce('bordercolor');
         coerce('borderwidth');
@@ -39,16 +39,16 @@ export default function handleDefaults(containerIn: any, containerOut: any, layo
 }
 
 function buttonDefaults(buttonIn: any, buttonOut: any, selectorOut: any, opts: any) {
-    var calendar = opts.calendar;
+    const calendar = opts.calendar;
 
     function coerce(attr: any, dflt?: any) {
         return Lib.coerce(buttonIn, buttonOut, attributes.buttons, attr, dflt);
     }
 
-    var visible = coerce('visible');
+    const visible = coerce('visible');
 
     if(visible) {
-        var step = coerce('step');
+        const step = coerce('step');
         if(step !== 'all') {
             if(calendar && calendar !== 'gregorian' && (step === 'month' || step === 'year')) {
                 buttonOut.stepmode = 'backward';
@@ -64,13 +64,13 @@ function buttonDefaults(buttonIn: any, buttonOut: any, selectorOut: any, opts: a
 }
 
 function getPosDflt(containerOut: any, layout: any, counterAxes: any) {
-    var anchoredList = counterAxes.filter(function(ax: string) {
+    const anchoredList = counterAxes.filter(function(ax: string) {
         return layout[ax].anchor === containerOut._id;
     });
 
-    var posY = 0;
-    for(var i = 0; i < anchoredList.length; i++) {
-        var domain = layout[anchoredList[i]].domain;
+    let posY = 0;
+    for(let i = 0; i < anchoredList.length; i++) {
+        const domain = layout[anchoredList[i]].domain;
         if(domain) posY = Math.max(domain[1], posY);
     }
 

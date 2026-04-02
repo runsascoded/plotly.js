@@ -10,7 +10,7 @@ import handleLineGridDefaults from '../cartesian/line_grid_defaults.js';
 import layoutAttributes from './layout_attributes.js';
 import type { FullLayout, FullTrace } from '../../../types/core';
 
-var axesNames = ['aaxis', 'baxis', 'caxis'];
+const axesNames = ['aaxis', 'baxis', 'caxis'];
 
 export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayout, fullData: FullTrace[]) {
     handleSubplotDefaults(layoutIn, layoutOut, fullData, {
@@ -22,16 +22,16 @@ export default function supplyLayoutDefaults(layoutIn: any, layoutOut: FullLayou
     });
 }
 
-function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, options) {
-    var bgColor = coerce('bgcolor');
-    var sum = coerce('sum');
+function handleTernaryDefaults(ternaryLayoutIn: any, ternaryLayoutOut: any, coerce: any, options: any) {
+    const bgColor = coerce('bgcolor');
+    const sum = coerce('sum');
     options.bgColor = Color.combine(bgColor, options.paper_bgcolor);
-    var axName, containerIn, containerOut;
+    let axName, containerIn, containerOut;
 
     // TODO: allow most (if not all) axis attributes to be set
     // in the outer container and used as defaults in the individual axes?
 
-    for(var j = 0; j < axesNames.length; j++) {
+    for(let j = 0; j < axesNames.length; j++) {
         axName = axesNames[j];
         containerIn = ternaryLayoutIn[axName] || {};
         containerOut = Template.newContainer(ternaryLayoutOut, axName);
@@ -43,9 +43,9 @@ function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, option
     // if the min values contradict each other, set them all to default (0)
     // and delete *all* the inputs so the user doesn't get confused later by
     // changing one and having them all change.
-    var aaxis = ternaryLayoutOut.aaxis;
-    var baxis = ternaryLayoutOut.baxis;
-    var caxis = ternaryLayoutOut.caxis;
+    const aaxis = ternaryLayoutOut.aaxis;
+    const baxis = ternaryLayoutOut.baxis;
+    const caxis = ternaryLayoutOut.caxis;
     if(aaxis.min + baxis.min + caxis.min >= sum) {
         aaxis.min = 0;
         baxis.min = 0;
@@ -56,8 +56,8 @@ function handleTernaryDefaults(ternaryLayoutIn, ternaryLayoutOut, coerce, option
     }
 }
 
-function handleAxisDefaults(containerIn, containerOut, options, ternaryLayoutOut) {
-    var axAttrs = layoutAttributes[containerOut._name];
+function handleAxisDefaults(containerIn: any, containerOut: any, options: any, ternaryLayoutOut: any) {
+    const axAttrs = layoutAttributes[containerOut._name];
 
     function coerce(attr: string, dflt?: any) {
         return Lib.coerce(containerIn, containerOut, axAttrs, attr, dflt);
@@ -67,16 +67,16 @@ function handleAxisDefaults(containerIn, containerOut, options, ternaryLayoutOut
 
     containerOut.type = 'linear'; // no other types allowed for ternary
 
-    var dfltColor = coerce('color');
+    const dfltColor = coerce('color');
     // if axis.color was provided, use it for fonts too; otherwise,
     // inherit from global font color in case that was provided.
-    var dfltFontColor = (dfltColor !== axAttrs.color.dflt) ? dfltColor : options.font.color;
+    const dfltFontColor = (dfltColor !== axAttrs.color.dflt) ? dfltColor : options.font.color;
 
-    var axName = containerOut._name;
-    var letterUpper = axName.charAt(0).toUpperCase();
-    var dfltTitle = 'Component ' + letterUpper;
+    const axName = containerOut._name;
+    const letterUpper = axName.charAt(0).toUpperCase();
+    const dfltTitle = 'Component ' + letterUpper;
 
-    var title = coerce('title.text', dfltTitle);
+    const title = coerce('title.text', dfltTitle);
     containerOut._hovertitle = title === dfltTitle ? title : letterUpper;
 
     Lib.coerceFont(coerce, 'title.font', options.font, { overrideDflt: {
@@ -97,7 +97,7 @@ function handleAxisDefaults(containerIn, containerOut, options, ternaryLayoutOut
     handleTickMarkDefaults(containerIn, containerOut, coerce,
         { outerTicks: true });
 
-    var showTickLabels = coerce('showticklabels');
+    const showTickLabels = coerce('showticklabels');
     if(showTickLabels) {
         Lib.coerceFont(coerce, 'tickfont', options.font, { overrideDflt: {
             color: dfltFontColor

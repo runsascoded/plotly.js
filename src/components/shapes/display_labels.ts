@@ -8,7 +8,7 @@ import helpers from './helpers.js';
 import shapeLabelTexttemplateVars from './label_texttemplate.js';
 import _alignment from '../../constants/alignment.js';
 const { FROM_TL } = _alignment;
-var getPathString = helpers.getPathString;
+const getPathString = helpers.getPathString;
 
 export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeGroup: any) {
     // Remove existing label
@@ -18,14 +18,14 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
     if (!(options.label.text || options.label.texttemplate)) return;
 
     // Text template overrides text
-    var text;
+    let text;
     if (options.label.texttemplate) {
-        var templateValues: any = {};
+        const templateValues: any = {};
         if (options.type !== 'path') {
-            var _xa = Axes.getFromId(gd, options.xref);
-            var _ya = Axes.getFromId(gd, options.yref);
-            for (var key in shapeLabelTexttemplateVars) {
-                var val = shapeLabelTexttemplateVars[key](options, _xa, _ya);
+            const _xa = Axes.getFromId(gd, options.xref);
+            const _ya = Axes.getFromId(gd, options.yref);
+            for (const key in shapeLabelTexttemplateVars) {
+                const val = (shapeLabelTexttemplateVars as any)[key](options, _xa, _ya);
                 if (val !== undefined) templateValues[key] = val;
             }
         }
@@ -39,35 +39,28 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
         text = options.label.text;
     }
 
-    var labelGroupAttrs = {
-        'data-index': index
-    };
-    var font = options.label.font;
+    const font = options.label.font;
 
-    var labelTextAttrs = {
-        'data-notex': 1
-    };
-
-    var labelGroup = shapeGroup.append('g').attr(labelGroupAttrs).classed('shape-label', true);
-    var labelText = labelGroup.append('text').attr(labelTextAttrs).classed('shape-label-text', true).text(text);
+    const labelGroup = shapeGroup.append('g').attr('data-index', index).classed('shape-label', true);
+    const labelText = labelGroup.append('text').attr('data-notex', 1).classed('shape-label-text', true).text(text);
 
     // Get x and y bounds of shape
-    var shapex0, shapex1, shapey0, shapey1;
+    let shapex0, shapex1, shapey0, shapey1;
     if (options.path) {
         // If shape is defined as a path, get the
         // min and max bounds across all polygons in path
-        var d = getPathString(gd, options);
-        var polygons = readPaths(d, gd);
+        const d = getPathString(gd, options);
+        const polygons = readPaths(d, gd);
         shapex0 = Infinity;
         shapey0 = Infinity;
         shapex1 = -Infinity;
         shapey1 = -Infinity;
-        for (var i = 0; i < polygons.length; i++) {
-            for (var j = 0; j < polygons[i].length; j++) {
-                var p = polygons[i][j];
-                for (var k = 1; k < p.length; k += 2) {
-                    var _x = p[k];
-                    var _y = p[k + 1];
+        for (let i = 0; i < polygons.length; i++) {
+            for (let j = 0; j < (polygons[i] as any).length; j++) {
+                const p = polygons[i][j];
+                for (let k = 1; k < (p as any).length; k += 2) {
+                    const _x = p[k];
+                    const _y = p[k + 1];
 
                     shapex0 = Math.min(shapex0, _x);
                     shapex1 = Math.max(shapex1, _x);
@@ -80,20 +73,20 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
         // Otherwise, we use the x and y bounds defined in the shape options
         // and convert them to pixel coordinates
         // Setup conversion functions
-        var xa = Axes.getFromId(gd, options.xref);
-        var xShiftStart = options.x0shift;
-        var xShiftEnd = options.x1shift;
-        var xRefType = Axes.getRefType(options.xref);
-        var ya = Axes.getFromId(gd, options.yref);
-        var yShiftStart = options.y0shift;
-        var yShiftEnd = options.y1shift;
-        var yRefType = Axes.getRefType(options.yref);
-        var x2p = function (v: any, shift: any) {
-            var dataToPixel = helpers.getDataToPixel(gd, xa, shift, false, xRefType);
+        const xa = Axes.getFromId(gd, options.xref);
+        const xShiftStart = options.x0shift;
+        const xShiftEnd = options.x1shift;
+        const xRefType = Axes.getRefType(options.xref);
+        const ya = Axes.getFromId(gd, options.yref);
+        const yShiftStart = options.y0shift;
+        const yShiftEnd = options.y1shift;
+        const yRefType = Axes.getRefType(options.yref);
+        const x2p = function (v: any, shift: any) {
+            const dataToPixel = helpers.getDataToPixel(gd, xa, shift, false, xRefType);
             return dataToPixel(v);
         };
-        var y2p = function (v: any, shift: any) {
-            var dataToPixel = helpers.getDataToPixel(gd, ya, shift, true, yRefType);
+        const y2p = function (v: any, shift: any) {
+            const dataToPixel = helpers.getDataToPixel(gd, ya, shift, true, yRefType);
             return dataToPixel(v);
         };
         shapex0 = x2p(options.x0, xShiftStart);
@@ -103,7 +96,7 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
     }
 
     // Handle `auto` angle
-    var textangle = options.label.textangle;
+    let textangle = options.label.textangle;
     if (textangle === 'auto') {
         if (options.type === 'line') {
             // Auto angle for line is same angle as line
@@ -116,36 +109,34 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
 
     // Do an initial render so we can get the text bounding box height
     labelText.call(function (s: any) {
-        s.call(drawingFont, font).attr({});
+        s.call(drawingFont, font);
         svgTextUtils.convertToTspans(s, gd);
         return s;
     });
-    var textBB = bBox(labelText.node());
+    const textBB = bBox(labelText.node());
 
     // Calculate correct (x,y) for text
     // We also determine true xanchor since xanchor depends on position when set to 'auto'
-    var textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
-    var textx = textPos.textx;
-    var texty = textPos.texty;
-    var xanchor = textPos.xanchor;
+    const textPos = calcTextPosition(shapex0, shapey0, shapex1, shapey1, options, textangle, textBB);
+    const textx = textPos.textx;
+    const texty = textPos.texty;
+    const xanchor = textPos.xanchor;
 
     // Update (x,y) position, xanchor, and angle
     labelText
-        .attr({
-            'text-anchor': {
+        .attr('text-anchor', ({
                 left: 'start',
                 center: 'middle',
                 right: 'end'
-            }[xanchor],
-            y: texty,
-            x: textx,
-            transform: 'rotate(' + textangle + ',' + textx + ',' + texty + ')'
-        })
+            } as any)[xanchor])
+        .attr('y', texty)
+        .attr('x', textx)
+        .attr('transform', 'rotate(' + textangle + ',' + textx + ',' + texty + ')')
         .call(svgTextUtils.positionText, textx, texty);
 }
 
 function calcTextAngle(shapex0: any, shapey0: any, shapex1: any, shapey1: any) {
-    var dy, dx;
+    let dy, dx;
     dx = Math.abs(shapex1 - shapex0);
     if (shapex1 >= shapex0) {
         dy = shapey0 - shapey1;
@@ -156,17 +147,17 @@ function calcTextAngle(shapex0: any, shapey0: any, shapex1: any, shapey1: any) {
 }
 
 function calcTextPosition(shapex0: any, shapey0: any, shapex1: any, shapey1: any, shapeOptions: any, actualTextAngle: any, textBB: any) {
-    var textPosition = shapeOptions.label.textposition;
-    var textAngle = shapeOptions.label.textangle;
-    var textPadding = shapeOptions.label.padding;
-    var shapeType = shapeOptions.type;
-    var textAngleRad = (Math.PI / 180) * actualTextAngle;
-    var sinA = Math.sin(textAngleRad);
-    var cosA = Math.cos(textAngleRad);
-    var xanchor = shapeOptions.label.xanchor;
-    var yanchor = shapeOptions.label.yanchor;
+    const textPosition = shapeOptions.label.textposition;
+    const textAngle = shapeOptions.label.textangle;
+    const textPadding = shapeOptions.label.padding;
+    const shapeType = shapeOptions.type;
+    const textAngleRad = (Math.PI / 180) * actualTextAngle;
+    const sinA = Math.sin(textAngleRad);
+    const cosA = Math.cos(textAngleRad);
+    let xanchor = shapeOptions.label.xanchor;
+    const yanchor = shapeOptions.label.yanchor;
 
-    var textx, texty, paddingX, paddingY;
+    let textx, texty, paddingX, paddingY;
 
     // Text position functions differently for lines vs. other shapes
     if (shapeType === 'line') {
@@ -213,17 +204,17 @@ function calcTextPosition(shapex0: any, shapey0: any, shapex1: any, shapey1: any
         // Special case for padding when angle is 'auto' for lines
         // Padding should be treated as an orthogonal offset in this case
         // Otherwise, padding is just a simple x and y offset
-        var paddingConstantsX = { left: 1, center: 0, right: -1 };
-        var paddingConstantsY = { bottom: -1, middle: 0, top: 1 };
+        const paddingConstantsX = { left: 1, center: 0, right: -1 };
+        const paddingConstantsY = { bottom: -1, middle: 0, top: 1 };
         if (textAngle === 'auto') {
             // Set direction to apply padding (based on `yanchor` only)
-            var paddingDirection = paddingConstantsY[yanchor];
+            const paddingDirection = (paddingConstantsY as any)[yanchor];
             paddingX = -textPadding * sinA * paddingDirection;
             paddingY = textPadding * cosA * paddingDirection;
         } else {
             // Set direction to apply padding (based on `xanchor` and `yanchor`)
-            var paddingDirectionX = paddingConstantsX[xanchor];
-            var paddingDirectionY = paddingConstantsY[yanchor];
+            const paddingDirectionX = (paddingConstantsX as any)[xanchor];
+            const paddingDirectionY = (paddingConstantsY as any)[yanchor];
             paddingX = textPadding * paddingDirectionX;
             paddingY = textPadding * paddingDirectionY;
         }
@@ -264,12 +255,12 @@ function calcTextPosition(shapex0: any, shapey0: any, shapex1: any, shapey1: any
     }
 
     // Shift vertical (& horizontal) position according to `yanchor`
-    var shiftFraction = FROM_TL[yanchor];
+    const shiftFraction = (FROM_TL as any)[yanchor];
     // Adjust so that text is anchored at top of first line rather than at baseline of first line
-    var baselineAdjust = shapeOptions.label.font.size;
-    var textHeight = textBB.height;
-    var xshift = (textHeight * shiftFraction - baselineAdjust) * sinA;
-    var yshift = -(textHeight * shiftFraction - baselineAdjust) * cosA;
+    const baselineAdjust = shapeOptions.label.font.size;
+    const textHeight = textBB.height;
+    const xshift = (textHeight * shiftFraction - baselineAdjust) * sinA;
+    const yshift = -(textHeight * shiftFraction - baselineAdjust) * cosA;
 
     return { textx: textx + xshift, texty: texty + yshift, xanchor: xanchor };
 }

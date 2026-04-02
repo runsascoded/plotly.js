@@ -9,16 +9,16 @@ import _index from '../../lib/index.js';
 const { coercePattern } = _index;
 
 function handleLabelsAndValues(labels: any[], values: any[]): { hasLabels: boolean; hasValues: boolean; len: number } {
-    var hasLabels = Lib.isArrayOrTypedArray(labels);
-    var hasValues = Lib.isArrayOrTypedArray(values);
-    var len = Math.min(hasLabels ? labels.length : Infinity, hasValues ? values.length : Infinity);
+    const hasLabels = Lib.isArrayOrTypedArray(labels);
+    const hasValues = Lib.isArrayOrTypedArray(values);
+    let len = Math.min(hasLabels ? labels.length : Infinity, hasValues ? values.length : Infinity);
 
     if (!isFinite(len)) len = 0;
 
     if (len && hasValues) {
-        var hasPositive;
-        for (var i = 0; i < len; i++) {
-            var v = values[i];
+        let hasPositive;
+        for (let i = 0; i < len; i++) {
+            const v = values[i];
             if (isNumeric(v) && v > 0) {
                 hasPositive = true;
                 break;
@@ -35,7 +35,7 @@ function handleLabelsAndValues(labels: any[], values: any[]): { hasLabels: boole
 }
 
 function handleMarkerDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: FullLayout, coerce: Function, isPie: boolean): void {
-    var lineWidth = coerce('marker.line.width');
+    const lineWidth = coerce('marker.line.width');
     if (lineWidth) {
         coerce(
             'marker.line.color',
@@ -43,7 +43,7 @@ function handleMarkerDefaults(traceIn: InputTrace, traceOut: FullTrace, layout: 
         );
     }
 
-    var markerColors = coerce('marker.colors');
+    const markerColors = coerce('marker.colors');
     coercePattern(coerce, 'marker.pattern', markerColors);
     // push the marker colors (with s) to the foreground colors, to work around logic in the drawing pattern code on marker.color (without s, which is okay for a bar trace)
     if (traceIn.marker && !traceOut.marker.pattern.fgcolor) traceOut.marker.pattern.fgcolor = traceIn.marker.colors;
@@ -55,11 +55,11 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var labels = coerce('labels');
-    var values = coerce('values');
+    const labels = coerce('labels');
+    const values = coerce('values');
 
-    var res = handleLabelsAndValues(labels, values);
-    var len = res.len;
+    const res = handleLabelsAndValues(labels, values);
+    const len = res.len;
     traceOut._hasLabels = res.hasLabels;
     traceOut._hasValues = res.hasValues;
 
@@ -79,10 +79,10 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('scalegroup');
     // TODO: hole needs to be coerced to the same value within a scaleegroup
 
-    var textData = coerce('text');
-    var textTemplate = coerce('texttemplate');
+    const textData = coerce('text');
+    const textTemplate = coerce('texttemplate');
     coerce('texttemplatefallback');
-    var textInfo;
+    let textInfo;
     if (!textTemplate) textInfo = coerce('textinfo', Lib.isArrayOrTypedArray(textData) ? 'text+percent' : 'percent');
 
     coerce('hovertext');
@@ -90,7 +90,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
     coerce('hovertemplatefallback');
 
     if (textTemplate || (textInfo && textInfo !== 'none')) {
-        var textposition = coerce('textposition');
+        const textposition = coerce('textposition');
         handleText(traceIn, traceOut, layout, coerce, textposition, {
             moduleHasSelected: false,
             moduleHasUnselected: false,
@@ -100,8 +100,8 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
             moduleHasInsideanchor: false
         });
 
-        var hasBoth = Array.isArray(textposition) || textposition === 'auto';
-        var hasOutside = hasBoth || textposition === 'outside';
+        const hasBoth = Array.isArray(textposition) || textposition === 'auto';
+        const hasOutside = hasBoth || textposition === 'outside';
         if (hasOutside) {
             coerce('automargin');
         }
@@ -115,10 +115,10 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
 
     handleDomainDefaults(traceOut, layout, coerce);
 
-    var hole = coerce('hole');
-    var title = coerce('title.text');
+    const hole = coerce('hole');
+    const title = coerce('title.text');
     if (title) {
-        var titlePosition = coerce('title.position', hole ? 'middle center' : 'top center');
+        const titlePosition = coerce('title.position', hole ? 'middle center' : 'top center');
         if (!hole && titlePosition === 'middle center') traceOut.title.position = 'top center';
         Lib.coerceFont(coerce, 'title.font', layout.font);
     }

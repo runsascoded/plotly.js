@@ -5,22 +5,22 @@ import _helpers from './helpers.js';
 const { extractOpts } = _helpers;
 
 export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): any {
-    var fullLayout = gd._fullLayout;
-    var vals = opts.vals;
-    var containerStr = opts.containerStr;
+    const fullLayout = gd._fullLayout;
+    const vals = opts.vals;
+    const containerStr = opts.containerStr;
 
-    var container = containerStr ?
+    const container = containerStr ?
         nestedProperty(trace, containerStr).get() :
         trace;
 
-    var cOpts = extractOpts(container);
-    var auto = cOpts.auto !== false;
-    var min = cOpts.min;
-    var max = cOpts.max;
-    var mid = cOpts.mid;
+    const cOpts = extractOpts(container);
+    const auto = cOpts.auto !== false;
+    let min = cOpts.min;
+    let max = cOpts.max;
+    const mid = cOpts.mid;
 
-    var minVal = function(): number { return aggNums(Math.min, null, vals); };
-    var maxVal = function(): number { return aggNums(Math.max, null, vals); };
+    const minVal = function(): number { return aggNums(Math.min, null, vals); };
+    const maxVal = function(): number { return aggNums(Math.max, null, vals); };
 
     if(min === undefined) {
         min = minVal();
@@ -59,7 +59,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace, opts: any): any {
     cOpts._sync('max', max);
 
     if(cOpts.autocolorscale) {
-        var scl;
+        let scl;
         if(min * max < 0) scl = fullLayout.colorscale.diverging;
         else if(min >= 0) scl = fullLayout.colorscale.sequential;
         else scl = fullLayout.colorscale.sequentialminus;

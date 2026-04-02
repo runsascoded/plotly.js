@@ -14,21 +14,21 @@ const locationmodeBreakingChangeWarning = [
 ].join(' ');
 
 export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: string, layout: FullLayout) {
-    function coerce(attr, dflt?) {
+    function coerce(attr: any, dflt?: any) {
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var locations = coerce('locations');
-    var len;
+    const locations = coerce('locations');
+    let len;
 
     if (locations && locations.length) {
-        var geojson = coerce('geojson');
-        var locationmodeDflt;
+        const geojson = coerce('geojson');
+        let locationmodeDflt;
         if ((typeof geojson === 'string' && geojson !== '') || Lib.isPlainObject(geojson)) {
             locationmodeDflt = 'geojson-id';
         }
 
-        var locationMode = coerce('locationmode', locationmodeDflt);
+        const locationMode = coerce('locationmode', locationmodeDflt);
 
         if (locationMode === 'country names') {
             Lib.warn(locationmodeBreakingChangeWarning);
@@ -40,8 +40,8 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
         len = locations.length;
     } else {
-        var lon = coerce('lon') || [];
-        var lat = coerce('lat') || [];
+        const lon = coerce('lon') || [];
+        const lat = coerce('lat') || [];
         len = Math.min(lon.length, lat.length);
     }
 

@@ -1,10 +1,10 @@
 import type { CalcDatum, FullTrace } from '../../../types/core';
-export default function eventData(out, pt, trace: FullTrace, cd: CalcDatum[], pointNumber) {
+export default function eventData(out: any, pt: any, trace: FullTrace, cd: CalcDatum[], pointNumber: any) {
     if(pt.xa) out.xaxis = pt.xa;
     if(pt.ya) out.yaxis = pt.ya;
 
     if(cd[pointNumber]) {
-        var cdi = cd[pointNumber];
+        const cdi = cd[pointNumber];
 
         // N.B. These are the normalized coordinates.
         out.a = cdi.a;

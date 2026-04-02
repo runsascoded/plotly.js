@@ -15,21 +15,21 @@ import _autorange from '../plots/cartesian/autorange.js';
 const { doAutoRange } = _autorange;
 import _constants from '../plots/cartesian/constants.js';
 const { zindexSeparator } = _constants;
-var enforceAxisConstraints = axisConstraints.enforce;
-var cleanAxisConstraints = axisConstraints.clean;
+const enforceAxisConstraints = axisConstraints.enforce;
+const cleanAxisConstraints = axisConstraints.clean;
 
-var SVG_TEXT_ANCHOR_START = 'start';
-var SVG_TEXT_ANCHOR_MIDDLE = 'middle';
-var SVG_TEXT_ANCHOR_END = 'end';
+const SVG_TEXT_ANCHOR_START = 'start';
+const SVG_TEXT_ANCHOR_MIDDLE = 'middle';
+const SVG_TEXT_ANCHOR_END = 'end';
 
-export var layoutStyles = function(gd: GraphDiv): any {
+export const layoutStyles = function(gd: GraphDiv): any {
     return syncOrAsync([doAutoMargin, lsInner], gd);
 };
 
 function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): boolean {
-    for(var i = 0; i < domains.length; i++) {
-        var existingX = domains[i][0];
-        var existingY = domains[i][1];
+    for(let i = 0; i < domains.length; i++) {
+        const existingX = domains[i][0];
+        const existingY = domains[i][1];
 
         if(existingX[0] >= xDomain[1] || existingX[1] <= xDomain[0]) {
             continue;
@@ -42,11 +42,11 @@ function overlappingDomain(xDomain?: any, yDomain?: any, domains?: any): boolean
 }
 
 function lsInner(gd: GraphDiv): any {
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
-    var pad = gs.p;
-    var axList = Axes.list(gd, '', true);
-    var i, subplot, plotinfo, ax, xa, ya;
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
+    const pad = gs.p;
+    const axList = Axes.list(gd, '', true);
+    let i, subplot: any, plotinfo, ax, xa: any, ya: any;
 
     // Set the width and height of the paper div ('.svg-container') in
     // accordance with the users configuration and layout. 
@@ -56,13 +56,12 @@ function lsInner(gd: GraphDiv): any {
     // We can't leave the height or width unset because all of the contents of
     // the paper div are positioned absolutely (and will therefore not take up
     // any space).
-    fullLayout._paperdiv.style({
-        width: (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width) ? '100%' : fullLayout.width + 'px',
-        height: (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height) ? '100%' : fullLayout.height + 'px'
-    })
+    fullLayout._paperdiv
+        .style('width', (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroWidth && !gd.layout.width) ? '100%' : fullLayout.width + 'px')
+        .style('height', (gd._context.responsive && fullLayout.autosize && !gd._context._hasZeroHeight && !gd.layout.height) ? '100%' : fullLayout.height + 'px')
     .selectAll('.main-svg')
     .call(setSize, fullLayout.width, fullLayout.height);
-    gd._context.setBackground(gd, fullLayout.paper_bgcolor);
+    gd._context.setBackground(gd, (fullLayout.paper_bgcolor as any));
 
     drawMainTitle(gd);
     Registry.getComponentMethod('modebar', 'manage')(gd);
@@ -73,7 +72,7 @@ function lsInner(gd: GraphDiv): any {
     }
 
     function getLinePosition(ax?: any, counterAx?: any, side?: any) {
-        var lwHalf = ax._lw / 2;
+        const lwHalf = ax._lw / 2;
 
         if(ax._id.charAt(0) === 'x') {
             if(!counterAx) return gs.t + gs.h * (1 - (ax.position || 0)) + (lwHalf % 1);
@@ -90,7 +89,7 @@ function lsInner(gd: GraphDiv): any {
     for(i = 0; i < axList.length; i++) {
         ax = axList[i];
 
-        var counterAx: any = ax._anchorAxis;
+        const counterAx: any = ax._anchorAxis;
 
         // clear axis line positions, to be set in the subplot loop below
         ax._linepositions = {};
@@ -106,18 +105,18 @@ function lsInner(gd: GraphDiv): any {
         ax._mainLinePosition = getLinePosition(ax, counterAx, ax.side);
         ax._mainMirrorPosition = (ax.mirror && counterAx) ?
             getLinePosition(ax, counterAx,
-                alignmentConstants.OPPOSITE_SIDE[ax.side]) : null;
+                (alignmentConstants.OPPOSITE_SIDE as any)[ax.side]) : null;
     }
 
     // figure out which backgrounds we need to draw,
     // and in which layers to put them
-    var lowerBackgroundIDs = [];
-    var backgroundIds = [];
-    var lowerDomains = [];
+    const lowerBackgroundIDs: any[] = [];
+    const backgroundIds: any[] = [];
+    const lowerDomains: any[] = [];
     // no need to draw background when paper and plot color are the same color,
     // activate mode just for large splom (which benefit the most from this
     // optimization), but this could apply to all cartesian subplots.
-    var noNeedForBg = (
+    const noNeedForBg = (
         Color.opacity(fullLayout.paper_bgcolor) === 1 &&
         Color.opacity(fullLayout.plot_bgcolor) === 1 &&
         fullLayout.paper_bgcolor === fullLayout.plot_bgcolor
@@ -135,13 +134,13 @@ function lsInner(gd: GraphDiv): any {
             }
             plotinfo.bg = undefined;
         } else {
-            var xDomain = plotinfo.xaxis.domain;
-            var yDomain = plotinfo.yaxis.domain;
-            var plotgroup = plotinfo.plotgroup;
+            const xDomain = plotinfo.xaxis.domain;
+            const yDomain = plotinfo.yaxis.domain;
+            const plotgroup = plotinfo.plotgroup;
 
             if(overlappingDomain(xDomain, yDomain, lowerDomains) && subplot.indexOf(zindexSeparator) === -1) {
-                var pgNode = plotgroup.node();
-                var plotgroupBg = plotinfo.bg = ensureSingle(plotgroup, 'rect', 'bg');
+                const pgNode = plotgroup.node();
+                const plotgroupBg = plotinfo.bg = ensureSingle(plotgroup, 'rect', 'bg');
                 pgNode.insertBefore(plotgroupBg.node(), pgNode.childNodes[0]);
                 backgroundIds.push(subplot);
             } else {
@@ -157,15 +156,15 @@ function lsInner(gd: GraphDiv): any {
 
     // now create all the lower-layer backgrounds at once now that
     // we have the list of subplots that need them
-    var lowerBackgrounds = fullLayout._bgLayer.selectAll('.bg')
+    const lowerBackgrounds = fullLayout._bgLayer.selectAll('.bg')
         .data(lowerBackgroundIDs);
 
-    lowerBackgrounds.enter().append('rect')
+    const lowerBgEnter = lowerBackgrounds.enter().append('rect')
         .classed('bg', true);
 
     lowerBackgrounds.exit().remove();
 
-    lowerBackgrounds.each(function(subplot) {
+    lowerBackgrounds.merge(lowerBgEnter).each(function(this: any, subplot: any) {
         fullLayout._plots[subplot].bg = select(this);
     });
 
@@ -192,22 +191,21 @@ function lsInner(gd: GraphDiv): any {
             ya = plotinfo.yaxis;
 
             // Clip so that data only shows up on the plot area.
-            var clipId = plotinfo.clipId = 'clip' + fullLayout._uid + subplot + 'plot';
+            const clipId = plotinfo.clipId = 'clip' + fullLayout._uid + subplot + 'plot';
 
-            var plotClip = ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s) {
+            const plotClip = ensureSingleById(fullLayout._clips, 'clipPath', clipId, function(s: any) {
                 s.classed('plotclip', true)
                     .append('rect');
             });
 
-            plotinfo.clipRect = plotClip.select('rect').attr({
-                width: xa._length,
-                height: ya._length
-            });
+            plotinfo.clipRect = plotClip.select('rect')
+                .attr('width', xa._length)
+                .attr('height', ya._length);
 
             setTranslate(plotinfo.plot, xa._offset, ya._offset);
 
-            var plotClipId;
-            var layerClipId;
+            let plotClipId;
+            let layerClipId;
 
             if(plotinfo._hasClipOnAxisFalse) {
                 plotClipId = null;
@@ -217,7 +215,7 @@ function lsInner(gd: GraphDiv): any {
                 layerClipId = null;
             }
 
-            setClipUrl(plotinfo.plot, plotClipId, gd);
+            setClipUrl(plotinfo.plot, plotClipId as any, gd);
 
             // stash layer clipId value (null or same as clipId)
             // to DRY up setClipUrl calls on trace-module and trace layers
@@ -226,11 +224,11 @@ function lsInner(gd: GraphDiv): any {
         }
     }
 
-    var xLinesXLeft, xLinesXRight, xLinesYBottom, xLinesYTop,
+    let xLinesXLeft: any, xLinesXRight: any, xLinesYBottom, xLinesYTop,
         leftYLineWidth, rightYLineWidth;
-    var yLinesYBottom, yLinesYTop, yLinesXLeft, yLinesXRight,
+    let yLinesYBottom: any, yLinesYTop: any, yLinesXLeft, yLinesXRight,
         connectYBottom, connectYTop;
-    var extraSubplot;
+    let extraSubplot;
 
     function xLinePath(y?: any) {
         return 'M' + xLinesXLeft + ',' + y + 'H' + xLinesXRight;
@@ -254,7 +252,7 @@ function lsInner(gd: GraphDiv): any {
     function mainPath(ax?: any, pathFn?: any, pathFnFree?: any) {
         if(!ax.showline || subplot !== ax._mainSubplot) return '';
         if(!ax._anchorAxis) return pathFnFree(ax._mainLinePosition);
-        var out = pathFn(ax._mainLinePosition);
+        let out = pathFn(ax._mainLinePosition);
         if(ax.mirror) out += pathFn(ax._mainMirrorPosition);
         return out;
     }
@@ -278,7 +276,7 @@ function lsInner(gd: GraphDiv): any {
          *    -----
          *     x2
          */
-        var xPath = 'M0,0';
+        let xPath = 'M0,0';
         if(shouldShowLinesOrTicks(xa, subplot)) {
             leftYLineWidth = findCounterAxisLineWidth(xa, 'left', ya, axList);
             xLinesXLeft = xa._offset - (leftYLineWidth ? (pad + leftYLineWidth) : 0);
@@ -318,7 +316,7 @@ function lsInner(gd: GraphDiv): any {
          *       |
          *       +-----
          */
-        var yPath = 'M0,0';
+        let yPath = 'M0,0';
         if(shouldShowLinesOrTicks(ya, subplot)) {
             connectYBottom = findCounterAxisLineWidth(ya, 'bottom', xa, axList);
             yLinesYBottom = ya._offset + ya._length + (connectYBottom ? pad : 0);
@@ -367,7 +365,7 @@ function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): boolean 
     // are we drawing *all* lines for counterAx?
     if(counterAx.mirror === 'all' || counterAx.mirror === 'allticks') return true;
 
-    var anchorAx = counterAx._anchorAxis;
+    const anchorAx = counterAx._anchorAxis;
 
     // is this a free axis? free axes can only have a subplot side-line with all(ticks)? mirroring
     if(!anchorAx) return false;
@@ -375,7 +373,7 @@ function shouldShowLineThisSide(ax?: any, side?: any, counterAx?: any): boolean 
     // in order to handle cases where the user forgot to anchor this axis correctly
     // (because its default anchor has the same domain on the relevant end)
     // check whether the relevant position is the same.
-    var sideIndex = alignmentConstants.FROM_BL[side];
+    const sideIndex = (alignmentConstants.FROM_BL as any)[side];
     if(counterAx.side === side) {
         return anchorAx.domain[sideIndex] === ax.domain[sideIndex];
     }
@@ -392,8 +390,8 @@ function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?
     if(shouldShowLineThisSide(ax, side, counterAx)) {
         return counterAx._lw;
     }
-    for(var i = 0; i < axList.length; i++) {
-        var axi: any = axList[i];
+    for(let i = 0; i < axList.length; i++) {
+        const axi: any = axList[i];
         if(axi._mainAxis === counterAx._mainAxis && shouldShowLineThisSide(ax, side, axi)) {
             return axi._lw;
         }
@@ -401,13 +399,13 @@ function findCounterAxisLineWidth(ax?: any, side?: any, counterAx?: any, axList?
     return 0;
 }
 
-export var drawMainTitle = function(gd: GraphDiv): void {
-    var title: any = gd._fullLayout.title;
-    var fullLayout = gd._fullLayout;
-    var textAnchor = getMainTitleTextAnchor(fullLayout);
-    var dy = getMainTitleDy(fullLayout);
-    var y = getMainTitleY(fullLayout, dy);
-    var x = getMainTitleX(fullLayout, textAnchor);
+export const drawMainTitle = function(gd: GraphDiv): void {
+    const title: any = gd._fullLayout.title;
+    const fullLayout = gd._fullLayout;
+    const textAnchor = getMainTitleTextAnchor(fullLayout);
+    const dy = getMainTitleDy(fullLayout);
+    const y = getMainTitleY(fullLayout, dy);
+    const x = getMainTitleX(fullLayout, textAnchor);
 
     Titles.draw(gd, 'gtitle', {
         propContainer: fullLayout,
@@ -424,54 +422,52 @@ export var drawMainTitle = function(gd: GraphDiv): void {
     });
 
     if(title.text && title.automargin) {
-        var titleObj = select(gd).selectAll('.gtitle');
-        var titleHeight = bBox(select(gd).selectAll('.g-gtitle').node()).height;
-        var pushMargin = needsMarginPush(gd, title, titleHeight);
+        const titleObj = select(gd).selectAll('.gtitle');
+        const titleHeight = bBox(select(gd).selectAll('.g-gtitle').node()).height;
+        const pushMargin = needsMarginPush(gd, title, titleHeight);
         if(pushMargin > 0) {
             applyTitleAutoMargin(gd, y, pushMargin, titleHeight);
             // Re-position the title once we know where it needs to be
-            titleObj.attr({
-                x: x,
-                y: y,
-                'text-anchor': textAnchor,
-                dy: getMainTitleDyAdj(title.yanchor)
-            }).call(svgTextUtils.positionText, x, y);
+            titleObj
+                .attr('x', x)
+                .attr('y', y)
+                .attr('text-anchor', textAnchor)
+                .attr('dy', getMainTitleDyAdj(title.yanchor)).call(svgTextUtils.positionText, x, y);
 
-            var extraLines = (title.text.match(svgTextUtils.BR_TAG_ALL) || []).length;
+            const extraLines = (title.text.match(svgTextUtils.BR_TAG_ALL) || []).length;
             if(extraLines) {
-                var delta = alignmentConstants.LINE_SPACING * extraLines + alignmentConstants.MID_SHIFT;
+                let delta = alignmentConstants.LINE_SPACING * extraLines + alignmentConstants.MID_SHIFT;
                 if(title.y === 0) {
                     delta = -delta;
                 }
 
-                titleObj.selectAll('.line').each(function() {
-                    var newDy = +(this.getAttribute('dy')).slice(0, -2) - delta + 'em';
+                titleObj.selectAll('.line').each(function(this: any) {
+                    const newDy = +(this.getAttribute('dy')).slice(0, -2) - delta + 'em';
                     this.setAttribute('dy', newDy);
                 });
             }
 
             // If there is a subtitle
-            var subtitleObj = select(gd).selectAll('.gtitle-subtitle');
+            const subtitleObj = select(gd).selectAll('.gtitle-subtitle');
             if(subtitleObj.node()) {
                 // Get bottom edge of title bounding box
-                var titleBB = titleObj.node().getBBox();
-                var titleBottom = titleBB.y + titleBB.height;
-                var subtitleY = titleBottom + Titles.SUBTITLE_PADDING_EM * title.subtitle.font.size;
-                subtitleObj.attr({
-                    x: x,
-                    y: subtitleY,
-                    'text-anchor': textAnchor,
-                    dy: getMainTitleDyAdj(title.yanchor)
-                }).call(svgTextUtils.positionText, x, subtitleY);
+                const titleBB = titleObj.node().getBBox();
+                const titleBottom = titleBB.y + titleBB.height;
+                const subtitleY = titleBottom + Titles.SUBTITLE_PADDING_EM * title.subtitle.font.size;
+                subtitleObj
+                    .attr('x', x)
+                    .attr('y', subtitleY)
+                    .attr('text-anchor', textAnchor)
+                    .attr('dy', getMainTitleDyAdj(title.yanchor)).call(svgTextUtils.positionText, x, subtitleY);
             }
         }
     }
 };
 
 function isOutsideContainer(gd?: any, title?: any, position?: any, y?: any, titleHeight?: any): any {
-    var plotHeight = title.yref === 'paper' ? gd._fullLayout._size.h : gd._fullLayout.height;
-    var yPosTop = isTopAnchor(title) ? y : y - titleHeight; // Standardize to the top of the title
-    var yPosRel = position === 'b' ? plotHeight - yPosTop : yPosTop; // Position relative to the top or bottom of plot
+    const plotHeight = title.yref === 'paper' ? gd._fullLayout._size.h : gd._fullLayout.height;
+    const yPosTop = isTopAnchor(title) ? y : y - titleHeight; // Standardize to the top of the title
+    const yPosRel = position === 'b' ? plotHeight - yPosTop : yPosTop; // Position relative to the top or bottom of plot
     if((isTopAnchor(title) && position === 't') || isBottomAnchor(title) && position === 'b') {
         return false;
     } else {
@@ -480,7 +476,7 @@ function isOutsideContainer(gd?: any, title?: any, position?: any, y?: any, titl
 }
 
 function containerPushVal(position?: any, titleY?: any, titleYanchor?: any, height?: any, titleDepth?: any): any {
-    var push = 0;
+    let push = 0;
     if(titleYanchor === 'middle') {
         push += titleDepth / 2;
     }
@@ -499,11 +495,11 @@ function containerPushVal(position?: any, titleY?: any, titleYanchor?: any, heig
 }
 
 function needsMarginPush(gd?: any, title?: any, titleHeight?: any): number {
-    var titleY = title.y;
-    var titleYanchor = title.yanchor;
-    var position = titleY > 0.5 ? 't' : 'b';
-    var curMargin = gd._fullLayout.margin[position];
-    var pushMargin = 0;
+    const titleY = title.y;
+    const titleYanchor = title.yanchor;
+    const position = titleY > 0.5 ? 't' : 'b';
+    const curMargin = gd._fullLayout.margin[position];
+    let pushMargin = 0;
     if(title.yref === 'paper') {
         pushMargin = (
             titleHeight +
@@ -524,16 +520,16 @@ function needsMarginPush(gd?: any, title?: any, titleHeight?: any): number {
 }
 
 function applyTitleAutoMargin(gd?: any, y?: any, pushMargin?: any, titleHeight?: any): any {
-    var titleID = 'title.automargin';
-    var title: any = gd._fullLayout.title;
-    var position = title.y > 0.5 ? 't' : 'b';
-    var push: any = {
+    const titleID = 'title.automargin';
+    const title: any = gd._fullLayout.title;
+    const position = title.y > 0.5 ? 't' : 'b';
+    const push: any = {
         x: title.x,
         y: title.y,
         t: 0,
         b: 0
     };
-    var reservedPush: any = {};
+    const reservedPush: any = {};
 
     if(title.yref === 'paper' && isOutsideContainer(gd, title, position, y, titleHeight)) {
         push[position] = pushMargin;
@@ -546,9 +542,9 @@ function applyTitleAutoMargin(gd?: any, y?: any, pushMargin?: any, titleHeight?:
 }
 
 function getMainTitleX(fullLayout?: any, textAnchor?: any): any {
-    var title: any = fullLayout.title;
-    var gs = fullLayout._size;
-    var hPadShift = 0;
+    const title: any = fullLayout.title;
+    const gs = fullLayout._size;
+    let hPadShift = 0;
 
     if(textAnchor === SVG_TEXT_ANCHOR_START) {
         hPadShift = title.pad.l;
@@ -566,9 +562,9 @@ function getMainTitleX(fullLayout?: any, textAnchor?: any): any {
 }
 
 function getMainTitleY(fullLayout?: any, dy?: any): any {
-    var title: any = fullLayout.title;
-    var gs = fullLayout._size;
-    var vPadShift = 0;
+    const title: any = fullLayout.title;
+    const gs = fullLayout._size;
+    let vPadShift = 0;
     if(dy === '0em' || !dy) {
         vPadShift = -title.pad.b;
     } else if(dy === alignmentConstants.CAP_SHIFT + 'em') {
@@ -599,9 +595,9 @@ function getMainTitleDyAdj(yanchor?: any): any {
 }
 
 function getMainTitleTextAnchor(fullLayout?: any): any {
-    var title: any = fullLayout.title;
+    const title: any = fullLayout.title;
 
-    var textAnchor = SVG_TEXT_ANCHOR_MIDDLE;
+    let textAnchor = SVG_TEXT_ANCHOR_MIDDLE;
     if(isRightAnchor(title)) {
         textAnchor = SVG_TEXT_ANCHOR_END;
     } else if(isLeftAnchor(title)) {
@@ -612,9 +608,9 @@ function getMainTitleTextAnchor(fullLayout?: any): any {
 }
 
 function getMainTitleDy(fullLayout?: any): any {
-    var title: any = fullLayout.title;
+    const title: any = fullLayout.title;
 
-    var dy = '0em';
+    let dy = '0em';
     if(isTopAnchor(title)) {
         dy = alignmentConstants.CAP_SHIFT + 'em';
     } else if(isMiddleAnchor(title)) {
@@ -624,32 +620,32 @@ function getMainTitleDy(fullLayout?: any): any {
     return dy;
 }
 
-export var doTraceStyle = function(gd: GraphDiv): any {
-    var calcdata = gd.calcdata;
-    var editStyleCalls = [];
-    var i;
+export const doTraceStyle = function(gd: GraphDiv): any {
+    const calcdata = gd.calcdata;
+    const editStyleCalls: any[] = [];
+    let i;
 
     for(i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
-        var cd0: any = cd[0] || {};
-        var trace: any = cd0.trace || {};
-        var _module = trace._module || {};
+        const cd = calcdata[i];
+        const cd0: any = cd[0] || {};
+        const trace: any = cd0.trace || {};
+        const _module = trace._module || {};
 
         // See if we need to do arraysToCalcdata
         // call it regardless of what change we made, in case
         // supplyDefaults brought in an array that was already
         // in gd.data but not in gd._fullData previously
-        var arraysToCalcdata = _module.arraysToCalcdata;
+        const arraysToCalcdata = _module.arraysToCalcdata;
         if(arraysToCalcdata) arraysToCalcdata(cd, trace);
 
-        var editStyle = _module.editStyle;
+        const editStyle = _module.editStyle;
         if(editStyle) editStyleCalls.push({fn: editStyle, cd0: cd0});
     }
 
     if(editStyleCalls.length) {
         for(i = 0; i < editStyleCalls.length; i++) {
-            var edit = editStyleCalls[i];
-            edit.fn(gd, edit.cd0);
+            const edit = editStyleCalls[i];
+            (edit as any).fn(gd, (edit as any).cd0);
         }
         clearGlCanvases(gd);
         redrawReglTraces(gd);
@@ -661,23 +657,23 @@ export var doTraceStyle = function(gd: GraphDiv): any {
     return previousPromises(gd);
 };
 
-export var doColorBars = function(gd: GraphDiv): any {
+export const doColorBars = function(gd: GraphDiv): any {
     Registry.getComponentMethod('colorbar', 'draw')(gd);
     return previousPromises(gd);
 };
 
-export var layoutReplot = function(gd: GraphDiv): any {
-    var layout = gd.layout;
-    gd.layout = undefined;
+export const layoutReplot = function(gd: GraphDiv): any {
+    const layout = gd.layout;
+    gd.layout = (undefined as any);
     return Registry.call('_doPlot', gd, '', layout);
 };
 
-export var doLegend = function(gd: GraphDiv): any {
+export const doLegend = function(gd: GraphDiv): any {
     Registry.getComponentMethod('legend', 'draw')(gd);
     return previousPromises(gd);
 };
 
-export var doTicksRelayout = function(gd: GraphDiv): any {
+export const doTicksRelayout = function(gd: GraphDiv): any {
     Axes.draw(gd, 'redraw');
 
     if(gd._fullLayout._hasOnlyLargeSploms) {
@@ -690,40 +686,40 @@ export var doTicksRelayout = function(gd: GraphDiv): any {
     return previousPromises(gd);
 };
 
-export var doModeBar = function(gd: GraphDiv): any {
-    var fullLayout = gd._fullLayout;
+export const doModeBar = function(gd: GraphDiv): any {
+    const fullLayout = gd._fullLayout;
 
     Registry.getComponentMethod('modebar', 'manage')(gd);
 
-    for(var i = 0; i < fullLayout._basePlotModules.length; i++) {
-        var updateFx = fullLayout._basePlotModules[i].updateFx;
+    for(let i = 0; i < fullLayout._basePlotModules.length; i++) {
+        const updateFx = fullLayout._basePlotModules[i].updateFx;
         if(updateFx) updateFx(gd);
     }
 
     return previousPromises(gd);
 };
 
-export var doCamera = function(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots.gl3d;
+export const doCamera = function(gd: GraphDiv): void {
+    const fullLayout = gd._fullLayout;
+    const sceneIds = fullLayout._subplots.gl3d;
 
-    for(var i = 0; i < sceneIds.length; i++) {
-        var sceneLayout = fullLayout[sceneIds[i]];
-        var scene = sceneLayout._scene;
+    for(let i = 0; i < sceneIds.length; i++) {
+        const sceneLayout = fullLayout[sceneIds[i]];
+        const scene = sceneLayout._scene;
 
         scene.setViewport(sceneLayout);
     }
 };
 
-export var drawData = function(gd: GraphDiv): any {
-    var fullLayout = gd._fullLayout;
+export const drawData = function(gd: GraphDiv): any {
+    const fullLayout = gd._fullLayout;
 
     clearGlCanvases(gd);
 
     // loop over the base plot modules present on graph
-    var basePlotModules = fullLayout._basePlotModules;
-    for(var i = 0; i < basePlotModules.length; i++) {
-        basePlotModules[i].plot(gd);
+    const basePlotModules = fullLayout._basePlotModules;
+    for(let i = 0; i < basePlotModules.length; i++) {
+        basePlotModules[i].plot!(gd);
     }
 
     redrawReglTraces(gd);
@@ -744,14 +740,14 @@ export var drawData = function(gd: GraphDiv): any {
     return previousPromises(gd);
 };
 
-export var redrawReglTraces = function(gd: GraphDiv): void {
-    var fullLayout = gd._fullLayout;
+export const redrawReglTraces = function(gd: GraphDiv): void {
+    const fullLayout = gd._fullLayout;
 
     if(fullLayout._has('regl')) {
-        var fullData = gd._fullData;
-        var cartesianIds = [];
-        var polarIds = [];
-        var i, sp;
+        const fullData = gd._fullData;
+        const cartesianIds: any[] = [];
+        const polarIds: any[] = [];
+        let i, sp;
 
         if(fullLayout._hasOnlyLargeSploms) {
             fullLayout._splomGrid.draw();
@@ -762,7 +758,7 @@ export var redrawReglTraces = function(gd: GraphDiv): void {
         // - Fill list if subplot ids (instead of fullLayout._subplots) to handle cases where all traces
         //   of a given module are `visible !== true`
         for(i = 0; i < fullData.length; i++) {
-            var trace: any = fullData[i];
+            const trace: any = fullData[i];
 
             if(trace.visible === true && trace._length !== 0) {
                 if(trace.type === 'splom') {
@@ -787,13 +783,13 @@ export var redrawReglTraces = function(gd: GraphDiv): void {
     }
 };
 
-export var doAutoRangeAndConstraints = function(gd: GraphDiv): void {
-    var axList = Axes.list(gd, '', true);
-    var ax;
+export const doAutoRangeAndConstraints = function(gd: GraphDiv): void {
+    const axList = Axes.list(gd, '', true);
+    let ax;
 
-    var autoRangeDone: any = {};
+    const autoRangeDone: any = {};
 
-    for(var i = 0; i < axList.length; i++) {
+    for(let i = 0; i < axList.length; i++) {
         ax = axList[i];
 
         if(!autoRangeDone[ax._id]) {
@@ -805,10 +801,10 @@ export var doAutoRangeAndConstraints = function(gd: GraphDiv): void {
             // The extra arg to doAutoRange avoids recalculating the range,
             // since doAutoRange by itself accounts for all matching axes. but
             // there are other side-effects of doAutoRange that we still want.
-            var matchGroup = ax._matchGroup;
+            const matchGroup = ax._matchGroup;
             if(matchGroup) {
-                for(var id2 in matchGroup) {
-                    var ax2 = Axes.getFromId(gd, id2);
+                for(const id2 in matchGroup) {
+                    const ax2 = Axes.getFromId(gd, id2);
                     doAutoRange(gd, ax2, ax.range);
                     autoRangeDone[id2] = 1;
                 }
@@ -819,7 +815,7 @@ export var doAutoRangeAndConstraints = function(gd: GraphDiv): void {
     enforceAxisConstraints(gd);
 };
 
-export var finalDraw = function(gd: GraphDiv): void {
+export const finalDraw = function(gd: GraphDiv): void {
     // TODO: rangesliders really belong in marginPushers but they need to be
     // drawn after data - can we at least get the margin pushing part separated
     // out and done earlier?
@@ -831,7 +827,7 @@ export var finalDraw = function(gd: GraphDiv): void {
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
 };
 
-export var drawMarginPushers = function(gd: GraphDiv): void {
+export const drawMarginPushers = function(gd: GraphDiv): void {
     Registry.getComponentMethod('legend', 'draw')(gd);
     Registry.getComponentMethod('rangeselector', 'draw')(gd);
     Registry.getComponentMethod('sliders', 'draw')(gd);

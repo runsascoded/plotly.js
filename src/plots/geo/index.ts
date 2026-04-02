@@ -6,10 +6,10 @@ import _req0 from './layout_attributes.js';
 import _req1 from './layout_defaults.js';
 import type { FullLayout, FullTrace, GraphDiv } from '../../../types/core';
 
-var GEO = 'geo';
-var counter = counterRegex(GEO);
+const GEO = 'geo';
+const counter = counterRegex(GEO);
 
-var attributes: any = {};
+const attributes: any = {};
 attributes[GEO] = {
     valType: 'subplotid',
     dflt: GEO,
@@ -25,15 +25,15 @@ attributes[GEO] = {
 };
 
 function plotGeo(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcData = gd.calcdata;
-    var geoIds = fullLayout._subplots[GEO];
+    const fullLayout = gd._fullLayout;
+    const calcData = gd.calcdata;
+    const geoIds = fullLayout._subplots[GEO];
 
-    for(var i = 0; i < geoIds.length; i++) {
-        var geoId = geoIds[i];
-        var geoCalcData = getSubplotCalcData(calcData, GEO, geoId);
-        var geoLayout = fullLayout[geoId];
-        var geo = geoLayout._subplot;
+    for(let i = 0; i < geoIds.length; i++) {
+        const geoId = geoIds[i];
+        const geoCalcData = getSubplotCalcData(calcData, GEO, geoId);
+        const geoLayout = fullLayout[geoId];
+        let geo = geoLayout._subplot;
 
         if(!geo) {
             geo = createGeo({
@@ -52,11 +52,11 @@ function plotGeo(gd: GraphDiv) {
 }
 
 function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData: FullTrace[], oldFullLayout: FullLayout) {
-    var oldGeoKeys = oldFullLayout._subplots[GEO] || [];
+    const oldGeoKeys = oldFullLayout._subplots[GEO] || [];
 
-    for(var i = 0; i < oldGeoKeys.length; i++) {
-        var oldGeoKey = oldGeoKeys[i];
-        var oldGeo = oldFullLayout[oldGeoKey]._subplot;
+    for(let i = 0; i < oldGeoKeys.length; i++) {
+        const oldGeoKey = oldGeoKeys[i];
+        const oldGeo = oldFullLayout[oldGeoKey]._subplot;
 
         if(!newFullLayout[oldGeoKey] && !!oldGeo) {
             oldGeo.framework.remove();
@@ -66,12 +66,12 @@ function clean(newFullData: FullTrace[], newFullLayout: FullLayout, oldFullData:
 }
 
 function updateFx(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[GEO];
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[GEO];
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var subplotLayout = fullLayout[subplotIds[i]];
-        var subplotObj = subplotLayout._subplot;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const subplotLayout = fullLayout[subplotIds[i]];
+        const subplotObj = subplotLayout._subplot;
         subplotObj.updateFx(fullLayout, subplotLayout);
     }
 }

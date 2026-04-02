@@ -11,19 +11,19 @@ import type { GraphDiv } from '../../../types/core';
 import _edit_style from './edit_style.js';
 const { styleTextSelection } = _edit_style;
 
-var reglPrecompiled: any = {};
+const reglPrecompiled: any = {};
 
 function getViewport(fullLayout: any, xaxis: any, yaxis: any, plotGlPixelRatio: any) {
-    var gs = fullLayout._size;
-    var width = fullLayout.width * plotGlPixelRatio;
-    var height = fullLayout.height * plotGlPixelRatio;
+    const gs = fullLayout._size;
+    const width = fullLayout.width * plotGlPixelRatio;
+    const height = fullLayout.height * plotGlPixelRatio;
 
-    var l = gs.l * plotGlPixelRatio;
-    var b = gs.b * plotGlPixelRatio;
-    var r = gs.r * plotGlPixelRatio;
-    var t = gs.t * plotGlPixelRatio;
-    var w = gs.w * plotGlPixelRatio;
-    var h = gs.h * plotGlPixelRatio;
+    const l = gs.l * plotGlPixelRatio;
+    const b = gs.b * plotGlPixelRatio;
+    const r = gs.r * plotGlPixelRatio;
+    const t = gs.t * plotGlPixelRatio;
+    const w = gs.w * plotGlPixelRatio;
+    const h = gs.h * plotGlPixelRatio;
     return [
         l + xaxis.domain[0] * w,
         b + yaxis.domain[0] * h,
@@ -35,22 +35,22 @@ function getViewport(fullLayout: any, xaxis: any, yaxis: any, plotGlPixelRatio: 
 function plot(gd: GraphDiv, subplot: any, cdata: any) {
     if(!cdata.length) return;
 
-    var fullLayout = gd._fullLayout;
-    var scene = subplot._scene;
-    var xaxis = subplot.xaxis;
-    var yaxis = subplot.yaxis;
-    var i, j;
+    const fullLayout = gd._fullLayout;
+    const scene = subplot._scene;
+    const xaxis = subplot.xaxis;
+    const yaxis = subplot.yaxis;
+    let i, j;
 
     if(!scene) return;
 
-    var success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint'], reglPrecompiled);
+    const success = prepareRegl(gd, ['ANGLE_instanced_arrays', 'OES_element_index_uint'], reglPrecompiled);
     if(!success) {
         scene.init();
         return;
     }
 
-    var count = scene.count;
-    var regl = fullLayout._glcanvas.data()[0].regl;
+    const count = scene.count;
+    const regl = fullLayout._glcanvas.data()[0].regl;
 
     linkTraces(gd, subplot, cdata);
 
@@ -83,13 +83,13 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
 
         if(scene.glText) {
             if(count > scene.glText.length) {
-                var textsToAdd = count - scene.glText.length;
+                const textsToAdd = count - scene.glText.length;
                 for(i = 0; i < textsToAdd; i++) {
                     scene.glText.push(new Text(regl));
                 }
             } else if(count < scene.glText.length) {
-                var textsToRemove = scene.glText.length - count;
-                var removedTexts = scene.glText.splice(count, textsToRemove);
+                const textsToRemove = scene.glText.length - count;
+                const removedTexts = scene.glText.splice(count, textsToRemove);
                 removedTexts.forEach(function(text: any) { text.destroy(); });
             }
 
@@ -101,13 +101,13 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
             scene.line2d.update(scene.lineOptions);
             scene.lineOptions = scene.lineOptions.map(function(lineOptions: any) {
                 if(lineOptions && lineOptions.positions) {
-                    var srcPos = lineOptions.positions;
+                    const srcPos = lineOptions.positions;
 
-                    var firstptdef = 0;
+                    let firstptdef = 0;
                     while(firstptdef < srcPos.length && (isNaN(srcPos[firstptdef]) || isNaN(srcPos[firstptdef + 1]))) {
                         firstptdef += 2;
                     }
-                    var lastptdef = srcPos.length - 2;
+                    let lastptdef = srcPos.length - 2;
                     while(lastptdef > firstptdef && (isNaN(srcPos[lastptdef]) || isNaN(srcPos[lastptdef + 1]))) {
                         lastptdef -= 2;
                     }
@@ -118,7 +118,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
             scene.line2d.update(scene.lineOptions);
         }
         if(scene.error2d) {
-            var errorBatch = (scene.errorXOptions || []).concat(scene.errorYOptions || []);
+            const errorBatch = (scene.errorXOptions || []).concat(scene.errorYOptions || []);
             scene.error2d.update(errorBatch);
         }
         if(scene.scatter2d) {
@@ -128,22 +128,22 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         scene.fillOrder = Lib.repeat(null, count);
         if(scene.fill2d) {
             scene.fillOptions = scene.fillOptions.map(function(fillOptions: any, i: any) {
-                var cdscatter = cdata[i];
+                const cdscatter = cdata[i];
                 if(!fillOptions || !cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
-                var cd = cdscatter[0];
-                var trace = cd.trace;
-                var stash = cd.t;
-                var lineOptions = scene.lineOptions[i];
-                var last, j;
+                const cd = cdscatter[0];
+                const trace = cd.trace;
+                const stash = cd.t;
+                const lineOptions = scene.lineOptions[i];
+                let last, j;
 
-                var fillData: any[] = [];
+                const fillData: any[] = [];
                 if(trace._ownfill) fillData.push(i);
                 if(trace._nexttrace) fillData.push(i + 1);
                 if(fillData.length) scene.fillOrder[i] = fillData;
 
-                var pos: any[] = [];
-                var srcPos = (lineOptions && lineOptions.positions) || stash.positions;
-                var firstptdef, lastptdef;
+                let pos: any[] = [];
+                const srcPos = (lineOptions && lineOptions.positions) || stash.positions;
+                let firstptdef, lastptdef;
 
                 if(trace.fill === 'tozeroy') {
                     firstptdef = 0;
@@ -196,19 +196,19 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
                         pos.push(srcPos[last], srcPos[last + 1]);
                     }
                 } else {
-                    var nextTrace = trace._nexttrace;
+                    const nextTrace = trace._nexttrace;
 
                     if(nextTrace) {
-                        var nextOptions = scene.lineOptions[i + 1];
+                        const nextOptions = scene.lineOptions[i + 1];
 
                         if(nextOptions) {
-                            var nextPos = nextOptions.positions;
+                            const nextPos = nextOptions.positions;
                             if(trace.fill === 'tonexty') {
                                 pos = srcPos.slice();
 
                                 for(i = Math.floor(nextPos.length / 2); i--;) {
-                                    var xx = nextPos[i * 2];
-                                    var yy = nextPos[i * 2 + 1];
+                                    const xx = nextPos[i * 2];
+                                    const yy = nextPos[i * 2 + 1];
                                     if(isNaN(xx) || isNaN(yy)) continue;
                                     pos.push(xx, yy);
                                 }
@@ -219,11 +219,11 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
                 }
 
                 if(trace._prevtrace && trace._prevtrace.fill === 'tonext') {
-                    var prevLinePos = scene.lineOptions[i - 1].positions;
+                    const prevLinePos = scene.lineOptions[i - 1].positions;
 
-                    var offset = pos.length / 2;
+                    const offset = pos.length / 2;
                     last = offset;
-                    var hole = [last];
+                    const hole = [last];
                     for(j = 0; j < prevLinePos.length; j += 2) {
                         if(isNaN(prevLinePos[j]) || isNaN(prevLinePos[j + 1])) {
                             hole.push(j / 2 + offset + 1);
@@ -245,38 +245,38 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         }
     }
 
-    var dragmode = fullLayout.dragmode;
-    var isSelectMode = selectMode(dragmode);
-    var clickSelectEnabled = fullLayout.clickmode.indexOf('select') > -1;
+    const dragmode = fullLayout.dragmode;
+    let isSelectMode = selectMode(dragmode);
+    const clickSelectEnabled = fullLayout.clickmode.indexOf('select') > -1;
 
     for(i = 0; i < count; i++) {
-        var cd0 = cdata[i][0];
-        var trace = cd0.trace;
-        var stash = cd0.t;
-        var index = stash.index;
-        var len = trace._length;
-        var x = stash.x;
-        var y = stash.y;
+        const cd0 = cdata[i][0];
+        const trace = cd0.trace;
+        const stash = cd0.t;
+        const index = stash.index;
+        const len = trace._length;
+        const x = stash.x;
+        const y = stash.y;
 
         if(trace.selectedpoints || isSelectMode || clickSelectEnabled) {
             if(!isSelectMode) isSelectMode = true;
 
             if(trace.selectedpoints) {
-                var selPts = scene.selectBatch[index] = Lib.selIndices2selPoints(trace);
+                const selPts = scene.selectBatch[index] = Lib.selIndices2selPoints(trace);
 
-                var selDict: any = {};
+                const selDict: any = {};
                 for(j = 0; j < selPts.length; j++) {
                     selDict[selPts[j]] = 1;
                 }
-                var unselPts = [];
+                const unselPts: any[] = [];
                 for(j = 0; j < len; j++) {
                     if(!selDict[j]) unselPts.push(j);
                 }
                 scene.unselectBatch[index] = unselPts;
             }
 
-            var xpx = stash.xpx = new Array(len);
-            var ypx = stash.ypx = new Array(len);
+            const xpx = stash.xpx = new Array(len);
+            const ypx = stash.ypx = new Array(len);
             for(j = 0; j < len; j++) {
                 xpx[j] = xaxis.c2p(x[j]);
                 ypx[j] = yaxis.c2p(y[j]);
@@ -292,7 +292,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         }
 
         if(scene.scatter2d) {
-            var unselOpts = new Array(count);
+            const unselOpts = new Array(count);
             for(i = 0; i < count; i++) {
                 unselOpts[i] = scene.selectBatch[i].length || scene.unselectBatch[i].length ?
                     scene.markerUnselectedOptions[i] :
@@ -308,7 +308,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
 
         if(scene.glText) {
             cdata.forEach(function(cdscatter: any) {
-                var trace = ((cdscatter || [])[0] || {}).trace || {};
+                const trace = ((cdscatter || [])[0] || {}).trace || {};
                 if(subTypes.hasText(trace)) {
                     styleTextSelection(cdscatter);
                 }
@@ -320,7 +320,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         }
     }
 
-    var vpRange0 = {
+    const vpRange0 = {
         viewport: getViewport(fullLayout, xaxis, yaxis, gd._context.plotGlPixelRatio),
         range: [
             (xaxis._rl || xaxis.range)[0],
@@ -329,7 +329,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
             (yaxis._rl || yaxis.range)[1]
         ]
     };
-    var vpRange = Lib.repeat(vpRange0, scene.count);
+    const vpRange = Lib.repeat(vpRange0, scene.count);
 
     if(scene.fill2d) {
         scene.fill2d.update(vpRange);

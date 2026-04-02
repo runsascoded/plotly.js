@@ -4,9 +4,9 @@ import Plots from '../../plots/plots.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
 import Icons from '../../fonts/ploticon.js';
 import Lib from '../../lib/index.js';
-var _ = Lib._;
+const _ = Lib._;
 
-var modeBarButtons: any = {};
+const modeBarButtons: any = {};
 
 /**
  * ModeBar buttons configuration
@@ -36,22 +36,22 @@ var modeBarButtons: any = {};
 modeBarButtons.toImage = {
     name: 'toImage',
     title: function(gd: GraphDiv) {
-        var opts = gd._context.toImageButtonOptions || {};
-        var format = opts.format || 'png';
+        const opts = gd._context.toImageButtonOptions || {};
+        const format = opts.format || 'png';
         return format === 'png' ?
             _(gd, 'Download plot as a PNG') : // legacy text
             _(gd, 'Download plot'); // generic non-PNG text
     },
     icon: Icons.camera,
     click: function(gd: GraphDiv) {
-        var toImageButtonOptions = gd._context.toImageButtonOptions;
-        var opts = {format: toImageButtonOptions.format || 'png'};
+        const toImageButtonOptions = gd._context.toImageButtonOptions;
+        const opts = {format: toImageButtonOptions.format || 'png'};
 
         Lib.notifier(_(gd, 'Taking snapshot - this may take a few seconds'), 'long');
 
         ['filename', 'width', 'height', 'scale'].forEach(function(key: any) {
             if(key in toImageButtonOptions) {
-                opts[key] = toImageButtonOptions[key];
+                (opts as any)[key] = toImageButtonOptions[key];
             }
         });
 
@@ -240,21 +240,21 @@ modeBarButtons.hoverCompareCartesian = {
 };
 
 function handleCartesian(gd: GraphDiv, ev: any) {
-    var button = ev.currentTarget;
-    var astr = button.getAttribute('data-attr');
-    var val = button.getAttribute('data-val') || true;
-    var fullLayout = gd._fullLayout;
-    var aobj: any = {};
-    var axList = axisIds.list(gd, null, true);
-    var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
+    const button = ev.currentTarget;
+    const astr = button.getAttribute('data-attr');
+    let val = button.getAttribute('data-val') || true;
+    const fullLayout = gd._fullLayout;
+    const aobj: any = {};
+    const axList = axisIds.list(gd, null, true);
+    let allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
 
-    var ax, i;
+    let ax, i;
 
     if(astr === 'zoom') {
-        var mag = (val === 'in') ? 0.5 : 2;
-        var r0 = (1 + mag) / 2;
-        var r1 = (1 - mag) / 2;
-        var axName, allowed;
+        const mag = (val === 'in') ? 0.5 : 2;
+        const r0 = (1 + mag) / 2;
+        const r1 = (1 - mag) / 2;
+        let axName, allowed;
 
         for(i = 0; i < axList.length; i++) {
             ax = axList[i];
@@ -287,12 +287,12 @@ function handleCartesian(gd: GraphDiv, ev: any) {
                         }
                     }
                 } else {
-                    var rangeNow = [
+                    const rangeNow = [
                         ax.r2l(ax.range[0]),
                         ax.r2l(ax.range[1]),
                     ];
 
-                    var rangeNew = [
+                    const rangeNew = [
                         r0 * rangeNow[0] + r1 * rangeNow[1],
                         r0 * rangeNow[1] + r1 * rangeNow[0]
                     ];
@@ -356,20 +356,20 @@ modeBarButtons.tableRotation = {
 };
 
 function handleDrag3d(gd: GraphDiv, ev: any) {
-    var button = ev.currentTarget;
-    var attr = button.getAttribute('data-attr');
-    var val = button.getAttribute('data-val') || true;
-    var sceneIds = gd._fullLayout._subplots.gl3d || [];
-    var layoutUpdate: any = {};
+    const button = ev.currentTarget;
+    const attr = button.getAttribute('data-attr');
+    const val = button.getAttribute('data-val') || true;
+    const sceneIds = gd._fullLayout._subplots.gl3d || [];
+    const layoutUpdate: any = {};
 
-    var parts = attr.split('.');
+    const parts = attr.split('.');
 
-    for(var i = 0; i < sceneIds.length; i++) {
+    for(let i = 0; i < sceneIds.length; i++) {
         layoutUpdate[sceneIds[i] + '.' + parts[1]] = val;
     }
 
     // for multi-type subplots
-    var val2d = (val === 'pan') ? val : 'zoom';
+    const val2d = (val === 'pan') ? val : 'zoom';
     layoutUpdate.dragmode = val2d;
 
     Registry.call('_guiRelayout', gd, layoutUpdate);
@@ -394,22 +394,22 @@ modeBarButtons.resetCameraLastSave3d = {
 };
 
 function handleCamera3d(gd: GraphDiv, ev: any) {
-    var button = ev.currentTarget;
-    var attr = button.getAttribute('data-attr');
-    var resetLastSave = attr === 'resetLastSave';
-    var resetDefault = attr === 'resetDefault';
+    const button = ev.currentTarget;
+    const attr = button.getAttribute('data-attr');
+    const resetLastSave = attr === 'resetLastSave';
+    const resetDefault = attr === 'resetDefault';
 
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots.gl3d || [];
-    var aobj: any = {};
+    const fullLayout = gd._fullLayout;
+    const sceneIds = fullLayout._subplots.gl3d || [];
+    const aobj: any = {};
 
-    for(var i = 0; i < sceneIds.length; i++) {
-        var sceneId = sceneIds[i];
-        var camera = sceneId + '.camera';
-        var aspectratio = sceneId + '.aspectratio';
-        var aspectmode = sceneId + '.aspectmode';
-        var scene = fullLayout[sceneId]._scene;
-        var didUpdate;
+    for(let i = 0; i < sceneIds.length; i++) {
+        const sceneId = sceneIds[i];
+        const camera = sceneId + '.camera';
+        const aspectratio = sceneId + '.aspectratio';
+        const aspectmode = sceneId + '.aspectmode';
+        const scene = fullLayout[sceneId]._scene;
+        let didUpdate;
 
         if(resetLastSave) {
             aobj[camera + '.up'] = scene.viewInitial.up;
@@ -447,33 +447,33 @@ modeBarButtons.hoverClosest3d = {
 };
 
 function getNextHover3d(gd: GraphDiv, ev: any) {
-    var button = ev.currentTarget;
-    var val = button._previousVal;
-    var fullLayout = gd._fullLayout;
-    var sceneIds = fullLayout._subplots.gl3d || [];
+    const button = ev.currentTarget;
+    const val = button._previousVal;
+    const fullLayout = gd._fullLayout;
+    const sceneIds = fullLayout._subplots.gl3d || [];
 
-    var axes = ['xaxis', 'yaxis', 'zaxis'];
+    const axes = ['xaxis', 'yaxis', 'zaxis'];
 
     // initialize 'current spike' object to be stored in the DOM
-    var currentSpikes: any = {};
-    var layoutUpdate: any = {};
+    const currentSpikes: any = {};
+    let layoutUpdate: any = {};
 
     if(val) {
         layoutUpdate = val;
         button._previousVal = null;
     } else {
-        for(var i = 0; i < sceneIds.length; i++) {
-            var sceneId = sceneIds[i];
-            var sceneLayout = fullLayout[sceneId];
+        for(let i = 0; i < sceneIds.length; i++) {
+            const sceneId = sceneIds[i];
+            const sceneLayout = fullLayout[sceneId];
 
-            var hovermodeAStr = sceneId + '.hovermode';
+            const hovermodeAStr = sceneId + '.hovermode';
             currentSpikes[hovermodeAStr] = sceneLayout.hovermode;
             layoutUpdate[hovermodeAStr] = false;
 
             // copy all the current spike attrs
-            for(var j = 0; j < 3; j++) {
-                var axis = axes[j];
-                var spikeAStr = sceneId + '.' + axis + '.showspikes';
+            for(let j = 0; j < 3; j++) {
+                const axis = axes[j];
+                const spikeAStr = sceneId + '.' + axis + '.showspikes';
                 layoutUpdate[spikeAStr] = false;
                 currentSpikes[spikeAStr] = sceneLayout[axis].showspikes;
             }
@@ -485,7 +485,7 @@ function getNextHover3d(gd: GraphDiv, ev: any) {
 }
 
 function handleHover3d(gd: GraphDiv, ev: any) {
-    var layoutUpdate = getNextHover3d(gd, ev);
+    const layoutUpdate = getNextHover3d(gd, ev);
     Registry.call('_guiRelayout', gd, layoutUpdate);
 }
 
@@ -532,19 +532,19 @@ modeBarButtons.hoverClosestGeo = {
 };
 
 function handleGeo(gd: GraphDiv, ev: any) {
-    var button = ev.currentTarget;
-    var attr = button.getAttribute('data-attr');
-    var val = button.getAttribute('data-val') || true;
-    var fullLayout = gd._fullLayout;
-    var geoIds = fullLayout._subplots.geo || [];
+    const button = ev.currentTarget;
+    const attr = button.getAttribute('data-attr');
+    const val = button.getAttribute('data-val') || true;
+    const fullLayout = gd._fullLayout;
+    const geoIds = fullLayout._subplots.geo || [];
 
-    for(var i = 0; i < geoIds.length; i++) {
-        var id = geoIds[i];
-        var geoLayout = fullLayout[id];
+    for(let i = 0; i < geoIds.length; i++) {
+        const id = geoIds[i];
+        const geoLayout = fullLayout[id];
 
         if(attr === 'zoom') {
-            var scale = geoLayout.projection.scale;
-            var newScale = (val === 'in') ? 2 * scale : 0.5 * scale;
+            const scale = geoLayout.projection.scale;
+            const newScale = (val === 'in') ? 2 * scale : 0.5 * scale;
 
             Registry.call('_guiRelayout', gd, id + '.projection.scale', newScale);
         }
@@ -567,7 +567,7 @@ modeBarButtons.hoverClosestPie = {
 };
 
 function getNextHover(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
     if(fullLayout.hovermode) return false;
 
@@ -578,7 +578,7 @@ function getNextHover(gd: GraphDiv) {
 }
 
 function toggleHover(gd: GraphDiv) {
-    var newHover = getNextHover(gd);
+    const newHover = getNextHover(gd);
     Registry.call('_guiRelayout', gd, 'hovermode', newHover);
 }
 
@@ -587,13 +587,13 @@ modeBarButtons.resetViewSankey = {
     title: function(gd: GraphDiv) { return _(gd, 'Reset view'); },
     icon: Icons.home,
     click: function(gd: GraphDiv) {
-        var aObj: any = {
+        const aObj: any = {
             'node.groups': [],
             'node.x': [],
             'node.y': []
         };
-        for(var i = 0; i < gd._fullData.length; i++) {
-            var viewInitial = gd._fullData[i]._viewInitial;
+        for(let i = 0; i < gd._fullData.length; i++) {
+            const viewInitial = gd._fullData[i]._viewInitial;
             aObj['node.groups'].push(viewInitial.node.groups.slice());
             aObj['node.x'].push(viewInitial.node.x.slice());
             aObj['node.y'].push(viewInitial.node.y.slice());
@@ -613,7 +613,7 @@ modeBarButtons.toggleHover = {
     icon: Icons.tooltip_basic,
     gravity: 'ne',
     click: function(gd: GraphDiv, ev: any) {
-        var layoutUpdate = getNextHover3d(gd, ev);
+        const layoutUpdate = getNextHover3d(gd, ev);
         layoutUpdate.hovermode = getNextHover(gd);
 
         Registry.call('_guiRelayout', gd, layoutUpdate);
@@ -625,7 +625,7 @@ modeBarButtons.resetViews = {
     title: function(gd: GraphDiv) { return _(gd, 'Reset views'); },
     icon: Icons.home,
     click: function(gd: GraphDiv, ev: any) {
-        var button = ev.currentTarget;
+        const button = ev.currentTarget;
 
         button.setAttribute('data-attr', 'zoom');
         button.setAttribute('data-val', 'reset');
@@ -647,8 +647,8 @@ modeBarButtons.toggleSpikelines = {
     attr: '_cartesianSpikesEnabled',
     val: 'on',
     click: function(gd: GraphDiv) {
-        var fullLayout = gd._fullLayout;
-        var allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
+        const fullLayout = gd._fullLayout;
+        const allSpikesEnabled = fullLayout._cartesianSpikesEnabled;
 
         fullLayout._cartesianSpikesEnabled = allSpikesEnabled === 'on' ? 'off' : 'on';
         Registry.call('_guiRelayout', gd, setSpikelineVisibility(gd));
@@ -656,13 +656,13 @@ modeBarButtons.toggleSpikelines = {
 };
 
 function setSpikelineVisibility(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var areSpikesOn = fullLayout._cartesianSpikesEnabled === 'on';
-    var axList = axisIds.list(gd, null, true);
-    var aobj: any = {};
+    const fullLayout = gd._fullLayout;
+    const areSpikesOn = fullLayout._cartesianSpikesEnabled === 'on';
+    const axList = axisIds.list(gd, null, true);
+    const aobj: any = {};
 
-    for(var i = 0; i < axList.length; i++) {
-        var ax = axList[i];
+    for(let i = 0; i < axList.length; i++) {
+        const ax = axList[i];
         aobj[ax._name + '.showspikes'] = areSpikesOn ? true : ax._showSpikeInitial;
     }
 
@@ -740,17 +740,17 @@ function handleMapZoom(gd: GraphDiv, ev: any) {
 }
 
 function _handleMapZoom(gd: GraphDiv, ev: any, mapType: any) {
-    var button = ev.currentTarget;
-    var val = button.getAttribute('data-val');
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[mapType] || [];
-    var scalar = 1.05;
-    var aObj: any = {};
+    const button = ev.currentTarget;
+    const val = button.getAttribute('data-val');
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[mapType] || [];
+    const scalar = 1.05;
+    const aObj: any = {};
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var id = subplotIds[i];
-        var current = fullLayout[id].zoom;
-        var next = (val === 'in') ? scalar * current : current / scalar;
+    for(let i = 0; i < subplotIds.length; i++) {
+        const id = subplotIds[i];
+        const current = fullLayout[id].zoom;
+        const next = (val === 'in') ? scalar * current : current / scalar;
         aObj[id + '.zoom'] = next;
     }
 
@@ -758,18 +758,18 @@ function _handleMapZoom(gd: GraphDiv, ev: any, mapType: any) {
 }
 
 function resetView(gd: GraphDiv, subplotType: any) {
-    var fullLayout = gd._fullLayout;
-    var subplotIds = fullLayout._subplots[subplotType] || [];
-    var aObj: any = {};
+    const fullLayout = gd._fullLayout;
+    const subplotIds = fullLayout._subplots[subplotType] || [];
+    const aObj: any = {};
 
-    for(var i = 0; i < subplotIds.length; i++) {
-        var id = subplotIds[i];
-        var subplotObj = fullLayout[id]._subplot;
-        var viewInitial = subplotObj.viewInitial;
-        var viewKeys = Object.keys(viewInitial);
+    for(let i = 0; i < subplotIds.length; i++) {
+        const id = subplotIds[i];
+        const subplotObj = fullLayout[id]._subplot;
+        const viewInitial = subplotObj.viewInitial;
+        const viewKeys = Object.keys(viewInitial);
 
-        for(var j = 0; j < viewKeys.length; j++) {
-            var key = viewKeys[j];
+        for(let j = 0; j < viewKeys.length; j++) {
+            const key = viewKeys[j];
             aObj[id + '.' + key] = viewInitial[key];
         }
     }

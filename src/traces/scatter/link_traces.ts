@@ -1,16 +1,16 @@
 import type { CalcDatum, GraphDiv, PlotInfo } from '../../../types/core';
 
-var LINKEDFILLS = {tonextx: 1, tonexty: 1, tonext: 1};
+const LINKEDFILLS = {tonextx: 1, tonexty: 1, tonext: 1};
 
 export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDatum[][]): CalcDatum[][] {
-    var trace, i, group, prevtrace, groupIndex;
+    let trace, i, group, prevtrace, groupIndex;
 
     // first sort traces to keep stacks & filled-together groups together
-    var groupIndices: any = {};
-    var needsSort = false;
-    var prevGroupIndex = -1;
-    var nextGroupIndex = 0;
-    var prevUnstackedGroupIndex = -1;
+    const groupIndices: any = {};
+    let needsSort = false;
+    let prevGroupIndex = -1;
+    let nextGroupIndex = 0;
+    let prevUnstackedGroupIndex = -1;
     for(i = 0; i < cdscatter.length; i++) {
         trace = cdscatter[i][0].trace;
         group = trace.stackgroup || '';
@@ -32,18 +32,18 @@ export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: 
         trace._groupIndex = prevGroupIndex = groupIndex;
     }
 
-    var cdscatterSorted = cdscatter.slice();
+    const cdscatterSorted = cdscatter.slice();
     if(needsSort) {
         cdscatterSorted.sort(function(a, b) {
-            var traceA = a[0].trace;
-            var traceB = b[0].trace;
+            const traceA = a[0].trace;
+            const traceB = b[0].trace;
             return (traceA._groupIndex - traceB._groupIndex) ||
                 (traceA.index - traceB.index);
         });
     }
 
     // now link traces to each other
-    var prevtraces: any = {};
+    const prevtraces: any = {};
     for(i = 0; i < cdscatterSorted.length; i++) {
         trace = cdscatterSorted[i][0].trace;
         group = trace.stackgroup || '';

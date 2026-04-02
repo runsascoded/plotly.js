@@ -15,7 +15,7 @@ import { isTypedArraySpec } from './array.js';
 import { decodeTypedArraySpec } from './array.js';
 import type { FullLayout } from '../../types/core';
 
-export var valObjectMeta: Record<string, any> = {
+export const valObjectMeta: Record<string, any> = {
     data_array: {
         // You can use *dflt=[] to force said array to exist though.
         description: [
@@ -69,12 +69,12 @@ export var valObjectMeta: Record<string, any> = {
         validateFunction: function(v: any, opts: any): boolean {
             if(opts.coerceNumber) v = +v;
 
-            var values = opts.values;
-            for(var i = 0; i < values.length; i++) {
-                var k = String(values[i]);
+            const values = opts.values;
+            for(let i = 0; i < values.length; i++) {
+                const k = String(values[i]);
 
                 if((k.charAt(0) === '/' && k.charAt(k.length - 1) === '/')) {
-                    var regex = new RegExp(k.slice(1, -1));
+                    const regex = new RegExp(k.slice(1, -1));
                     if(regex.test(v)) return true;
                 } else if(v === values[i]) return true;
             }
@@ -147,7 +147,7 @@ export var valObjectMeta: Record<string, any> = {
         otherOpts: ['dflt', 'noBlank', 'strict', 'arrayOk', 'values'],
         coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             if(typeof v !== 'string') {
-                var okToCoerce = (typeof v === 'number');
+                const okToCoerce = (typeof v === 'number');
 
                 if(opts.strict === true || !okToCoerce) propOut.set(dflt);
                 else propOut.set(String(v));
@@ -229,7 +229,7 @@ export var valObjectMeta: Record<string, any> = {
         requiredOpts: ['dflt'],
         otherOpts: ['regex', 'arrayOk'],
         coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
-            var regex = opts.regex || counterRegex(dflt);
+            const regex = opts.regex || counterRegex(dflt);
             const isSubplotId = (value: any): boolean => typeof value === 'string' && regex.test(value);
             if (isSubplotId(v) || (opts.arrayOk && isArrayOrTypedArray(v) && v.length > 0 && v.every(isSubplotId))) {
                 propOut.set(v);
@@ -238,7 +238,7 @@ export var valObjectMeta: Record<string, any> = {
             }
         },
         validateFunction: function(v: any, opts: any): boolean {
-            var dflt = opts.dflt;
+            const dflt = opts.dflt;
 
             if(v === dflt) return true;
             if(typeof v !== 'string') return false;
@@ -266,10 +266,10 @@ export var valObjectMeta: Record<string, any> = {
                 propOut.set(dflt);
                 return;
             }
-            var vParts = v.split('+');
-            var i = 0;
+            const vParts = v.split('+');
+            let i = 0;
             while(i < vParts.length) {
-                var vi = vParts[i];
+                const vi = vParts[i];
                 if(opts.flags.indexOf(vi) === -1 || vParts.indexOf(vi) < i) {
                     vParts.splice(i, 1);
                 } else i++;
@@ -307,8 +307,8 @@ export var valObjectMeta: Record<string, any> = {
         coerceFunction: function(v: any, propOut: any, dflt: any, opts: any) {
             // simplified coerce function just for array items
             function coercePart(v: any, opts: any, dflt: any): any {
-                var out: any;
-                var propPart = {set: function(v: any) { out = v; }};
+                let out: any;
+                const propPart = {set: function(v: any) { out = v; }};
 
                 if(dflt === undefined) dflt = opts.dflt;
 
@@ -324,16 +324,16 @@ export var valObjectMeta: Record<string, any> = {
                 return;
             }
 
-            var twoD = opts.dimensions === 2 || (opts.dimensions === '1-2' && Array.isArray(v) && isArrayOrTypedArray(v[0]));
+            const twoD = opts.dimensions === 2 || (opts.dimensions === '1-2' && Array.isArray(v) && isArrayOrTypedArray(v[0]));
 
-            var items = opts.items;
-            var vOut: any[] = [];
-            var arrayItems = Array.isArray(items);
-            var arrayItems2D = arrayItems && twoD && isArrayOrTypedArray(items[0]);
-            var innerItemsOnly = twoD && arrayItems && !arrayItems2D;
-            var len = (arrayItems && !innerItemsOnly) ? items.length : v.length;
+            const items = opts.items;
+            const vOut: any[] = [];
+            const arrayItems = Array.isArray(items);
+            const arrayItems2D = arrayItems && twoD && isArrayOrTypedArray(items[0]);
+            const innerItemsOnly = twoD && arrayItems && !arrayItems2D;
+            const len = (arrayItems && !innerItemsOnly) ? items.length : v.length;
 
-            var i: number, j: number, row: any, item: any, len2: number, vNew: any;
+            let i: number, j: number, row: any, item: any, len2: number, vNew: any;
 
             dflt = Array.isArray(dflt) ? dflt : [];
 
@@ -366,20 +366,20 @@ export var valObjectMeta: Record<string, any> = {
         validateFunction: function(v: any, opts: any): boolean {
             if(!isArrayOrTypedArray(v)) return false;
 
-            var items = opts.items;
-            var arrayItems = Array.isArray(items);
-            var twoD = opts.dimensions === 2;
+            const items = opts.items;
+            const arrayItems = Array.isArray(items);
+            const twoD = opts.dimensions === 2;
 
             // when free length is off, input and declared lengths must match
             if(!opts.freeLength && v.length !== items.length) return false;
 
             // valid when all input items are valid
-            for(var i = 0; i < v.length; i++) {
+            for(let i = 0; i < v.length; i++) {
                 if(twoD) {
                     if(!isArrayOrTypedArray(v[i]) || (!opts.freeLength && v[i].length !== items[i].length)) {
                         return false;
                     }
-                    for(var j = 0; j < v[i].length; j++) {
+                    for(let j = 0; j < v[i].length; j++) {
                         if(!validate(v[i][j], arrayItems ? items[i][j] : items)) {
                             return false;
                         }
@@ -392,13 +392,13 @@ export var valObjectMeta: Record<string, any> = {
     }
 };
 
-export var coerce = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
-    var opts = nestedProperty(attributes, attribute).get();
-    var propIn = nestedProperty(containerIn, attribute);
-    var propOut = nestedProperty(containerOut, attribute);
-    var v = propIn.get();
+export const coerce = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
+    const opts = nestedProperty(attributes, attribute).get();
+    const propIn = nestedProperty(containerIn, attribute);
+    const propOut = nestedProperty(containerOut, attribute);
+    let v = propIn.get();
 
-    var template = containerOut._template;
+    let template = containerOut._template;
     if(v === undefined && template) {
         v = nestedProperty(template, attribute).get();
         // already used the template value, so short-circuit the second check
@@ -427,10 +427,10 @@ export var coerce = function(containerIn: any, containerOut: any, attributes: an
         }
     }
 
-    var coerceFunction = valObjectMeta[opts.valType].coerceFunction;
+    const coerceFunction = valObjectMeta[opts.valType].coerceFunction;
     coerceFunction(v, propOut, dflt, opts);
 
-    var out = propOut.get();
+    let out = propOut.get();
     // in case v was provided but invalid, try the template again so it still
     // overrides the regular default
     if(template && out === dflt && !validate(v, opts)) {
@@ -441,20 +441,20 @@ export var coerce = function(containerIn: any, containerOut: any, attributes: an
     return out;
 };
 
-export var coerce2 = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
-    var propIn = nestedProperty(containerIn, attribute);
-    var propOut = coerce(containerIn, containerOut, attributes, attribute, dflt);
-    var valIn = propIn.get();
+export const coerce2 = function(containerIn: any, containerOut: any, attributes: any, attribute: string, dflt?: any): any {
+    const propIn = nestedProperty(containerIn, attribute);
+    const propOut = coerce(containerIn, containerOut, attributes, attribute, dflt);
+    const valIn = propIn.get();
 
     return (valIn !== undefined && valIn !== null) ? propOut : false;
 };
 
-export var coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?: any): any {
+export const coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?: any): any {
     if(!opts) opts = {};
     dfltObj = extendFlat({}, dfltObj);
     dfltObj = extendFlat(dfltObj, opts.overrideDflt || {});
 
-    var out: any = {
+    const out: any = {
         family: coerce(attr + '.family', dfltObj.family),
         size: coerce(attr + '.size', dfltObj.size),
         color: coerce(attr + '.color', dfltObj.color),
@@ -466,7 +466,7 @@ export var coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?
     if(!opts.noFontLineposition) out.lineposition = coerce(attr + '.lineposition', dfltObj.lineposition);
     if(!opts.noFontTextcase) out.textcase = coerce(attr + '.textcase', dfltObj.textcase);
     if(!opts.noFontShadow) {
-        var dfltShadow = dfltObj.shadow;
+        let dfltShadow = dfltObj.shadow;
         if(dfltShadow === 'none' && opts.autoShadowDflt) {
             dfltShadow = 'auto';
         }
@@ -476,9 +476,9 @@ export var coerceFont = function(coerce: any, attr: string, dfltObj?: any, opts?
     return out;
 };
 
-export var coercePattern = function(coerce: any, attr: string, markerColor: any, hasMarkerColorscale: boolean): void {
-    var shape = coerce(attr + '.shape');
-    var path: any;
+export const coercePattern = function(coerce: any, attr: string, markerColor: any, hasMarkerColorscale: boolean): void {
+    const shape = coerce(attr + '.shape');
+    let path: any;
     if(!shape) {
         path = coerce(attr + '.path');
     }
@@ -487,11 +487,11 @@ export var coercePattern = function(coerce: any, attr: string, markerColor: any,
             coerce(attr + '.solidity');
         }
         coerce(attr + '.size');
-        var fillmode = coerce(attr + '.fillmode');
-        var isOverlay = fillmode === 'overlay';
+        const fillmode = coerce(attr + '.fillmode');
+        const isOverlay = fillmode === 'overlay';
 
         if(!hasMarkerColorscale) {
-            var bgcolor = coerce(attr + '.bgcolor', isOverlay ?
+            const bgcolor = coerce(attr + '.bgcolor', isOverlay ?
                 markerColor :
                 undefined
             );
@@ -509,15 +509,15 @@ export var coercePattern = function(coerce: any, attr: string, markerColor: any,
     }
 };
 
-export var coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: FullLayout): any {
-    var moduleAttrs = traceOut._module.attributes;
-    var attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
+export const coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: FullLayout): any {
+    const moduleAttrs = traceOut._module.attributes;
+    const attrs = moduleAttrs.hoverinfo ? moduleAttrs : baseTraceAttrs;
 
-    var valObj = attrs.hoverinfo;
-    var dflt: any;
+    const valObj = attrs.hoverinfo;
+    let dflt: any;
 
     if(layoutOut._dataLength === 1) {
-        var flags = valObj.dflt === 'all' ?
+        const flags = valObj.dflt === 'all' ?
             valObj.flags.slice() :
             valObj.dflt.split('+');
 
@@ -528,15 +528,15 @@ export var coerceHoverinfo = function(traceIn: any, traceOut: any, layoutOut: Fu
     return coerce(traceIn, traceOut, attrs, 'hoverinfo', dflt);
 };
 
-export var coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any): void {
+export const coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any): void {
     if(!traceOut.marker) return;
 
-    var mo = traceOut.marker.opacity;
+    const mo = traceOut.marker.opacity;
     // you can still have a `marker` container with no markers if there's text
     if(mo === undefined) return;
 
-    var smoDflt: any;
-    var usmoDflt: any;
+    let smoDflt: any;
+    let usmoDflt: any;
 
     // Don't give [un]selected.marker.opacity a default value if
     // marker.opacity is an array: handle this during style step.
@@ -553,7 +553,7 @@ export var coerceSelectionMarkerOpacity = function(traceOut: any, coerce: any): 
 };
 
 function validate(value: any, opts: any): boolean {
-    var valObjectDef = valObjectMeta[opts.valType];
+    const valObjectDef = valObjectMeta[opts.valType];
 
     if(opts.arrayOk && isArrayOrTypedArray(value)) return true;
 
@@ -561,9 +561,9 @@ function validate(value: any, opts: any): boolean {
         return valObjectDef.validateFunction(value, opts);
     }
 
-    var failed: any = {};
-    var out: any = failed;
-    var propMock = { set: function(v: any) { out = v; } };
+    const failed: any = {};
+    let out: any = failed;
+    const propMock = { set: function(v: any) { out = v; } };
 
     // 'failed' just something mutable that won't be === anything else
 

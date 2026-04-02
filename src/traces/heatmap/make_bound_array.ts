@@ -3,18 +3,18 @@ import Registry from '../../registry.js';
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,  numbricks,  ax: FullAxis) {
-    var arrayOut = [];
-    var isContour = Registry.traceIs(trace, 'contour');
-    var isHist = Registry.traceIs(trace, 'histogram');
-    var v0;
-    var dv;
-    var i;
+export default function makeBoundArray(trace: FullTrace,  arrayIn: any,  v0In: any,  dvIn: any,  numbricks: any,  ax: FullAxis) {
+    let arrayOut: any[] = [];
+    const isContour = Registry.traceIs(trace, 'contour');
+    const isHist = Registry.traceIs(trace, 'histogram');
+    let v0;
+    let dv;
+    let i;
 
-    var isArrayOfTwoItemsOrMore = isArrayOrTypedArray(arrayIn) && arrayIn.length > 1;
+    const isArrayOfTwoItemsOrMore = isArrayOrTypedArray(arrayIn) && arrayIn.length > 1;
 
     if(isArrayOfTwoItemsOrMore && !isHist && (ax.type !== 'category')) {
-        var len = arrayIn.length;
+        const len = arrayIn.length;
 
         // given vals are brick centers
         // hopefully length === numbricks, but use this method even if too few are supplied
@@ -49,8 +49,8 @@ export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,
             }
 
             if(len < numbricks) {
-                var lastPt = arrayOut[arrayOut.length - 1];
-                var delta; // either multiplicative delta (log axis type) or arithmetic delta (all other axis types)
+                let lastPt = arrayOut[arrayOut.length - 1];
+                let delta; // either multiplicative delta (log axis type) or arithmetic delta (all other axis types)
                 if(ax.type === 'log') {
                     delta = lastPt / arrayOut[arrayOut.length - 2];
 
@@ -75,7 +75,7 @@ export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,
                 arrayIn.slice(0, numbricks + 1);
         }
     } else {
-        var calendar = trace[ax._id.charAt(0) + 'calendar'];
+        const calendar = trace[ax._id.charAt(0) + 'calendar'];
 
         if(isHist) {
             v0 = ax.r2c(v0In, 0, calendar);
@@ -85,7 +85,7 @@ export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,
             } else if(v0In === undefined) {
                 v0 = 0;
             } else {
-                var fn = ax.type === 'log' ? ax.d2c : ax.r2c;
+                const fn = ax.type === 'log' ? ax.d2c : ax.r2c;
                 v0 = fn(v0In, 0, calendar);
             }
         }

@@ -13,7 +13,7 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
         return Lib.coerce(traceIn, traceOut, attributes, attr, dflt);
     }
 
-    var len = handleXYDefaults(traceIn, traceOut, layout, coerce);
+    const len = handleXYDefaults(traceIn, traceOut, layout, coerce);
     if (!len) {
         traceOut.visible = false;
         return;
@@ -27,13 +27,13 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     coerce('offset');
     coerce('width');
 
-    var text = coerce('text');
+    const text = coerce('text');
 
     coerce('hovertext');
     coerce('hovertemplate');
     coerce('hovertemplatefallback');
 
-    var textposition = coerce('textposition');
+    const textposition = coerce('textposition');
     handleText(traceIn, traceOut, layout, coerce, textposition, {
         moduleHasSelected: false,
         moduleHasUnselected: false,
@@ -47,15 +47,15 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
         coerce('textinfo', Lib.isArrayOrTypedArray(text) ? 'text+value' : 'value');
     }
 
-    var markerColor = coerce('marker.color', defaultColor);
+    const markerColor = coerce('marker.color', defaultColor);
     coerce('marker.line.color', Color.defaultLine);
     coerce('marker.line.width');
 
-    var connectorVisible = coerce('connector.visible');
+    const connectorVisible = coerce('connector.visible');
     if (connectorVisible) {
         coerce('connector.fillcolor', defaultFillColor(markerColor));
 
-        var connectorLineWidth = coerce('connector.line.width');
+        const connectorLineWidth = coerce('connector.line.width');
         if (connectorLineWidth) {
             coerce('connector.line.color');
             coerce('connector.line.dash');
@@ -64,20 +64,20 @@ function supplyDefaults(traceIn: InputTrace,  traceOut: FullTrace,  defaultColor
     coerce('zorder');
 }
 
-function defaultFillColor(markerColor) {
-    var cBase = Lib.isArrayOrTypedArray(markerColor) ? '#000' : markerColor;
+function defaultFillColor(markerColor: any) {
+    const cBase = Lib.isArrayOrTypedArray(markerColor) ? '#000' : markerColor;
 
     return Color.addOpacity(cBase, 0.5 * Color.opacity(cBase));
 }
 
-function crossTraceDefaults(fullData,  fullLayout: FullLayout) {
-    var traceIn, traceOut;
+function crossTraceDefaults(fullData: any,  fullLayout: FullLayout) {
+    let traceIn, traceOut: any;
 
     function coerce(attr: string) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
     }
 
-    for (var i = 0; i < fullData.length; i++) {
+    for (let i = 0; i < fullData.length; i++) {
         traceOut = fullData[i];
         if (traceOut.type === 'funnel') {
             traceIn = traceOut._input;

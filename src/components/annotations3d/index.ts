@@ -26,14 +26,14 @@ export default {
 };
 
 function includeGL3D(layoutIn: any, layoutOut: FullLayout) {
-    var GL3D = Registry.subplotsRegistry.gl3d;
+    const GL3D = Registry.subplotsRegistry.gl3d;
     if(!GL3D) return;
 
-    var attrRegex = GL3D.attrRegex;
+    const attrRegex = GL3D.attrRegex;
 
-    var keys = Object.keys(layoutIn);
-    for(var i = 0; i < keys.length; i++) {
-        var k = keys[i];
+    const keys = Object.keys(layoutIn);
+    for(let i = 0; i < keys.length; i++) {
+        const k = keys[i];
         if(attrRegex.test(k) && (layoutIn[k].annotations || []).length) {
             Lib.pushUnique(layoutOut._basePlotModules, GL3D);
             Lib.pushUnique(layoutOut._subplots.gl3d, k);

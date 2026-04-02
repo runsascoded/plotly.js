@@ -3,7 +3,7 @@ import { mergeArray, mergeArrayCastPositive } from '../../lib/index.js';
 
 export default function arraysToCalcdata(cd: CalcDatum[], trace: FullTrace): void {
     // so each point knows which index it originally came from
-    for(var i = 0; i < cd.length; i++) cd[i].i = i;
+    for(let i = 0; i < cd.length; i++) cd[i].i = i;
 
     mergeArray(trace.text, cd, 'tx');
     mergeArray(trace.texttemplate, cd, 'txt');
@@ -22,7 +22,7 @@ export default function arraysToCalcdata(cd: CalcDatum[], trace: FullTrace): voi
         mergeArray(trace.textfont.shadow, cd, 'tS');
     }
 
-    var marker = trace.marker;
+    const marker = trace.marker;
     if(marker) {
         mergeArrayCastPositive(marker.size, cd, 'ms');
         mergeArrayCastPositive(marker.opacity, cd, 'mo');
@@ -31,13 +31,13 @@ export default function arraysToCalcdata(cd: CalcDatum[], trace: FullTrace): voi
         mergeArray(marker.standoff, cd, 'mf');
         mergeArray(marker.color, cd, 'mc');
 
-        var markerLine = marker.line;
+        const markerLine = marker.line;
         if(marker.line) {
             mergeArray(markerLine.color, cd, 'mlc');
             mergeArrayCastPositive(markerLine.width, cd, 'mlw');
         }
 
-        var markerGradient = marker.gradient;
+        const markerGradient = marker.gradient;
         if(markerGradient && markerGradient.type !== 'none') {
             mergeArray(markerGradient.type, cd, 'mgt');
             mergeArray(markerGradient.color, cd, 'mgc');

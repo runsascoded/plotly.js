@@ -1,14 +1,14 @@
 import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
-export default function(a, b, cheaterslope) {
-    var i, j, ascal, bscal, aval, bval;
-    var data = [];
+export default function(a: any, b: any, cheaterslope: any) {
+    let i, j, ascal: any, bscal: any, aval, bval;
+    const data: any[] = [];
 
-    var na = isArrayOrTypedArray(a) ? a.length : a;
-    var nb = isArrayOrTypedArray(b) ? b.length : b;
-    var adata = isArrayOrTypedArray(a) ? a : null;
-    var bdata = isArrayOrTypedArray(b) ? b : null;
+    const na = isArrayOrTypedArray(a) ? a.length : a;
+    const nb = isArrayOrTypedArray(b) ? b.length : b;
+    const adata = isArrayOrTypedArray(a) ? a : null;
+    const bdata = isArrayOrTypedArray(b) ? b : null;
 
     // If we're using data, scale it so that for data that's just barely
     // not evenly spaced, the switch to value-based indexing is continuous.
@@ -22,18 +22,18 @@ export default function(a, b, cheaterslope) {
         bscal = (bdata.length - 1) / (bdata[bdata.length - 1] - bdata[0]) / (nb - 1);
     }
 
-    var xval;
-    var xmin = Infinity;
-    var xmax = -Infinity;
+    let xval;
+    let xmin = Infinity;
+    let xmax = -Infinity;
     for(j = 0; j < nb; j++) {
-        data[j] = [];
+        data[j] = ([] as any);
         bval = bdata ? (bdata[j] - bdata[0]) * bscal : j / (nb - 1);
         for(i = 0; i < na; i++) {
             aval = adata ? (adata[i] - adata[0]) * ascal : i / (na - 1);
             xval = aval - bval * cheaterslope;
             xmin = Math.min(xval, xmin);
             xmax = Math.max(xval, xmax);
-            data[j][i] = xval;
+            data[j][i] = (xval as any);
         }
     }
 
@@ -41,11 +41,11 @@ export default function(a, b, cheaterslope) {
     // multiple cheater plots. After careful consideration, it seems better if cheater
     // values are normalized to a consistent range. Otherwise one cheater affects the
     // layout of other cheaters on the same axis.
-    var slope = 1.0 / (xmax - xmin);
-    var offset = -xmin * slope;
+    const slope = 1.0 / (xmax - xmin);
+    const offset = -xmin * slope;
     for(j = 0; j < nb; j++) {
         for(i = 0; i < na; i++) {
-            data[j][i] = slope * data[j][i] + offset;
+            data[j][i] = (slope * data[j][i] + offset as any);
         }
     }
 

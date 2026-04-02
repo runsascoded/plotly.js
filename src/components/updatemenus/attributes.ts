@@ -6,7 +6,7 @@ const { overrideAll } = _edit_types;
 import padAttrs from '../../plots/pad_attributes.js';
 import { templatedArray } from '../../plot_api/plot_template.js';
 
-var buttonsAttrs = templatedArray('button', {
+const buttonsAttrs = templatedArray('button', {
     visible: {
         valType: 'boolean',
         description: 'Determines whether or not this button is visible.'

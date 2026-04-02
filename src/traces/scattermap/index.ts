@@ -21,9 +21,9 @@ export default {
     eventData: _req7,
     selectPoints: _req8,
 
-    styleOnSelect: function(_, cd) {
+    styleOnSelect: function(_: any, cd: any) {
         if(cd) {
-            var trace = cd[0].trace;
+            const trace = cd[0].trace;
             trace._glTrace.update(cd);
         }
     },

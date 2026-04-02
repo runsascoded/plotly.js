@@ -6,7 +6,7 @@ const { extendFlat } = _index;
 import _edit_types from '../../plot_api/edit_types.js';
 const { overrideAll } = _edit_types;
 
-var axisLineGridAttr = overrideAll({
+const axisLineGridAttr = overrideAll({
     color: axesAttrs.color,
     showline: extendFlat({}, axesAttrs.showline, {dflt: true}),
     linecolor: axesAttrs.linecolor,
@@ -22,7 +22,7 @@ var axisLineGridAttr = overrideAll({
 
 }, 'plot', 'from-root');
 
-var axisTickAttrs = overrideAll({
+const axisTickAttrs = overrideAll({
     tickmode: axesAttrs.minor.tickmode,
     nticks: axesAttrs.nticks,
     tick0: axesAttrs.tick0,
@@ -52,7 +52,7 @@ var axisTickAttrs = overrideAll({
     layer: axesAttrs.layer
 }, 'plot', 'from-root');
 
-var radialAxisAttrs = {
+const radialAxisAttrs = {
     visible: extendFlat({}, axesAttrs.visible, {dflt: true}),
     type: extendFlat({}, axesAttrs.type, {
         values: ['-', 'linear', 'log', 'date', 'category']
@@ -157,7 +157,7 @@ extendFlat(
     axisTickAttrs
 );
 
-var angularAxisAttrs = {
+const angularAxisAttrs = {
     visible: extendFlat({}, axesAttrs.visible, {dflt: true}),
     type: {
         valType: 'enumerated',

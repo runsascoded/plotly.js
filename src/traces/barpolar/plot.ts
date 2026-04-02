@@ -5,36 +5,36 @@ import { setClipUrl } from '../../components/drawing/index.js';
 import helpers from '../../plots/polar/helpers.js';
 import type { GraphDiv } from '../../../types/core';
 
-export default function plot(gd: GraphDiv, subplot, cdbar) {
-    var isStatic = gd._context.staticPlot;
-    var xa = subplot.xaxis;
-    var ya = subplot.yaxis;
-    var radialAxis = subplot.radialAxis;
-    var angularAxis = subplot.angularAxis;
-    var pathFn = makePathFn(subplot);
-    var barLayer = subplot.layers.frontplot.select('g.barlayer');
+export default function plot(gd: GraphDiv, subplot: any, cdbar: any) {
+    const isStatic = gd._context.staticPlot;
+    const xa = subplot.xaxis;
+    const ya = subplot.yaxis;
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
+    const pathFn = makePathFn(subplot);
+    const barLayer = subplot.layers.frontplot.select('g.barlayer');
 
-    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function() {
-        var plotGroup = select(this);
-        var pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
-        var bars = pointGroup.selectAll('g.point').data(Lib.identity);
+    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function(this: any) {
+        const plotGroup = select(this);
+        const pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
+        const bars = pointGroup.selectAll('g.point').data(Lib.identity);
 
-        bars.enter().append('g')
+        const barsEnter = bars.enter().append('g')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')
             .style('stroke-miterlimit', 2)
             .classed('point', true);
 
         bars.exit().remove();
 
-        bars.each(function(di) {
-            var bar = select(this);
+        bars.merge(barsEnter).each(function(this: any, di: any) {
+            const bar = select(this);
 
-            var rp0 = di.rp0 = radialAxis.c2p(di.s0);
-            var rp1 = di.rp1 = radialAxis.c2p(di.s1);
-            var thetag0 = di.thetag0 = angularAxis.c2g(di.p0);
-            var thetag1 = di.thetag1 = angularAxis.c2g(di.p1);
+            const rp0 = di.rp0 = radialAxis.c2p(di.s0);
+            const rp1 = di.rp1 = radialAxis.c2p(di.s1);
+            const thetag0 = di.thetag0 = angularAxis.c2g(di.p0);
+            const thetag1 = di.thetag1 = angularAxis.c2g(di.p1);
 
-            var dPath;
+            let dPath;
 
             if(!isNumeric(rp0) || !isNumeric(rp1) ||
                 !isNumeric(thetag0) || !isNumeric(thetag1) ||
@@ -46,8 +46,8 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
                 dPath = 'M0,0Z';
             } else {
                 // this 'center' pt is used for selections and hover labels
-                var rg1 = radialAxis.c2g(di.s1);
-                var thetagMid = (thetag0 + thetag1) / 2;
+                const rg1 = radialAxis.c2g(di.s1);
+                const thetagMid = (thetag0 + thetag1) / 2;
                 di.ct = [
                     xa.c2p(rg1 * Math.cos(thetagMid)),
                     ya.c2p(rg1 * Math.sin(thetagMid))
@@ -68,13 +68,13 @@ export default function plot(gd: GraphDiv, subplot, cdbar) {
     });
 }
 
-function makePathFn(subplot) {
-    var cxx = subplot.cxx;
-    var cyy = subplot.cyy;
+function makePathFn(subplot: any) {
+    const cxx = subplot.cxx;
+    const cyy = subplot.cyy;
 
     if(subplot.vangles) {
-        return function(r0, r1, _a0, _a1) {
-            var a0, a1;
+        return function(r0: any, r1: any, _a0: any, _a1: any) {
+            let a0, a1;
 
             if(Lib.angleDelta(_a0, _a1) > 0) {
                 a0 = _a0;
@@ -84,14 +84,14 @@ function makePathFn(subplot) {
                 a1 = _a0;
             }
 
-            var va0 = helpers.findEnclosingVertexAngles(a0, subplot.vangles)[0];
-            var va1 = helpers.findEnclosingVertexAngles(a1, subplot.vangles)[1];
-            var vaBar = [va0, (a0 + a1) / 2, va1];
+            const va0 = helpers.findEnclosingVertexAngles(a0, subplot.vangles)[0];
+            const va1 = helpers.findEnclosingVertexAngles(a1, subplot.vangles)[1];
+            const vaBar = [va0, (a0 + a1) / 2, va1];
             return helpers.pathPolygonAnnulus(r0, r1, a0, a1, vaBar, cxx, cyy);
         };
     }
 
-    return function(r0, r1, a0, a1) {
+    return function(r0: any, r1: any, a0: any, a1: any) {
         return Lib.pathAnnulus(r0, r1, a0, a1, cxx, cyy);
     };
 }

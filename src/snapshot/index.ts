@@ -5,7 +5,7 @@ import _req2 from './svgtoimg.js';
 import _req3 from './toimage.js';
 import _req4 from './download.js';
 
-var Snapshot = {
+const Snapshot = {
     getDelay: helpers.getDelay,
     getRedrawFunc: helpers.getRedrawFunc,
     clone: _req0,

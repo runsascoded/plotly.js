@@ -7,9 +7,9 @@ import _numerical from '../../constants/numerical.js';
 const { BADNUM } = _numerical;
 
 export default function calc(gd: GraphDiv,  trace: FullTrace) {
-    var xa = Axes.getFromId(gd, trace.xaxis || 'x');
-    var ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    var size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi;
+    const xa = Axes.getFromId(gd, trace.xaxis || 'x');
+    const ya = Axes.getFromId(gd, trace.yaxis || 'y');
+    let size, pos, origPos, pObj, hasPeriod, pLetter, i, cdi: any;
 
     if(trace.orientation === 'h') {
         size = xa.makeCalcdata(trace, 'x');
@@ -27,8 +27,8 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     pos = pObj.vals;
 
     // create the "calculated data" to plot
-    var serieslen = Math.min(pos.length, size.length);
-    var cd = new Array(serieslen);
+    const serieslen = Math.min(pos.length, size.length);
+    const cd = new Array(serieslen);
 
     // Unlike other bar-like traces funnels do not support base attribute.
     // bases for funnels are computed internally in a way that
@@ -40,7 +40,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
         // treat negative values as bad numbers
         if(size[i] < 0) size[i] = BADNUM;
 
-        var connectToNext = false;
+        let connectToNext = false;
         if(size[i] !== BADNUM) {
             if(i + 1 < serieslen && size[i + 1] !== BADNUM) {
                 connectToNext = true;
@@ -73,7 +73,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
         cdi.begR = fixNum(cdi.s) / fixNum(cd[0].s);
     }
 
-    var prevGoodNum;
+    let prevGoodNum;
     for(i = 0; i < serieslen; i++) {
         cdi = cd[i];
         if(cdi.s === BADNUM) continue;
@@ -93,6 +93,6 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
     return cd;
 }
 
-function fixNum(a) {
+function fixNum(a: any) {
     return (a === BADNUM) ? 0 : a;
 }

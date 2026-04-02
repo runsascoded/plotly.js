@@ -2,24 +2,24 @@ import Lib from '../lib/index.js';
 import { EventEmitter } from 'events';
 import helpers from './helpers.js';
 
-function svgToImg(opts) {
-    var ev = opts.emitter || new EventEmitter();
+function svgToImg(opts: any) {
+    const ev = opts.emitter || new EventEmitter();
 
-    var promise = new Promise(function(resolve, reject) {
-        var Image = window.Image;
-        var svg = opts.svg;
-        var format = opts.format || 'png';
+    const promise = new Promise(function(resolve, reject) {
+        const Image = window.Image;
+        const svg = opts.svg;
+        const format = opts.format || 'png';
 
-        var canvas = opts.canvas;
-        var scale = opts.scale || 1;
-        var w0 = opts.width || 300;
-        var h0 = opts.height || 150;
-        var w1 = scale * w0;
-        var h1 = scale * h0;
+        const canvas = opts.canvas;
+        const scale = opts.scale || 1;
+        const w0 = opts.width || 300;
+        const h0 = opts.height || 150;
+        const w1 = scale * w0;
+        const h1 = scale * h0;
 
-        var ctx = canvas.getContext('2d', {willReadFrequently: true});
-        var img = new Image();
-        var svgBlob, url;
+        const ctx = canvas.getContext('2d', {willReadFrequently: true});
+        const img = new Image();
+        let svgBlob, url;
 
         if(format === 'svg' || Lib.isSafari()) {
             url = helpers.encodeSVG(svg);
@@ -32,7 +32,7 @@ function svgToImg(opts) {
         canvas.height = h1;
 
         img.onload = function() {
-            var imgData;
+            let imgData;
 
             svgBlob = null;
             helpers.revokeObjectURL(url);
@@ -57,7 +57,7 @@ function svgToImg(opts) {
                     imgData = url;
                     break;
                 default:
-                    var errorMsg = 'Image format is not jpeg, png, svg or webp.';
+                    const errorMsg = 'Image format is not jpeg, png, svg or webp.';
                     reject(new Error(errorMsg));
                     // eventually remove the ev
                     //  in favor of promises

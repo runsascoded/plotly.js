@@ -1,9 +1,9 @@
 import { coerce, isPlainObject, nestedProperty, warn } from '../lib/index.js';
 import plotAttributes from '../plots/attributes.js';
 
-var TEMPLATEITEMNAME = 'templateitemname';
+const TEMPLATEITEMNAME = 'templateitemname';
 
-var templateAttrs: any = {
+const templateAttrs: any = {
     name: {
         valType: 'string',
         editType: 'none',
@@ -32,16 +32,16 @@ templateAttrs[TEMPLATEITEMNAME] = {
     ].join(' ')
 };
 
-export var templatedArray = function(name?: any, attrs?: any): any {
+export const templatedArray = function(name?: any, attrs?: any): any {
     attrs._isLinkedToArray = name;
     attrs.name = templateAttrs.name;
     attrs[TEMPLATEITEMNAME] = templateAttrs[TEMPLATEITEMNAME];
     return attrs;
 };
 
-export var traceTemplater = function(dataTemplate?: any): any {
-    var traceCounts: any = {};
-    var traceType, typeTemplates;
+export const traceTemplater = function(dataTemplate?: any): any {
+    const traceCounts: any = {};
+    let traceType, typeTemplates;
 
     for(traceType in dataTemplate) {
         typeTemplates = dataTemplate[traceType];
@@ -52,11 +52,11 @@ export var traceTemplater = function(dataTemplate?: any): any {
 
     function newTrace(traceIn?: any) {
         traceType = coerce(traceIn, {}, plotAttributes, 'type');
-        var traceOut: any = {type: traceType, _template: null};
+        const traceOut: any = {type: traceType, _template: null};
         if(traceType in traceCounts) {
             typeTemplates = dataTemplate[traceType];
             // cycle through traces in the template set for this type
-            var typei = traceCounts[traceType] % typeTemplates.length;
+            const typei = traceCounts[traceType] % typeTemplates.length;
             traceCounts[traceType]++;
             traceOut._template = typeTemplates[typei];
         } else {
@@ -79,24 +79,24 @@ export var traceTemplater = function(dataTemplate?: any): any {
     };
 };
 
-export var newContainer = function(container?: any, name?: any, baseName?: any): any {
-    var template = container._template;
-    var part = template && (template[name] || (baseName && template[baseName]));
+export const newContainer = function(container?: any, name?: any, baseName?: any): any {
+    const template = container._template;
+    let part = template && (template[name] || (baseName && template[baseName]));
     if(!isPlainObject(part)) part = null;
 
-    var out: any = container[name] = {_template: part};
+    const out: any = container[name] = {_template: part};
     return out;
 };
 
-export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?: any): any {
-    var template = container._template;
-    var defaultsTemplate = template && template[arrayDefaultKey(name)];
-    var templateItems = template && template[name];
+export const arrayTemplater = function(container?: any, name?: any, inclusionAttr?: any): any {
+    const template = container._template;
+    const defaultsTemplate = template && template[arrayDefaultKey(name)];
+    let templateItems = template && template[name];
     if(!Array.isArray(templateItems) || !templateItems.length) {
         templateItems = [];
     }
 
-    var usedNames: any = {};
+    const usedNames: any = {};
 
     function newItem(itemIn?: any) {
         // include name and templateitemname in the output object for ALL
@@ -104,8 +104,8 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
         // name and templateitemname, if you're using one template to make
         // another template. templateitemname would be the name in the original
         // template, and name is the new "subclassed" item name.
-        var out: any = {name: itemIn.name, _input: itemIn};
-        var templateItemName = out[TEMPLATEITEMNAME] = itemIn[TEMPLATEITEMNAME];
+        const out: any = {name: itemIn.name, _input: itemIn};
+        const templateItemName = out[TEMPLATEITEMNAME] = itemIn[TEMPLATEITEMNAME];
 
         // no itemname: use the default template
         if(!validItemName(templateItemName)) {
@@ -115,8 +115,8 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
 
         // look for an item matching this itemname
         // note these do not inherit from the default template, only the item.
-        for(var i = 0; i < templateItems.length; i++) {
-            var templateItem: any = templateItems[i];
+        for(let i = 0; i < templateItems.length; i++) {
+            const templateItem: any = templateItems[i];
             if(templateItem.name === templateItemName) {
                 // Note: it's OK to use a template item more than once
                 // but using it at least once will stop it from generating
@@ -138,14 +138,14 @@ export var arrayTemplater = function(container?: any, name?: any, inclusionAttr?
     }
 
     function defaultItems() {
-        var out: any = [];
-        for(var i = 0; i < templateItems.length; i++) {
-            var templateItem: any = templateItems[i];
-            var name = templateItem.name;
+        const out: any = [];
+        for(let i = 0; i < templateItems.length; i++) {
+            const templateItem: any = templateItems[i];
+            const name = templateItem.name;
             // only allow named items to be added as defaults,
             // and only allow each name once
             if(validItemName(name) && !usedNames[name]) {
-                var outi: any = {
+                const outi: any = {
                     _template: templateItem,
                     name: name,
                     _input: {_templateitemname: name}
@@ -169,7 +169,7 @@ function validItemName(name?: any): boolean {
 }
 
 function arrayDefaultKey(name?: any): any {
-    var lastChar = name.length - 1;
+    const lastChar = name.length - 1;
     if(name.charAt(lastChar) !== 's') {
         warn('bad argument to arrayDefaultKey: ' + name);
     }
@@ -177,17 +177,17 @@ function arrayDefaultKey(name?: any): any {
 }
 export { arrayDefaultKey };
 
-export var arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?: any): any {
-    var lengthIn = (nestedProperty(parentIn, containerStr).get() || []).length;
-    var index = itemOut._index;
+export const arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?: any): any {
+    const lengthIn = (nestedProperty(parentIn, containerStr).get() || []).length;
+    let index = itemOut._index;
     // Check that we are indeed off the end of this container.
     // Otherwise a devious user could put a key `_templateitemname` in their
     // own input and break lots of things.
-    var templateItemName = (index >= lengthIn) && (itemOut._input || {})._templateitemname;
+    const templateItemName = (index >= lengthIn) && (itemOut._input || {})._templateitemname;
     if(templateItemName) index = lengthIn;
-    var itemStr = containerStr + '[' + index + ']';
+    const itemStr = containerStr + '[' + index + ']';
 
-    var update;
+    let update: any;
     function resetUpdate() {
         update = {};
         if(templateItemName) {
@@ -212,15 +212,15 @@ export var arrayEditor = function(parentIn?: any, containerStr?: any, itemOut?: 
     }
 
     function getUpdateObj() {
-        var updateOut = update;
+        const updateOut = update;
         resetUpdate();
         return updateOut;
     }
 
     function applyUpdate(attr?: any, value?: any) {
         if(attr) modifyItem(attr, value);
-        var updateToApply = getUpdateObj();
-        for(var key in updateToApply) {
+        const updateToApply = getUpdateObj();
+        for(const key in updateToApply) {
             nestedProperty(parentIn, key).set(updateToApply[key]);
         }
     }

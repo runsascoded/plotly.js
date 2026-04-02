@@ -21,24 +21,30 @@ import axisLayoutAttrs from '../../plots/cartesian/layout_attributes.js';
 import alignmentConstants from '../../constants/alignment.js';
 import _constants from './constants.js';
 const { cn } = _constants;
-var strTranslate = Lib.strTranslate;
-var LINE_SPACING = alignmentConstants.LINE_SPACING;
-var FROM_TL = alignmentConstants.FROM_TL;
-var FROM_BR = alignmentConstants.FROM_BR;
+const strTranslate = Lib.strTranslate;
+const LINE_SPACING = alignmentConstants.LINE_SPACING;
+const FROM_TL = alignmentConstants.FROM_TL;
+const FROM_BR = alignmentConstants.FROM_BR;
 
 function draw(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var colorBars = fullLayout._infolayer
+    const colorBars = fullLayout._infolayer
         .selectAll('g.' + cn.colorbar)
         .data(makeColorBarData(gd), function(opts: any) { return opts._id; });
 
-    colorBars.enter().append('g')
+    colorBars.exit()
+        .each(function(opts: any) { Plots.autoMargin(gd, opts._id); })
+        .remove();
+
+    const colorBarsEnter = colorBars.enter().append('g')
         .attr('class', function(opts: any) { return opts._id; })
         .classed(cn.colorbar, true);
 
-    colorBars.each(function(opts: any) {
-        var g = select(this);
+    const colorBarsMerged = colorBars.merge(colorBarsEnter);
+
+    colorBarsMerged.each(function(this: any, opts: any) {
+        const g = select(this);
 
         Lib.ensureSingle(g, 'rect', cn.cbbg);
         Lib.ensureSingle(g, 'g', cn.cbfills);
@@ -47,7 +53,7 @@ function draw(gd: GraphDiv) {
         Lib.ensureSingle(g, 'g', cn.cbtitleunshift, function(s: any) { s.append('g').classed(cn.cbtitle, true); });
         Lib.ensureSingle(g, 'rect', cn.cboutline);
 
-        var done = drawColorBar(g, opts, gd);
+        const done = drawColorBar(g, opts, gd);
         if(done && done.then) (gd._promises || []).push(done);
 
         if(gd._context.edits.colorbarPosition) {
@@ -55,26 +61,22 @@ function draw(gd: GraphDiv) {
         }
     });
 
-    colorBars.exit()
-        .each(function(opts: any) { Plots.autoMargin(gd, opts._id); })
-        .remove();
-
-    colorBars.order();
+    colorBarsMerged.order();
 }
 
 function makeColorBarData(gd: GraphDiv) {
-    var fullLayout = gd._fullLayout;
-    var calcdata = gd.calcdata;
-    var out = [];
+    const fullLayout = gd._fullLayout;
+    const calcdata = gd.calcdata;
+    const out: any[] = [];
 
     // single out item
-    var opts;
+    let opts: any;
     // colorbar attr parent container
-    var cont;
+    let cont: any;
     // trace attr container
-    var trace;
+    let trace: any;
     // colorbar options
-    var cbOpt;
+    let cbOpt: any;
 
     function initOpts(opts: any) {
         return extendFlat(opts, {
@@ -112,19 +114,19 @@ function makeColorBarData(gd: GraphDiv) {
         }
     }
 
-    for(var i = 0; i < calcdata.length; i++) {
-        var cd = calcdata[i];
+    for(let i = 0; i < calcdata.length; i++) {
+        const cd = calcdata[i];
         trace = cd[0].trace;
         if(!trace._module) continue;
-        var moduleOpts = trace._module.colorbar;
+        const moduleOpts = trace._module.colorbar;
 
         if(trace.visible === true && moduleOpts) {
-            var allowsMultiplotCbs = Array.isArray(moduleOpts);
-            var cbOpts = allowsMultiplotCbs ? moduleOpts : [moduleOpts];
+            const allowsMultiplotCbs = Array.isArray(moduleOpts);
+            const cbOpts = allowsMultiplotCbs ? moduleOpts : [moduleOpts];
 
-            for(var j = 0; j < cbOpts.length; j++) {
+            for(let j = 0; j < cbOpts.length; j++) {
                 cbOpt = cbOpts[j];
-                var contName = cbOpt.container;
+                const contName = cbOpt.container;
                 cont = contName ? trace[contName] : trace;
 
                 if(cont && cont.showscale) {
@@ -140,11 +142,11 @@ function makeColorBarData(gd: GraphDiv) {
         }
     }
 
-    for(var k in fullLayout._colorAxes) {
+    for(const k in fullLayout._colorAxes) {
         cont = fullLayout[k];
 
         if(cont.showscale) {
-            var colorAxOpts = fullLayout._colorAxes[k];
+            const colorAxOpts = fullLayout._colorAxes[k];
 
             opts = initOpts(cont.colorbar);
             opts._id = 'cb' + k;
@@ -166,46 +168,46 @@ function makeColorBarData(gd: GraphDiv) {
 }
 
 function drawColorBar(g: any, opts: any, gd: GraphDiv) {
-    var isVertical = opts.orientation === 'v';
-    var len = opts.len;
-    var lenmode = opts.lenmode;
-    var thickness = opts.thickness;
-    var thicknessmode = opts.thicknessmode;
-    var outlinewidth = opts.outlinewidth;
-    var borderwidth = opts.borderwidth;
-    var bgcolor = opts.bgcolor;
-    var xanchor = opts.xanchor;
-    var yanchor = opts.yanchor;
-    var xpad = opts.xpad;
-    var ypad = opts.ypad;
-    var optsX = opts.x;
-    var optsY = isVertical ? opts.y : 1 - opts.y;
+    const isVertical = opts.orientation === 'v';
+    const len = opts.len;
+    const lenmode = opts.lenmode;
+    const thickness = opts.thickness;
+    const thicknessmode = opts.thicknessmode;
+    const outlinewidth = opts.outlinewidth;
+    const borderwidth = opts.borderwidth;
+    const bgcolor = opts.bgcolor;
+    const xanchor = opts.xanchor;
+    const yanchor = opts.yanchor;
+    const xpad = opts.xpad;
+    const ypad = opts.ypad;
+    const optsX = opts.x;
+    const optsY = isVertical ? opts.y : 1 - opts.y;
 
-    var isPaperY = opts.yref === 'paper';
-    var isPaperX = opts.xref === 'paper';
+    const isPaperY = opts.yref === 'paper';
+    const isPaperX = opts.xref === 'paper';
 
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
 
-    var fillColor = opts._fillcolor;
-    var line = opts._line;
-    var title = opts.title;
-    var titleSide = title.side;
+    const fillColor = opts._fillcolor;
+    const line = opts._line;
+    const title = opts.title;
+    const titleSide = title.side;
 
-    var zrange = opts._zrange ||
+    const zrange = opts._zrange ||
         extent((typeof fillColor === 'function' ? fillColor : line.color).domain());
 
-    var lineColormap = typeof line.color === 'function' ?
+    const lineColormap = typeof line.color === 'function' ?
         line.color :
         function() { return line.color; };
-    var fillColormap = typeof fillColor === 'function' ?
+    const fillColormap = typeof fillColor === 'function' ?
         fillColor :
         function() { return fillColor; };
 
-    var levelsIn = opts._levels;
-    var levelsOut = calcLevels(gd, opts, zrange);
-    var fillLevels = levelsOut.fill;
-    var lineLevels = levelsOut.line;
+    const levelsIn = opts._levels;
+    const levelsOut = calcLevels(gd, opts, zrange);
+    const fillLevels = levelsOut.fill;
+    const lineLevels = levelsOut.line;
 
     // we calculate pixel sizes based on the specified graph size,
     // not the actual (in case something pushed the margins around)
@@ -213,37 +215,37 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     // when the colorbar itself is pushing the margins.
     // but then the fractional size is calculated based on the
     // actual graph size, so that the axes will size correctly.
-    var thickPx = Math.round(thickness * (thicknessmode === 'fraction' ? (isVertical ? gs.w : gs.h) : 1));
-    var thickFrac = thickPx / (isVertical ? gs.w : gs.h);
-    var lenPx = Math.round(len * (lenmode === 'fraction' ? (isVertical ? gs.h : gs.w) : 1));
-    var lenFrac = lenPx / (isVertical ? gs.h : gs.w);
+    const thickPx = Math.round(thickness * (thicknessmode === 'fraction' ? (isVertical ? gs.w : gs.h) : 1));
+    const thickFrac = thickPx / (isVertical ? gs.w : gs.h);
+    const lenPx = Math.round(len * (lenmode === 'fraction' ? (isVertical ? gs.h : gs.w) : 1));
+    const lenFrac = lenPx / (isVertical ? gs.h : gs.w);
 
-    var posW = isPaperX ? gs.w : gd._fullLayout.width;
-    var posH = isPaperY ? gs.h : gd._fullLayout.height;
+    const posW = isPaperX ? gs.w : gd._fullLayout.width;
+    const posH = isPaperY ? gs.h : gd._fullLayout.height;
 
     // x positioning: do it initially just for left anchor,
     // then fix at the end (since we don't know the width yet)
-    var uPx = Math.round(isVertical ?
-        optsX * posW + xpad :
-        optsY * posH + ypad
+    const uPx = Math.round(isVertical ?
+        optsX * posW! + xpad :
+        optsY * posH! + ypad
     );
 
-    var xRatio = {center: 0.5, right: 1}[xanchor] || 0;
-    var yRatio = {top: 1, middle: 0.5}[yanchor] || 0;
+    const xRatio = ({center: 0.5, right: 1} as any)[xanchor] || 0;
+    const yRatio = ({top: 1, middle: 0.5} as any)[yanchor] || 0;
 
     // for dragging... this is getting a little muddled...
-    var uFrac = isVertical ?
+    const uFrac = isVertical ?
         optsX - xRatio * thickFrac :
         optsY - yRatio * thickFrac;
 
     // y/x positioning (for v/h) we can do correctly from the start
-    var vFrac = isVertical ?
+    const vFrac = isVertical ?
         optsY - yRatio * lenFrac :
         optsX - xRatio * lenFrac;
 
-    var vPx = Math.round(isVertical ?
-        posH * (1 - vFrac) :
-        posW * vFrac
+    const vPx = Math.round(isVertical ?
+        posH! * (1 - vFrac) :
+        posW! * vFrac
     );
 
     // stash a few things for makeEditable
@@ -253,7 +255,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     opts._vFrac = vFrac;
 
     // stash mocked axis for contour label formatting
-    var ax = opts._axis = mockColorBarAxis(gd, opts, zrange);
+    const ax = opts._axis = mockColorBarAxis(gd, opts, zrange);
 
     // position can't go in through supplyDefaults
     // because that restricts it to [0,1]
@@ -262,7 +264,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         optsY + ypad / gs.h
     );
 
-    var topOrBottom = ['top', 'bottom'].indexOf(titleSide) !== -1;
+    const topOrBottom = ['top', 'bottom'].indexOf(titleSide) !== -1;
 
     if(isVertical && topOrBottom) {
         ax.title.side = titleSide;
@@ -279,12 +281,12 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     if(line.color && opts.tickmode === 'auto') {
         ax.tickmode = 'linear';
         ax.tick0 = levelsIn.start;
-        var dtick = levelsIn.size;
+        let dtick = levelsIn.size;
         // expand if too many contours, so we don't get too many ticks
-        var autoNtick = Lib.constrain(lenPx / 50, 4, 15) + 1;
-        var dtFactor = (zrange[1] - zrange[0]) / ((opts.nticks || autoNtick) * dtick);
+        const autoNtick = Lib.constrain(lenPx / 50, 4, 15) + 1;
+        const dtFactor = (zrange[1] - zrange[0]) / ((opts.nticks || autoNtick) * dtick);
         if(dtFactor > 1) {
-            var dtexp = Math.pow(10, Math.floor(Math.log(dtFactor) / Math.LN10));
+            const dtexp = Math.pow(10, Math.floor(Math.log(dtFactor) / Math.LN10));
             dtick *= dtexp * Lib.roundUp(dtFactor / dtexp, [2, 5, 10]);
             // if the contours are at round multiples, reset tick0
             // so they're still at round multiples. Otherwise,
@@ -310,19 +312,19 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
     g.attr('transform', strTranslate(Math.round(gs.l), Math.round(gs.t)));
 
-    var titleCont = g.select('.' + cn.cbtitleunshift)
+    const titleCont = g.select('.' + cn.cbtitleunshift)
         .attr('transform', strTranslate(-Math.round(gs.l), -Math.round(gs.t)));
 
-    var ticklabelposition = ax.ticklabelposition;
-    var titleFontSize = ax.title.font.size;
+    const ticklabelposition = ax.ticklabelposition;
+    const titleFontSize = ax.title.font.size;
 
-    var axLayer = g.select('.' + cn.cbaxis);
-    var titleEl;
-    var titleHeight = 0;
-    var titleWidth = 0;
+    const axLayer = g.select('.' + cn.cbaxis);
+    let titleEl;
+    let titleHeight = 0;
+    let titleWidth = 0;
 
     function drawTitle(titleClass: any, titleOpts: any) {
-        var dfltTitleOpts = {
+        const dfltTitleOpts = {
             propContainer: ax,
             propName: opts._propPrefix + 'title.text',
             traceIndex: opts._traceIndex,
@@ -335,7 +337,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         // getting hackier and hackier... delete groups with the
         // wrong class (in case earlier the colorbar was drawn on
         // a different side, I think?)
-        var otherClass = titleClass.charAt(0) === 'h' ?
+        const otherClass = titleClass.charAt(0) === 'h' ?
             titleClass.slice(1) :
             'h' + titleClass;
         g.selectAll('.' + otherClass + ',.' + otherClass + '-math-group').remove();
@@ -353,21 +355,21 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             (isVertical && topOrBottom) ||
             (!isVertical && !topOrBottom)
         ) {
-            var x, y;
+            let x, y;
 
             if(titleSide === 'top') {
-                x = xpad + gs.l + posW * optsX;
-                y = ypad + gs.t + posH * (1 - vFrac - lenFrac) + 3 + titleFontSize * 0.75;
+                x = xpad + gs.l + posW! * optsX;
+                y = ypad + gs.t + posH! * (1 - vFrac - lenFrac) + 3 + titleFontSize * 0.75;
             }
 
             if(titleSide === 'bottom') {
-                x = xpad + gs.l + posW * optsX;
-                y = ypad + gs.t + posH * (1 - vFrac) - 3 - titleFontSize * 0.25;
+                x = xpad + gs.l + posW! * optsX;
+                y = ypad + gs.t + posH! * (1 - vFrac) - 3 - titleFontSize * 0.25;
             }
 
             if(titleSide === 'right') {
-                y = ypad + gs.t + posH * optsY + 3 + titleFontSize * 0.75;
-                x = xpad + gs.l + posW * vFrac;
+                y = ypad + gs.t + posH! * optsY + 3 + titleFontSize * 0.75;
+                x = xpad + gs.l + posW! * vFrac;
             }
 
             drawTitle(ax._id + 'title', {
@@ -381,20 +383,20 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             (isVertical && !topOrBottom) ||
             (!isVertical && topOrBottom)
         ) {
-            var pos = ax.position || 0;
-            var mid = ax._offset + ax._length / 2;
-            var x, y;
+            const pos = ax.position || 0;
+            const mid = ax._offset + ax._length / 2;
+            let x, y;
 
             if(titleSide === 'right') {
                 y = mid;
-                x = gs.l + posW * pos + 10 + titleFontSize * (
+                x = gs.l + posW! * pos + 10 + titleFontSize * (
                     ax.showticklabels ? 1 : 0.5
                 );
             } else {
                 x = mid;
 
                 if(titleSide === 'bottom') {
-                    y = gs.t + posH * pos + 10 + (
+                    y = gs.t + posH! * pos + 10 + (
                         ticklabelposition.indexOf('inside') === -1 ?
                             ax.tickfont.size :
                             0
@@ -406,8 +408,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
                 }
 
                 if(titleSide === 'top') {
-                    var nlines = title.text.split('<br>').length;
-                    y = gs.t + posH * pos + 10 - thickPx - LINE_SPACING * titleFontSize * nlines;
+                    const nlines = title.text.split('<br>').length;
+                    y = gs.t + posH! * pos + 10 - thickPx - LINE_SPACING * titleFontSize * nlines;
                 }
             }
 
@@ -437,18 +439,18 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             (isVertical && topOrBottom)
         ) {
             // squish the axis top to make room for the title
-            var titleGroup = g.select('.' + cn.cbtitle);
-            var titleText = titleGroup.select('text');
-            var titleTrans = [-outlinewidth / 2, outlinewidth / 2];
-            var mathJaxNode = titleGroup
+            const titleGroup = g.select('.' + cn.cbtitle);
+            const titleText = titleGroup.select('text');
+            const titleTrans = [-outlinewidth / 2, outlinewidth / 2];
+            const mathJaxNode = titleGroup
                 .select('.h' + ax._id + 'title-math-group')
                 .node();
-            var lineSize = 15.6;
+            let lineSize = 15.6;
             if(titleText.node()) {
                 lineSize = parseInt(titleText.node().style.fontSize, 10) * LINE_SPACING;
             }
 
-            var bb;
+            let bb;
             if(mathJaxNode) {
                 bb = bBox(mathJaxNode);
                 titleWidth = bb.width;
@@ -475,7 +477,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
                         titleTrans[1] *= -1;
                     } else {
                         ax.domain[0] += titleHeight / gs.h;
-                        var nlines = svgTextUtils.lineCount(titleText);
+                        const nlines = svgTextUtils.lineCount(titleText);
                         titleTrans[1] += (1 - nlines) * lineSize;
                     }
 
@@ -505,26 +507,26 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             strTranslate(Math.round(-gs.l), 0)
         );
 
-        var fills = g.select('.' + cn.cbfills)
+        const fills = g.select('.' + cn.cbfills)
             .selectAll('rect.' + cn.cbfill)
             .attr('style', '')
             .data(fillLevels);
-        fills.enter().append('rect')
+        const fillsEnter = fills.enter().append('rect')
             .classed(cn.cbfill, true)
             .attr('style', '');
         fills.exit().remove();
 
-        var zBounds = zrange
+        const zBounds = zrange
             .map(ax.c2p)
             .map(Math.round)
             .sort(function(a: any, b: any) { return a - b; });
 
-        fills.each(function(d: any, i: any) {
-            var z = [
+        fills.merge(fillsEnter).each(function(this: any, d: any, i: any) {
+            const z = [
                 (i === 0) ? zrange[0] : (fillLevels[i] + fillLevels[i - 1]) / 2,
                 (i === fillLevels.length - 1) ? zrange[1] : (fillLevels[i] + fillLevels[i + 1]) / 2
             ]
-            .map(ax.c2p)
+            .map(ax.c2p as (v: number) => number)
             .map(Math.round);
 
             // offset the side adjoining the next rectangle so they
@@ -537,7 +539,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
             // Colorbar cannot currently support opacities so we
             // use an opaque fill even when alpha channels present
-            var fillEl = select(this)
+            const fillEl = select(this)
             .attr(isVertical ? 'x' : 'y', uPx)
             .attr(isVertical ? 'y' : 'x', min(z))
             .attr(isVertical ? 'width' : 'height', Math.max(thickPx, 2))
@@ -548,20 +550,20 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             } else {
                 // tinycolor can't handle exponents and
                 // at this scale, removing it makes no difference.
-                var colorString = fillColormap(d).replace('e-', '');
+                const colorString = fillColormap(d).replace('e-', '');
                 fillEl.attr('fill', tinycolor(colorString).toHexString());
             }
         });
 
-        var lines = g.select('.' + cn.cblines)
+        const lines = g.select('.' + cn.cblines)
             .selectAll('path.' + cn.cbline)
             .data(line.color && line.width ? lineLevels : []);
-        lines.enter().append('path')
+        const linesEnter = lines.enter().append('path')
             .classed(cn.cbline, true);
         lines.exit().remove();
-        lines.each(function(d: any) {
-            var a = uPx;
-            var b = (Math.round(ax.c2p(d)) + (line.width / 2) % 1);
+        lines.merge(linesEnter).each(function(this: any, d: any) {
+            const a = uPx;
+            const b = (Math.round(ax.c2p(d)) + (line.width / 2) % 1);
 
             select(this)
                 .attr('d', 'M' +
@@ -575,11 +577,11 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         // force full redraw of labels and ticks
         axLayer.selectAll('g.' + ax._id + 'tick,path').remove();
 
-        var shift = uPx + thickPx +
+        const shift = uPx + thickPx +
             (outlinewidth || 0) / 2 - (opts.ticks === 'outside' ? 1 : 0);
 
-        var vals = Axes.calcTicks(ax);
-        var tickSign = Axes.getTickSigns(ax)[2];
+        const vals = Axes.calcTicks(ax);
+        const tickSign = Axes.getTickSigns(ax)[2];
 
         Axes.drawTicks(gd, ax, {
             vals: ax.ticks === 'inside' ? Axes.clipEnds(ax, vals) : vals,
@@ -601,8 +603,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     // TODO: why are we redrawing multiple times now with this?
     // I guess autoMargin doesn't like being post-promise?
     function positionCB() {
-        var bb;
-        var innerThickness = thickPx + outlinewidth / 2;
+        let bb;
+        let innerThickness = thickPx + outlinewidth / 2;
         if(ticklabelposition.indexOf('inside') === -1) {
             bb = bBox(axLayer.node());
             innerThickness += isVertical ? bb.width : bb.height;
@@ -610,17 +612,17 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
         titleEl = titleCont.select('text');
 
-        var titleWidth = 0;
+        let titleWidth = 0;
 
-        var topSideVertical = isVertical && titleSide === 'top';
-        var rightSideHorizontal = !isVertical && titleSide === 'right';
+        const topSideVertical = isVertical && titleSide === 'top';
+        const rightSideHorizontal = !isVertical && titleSide === 'right';
 
-        var moveY = 0;
+        let moveY = 0;
 
         if(titleEl.node() && !titleEl.classed(cn.jsPlaceholder)) {
-            var _titleHeight;
+            let _titleHeight;
 
-            var mathJaxNode = titleCont.select('.h' + ax._id + 'title-math-group').node();
+            const mathJaxNode = titleCont.select('.h' + ax._id + 'title-math-group').node();
             if(mathJaxNode && (
                 (isVertical && topOrBottom) ||
                 (!isVertical && !topOrBottom)
@@ -656,12 +658,12 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             );
         }
 
-        var outerThickness = (isVertical ?
+        let outerThickness = (isVertical ?
             xpad :
             ypad
         ) * 2 + innerThickness + borderwidth + outlinewidth / 2;
 
-        var hColorbarMoveTitle = 0;
+        let hColorbarMoveTitle = 0;
         if(!isVertical && title.text && yanchor === 'bottom' && optsY <= 0) {
             hColorbarMoveTitle = outerThickness / 2;
 
@@ -671,11 +673,11 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         fullLayout._hColorbarMoveTitle = hColorbarMoveTitle;
         fullLayout._hColorbarMoveCBTitle = moveY;
 
-        var extraW = borderwidth + outlinewidth;
+        const extraW = borderwidth + outlinewidth;
 
         // TODO - are these the correct positions?
-        var lx = (isVertical ? uPx : vPx) - extraW / 2 - (isVertical ? xpad : 0);
-        var ly = (isVertical ? vPx : uPx) - (isVertical ? lenPx : ypad + moveY - hColorbarMoveTitle);
+        const lx = (isVertical ? uPx : vPx) - extraW / 2 - (isVertical ? xpad : 0);
+        const ly = (isVertical ? vPx : uPx) - (isVertical ? lenPx : ypad + moveY - hColorbarMoveTitle);
 
         g.select('.' + cn.cbbg)
         .attr('x', lx)
@@ -686,7 +688,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         .call(Color.stroke, opts.bordercolor)
         .style('stroke-width', borderwidth);
 
-        var moveX = rightSideHorizontal ? Math.max(titleWidth - 10, 0) : 0;
+        const moveX = rightSideHorizontal ? Math.max(titleWidth - 10, 0) : 0;
 
         g.selectAll('.' + cn.cboutline)
         .attr('x', (isVertical ? uPx : vPx + xpad) + moveX)
@@ -697,13 +699,11 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             2 * xpad + moveX
         ), 2))
         .call(Color.stroke, opts.outlinecolor)
-        .style({
-            fill: 'none',
-            'stroke-width': outlinewidth
-        });
+        .style('fill', 'none')
+        .style('stroke-width', outlinewidth);
 
-        var xShift = ((isVertical ? xRatio * outerThickness : 0));
-        var yShift = ((isVertical ? 0 : (1 - yRatio) * outerThickness - moveY));
+        let xShift = ((isVertical ? xRatio * outerThickness : 0));
+        let yShift = ((isVertical ? 0 : (1 - yRatio) * outerThickness - moveY));
         xShift = isPaperX ? gs.l - xShift : -xShift;
         yShift = isPaperY ? gs.t - yShift : -yShift;
 
@@ -720,32 +720,32 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         )) {
             // for horizontal colorbars when there is a border line or having different background color
             // hide/adjust x positioning for the first/last tick labels if they go outside the border
-            var tickLabels = axLayer.selectAll('text');
-            var numTicks = tickLabels[0].length;
+            const tickLabels = axLayer.selectAll('text');
+            const numTicks = tickLabels[0].length;
 
-            var border = g.select('.' + cn.cbbg).node();
-            var oBb = bBox(border);
-            var oTr = getTranslate(g);
+            const border = g.select('.' + cn.cbbg).node();
+            const oBb = bBox(border);
+            const oTr = getTranslate(g);
 
-            var TEXTPAD = 2;
+            const TEXTPAD = 2;
 
-            tickLabels.each(function(d: any, i: any) {
-                var first = 0;
-                var last = numTicks - 1;
+            tickLabels.each(function(this: any, d: any, i: any) {
+                const first = 0;
+                const last = numTicks - 1;
                 if(i === first || i === last) {
-                    var iBb = bBox(this);
-                    var iTr = getTranslate(this);
-                    var deltaX;
+                    const iBb = bBox(this);
+                    const iTr = getTranslate(this);
+                    let deltaX;
 
                     if(i === last) {
-                        var iRight = iBb.right + iTr.x;
-                        var oRight = oBb.right + oTr.x + vPx - borderwidth - TEXTPAD + optsX;
+                        const iRight = iBb.right + iTr.x;
+                        const oRight = oBb.right + oTr.x + vPx - borderwidth - TEXTPAD + optsX;
 
                         deltaX = oRight - iRight;
                         if(deltaX > 0) deltaX = 0;
                     } else if(i === first) {
-                        var iLeft = iBb.left + iTr.x;
-                        var oLeft = oBb.left + oTr.x + vPx + borderwidth + TEXTPAD;
+                        const iLeft = iBb.left + iTr.x;
+                        const oLeft = oBb.left + oTr.x + vPx + borderwidth + TEXTPAD;
 
                         deltaX = oLeft - iLeft;
                         if(deltaX < 0) deltaX = 0;
@@ -766,13 +766,13 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         }
 
         // auto margin adjustment
-        var marginOpts: any = {};
-        var lFrac = FROM_TL[xanchor];
-        var rFrac = FROM_BR[xanchor];
-        var tFrac = FROM_TL[yanchor];
-        var bFrac = FROM_BR[yanchor];
+        const marginOpts: any = {};
+        const lFrac = (FROM_TL as any)[xanchor];
+        const rFrac = (FROM_BR as any)[xanchor];
+        const tFrac = (FROM_TL as any)[yanchor];
+        const bFrac = (FROM_BR as any)[yanchor];
 
-        var extraThickness = outerThickness - thickPx;
+        const extraThickness = outerThickness - thickPx;
         if(isVertical) {
             if(lenmode === 'pixels') {
                 marginOpts.y = optsY;
@@ -816,14 +816,14 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
                 marginOpts.yb = optsY + thickness * bFrac;
             }
         }
-        var sideY = opts.y < 0.5 ? 'b' : 't';
-        var sideX = opts.x < 0.5 ? 'l' : 'r';
+        const sideY = opts.y < 0.5 ? 'b' : 't';
+        const sideX = opts.x < 0.5 ? 'l' : 'r';
 
         gd._fullLayout._reservedMargin[opts._id] = {};
-        var possibleReservedMargins: any = {
-            r: (fullLayout.width - lx - xShift),
+        const possibleReservedMargins: any = {
+            r: (fullLayout.width! - lx - xShift),
             l: lx + marginOpts.r,
-            b: (fullLayout.height - ly - yShift),
+            b: (fullLayout.height! - ly - yShift),
             t: ly + marginOpts.b
         };
 
@@ -853,10 +853,10 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 }
 
 function makeEditable(g: any, opts: any, gd: GraphDiv) {
-    var isVertical = opts.orientation === 'v';
-    var fullLayout = gd._fullLayout;
-    var gs = fullLayout._size;
-    var t0, xf, yf;
+    const isVertical = opts.orientation === 'v';
+    const fullLayout = gd._fullLayout;
+    const gs = fullLayout._size;
+    let t0: any, xf: any, yf: any;
 
     dragElement.init({
         element: g.node(),
@@ -877,14 +877,14 @@ function makeEditable(g: any, opts: any, gd: GraphDiv) {
                 isVertical ? opts._lenFrac : opts._thickFrac,
                 0, 1, opts.yanchor);
 
-            var csr = dragElement.getCursor(xf, yf, opts.xanchor, opts.yanchor);
+            const csr = dragElement.getCursor(xf, yf, opts.xanchor, opts.yanchor);
             setCursor(g, csr);
         },
         doneFn: function() {
             setCursor(g);
 
             if(xf !== undefined && yf !== undefined) {
-                var update: any = {};
+                const update: any = {};
                 update[opts._propPrefix + 'x'] = xf;
                 update[opts._propPrefix + 'y'] = yf;
                 if(opts._traceIndex !== undefined) {
@@ -898,16 +898,16 @@ function makeEditable(g: any, opts: any, gd: GraphDiv) {
 }
 
 function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
-    var levelsIn = opts._levels;
-    var lineLevels = [];
-    var fillLevels = [];
-    var l;
-    var i;
+    const levelsIn = opts._levels;
+    const lineLevels: any[] = [];
+    let fillLevels: any[] = [];
+    let l;
+    let i;
 
-    var l0 = levelsIn.end + levelsIn.size / 100;
-    var ls = levelsIn.size;
-    var zr0 = (1.001 * zrange[0] - 0.001 * zrange[1]);
-    var zr1 = (1.001 * zrange[1] - 0.001 * zrange[0]);
+    let l0 = levelsIn.end + levelsIn.size / 100;
+    let ls = levelsIn.size;
+    const zr0 = (1.001 * zrange[0] - 0.001 * zrange[1]);
+    const zr1 = (1.001 * zrange[1] - 0.001 * zrange[0]);
 
     for(i = 0; i < 1e5; i++) {
         l = levelsIn.start + i * ls;
@@ -918,7 +918,7 @@ function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
     if(opts._fillgradient) {
         fillLevels = [0];
     } else if(typeof opts._fillcolor === 'function') {
-        var fillLevelsIn = opts._filllevels;
+        const fillLevelsIn = opts._filllevels;
 
         if(fillLevelsIn) {
             l0 = fillLevelsIn.end + fillLevelsIn.size / 100;
@@ -949,11 +949,11 @@ function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
 }
 
 function mockColorBarAxis(gd: GraphDiv, opts: any, zrange: any) {
-    var fullLayout = gd._fullLayout;
+    const fullLayout = gd._fullLayout;
 
-    var isVertical = opts.orientation === 'v';
+    const isVertical = opts.orientation === 'v';
 
-    var cbAxisIn = {
+    const cbAxisIn = {
         type: 'linear',
         range: zrange,
         tickmode: opts.tickmode,
@@ -989,14 +989,14 @@ function mockColorBarAxis(gd: GraphDiv, opts: any, zrange: any) {
         position: 1
     };
 
-    var letter = isVertical ? 'y' : 'x';
+    const letter = isVertical ? 'y' : 'x';
 
-    var cbAxisOut: any = {
+    const cbAxisOut: any = {
         type: 'linear',
         _id: letter + opts._id
     };
 
-    var axisOptions: any = {
+    const axisOptions: any = {
         letter: letter,
         font: fullLayout.font,
         noAutotickangles: letter === 'y',

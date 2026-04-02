@@ -1,11 +1,11 @@
 import Registry from '../../registry.js';
 import Lib from '../../lib/index.js';
 
-export default function handleSampleDefaults(traceIn, traceOut, coerce, layout) {
-    var x = coerce('x');
-    var y = coerce('y');
-    var xlen = Lib.minRowLength(x);
-    var ylen = Lib.minRowLength(y);
+export default function handleSampleDefaults(traceIn: any, traceOut: any, coerce: any, layout: any) {
+    const x = coerce('x');
+    const y = coerce('y');
+    const xlen = Lib.minRowLength(x);
+    const ylen = Lib.minRowLength(y);
 
     // we could try to accept x0 and dx, etc...
     // but that's a pretty weird use case.
@@ -17,11 +17,11 @@ export default function handleSampleDefaults(traceIn, traceOut, coerce, layout) 
 
     traceOut._length = Math.min(xlen, ylen);
 
-    var handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
+    const handleCalendarDefaults = Registry.getComponentMethod('calendars', 'handleTraceDefaults');
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y'], layout);
 
     // if marker.color is an array, we can use it in aggregation instead of z
-    var hasAggregationData = coerce('z') || coerce('marker.color');
+    const hasAggregationData = coerce('z') || coerce('marker.color');
 
     if(hasAggregationData) coerce('histfunc');
     coerce('histnorm');
