@@ -4,14 +4,6 @@
 * All rights reserved.
 * Licensed under the MIT license
 */
-(
- function(root, factory) {
-  if (typeof module === "object" && module.exports) {
-   module.exports = factory();
-  } else {
-   root.moduleName = factory();
-  }
-} (typeof self !== "undefined" ? self : this, () => {
 "use strict";
 var Plotly = (() => {
   var __create = Object.create;
@@ -97421,6 +97413,4 @@ buffer/index.js:
    *)
 */
 
-window.Plotly = Plotly;
-return Plotly;
-}));
+Plotly = Plotly.default || Plotly;
