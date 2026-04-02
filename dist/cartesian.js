@@ -78154,7 +78154,7 @@ var Plotly = (() => {
     var isFunnelArea = trace.type === "funnelarea";
     if (!("_hasHoverLabel" in trace)) trace._hasHoverLabel = false;
     if (!("_hasHoverEvent" in trace)) trace._hasHoverEvent = false;
-    sliceTop.on("mouseover", function(pt) {
+    sliceTop.on("mouseover", function(event2, pt) {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
       if (gd._dragging || fullLayout2.hovermode === false) return;
@@ -78228,7 +78228,7 @@ var Plotly = (() => {
       trace._hasHoverEvent = true;
       gd.emit("plotly_hover", {
         points: [eventData5(pt, trace2)],
-        event
+        event: event2
       });
     });
     sliceTop.on("mouseout", function(evt) {
@@ -78248,12 +78248,12 @@ var Plotly = (() => {
         trace._hasHoverLabel = false;
       }
     });
-    sliceTop.on("click", function(pt) {
+    sliceTop.on("click", function(event2, pt) {
       var fullLayout2 = gd._fullLayout;
       var trace2 = gd._fullData[trace.index];
       if (gd._dragging || fullLayout2.hovermode === false) return;
       gd._hoverdata = [eventData5(pt, trace2)];
-      fx_default.click(gd, event);
+      fx_default.click(gd, event2);
     });
   }
   function determineOutsideTextFont(trace, pt, layoutFont) {
