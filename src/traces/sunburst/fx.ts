@@ -29,7 +29,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
     // in the same slice that you moused up in
     if(!('_hasHoverEvent' in trace)) trace._hasHoverEvent = false;
 
-    const onMouseOver = function(pt: any) {
+    const onMouseOver = function(event: any, pt: any) {
         const fullLayoutNow = gd._fullLayout;
 
         if(gd._dragging || fullLayoutNow.hovermode === false) return;
@@ -193,10 +193,9 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         const pt = select(this).datum();
 
         if(trace._hasHoverEvent) {
-            evt.originalEvent = event;
             gd.emit('plotly_unhover', {
                 points: [makeEventData(pt, traceNow, opts.eventDataKeys)],
-                event: event
+                event: evt
             });
             trace._hasHoverEvent = false;
         }
@@ -214,7 +213,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
         }
     };
 
-    const onClick = function(pt: any) {
+    const onClick = function(event: any, pt: any) {
         // TODO: this does not support right-click. If we want to support it, we
         // would likely need to change pie to use dragElement instead of straight
         // map subplots event binding. Or perhaps better, make a simple wrapper with the

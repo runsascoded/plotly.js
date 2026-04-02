@@ -488,10 +488,9 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
         const pt = select(this).datum();
 
         if (trace._hasHoverEvent) {
-            evt.originalEvent = event;
             gd.emit('plotly_unhover', {
                 points: [eventData(pt, trace2)],
-                event: event
+                event: evt
             });
             trace._hasHoverEvent = false;
         }

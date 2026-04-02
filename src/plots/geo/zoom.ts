@@ -211,7 +211,7 @@ function zoomClipped(geo: any, projection: any) {
 
     let zoomPoint: any;
 
-    zoom.on('zoomstart', function(this: any, event: any) {
+    zoom.on('zoomstart', function(this: any, event: any, ...zoomstartArgs: any[]) {
         select(this).style(zoomstartStyle);
 
         let mouse0 = pointer(event, this);
@@ -222,7 +222,7 @@ function zoomClipped(geo: any, projection: any) {
 
         zoomPoint = position(projection, mouse0);
 
-        zoomOn.call(zoom, 'zoom', function(this: any, event: any) {
+        zoomOn.call(zoom, 'zoom', function(this: any, event: any, ...args: any[]) {
             const mouse1 = pointer(event, this);
 
             projection.scale(view.k = event.scale);
@@ -260,15 +260,15 @@ function zoomClipped(geo: any, projection: any) {
                 lastRotate = rotateAngles;
             }
 
-            zoomed(event.of(this, arguments));
+            zoomed(event.of(this, [event, ...args]));
         });
 
-        zoomstarted(event.of(this, arguments));
+        zoomstarted(event.of(this, [event, ...zoomstartArgs]));
     })
-    .on('zoomend', function(this: any, event: any) {
+    .on('zoomend', function(this: any, event: any, ...zoomendArgs: any[]) {
         select(this).style(zoomendStyle);
         zoomOn.call(zoom, 'zoom', null);
-        zoomended(event.of(this, arguments));
+        zoomended(event.of(this, [event, ...zoomendArgs]));
         sync(geo, projection, syncCb);
     })
     .on('zoom.redraw', function(event: any) {

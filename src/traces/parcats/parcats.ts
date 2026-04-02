@@ -12,7 +12,6 @@ import Lib from '../../lib/index.js';
 import { font } from '../../components/drawing/index.js';
 import tinycolor from 'tinycolor2';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-declare let event: any;
 const strTranslate = Lib.strTranslate;
 
 function performPlot(parcatsModels: any, graphDiv: any, layout: FullLayout, svg: any) {
@@ -378,7 +377,7 @@ function compareRawColor(a: any, b: any) {
  * Handle path mouseover
  * @param {PathViewModel} d
  */
-function mouseoverPath(this: any, d: any) {
+function mouseoverPath(this: any, event: any, d: any) {
     if(!d.parcatsViewModel.dragDimension) {
         // We're not currently dragging
 
@@ -484,7 +483,7 @@ function mouseoverPath(this: any, d: any) {
  * Handle path mouseout
  * @param {PathViewModel} d
  */
-function mouseoutPath(this: any, d: any) {
+function mouseoutPath(this: any, event: any, d: any) {
     if(!d.parcatsViewModel.dragDimension) {
         // We're not currently dragging
         stylePathsNoHover(select(this));
@@ -554,7 +553,7 @@ function buildConstraintsForPath(d: any) {
  * Handle path click
  * @param {PathViewModel} d
  */
-function clickPath(d: any) {
+function clickPath(event: any, d: any) {
     if(d.parcatsViewModel.hoverinfoItems.indexOf('skip') === -1) {
         // hoverinfo it's skip, so interaction events aren't disabled
         const points = buildPointsArrayForPath(d);
@@ -971,7 +970,7 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox: any, bandElem
  * Handle dimension mouseover
  * @param {CategoryBandViewModel} bandViewModel
  */
-function mouseoverCategoryBand(this: any, bandViewModel: any) {
+function mouseoverCategoryBand(this: any, event: any, bandViewModel: any) {
     if(!bandViewModel.parcatsViewModel.dragDimension) {
         // We're not currently dragging
 
@@ -1029,7 +1028,7 @@ function mouseoverCategoryBand(this: any, bandViewModel: any) {
  * Handle dimension mouseover
  * @param {CategoryBandViewModel} bandViewModel
  */
-function mouseoutCategory(this: any, bandViewModel: any) {
+function mouseoutCategory(this: any, event: any, bandViewModel: any) {
     const parcatsViewModel = bandViewModel.parcatsViewModel;
 
     if(!parcatsViewModel.dragDimension) {
@@ -1065,7 +1064,7 @@ function mouseoutCategory(this: any, bandViewModel: any) {
  * Handle dimension drag start
  * @param {DimensionViewModel} d
  */
-function dragDimensionStart(this: any, d: any) {
+function dragDimensionStart(this: any, event: any, d: any) {
     // Check if dragging is supported
     if(d.parcatsViewModel.arrangement === 'fixed') {
         return;
@@ -1124,7 +1123,7 @@ function dragDimensionStart(this: any, d: any) {
  * Handle dimension drag
  * @param {DimensionViewModel} d
  */
-function dragDimension(d: any) {
+function dragDimension(event: any, d: any) {
     // Check if dragging is supported
     if(d.parcatsViewModel.arrangement === 'fixed') {
         return;
@@ -1220,7 +1219,7 @@ function dragDimension(d: any) {
  * Handle dimension drag end
  * @param {DimensionViewModel} d
  */
-function dragDimensionEnd(this: any, d: any) {
+function dragDimensionEnd(this: any, event: any, d: any) {
     // Check if dragging is supported
     if(d.parcatsViewModel.arrangement === 'fixed') {
         return;

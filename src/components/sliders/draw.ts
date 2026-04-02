@@ -465,21 +465,21 @@ function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
         return sliderGroup.data()[0];
     }
 
-    function mouseDownHandler() {
+    function mouseDownHandler(event: any) {
         const sliderOpts = getSliderOpts();
         gd.emit('plotly_sliderstart', {slider: sliderOpts});
 
         const grip = sliderGroup.select('.' + constants.gripRectClass);
 
-        event!.stopPropagation();
-        event!.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
         grip.call(Color.fill, sliderOpts.activebgcolor);
 
         const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
         handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, true);
         sliderOpts._dragging = true;
 
-        function mouseMoveHandler() {
+        function mouseMoveHandler(event: any) {
             const sliderOpts = getSliderOpts();
             const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);
             handleInput(gd, sliderGroup, sliderOpts, normalizedPosition, false);
