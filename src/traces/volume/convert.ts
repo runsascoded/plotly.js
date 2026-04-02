@@ -64,9 +64,7 @@ proto.update = function(data: any) {
 
     // Unpack position data
     function toDataCoords(axis: any, coord: any, scale: any, calendar: any) {
-        return coord.map(function(x: any) {
-            return axis.d2l(x, 0, calendar) * scale;
-        });
+        return coord.map((x: any) => axis.d2l(x, 0, calendar) * scale);
     }
 
     const positions = zip3(

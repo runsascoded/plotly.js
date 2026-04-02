@@ -73,7 +73,7 @@ function parseColorScale(cont: any): { index: number; rgb: number[] }[] {
     let colorscale = cOpts.colorscale;
     if(cOpts.reversescale) colorscale = Colorscale.flipScale(cOpts.colorscale);
 
-    return colorscale.map(function(elem: any[]) {
+    return colorscale.map((elem: any[]) => {
         const index = elem[0];
         const color = tinycolor(elem[1]);
         const rgb = color.toRgb();

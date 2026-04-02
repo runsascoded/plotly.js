@@ -83,5 +83,5 @@ export default function findEmpties(z: any) {
     }
 
     // sort the full list in descending order of neighbor count
-    return empties.sort(function(a, b) { return b[2] - a[2]; });
+    return empties.sort((a, b) => b[2] - a[2]);
 }

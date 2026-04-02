@@ -49,7 +49,7 @@ modeBarButtons.toImage = {
 
         Lib.notifier(_(gd, 'Taking snapshot - this may take a few seconds'), 'long');
 
-        ['filename', 'width', 'height', 'scale'].forEach(function(key: any) {
+        ['filename', 'width', 'height', 'scale'].forEach((key: any) => {
             if(key in toImageButtonOptions) {
                 (opts as any)[key] = toImageButtonOptions[key];
             }

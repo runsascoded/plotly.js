@@ -37,7 +37,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
     if(legendItem.groupTitle && legendItem.noClick) return;
 
     const fullData = gd._fullData;
-    const shapesWithLegend = (fullLayout.shapes || []).filter(function(d: any) { return d.showlegend; });
+    const shapesWithLegend = (fullLayout.shapes || []).filter((d: any) => d.showlegend);
     const allLegendItems = fullData.concat(shapesWithLegend);
 
     let fullTrace = legendItem.trace;
@@ -70,9 +70,7 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
         return attrIndex;
     }
 
-    const updatedShapes = (fullLayout.shapes || []).map(function(d: any) {
-        return d._input;
-    });
+    const updatedShapes = (fullLayout.shapes || []).map((d: any) => d._input);
 
     let shapesUpdated = false;
 

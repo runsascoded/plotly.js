@@ -105,7 +105,7 @@ function setStyleOnHover(selector: string, activeSelector: string, childSelector
     if (!element) {
         element = document;
     }
-    element.querySelectorAll(selector).forEach(function(el) {
+    element.querySelectorAll(selector).forEach((el) => {
         if(!el.getAttribute(eventAddedAttrName)) {
             // Emulate ":hover" CSS style using JS event handlers to set the
             // style in a strict CSP-compliant manner.
@@ -139,7 +139,7 @@ function getFullTransformMatrix(element: Element): number[] {
         0, 0, 1, 0,
         0, 0, 0, 1
     ];
-    allElements.forEach(function(e) {
+    allElements.forEach((e) => {
         const t = getElementTransformMatrix(e);
         if(t) {
             const m = matrix.convertCssMatrix(t);
@@ -169,7 +169,7 @@ function getElementTransformMatrix(element: Element): number[] | null {
         .replace('3d', '')
         .slice(1, -1)
         .split(',')
-        .map(function(n) { return +n; });
+        .map((n) => +n);
 }
 /**
  * retrieve all DOM elements that are ancestors of the specified one (including itself)

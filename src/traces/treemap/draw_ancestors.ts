@@ -50,7 +50,7 @@ export default function drawAncestors(gd: GraphDiv, cd: any[], entry: any, slice
     }).descendants();
 
     // edit slices that show up on graph
-    sliceData = sliceData.filter(function(pt: any) {
+    sliceData = sliceData.filter((pt: any) => {
         const level = pathIds.indexOf(pt.data.id);
         if(level === -1) return false;
 

@@ -327,7 +327,7 @@ proto.updateBaseLayers = function(fullLayout: any, geoLayout: any) {
         constants.layersForChoropleth :
         constants.layers;
 
-    const layerData = allLayers.filter(function(d) {
+    const layerData = allLayers.filter((d) => {
         return (isLineLayer(d) || isFillLayer(d)) ? geoLayout['show' + d] :
             isAxisLayer(d) ? geoLayout[d].showgrid :
             true;

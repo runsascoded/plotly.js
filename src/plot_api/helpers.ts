@@ -364,9 +364,7 @@ export const coerceTraceIndices = function (gd?: any, traceIndices?: any) {
     if (isNumeric(traceIndices)) {
         return [traceIndices];
     } else if (!Array.isArray(traceIndices) || !traceIndices.length) {
-        return gd.data.map(function (_?: any, i?: any) {
-            return i;
-        });
+        return gd.data.map((_?: any, i?: any) => i);
     } else if (Array.isArray(traceIndices)) {
         const traceIndicesOut: any[] = [];
         for (let i = 0; i < traceIndices.length; i++) {

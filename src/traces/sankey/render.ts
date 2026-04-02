@@ -179,15 +179,13 @@ function sankeyModel(layout: any, d: any, traceIndex: any) {
 
     // Push any overlapping nodes down.
     function resolveCollisionsTopToBottom(columns: any) {
-        columns.forEach(function(nodes: any) {
+        columns.forEach((nodes: any) => {
             let node;
             let dy;
             let y = 0;
             const n = nodes.length;
             let i;
-            nodes.sort(function(a: any, b: any) {
-                return a.y0 - b.y0;
-            });
+            nodes.sort((a: any, b: any) => a.y0 - b.y0);
             for(i = 0; i < n; ++i) {
                 node = nodes[i];
                 if(node.y0 >= y) {
@@ -204,15 +202,13 @@ function sankeyModel(layout: any, d: any, traceIndex: any) {
     // Group nodes into columns based on their x position
     function snapToColumns(nodes: any) {
         // Sort nodes by x position
-        const orderedNodes = nodes.map(function(n: any, i: any) {
+        const orderedNodes = nodes.map((n: any, i: any) => {
             return {
                 x0: n.x0,
                 index: i
             };
         })
-        .sort(function(a: any, b: any) {
-            return a.x0 - b.x0;
-        });
+        .sort((a: any, b: any) => a.x0 - b.x0);
 
         const columns: any[] = [];
         let colNumber = -1;
@@ -731,9 +727,9 @@ function attachForce(sankeyNode: any, forceKey: any, d: any, gd: any) {
     // Attach force to nodes in the same column (same x coordinate)
     switchToForceFormat(d.graph.nodes);
     const nodes = d.graph.nodes
-        .filter(function(n: any) {return n.originalX === d.node.originalX;})
+        .filter((n: any) => n.originalX === d.node.originalX)
         // Filter out children
-        .filter(function(n: any) {return !n.partOfGroup;});
+        .filter((n: any) => !n.partOfGroup);
     d.forceLayouts[forceKey] = d3Force.forceSimulation(nodes)
         .alphaDecay(0)
         .force('collide', d3Force.forceCollide()
@@ -822,7 +818,7 @@ function persistOriginalPlace(nodes: any) {
             distinctLayerPositions.push(nodes[i].originalX);
         }
     }
-    distinctLayerPositions.sort(function(a, b) {return a - b;});
+    distinctLayerPositions.sort((a, b) => a - b);
     for(i = 0; i < nodes.length; i++) {
         nodes[i].originalLayerIndex = distinctLayerPositions.indexOf(nodes[i].originalX);
         nodes[i].originalLayer = nodes[i].originalLayerIndex / (distinctLayerPositions.length - 1);
@@ -870,7 +866,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
     const dragcover = gd._fullLayout._dragCover;
 
     const styledData = calcData
-            .filter(function(d: any) {return unwrap(d).trace.visible;})
+            .filter((d: any) => unwrap(d).trace.visible)
             .map(sankeyModel.bind(null, layout));
 
     const sankey = svg.selectAll('.' + c.cn.sankey)
@@ -926,7 +922,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
           .data(function(d: any) {
               const links = d.graph.links;
               return links
-                .filter(function(l: any) {return l.value;})
+                .filter((l: any) => l.value)
                 .map(linkModel.bind(null, d));
           }, keyFun);
 

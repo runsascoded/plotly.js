@@ -16,17 +16,15 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         headerValuesIn = squareStringMatrix(headerValuesIn);
     }
     const headerValues = headerValuesIn
-        .concat(slicer(cellsValues).map(function() {
-            return emptyStrings((headerValuesIn[0] || ['']).length);
-        }));
+        .concat(slicer(cellsValues).map(() => emptyStrings((headerValuesIn[0] || ['']).length)));
 
     const domain = trace.domain;
     const groupWidth = Math.floor(gd._fullLayout._size.w * (domain.x[1] - domain.x[0]));
     const groupHeight = Math.floor(gd._fullLayout._size.h * (domain.y[1] - domain.y[0]));
     const headerRowHeights = trace.header.values.length ?
-        headerValues[0].map(function() { return trace.header.height; }) :
+        headerValues[0].map(() => trace.header.height) :
         [c.emptyHeaderHeight];
-    const rowHeights = cellsValues.length ? cellsValues[0].map(function() { return trace.cells.height; }) : [];
+    const rowHeights = cellsValues.length ? cellsValues[0].map(() => trace.cells.height) : [];
     const headerHeight = headerRowHeights.reduce(sum, 0);
     const scrollHeight = groupHeight - headerHeight;
     const minimumFillHeight = scrollHeight + c.uplift;
@@ -38,9 +36,9 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     let columnOrder = trace._fullInput.columnorder;
     if(isArrayOrTypedArray(columnOrder)) columnOrder = Array.from(columnOrder);
-    columnOrder = columnOrder.concat(slicer(cellsValues.map(function(d: any, i: any) {return i;})));
+    columnOrder = columnOrder.concat(slicer(cellsValues.map((d: any, i: any) => i)));
 
-    let columnWidths = headerValues.map(function(d: any, i: any) {
+    let columnWidths = headerValues.map((d: any, i: any) => {
         const value = isArrayOrTypedArray(trace.columnwidth) ?
             trace.columnwidth[Math.min(i, trace.columnwidth.length - 1)] :
             trace.columnwidth;
@@ -49,7 +47,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const totalColumnWidths = columnWidths.reduce(sum, 0);
 
     // fit columns in the available vertical space as there's no vertical scrolling now
-    columnWidths = columnWidths.map(function(d: any) { return d / totalColumnWidths * groupWidth; });
+    columnWidths = columnWidths.map((d: any) => d / totalColumnWidths * groupWidth);
 
     const maxLineWidth = Math.max(arrayMax(trace.header.line.width), arrayMax(trace.cells.line.width));
 
@@ -69,11 +67,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         scrollY: 0, // will be mutated on scroll
         cells: extendFlat({}, trace.cells, {values: cellsValues}),
         headerCells: extendFlat({}, trace.header, {values: headerValues}),
-        gdColumns: headerValues.map(function(d: any) {return d[0];}),
-        gdColumnsOriginalOrder: headerValues.map(function(d: any) {return d[0];}),
+        gdColumns: headerValues.map((d: any) => d[0]),
+        gdColumnsOriginalOrder: headerValues.map((d: any) => d[0]),
         prevPages: [0, 0],
         scrollbarState: {scrollbarScrollInProgress: false},
-        columns: headerValues.map(function(label: any, i: any) {
+        columns: headerValues.map((label: any, i: any) => {
             const foundKey = uniqueKeys[label];
             uniqueKeys[label] = (foundKey || 0) + 1;
             const key = label + '__' + uniqueKeys[label];
@@ -90,7 +88,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         })
     };
 
-    calcdata.columns.forEach(function(col: any) {
+    calcdata.columns.forEach((col: any) => {
         col.calcdata = calcdata;
         col.x = xScale(col);
     });
@@ -141,14 +139,12 @@ function emptyStrings(len: any) {
 }
 
 function xScale(d: any) {
-    return d.calcdata.columns.reduce(function(prev: any, next: any) {
-        return next.xIndex < d.xIndex ? prev + next.columnWidth : prev;
-    }, 0);
+    return d.calcdata.columns.reduce((prev: any, next: any) => next.xIndex < d.xIndex ? prev + next.columnWidth : prev, 0);
 }
 
 function makeRowBlock(anchorToRowBlock: any, auxiliary: any) {
     const blockAnchorKeys = Object.keys(anchorToRowBlock);
-    return blockAnchorKeys.map(function(k) {return extendFlat({}, anchorToRowBlock[k], {auxiliaryBlocks: auxiliary});});
+    return blockAnchorKeys.map((k) => extendFlat({}, anchorToRowBlock[k], {auxiliaryBlocks: auxiliary}));
 }
 
 function makeAnchorToRowBlock(rowHeights: any, minimumFillHeight: any) {

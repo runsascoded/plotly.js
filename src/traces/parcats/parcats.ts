@@ -676,7 +676,7 @@ function styleForColorHovermode(bandElement: any) {
     // Style category for drag
     select(bandElement.parentNode)
         .selectAll('rect.bandrect')
-        .filter(function(b: any) {return b.color === bandViewModel.color;})
+        .filter((b: any) => b.color === bandViewModel.color)
         .each(function(this: any) {
             Lib.raiseToTop(this);
             styleBandsHover(select(this));
@@ -896,7 +896,7 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox: any, bandElem
     const totalCount = bandViewModel.parcatsViewModel.model.count;
 
     let bandColorCount = 0;
-    bandViewModel.categoryViewModel.bands.forEach(function(b: any) {
+    bandViewModel.categoryViewModel.bands.forEach((b: any) => {
         if(b.color === bandViewModel.color) {
             bandColorCount += b.count;
         }
@@ -1072,7 +1072,7 @@ function dragDimensionStart(this: any, event: any, d: any) {
 
     // Save off initial drag indexes for dimension
     d.dragDimensionDisplayInd = d.model.displayInd;
-    d.initialDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(this: any, d: any) {return d.displayInd;});
+    d.initialDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map((d: any) => d.displayInd);
     d.dragHasMoved = false;
 
     // Check for category hit
@@ -1090,9 +1090,7 @@ function dragDimensionStart(this: any, event: any, d: any) {
                     -2 <= catMouseY && catMouseY <= catViewModel.height + 2) {
                     // Save off initial drag indexes for categories
                     d.dragCategoryDisplayInd = catViewModel.model.displayInd;
-                    d.initialDragCategoryDisplayInds = d.model.categories.map(function(this: any, c: any) {
-                        return c.displayInd;
-                    });
+                    d.initialDragCategoryDisplayInds = d.model.categories.map((c: any) => c.displayInd);
 
                     // Initialize categories dragY to be the current y position
                     catViewModel.model.dragY = catViewModel.y;
@@ -1237,13 +1235,13 @@ function dragDimensionEnd(this: any, event: any, d: any) {
     const traceInd = getTraceIndex(d.parcatsViewModel);
 
     // ### Handle dimension reordering ###
-    const finalDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map(function(d: any) {return d.displayInd;});
+    const finalDragDimensionDisplayInds = d.parcatsViewModel.model.dimensions.map((d: any) => d.displayInd);
     const anyDimsReordered = d.initialDragDimensionDisplayInds.some(function(initDimDisplay: any, dimInd: any) {
         return initDimDisplay !== finalDragDimensionDisplayInds[dimInd];
     });
 
     if(anyDimsReordered) {
-        finalDragDimensionDisplayInds.forEach(function(finalDimDisplay: any, dimInd: any) {
+        finalDragDimensionDisplayInds.forEach((finalDimDisplay: any, dimInd: any) => {
             const containerInd = d.parcatsViewModel.model.dimensions[dimInd].containerInd;
             restyleData['dimensions[' + containerInd + '].displayindex'] = finalDimDisplay;
         });
@@ -1252,9 +1250,7 @@ function dragDimensionEnd(this: any, event: any, d: any) {
     // ### Handle category reordering ###
     let anyCatsReordered = false;
     if(d.dragCategoryDisplayInd !== null) {
-        const finalDragCategoryDisplayInds = d.model.categories.map(function(c: any) {
-            return c.displayInd;
-        });
+        const finalDragCategoryDisplayInds = d.model.categories.map((c: any) => c.displayInd);
 
         anyCatsReordered = d.initialDragCategoryDisplayInds.some(function(initCatDisplay: any, catInd: any) {
             return initCatDisplay !== finalDragCategoryDisplayInds[catInd];
@@ -1266,8 +1262,8 @@ function dragDimensionEnd(this: any, event: any, d: any) {
                 function(a: any, b: any) { return a.displayInd - b.displayInd; });
 
             // Get new categoryarray and ticktext values
-            const newCategoryArray = sortedCategoryModels.map(function(v: any) { return v.categoryValue; });
-            const newCategoryLabels = sortedCategoryModels.map(function(v: any) { return v.categoryLabel; });
+            const newCategoryArray = sortedCategoryModels.map((v: any) => v.categoryValue);
+            const newCategoryLabels = sortedCategoryModels.map((v: any) => v.categoryLabel);
 
             restyleData['dimensions[' + d.model.containerInd + '].categoryarray'] = [newCategoryArray];
             restyleData['dimensions[' + d.model.containerInd + '].ticktext'] = [newCategoryLabels];
@@ -1676,12 +1672,12 @@ function updatePathViewModels(parcatsViewModel: any) {
     // Array from category index to category display index for each true dimension index
     const catToDisplayIndPerDim = parcatsViewModel.model.dimensions.map(
         function(d: any) {
-            return d.categories.map(function(c: any) {return c.displayInd;});
+            return d.categories.map((c: any) => c.displayInd);
         });
 
     // Array from true dimension index to dimension display index
-    const dimToDisplayInd = parcatsViewModel.model.dimensions.map(function(d: any) {return d.displayInd;});
-    const displayToDimInd = parcatsViewModel.dimensions.map(function(d: any) {return d.model.dimensionInd;});
+    const dimToDisplayInd = parcatsViewModel.model.dimensions.map((d: any) => d.displayInd);
+    const displayToDimInd = parcatsViewModel.dimensions.map((d: any) => d.model.dimensionInd);
 
     // Array of the x position of the left edge of the rectangles for each dimension
     const leftXPositions = dimensionViewModels.map(
@@ -1690,7 +1686,7 @@ function updatePathViewModels(parcatsViewModel: any) {
         });
 
     // Compute dimension widths
-    const dimWidths = dimensionViewModels.map(function(d: any) {return d.width;});
+    const dimWidths = dimensionViewModels.map((d: any) => d.width);
 
     // Build sorted Array of PathModel objects
     const pathModels: any[] = [];
@@ -1702,15 +1698,13 @@ function updatePathViewModels(parcatsViewModel: any) {
 
     // Compute category display inds to use for sorting paths
     function pathDisplayCategoryInds(pathModel: any) {
-        const dimensionInds = pathModel.categoryInds.map(function(catInd: any, dimInd: any) {return catToDisplayIndPerDim[dimInd][catInd];});
-        const displayInds = displayToDimInd.map(function(dimInd: any) {
-            return dimensionInds[dimInd];
-        });
+        const dimensionInds = pathModel.categoryInds.map((catInd: any, dimInd: any) => catToDisplayIndPerDim[dimInd][catInd]);
+        const displayInds = displayToDimInd.map((dimInd: any) => dimensionInds[dimInd]);
         return displayInds;
     }
 
     // Sort in ascending order by display index array
-    pathModels.sort(function(v1, v2) {
+    pathModels.sort((v1, v2) => {
         // Build display inds for each path
         const sortArray1 = pathDisplayCategoryInds(v1);
         const sortArray2 = pathDisplayCategoryInds(v2);
@@ -1747,8 +1741,8 @@ function updatePathViewModels(parcatsViewModel: any) {
     const pathViewModels = new Array(pathModels.length);
     const totalCount = dimensionViewModels[0].model.count;
     const totalHeight = dimensionViewModels[0].categories
-        .map(function(c: any) { return c.height; })
-        .reduce(function(v1: any, v2: any) { return v1 + v2; });
+        .map((c: any) => c.height)
+        .reduce((v1: any, v2: any) => v1 + v2);
 
     for(let pathNumber = 0; pathNumber < pathModels.length; pathNumber++) {
         const pathModel = pathModels[pathNumber];
@@ -1838,13 +1832,9 @@ function updatePathViewModels(parcatsViewModel: any) {
  */
 function updateDimensionViewModels(parcatsViewModel: any) {
     // Compute dimension ordering
-    const dimensionsIndInfo = parcatsViewModel.model.dimensions.map(function(d: any) {
-        return {displayInd: d.displayInd, dimensionInd: d.dimensionInd};
-    });
+    const dimensionsIndInfo = parcatsViewModel.model.dimensions.map((d: any) => ({displayInd: d.displayInd, dimensionInd: d.dimensionInd}));
 
-    dimensionsIndInfo.sort(function(a: any, b: any) {
-        return a.displayInd - b.displayInd;
-    });
+    dimensionsIndInfo.sort((a: any, b: any) => a.displayInd - b.displayInd);
 
     const dimensions: any[] = [];
     for(const displayInd in dimensionsIndInfo) {
@@ -1901,13 +1891,9 @@ function createDimensionViewModel(parcatsViewModel: any, dimensionModel: any) {
     let nextCatY = (maxCats - numCats) * catSpacing / 2.0;
 
     // Compute category ordering
-    const categoryIndInfo = dimensionModel.categories.map(function(c: any) {
-        return {displayInd: c.displayInd, categoryInd: c.categoryInd};
-    });
+    const categoryIndInfo = dimensionModel.categories.map((c: any) => ({displayInd: c.displayInd, categoryInd: c.categoryInd}));
 
-    categoryIndInfo.sort(function(a: any, b: any) {
-        return a.displayInd - b.displayInd;
-    });
+    categoryIndInfo.sort((a: any, b: any) => a.displayInd - b.displayInd);
 
     for(catDisplayInd = 0; catDisplayInd < numCats; catDisplayInd++) {
         catInd = categoryIndInfo[catDisplayInd].categoryInd;

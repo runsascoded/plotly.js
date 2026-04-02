@@ -122,11 +122,11 @@ export default function getLegendData(calcdata: any[], opts: any, hasMultipleLeg
     };
 
     // sort considering minimum group legendrank
-    legendData.forEach(function(a: any, k: number) { a[0]._preGroupSort = k; });
+    legendData.forEach((a: any, k: number) => { a[0]._preGroupSort = k; });
     legendData.sort(orderFn1);
     for(i = 0; i < legendData.length; i++) {
         // sort considering trace.legendrank and legend.traceorder
-        legendData[i].forEach(function(a: any, k: number) { a._preSort = k; });
+        legendData[i].forEach((a: any, k: number) => { a._preSort = k; });
         legendData[i].sort(orderFn2);
 
         const firstItemTrace = legendData[i][0].trace;

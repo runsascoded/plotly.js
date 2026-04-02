@@ -22,7 +22,7 @@ export const clean = function(newFullData: any, newFullLayout: any, oldFullData:
 export const toSVG = function(gd: any) {
     const imageRoot = gd._fullLayout._glimages;
     const root = select(gd).selectAll('.svg-container');
-    const canvases = root.filter(function(d: any, i: any) {return i === root.size() - 1;})
+    const canvases = root.filter((d: any, i: any) => i === root.size() - 1)
         .selectAll('.gl-canvas-context, .gl-canvas-focus');
 
     function canvasToImage(this: any) {

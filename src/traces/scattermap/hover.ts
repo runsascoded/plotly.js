@@ -20,7 +20,7 @@ function hoverPoints(pointData: any, xval: any, yval: any) {
 
     if(hasCluster) {
         const elems = subplot.map.queryRenderedFeatures(null, {layers: [layer]});
-        clusteredPointsIds = elems.map(function(elem: any) {return elem.id;});
+        clusteredPointsIds = elems.map((elem: any) => elem.id);
     }
 
     // compute winding number about [-180, 180] globe

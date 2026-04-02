@@ -272,7 +272,7 @@ proto.updateData = function(calcData: any) {
     // in case traces with different `type` have the same
     // below value, but sorting we ensure that
     // e.g. choroplethmap traces will be below scattermap traces
-    const calcDataSorted = calcData.slice().sort(function(a: any, b: any) {
+    const calcDataSorted = calcData.slice().sort((a: any, b: any) => {
         return (
             traceType2orderIndex[a[0].trace.type] -
             traceType2orderIndex[b[0].trace.type]

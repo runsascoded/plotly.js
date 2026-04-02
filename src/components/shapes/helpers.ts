@@ -26,7 +26,7 @@ export const extractPathCoords = function(path: any, paramsToUse: any, isRaw?: a
     const extractedCoordinates: any[] = [];
 
     const segments = path.match(constants.segmentRE);
-    segments.forEach(function(segment: any) {
+    segments.forEach((segment: any) => {
         const relevantParamIdx = paramsToUse[segment.charAt(0)].drawn;
         if(relevantParamIdx === undefined) return;
 

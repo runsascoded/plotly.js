@@ -43,7 +43,7 @@ function supplyIsoDefaults(traceIn: any, traceOut: any, defaultColor: any, layou
     handleCalendarDefaults(traceIn, traceOut, ['x', 'y', 'z'], layout);
 
     coerce('valuehoverformat');
-    ['x', 'y', 'z'].forEach(function(dim) {
+    ['x', 'y', 'z'].forEach((dim) => {
         coerce(dim + 'hoverformat');
 
         const capDim = 'caps.' + dim;
@@ -95,7 +95,7 @@ function supplyIsoDefaults(traceIn: any, traceOut: any, defaultColor: any, layou
         'lightposition.z',
         'flatshading',
         'opacity'
-    ].forEach(function(x) { coerce(x); });
+    ].forEach((x) => { coerce(x); });
 
     colorscaleDefaults(traceIn, traceOut, layout, coerce, {prefix: '', cLetter: 'c'});
 

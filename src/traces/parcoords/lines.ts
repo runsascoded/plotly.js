@@ -498,7 +498,7 @@ export default function(canvasGL: any, d: any) {
         sampleCount = initialDims[0] ? initialDims[0].values.length : 0;
 
         const lines = model.lines;
-        const color = isPick ? lines.color.map(function(_: any, i: any) {return i / lines.color.length;}) : lines.color;
+        const color = isPick ? lines.color.map((_: any, i: any) => i / lines.color.length) : lines.color;
 
         const points = makePoints(sampleCount, initialDims, color);
         setAttributes(attributes, sampleCount, points);

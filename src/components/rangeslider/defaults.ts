@@ -42,12 +42,8 @@ export default function handleDefaults(layoutIn: any, layoutOut: FullLayout, axN
     const subplots = layoutOut._subplots;
     if(subplots) {
         const yIds = subplots.cartesian
-            .filter(function(subplotId: any) {
-                return subplotId.slice(0, Math.max(0, subplotId.indexOf('y'))) === axisIds.name2id(axName);
-            })
-            .map(function(subplotId: any) {
-                return subplotId.slice(subplotId.indexOf('y'), subplotId.length);
-            });
+            .filter((subplotId: any) => subplotId.slice(0, Math.max(0, subplotId.indexOf('y'))) === axisIds.name2id(axName))
+            .map((subplotId: any) => subplotId.slice(subplotId.indexOf('y'), subplotId.length));
         const yNames = Lib.simpleMap(yIds, axisIds.id2name);
         for(let i = 0; i < yNames.length; i++) {
             const yName = yNames[i];

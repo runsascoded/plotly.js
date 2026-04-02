@@ -331,9 +331,7 @@ function _arrayToColor(color: any) {
 
         return (
             'rgb(' +
-            color.slice(0, 3).map(function (x: any) {
-                return Math.round(x * 255);
-            }) +
+            color.slice(0, 3).map((x: any) => Math.round(x * 255)) +
             ')'
         );
     }

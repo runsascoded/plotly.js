@@ -61,7 +61,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
 
     let minVisibleDepth = Infinity;
     let maxVisibleDepth = -Infinity;
-    sliceData.forEach(function(pt: any) {
+    sliceData.forEach((pt: any) => {
         const depth = pt.depth;
         if(depth >= trace._maxDepth) {
             // hide slices that won't show up on graph

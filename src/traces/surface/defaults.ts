@@ -82,7 +82,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         'hidesurface',
         'connectgaps',
         'opacity'
-    ].forEach(function (x) {
+    ].forEach((x) => {
         coerce(x);
     });
 

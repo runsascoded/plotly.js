@@ -73,7 +73,7 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
     const gTop = getTopOffset(gd);
     const gLeft = getLeftOffset(gd);
 
-    const pointsData = hoverItems.map(function (hoverItem: any) {
+    const pointsData = hoverItems.map((hoverItem: any) => {
         const _x0 = hoverItem._x0 || hoverItem.x0 || hoverItem.x || 0;
         const _x1 = hoverItem._x1 || hoverItem.x1 || hoverItem.x || 0;
         const _y0 = hoverItem._y0 || hoverItem.y0 || hoverItem.y || 0;
@@ -168,9 +168,7 @@ export const loneHover = function loneHover(hoverItems: any, opts: any): any {
     let lastBottomY = 0;
     let anchor = 0;
     hoverLabel
-        .sort(function (a: any, b: any) {
-            return a.y0 - b.y0;
-        })
+        .sort((a: any, b: any) => a.y0 - b.y0)
         .each(function (d: any, i: any) {
             const topY = d.y0 - d.by / 2;
 
@@ -246,9 +244,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     // list of all overlaid subplots to look at
     if (plotinfo && hoversubplots !== 'single') {
-        const overlayedSubplots = plotinfo.overlays.map(function (pi: any) {
-            return pi.id;
-        });
+        const overlayedSubplots = plotinfo.overlays.map((pi: any) => pi.id);
 
         subplots = subplots.concat(overlayedSubplots);
     }
@@ -340,7 +336,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     } else {
         // take into account zorder
         const zorderedCalcdata = gd.calcdata.slice();
-        zorderedCalcdata.sort(function (a, b) {
+        zorderedCalcdata.sort((a, b) => {
             const aZorder = a[0].trace.zorder || 0;
             const bZorder = b[0].trace.zorder || 0;
             return aZorder - bZorder;
@@ -571,17 +567,11 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                         hoverLayer: fullLayout._hoverlayer
                     });
                     if (closestPoints) {
-                        closestPoints = closestPoints.filter(function (point: any) {
-                            // some hover points, like scatter fills, do not allow spikes,
-                            // so will generate a hover point but without a valid spikeDistance
-                            return point.spikeDistance <= spikedistance;
-                        });
+                        closestPoints = closestPoints.filter((point: any) => point.spikeDistance <= spikedistance);
                     }
                     if (closestPoints && closestPoints.length) {
                         let tmpPoint;
-                        const closestVPoints = closestPoints.filter(function (point: any) {
-                            return point.xa.showspikes && point.xa.spikesnap !== 'hovered data';
-                        });
+                        const closestVPoints = closestPoints.filter((point: any) => point.xa.showspikes && point.xa.spikesnap !== 'hovered data');
                         if (closestVPoints.length) {
                             const closestVPt = closestVPoints[0];
                             if (isNumeric(closestVPt.x0) && isNumeric(closestVPt.y0)) {
@@ -595,9 +585,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                             }
                         }
 
-                        const closestHPoints = closestPoints.filter(function (point: any) {
-                            return point.ya.showspikes && point.ya.spikesnap !== 'hovered data';
-                        });
+                        const closestHPoints = closestPoints.filter((point: any) => point.ya.showspikes && point.ya.spikesnap !== 'hovered data');
                         if (closestHPoints.length) {
                             const closestHPt = closestHPoints[0];
                             if (isNumeric(closestHPt.x0) && isNumeric(closestHPt.y0)) {
@@ -669,13 +657,9 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         // When sorting keep the points in the main subplot at the top
         // then add points in other subplots
 
-        const hoverDataInSubplot = hoverData.filter(function (a) {
-            return firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id;
-        });
+        const hoverDataInSubplot = hoverData.filter((a) => firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id);
 
-        const hoverDataOutSubplot = hoverData.filter(function (a) {
-            return !(firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id);
-        });
+        const hoverDataOutSubplot = hoverData.filter((a) => !(firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id));
 
         hoverDataInSubplot.sort(distanceSort);
         hoverDataOutSubplot.sort(distanceSort);
@@ -693,15 +677,11 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     // Now if it is not restricted by spikedistance option, set the points to draw the spikelines
     if (hasCartesian && spikedistance !== 0) {
         if (hoverData.length !== 0) {
-            const tmpHPointData = hoverData.filter(function (point) {
-                return (point as any).ya.showspikes;
-            });
+            const tmpHPointData = hoverData.filter((point) => (point as any).ya.showspikes);
             const tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
             spikePoints.hLinePoint = fillSpikePoint(tmpHPoint);
 
-            const tmpVPointData = hoverData.filter(function (point) {
-                return (point as any).xa.showspikes;
-            });
+            const tmpVPointData = hoverData.filter((point) => (point as any).xa.showspikes);
             const tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
             spikePoints.vLinePoint = fillSpikePoint(tmpVPoint);
         }
@@ -1246,9 +1226,7 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        mockLegend.entries.sort(function (a: any, b: any) {
-            return a[0].trace.index - b[0].trace.index;
-        });
+        mockLegend.entries.sort((a: any, b: any) => a[0].trace.index - b[0].trace.index);
         mockLegend.layer = container;
 
         // Draw unified hover label
@@ -1278,23 +1256,17 @@ function createHoverText(hoverData: any[], opts: any): any {
             } else {
                 lyTop = Math.min.apply(
                     null,
-                    groupedHoverData.map(function (c) {
-                        return Math.min(c.y0, c.y1);
-                    })
+                    groupedHoverData.map((c) => Math.min(c.y0, c.y1))
                 );
                 lyBottom = Math.max.apply(
                     null,
-                    groupedHoverData.map(function (c) {
-                        return Math.max(c.y0, c.y1);
-                    })
+                    groupedHoverData.map((c) => Math.max(c.y0, c.y1))
                 );
             }
         } else {
             lyTop = lyBottom =
                 mean(
-                    groupedHoverData.map(function (c) {
-                        return (c.y0 + c.y1) / 2;
-                    })
+                    groupedHoverData.map((c) => (c.y0 + c.y1) / 2)
                 ) -
                 tHeight / 2;
         }
@@ -1307,23 +1279,17 @@ function createHoverText(hoverData: any[], opts: any): any {
             } else {
                 lxRight = Math.max.apply(
                     null,
-                    groupedHoverData.map(function (c) {
-                        return Math.max(c.x0, c.x1);
-                    })
+                    groupedHoverData.map((c) => Math.max(c.x0, c.x1))
                 );
                 lxLeft = Math.min.apply(
                     null,
-                    groupedHoverData.map(function (c) {
-                        return Math.min(c.x0, c.x1);
-                    })
+                    groupedHoverData.map((c) => Math.min(c.x0, c.x1))
                 );
             }
         } else {
             lxRight = lxLeft =
                 mean(
-                    groupedHoverData.map(function (c) {
-                        return (c.x0 + c.x1) / 2;
-                    })
+                    groupedHoverData.map((c) => (c.x0 + c.x1) / 2)
                 ) -
                 tWidth / 2;
         }
@@ -1751,7 +1717,7 @@ function hoverAvoidOverlaps(hoverLabels: any, rotateLabels: boolean, fullLayout:
         ];
     });
 
-    pointgroups.sort(function (a, b) {
+    pointgroups.sort((a, b) => {
         return (
             a[0].posref - b[0].posref ||
             // for equal positions, sort trace indices increasing or decreasing

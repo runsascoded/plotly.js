@@ -140,7 +140,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
 
     function newAxLayoutOut() {
         const traces = ax2traces[axName] || [];
-        axLayoutOut._traceIndices = traces.map(function(t: any) { return t.index; });
+        axLayoutOut._traceIndices = traces.map((t: any) => t.index);
         axLayoutOut._annIndices = [];
         axLayoutOut._shapeIndices = [];
         axLayoutOut._selectionIndices = [];

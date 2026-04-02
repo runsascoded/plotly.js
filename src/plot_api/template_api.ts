@@ -32,7 +32,7 @@ export const makeTemplate = function(figure?: any): any {
      * values, rather than just using them as defaults.
      */
 
-    data.forEach(function(trace: any) {
+    data.forEach((trace: any) => {
         // TODO: What if no style info is extracted for this trace. We may
         // not want an empty object as the null value.
         // TODO: allow transforms to contribute to templates?

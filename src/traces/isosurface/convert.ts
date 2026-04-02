@@ -79,9 +79,7 @@ proto.update = function(data: any) {
 
     // Unpack position data
     function toDataCoords(axis: any, coord: any, scale: any, calendar: any) {
-        return coord.map(function(x: any) {
-            return axis.d2l(x, 0, calendar) * scale;
-        });
+        return coord.map((x: any) => axis.d2l(x, 0, calendar) * scale);
     }
 
     const positions = zip3(
@@ -439,7 +437,7 @@ function generateIsoMeshes(data: any) {
             [0, 1, 2],
             [2, 0, 1],
             [1, 2, 0]
-        ].forEach(function(e) {
+        ].forEach((e) => {
             if(ok[e[0]] && ok[e[1]] && !ok[e[2]]) {
                 const A = xyzv[e[0]];
                 const B = xyzv[e[1]];
@@ -460,7 +458,7 @@ function generateIsoMeshes(data: any) {
             [0, 1, 2],
             [1, 2, 0],
             [2, 0, 1]
-        ].forEach(function(e) {
+        ].forEach((e) => {
             if(ok[e[0]] && !ok[e[1]] && !ok[e[2]]) {
                 const A = xyzv[e[0]];
                 const B = xyzv[e[1]];
@@ -507,7 +505,7 @@ function generateIsoMeshes(data: any) {
             [3, 0, 1, 2],
             [2, 3, 0, 1],
             [1, 2, 3, 0]
-        ].forEach(function(e) {
+        ].forEach((e) => {
             if(ok[e[0]] && ok[e[1]] && ok[e[2]] && !ok[e[3]]) {
                 const A = xyzv[e[0]];
                 const B = xyzv[e[1]];
@@ -536,7 +534,7 @@ function generateIsoMeshes(data: any) {
             [3, 0, 1, 2],
             [0, 2, 3, 1],
             [1, 3, 2, 0]
-        ].forEach(function(e) {
+        ].forEach((e) => {
             if(ok[e[0]] && ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
                 const A = xyzv[e[0]];
                 const B = xyzv[e[1]];
@@ -565,7 +563,7 @@ function generateIsoMeshes(data: any) {
             [1, 2, 3, 0],
             [2, 3, 0, 1],
             [3, 0, 1, 2]
-        ].forEach(function(e) {
+        ].forEach((e) => {
             if(ok[e[0]] && !ok[e[1]] && !ok[e[2]] && !ok[e[3]]) {
                 const A = xyzv[e[0]];
                 const B = xyzv[e[1]];
@@ -924,7 +922,7 @@ function generateIsoMeshes(data: any) {
             [ Math.min(minValues, vMax), Math.max(minValues, vMax) ]
         ];
 
-        ['x', 'y', 'z'].forEach(function(e) {
+        ['x', 'y', 'z'].forEach((e) => {
             const preRes: any[] = [];
             for(let s = 0; s < setupMinMax.length; s++) {
                 let count = 0;

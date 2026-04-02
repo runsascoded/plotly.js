@@ -112,7 +112,7 @@ export default function sceneUpdate(gd: GraphDiv, subplot: PlotInfo) {
             if(scene.line2d && scene.line2d.destroy) scene.line2d.destroy();
             if(scene.select2d && scene.select2d.destroy) scene.select2d.destroy();
             if(scene.glText) {
-                scene.glText.forEach(function(text: any) {
+                scene.glText.forEach((text: any) => {
                     if(text.destroy) text.destroy();
                 });
             }

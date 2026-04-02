@@ -67,11 +67,11 @@ export default function convertColumnData(trace: any,  ax1: any,  ax2: any,  var
     if(hasColumnHoverText) trace._hovertext = hovertext;
 
     if(ax1 && ax1.type === 'category') {
-        trace['_' + var1Name + 'CategoryMap'] = col1vals.map(function(v: any) { return ax1._categories[v];});
+        trace['_' + var1Name + 'CategoryMap'] = col1vals.map((v: any) => ax1._categories[v]);
     }
 
     if(ax2 && ax2.type === 'category') {
-        trace['_' + var2Name + 'CategoryMap'] = col2vals.map(function(v: any) { return ax2._categories[v];});
+        trace['_' + var2Name + 'CategoryMap'] = col2vals.map((v: any) => ax2._categories[v]);
     }
 
     trace._after2before = after2before;

@@ -8,7 +8,7 @@ export default function hoverPoints(pointData: any,  xval: any,  yval: any,  hov
     const hoverData = heatmapHoverPoints(pointData, xval, yval, hovermode, opts);
 
     if(hoverData) {
-        hoverData.forEach(function(hoverPt) {
+        hoverData.forEach((hoverPt) => {
             const trace = hoverPt.trace;
             if(trace.contours.type === 'constraint') {
                 if(trace.fillcolor && Color.opacity(trace.fillcolor)) {

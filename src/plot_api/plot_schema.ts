@@ -23,7 +23,7 @@ export { UNDERSCORE_ATTRS };
 export const get = function(): any {
     const traces: any = {};
 
-    Registry.allTypes.forEach(function(type) {
+    Registry.allTypes.forEach((type) => {
         traces[type] = getTraceAttributes(type);
     });
 
@@ -69,7 +69,7 @@ export const crawl = function(attrs?: any, callback?: any, specifiedLevel?: any,
     const level = specifiedLevel || 0;
     attrString = attrString || '';
 
-    Object.keys(attrs).forEach(function(attrName) {
+    Object.keys(attrs).forEach((attrName) => {
         const attr: any = attrs[attrName];
 
         if(UNDERSCORE_ATTRS.indexOf(attrName) !== -1) return;

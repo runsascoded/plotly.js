@@ -452,15 +452,15 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     trace._ownPolygons = thisPolygons;
 
     function visFilter(d: any) {
-        return d.filter(function(v: any) { return !v.gap && v.vis; });
+        return d.filter((v: any) => !v.gap && v.vis);
     }
 
     function visFilterWithGaps(d: any) {
-        return d.filter(function(v: any) { return v.vis; });
+        return d.filter((v: any) => v.vis);
     }
 
     function gapFilter(d: any) {
-        return d.filter(function(v: any) { return !v.gap; });
+        return d.filter((v: any) => !v.gap);
     }
 
     function keyFunc(d: any) {
@@ -633,12 +633,10 @@ function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter:
     // TODO: remove some as we get away from the viewport?
     if(mnum === 0) return;
 
-    const cd = cdscatter.filter(function(v) {
-        return v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1];
-    });
+    const cd = cdscatter.filter((v) => v.x >= xr[0] && v.x <= xr[1] && v.y >= yr[0] && v.y <= yr[1]);
     const inc = Math.ceil(cd.length / mnum);
     let tnum = 0;
-    cdscatterAll.forEach(function(cdj, j) {
+    cdscatterAll.forEach((cdj, j) => {
         const tracei = cdj[0].trace;
         if(subTypes.hasMarkers(tracei) &&
                 tracei.marker.maxdisplayed > 0 && j < idx) {
@@ -654,8 +652,8 @@ function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter:
 
     // for error bars: save in cd which markers to show
     // so we don't have to repeat this
-    cdscatter.forEach(function(v) { delete v.vis; });
-    cd.forEach(function(v, i) {
+    cdscatter.forEach((v) => { delete v.vis; });
+    cd.forEach((v, i) => {
         if(Math.round((i + i0) % inc) === 0) v.vis = true;
     });
 }

@@ -519,7 +519,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         const zBounds = zrange
             .map(ax.c2p)
             .map(Math.round)
-            .sort(function(a: any, b: any) { return a - b; });
+            .sort((a: any, b: any) => a - b);
 
         fills.merge(fillsEnter).each(function(this: any, d: any, i: any) {
             const z = [
@@ -929,9 +929,7 @@ function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
                 if(l > zrange[0] && l < zrange[1]) fillLevels.push(l);
             }
         } else {
-            fillLevels = lineLevels.map(function(v: any) {
-                return v - levelsIn.size / 2;
-            });
+            fillLevels = lineLevels.map((v: any) => v - levelsIn.size / 2);
             fillLevels.push(fillLevels[fillLevels.length - 1] + levelsIn.size);
         }
     } else if(opts._fillcolor && typeof opts._fillcolor === 'string') {

@@ -181,7 +181,7 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
     // since box plot points get an extra level of nesting, each
     // box needs the trace styling info
     const fn = function(d: any) {
-        d.forEach(function(v: any) {
+        d.forEach((v: any) => {
             v.t = t;
             v.trace = trace;
         });

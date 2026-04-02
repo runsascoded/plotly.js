@@ -1082,9 +1082,7 @@ function addTraces(gd?: any, traces?: any, newIndices?: any): any {
     }
 
     // make sure traces do not repeat existing ones
-    traces = traces.map(function (trace?: any) {
-        return extendFlat({}, trace);
-    });
+    traces = traces.map((trace?: any) => extendFlat({}, trace));
 
     helpers.cleanData(traces);
 
@@ -1251,9 +1249,7 @@ function moveTraces(gd?: any, currentIndices?: any, newIndices?: any): any {
     }
 
     // reorder this mapping by newIndex, ascending
-    movingTraceMap.sort(function (a?: any, b?: any) {
-        return a.newIndex - b.newIndex;
-    });
+    movingTraceMap.sort((a?: any, b?: any) => a.newIndex - b.newIndex);
 
     // now, add the moving traces back in, in order!
     for (i = 0; i < movingTraceMap.length; i += 1) {
@@ -1452,9 +1448,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
 
     // make a new empty vals array for undoit
     function a0() {
-        return traces.map(function () {
-            return undefined;
-        });
+        return traces.map(() => undefined);
     }
 
     // for autoranging multiple axes
@@ -1488,7 +1482,7 @@ function _restyle(gd?: any, aobj?: any, traces?: any): any {
     // attr can be an array to set several at once (all to the same val)
     function doextra(attr?: any, val?: any, i?: any) {
         if (Array.isArray(attr)) {
-            attr.forEach(function (a?: any) {
+            attr.forEach((a?: any) => {
                 doextra(a, val, i);
             });
             return;
@@ -1958,7 +1952,7 @@ function _relayout(gd?: any, aobj?: any): any {
     // attr can be an array to set several at once (all to the same val)
     function doextra(attr?: any, val?: any) {
         if (Array.isArray(attr)) {
-            attr.forEach(function (a?: any) {
+            attr.forEach((a?: any) => {
                 doextra(a, val);
             });
             return;
@@ -3562,7 +3556,7 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
     }
 
     // Sort this, taking note that undefined insertions end up at the end:
-    insertions.sort(function (a?: any, b?: any) {
+    insertions.sort((a?: any, b?: any) => {
         if (a.index > b.index) return -1;
         if (a.index < b.index) return 1;
         return 0;

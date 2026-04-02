@@ -148,13 +148,11 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
     }
 
     // filter out slices that won't show up on graph
-    sliceData = sliceData.filter(function (pt: any) {
-        return pt.y1 <= cutoff;
-    });
+    sliceData = sliceData.filter((pt: any) => pt.y1 <= cutoff);
 
     const baseX = getRotationAngle(trace.rotation);
     if (baseX) {
-        sliceData.forEach(function (pt: any) {
+        sliceData.forEach((pt: any) => {
             pt.x0 += baseX;
             pt.x1 += baseX;
         });
@@ -353,7 +351,7 @@ function plotOne(gd: GraphDiv, cd: any[], element: Element, transitionOpts: any)
             });
             const parentChildren = parent.children;
             let ci: any;
-            parentChildren.forEach(function (pt2: any, i: any) {
+            parentChildren.forEach((pt2: any, i: any) => {
                 if (helpers.getPtId(pt2) === id) {
                     return (ci = i);
                 }

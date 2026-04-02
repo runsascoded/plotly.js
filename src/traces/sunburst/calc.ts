@@ -154,9 +154,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
                     let v = cdi.v;
 
                     if(d.children) {
-                        const partialSum = d.children.reduce(function(a: any, c: any) {
-                            return a + c.data.data.v;
-                        }, 0);
+                        const partialSum = d.children.reduce((a: any, c: any) => a + c.data.data.v, 0);
 
                         // N.B. we must fill in `value` for generated sectors
                         // with the partialSum to compute the correct partition
@@ -190,7 +188,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
 
     // TODO add way to sort by height also?
     if(trace.sort) {
-        hierarchy.sort(function(a: any, b: any) { return b.value - a.value; });
+        hierarchy.sort((a: any, b: any) => b.value - a.value);
     }
 
     let pullColor: any;

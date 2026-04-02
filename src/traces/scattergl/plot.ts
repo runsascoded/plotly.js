@@ -90,7 +90,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
             } else if(count < scene.glText.length) {
                 const textsToRemove = scene.glText.length - count;
                 const removedTexts = scene.glText.splice(count, textsToRemove);
-                removedTexts.forEach(function(text: any) { text.destroy(); });
+                removedTexts.forEach((text: any) => { text.destroy(); });
             }
 
             for(i = 0; i < count; i++) {
@@ -99,7 +99,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         }
         if(scene.line2d) {
             scene.line2d.update(scene.lineOptions);
-            scene.lineOptions = scene.lineOptions.map(function(lineOptions: any) {
+            scene.lineOptions = scene.lineOptions.map((lineOptions: any) => {
                 if(lineOptions && lineOptions.positions) {
                     const srcPos = lineOptions.positions;
 
@@ -127,7 +127,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
 
         scene.fillOrder = Lib.repeat(null, count);
         if(scene.fill2d) {
-            scene.fillOptions = scene.fillOptions.map(function(fillOptions: any, i: any) {
+            scene.fillOptions = scene.fillOptions.map((fillOptions: any, i: any) => {
                 const cdscatter = cdata[i];
                 if(!fillOptions || !cdscatter || !cdscatter[0] || !cdscatter[0].trace) return;
                 const cd = cdscatter[0];
@@ -307,7 +307,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         }
 
         if(scene.glText) {
-            cdata.forEach(function(cdscatter: any) {
+            cdata.forEach((cdscatter: any) => {
                 const trace = ((cdscatter || [])[0] || {}).trace || {};
                 if(subTypes.hasText(trace)) {
                     styleTextSelection(cdscatter);
@@ -347,7 +347,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
         scene.select2d.update(vpRange);
     }
     if(scene.glText) {
-        scene.glText.forEach(function(text: any) { text.update(vpRange0); });
+        scene.glText.forEach((text: any) => { text.update(vpRange0); });
     }
 }
 

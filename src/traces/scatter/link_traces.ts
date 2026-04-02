@@ -34,7 +34,7 @@ export default function linkTraces(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: 
 
     const cdscatterSorted = cdscatter.slice();
     if(needsSort) {
-        cdscatterSorted.sort(function(a, b) {
+        cdscatterSorted.sort((a, b) => {
             const traceA = a[0].trace;
             const traceB = b[0].trace;
             return (traceA._groupIndex - traceB._groupIndex) ||

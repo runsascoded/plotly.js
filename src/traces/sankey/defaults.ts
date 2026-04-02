@@ -39,9 +39,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     const defaultNodePalette = function(i: any) {return colors[i % colors.length];};
 
-    coerceNode('color', nodeOut.label.map(function(d: any, i: any) {
-        return Color.addOpacity(defaultNodePalette(i), 0.8);
-    }));
+    coerceNode('color', nodeOut.label.map((d: any, i: any) => Color.addOpacity(defaultNodePalette(i), 0.8)));
     coerceNode('customdata');
 
     // link attributes

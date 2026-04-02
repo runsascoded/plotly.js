@@ -112,7 +112,7 @@ function makeFills(plotgroup: any,  pathinfo: any,  perimeter: any,  contours: a
 function joinAllPaths(pi: any,  perimeter: any) {
     let fullpath = '';
     let i = 0;
-    const startsleft = pi.edgepaths.map(function(v: any, i: any) { return i; });
+    const startsleft = pi.edgepaths.map((v: any, i: any) => i);
     let newloop = true;
     let endpt;
     let newendpt;

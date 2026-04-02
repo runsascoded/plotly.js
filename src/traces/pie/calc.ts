@@ -74,10 +74,10 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     }
 
     // Drop aggregate sums of value 0 or less
-    cd = cd.filter(function(elem: any) { return elem.v >= 0; });
+    cd = cd.filter((elem: any) => elem.v >= 0);
 
     const shouldSort = (trace.type === 'funnelarea') ? isAggregated : trace.sort;
-    if(shouldSort) cd.sort(function(a: any, b: any) { return b.v - a.v; });
+    if(shouldSort) cd.sort((a: any, b: any) => b.v - a.v);
 
     // include the sum of all values in the first point
     if(cd[0]) cd[0].vTotal = vTotal;

@@ -20,7 +20,7 @@ function annAutorange(gd: GraphDiv) {
     // relative to their anchor points
     // use the arrow and the text bg rectangle,
     // as the whole anno may include hidden text in its bbox
-    Lib.filterVisible(fullLayout.annotations).forEach(function(ann: any) {
+    Lib.filterVisible(fullLayout.annotations).forEach((ann: any) => {
         const xa = Axes.getFromId(gd, ann.xref);
         const ya = Axes.getFromId(gd, ann.yref);
         const xRefType = Axes.getRefType(ann.xref);

@@ -518,7 +518,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
             // casting for rotated boxes: see which edges intersect a
             // line from the arrowhead to far away and reduce with xor
             // to get the parity of the number of intersections.
-            if(edges.reduce(function(a: any, x: any) {
+            if(edges.reduce((a: any, x: any) => {
                 return (a as any) ^
                     (!!Lib.segmentsIntersect(headX, headY, headX + 1e6, headY + 1e6,
                             x[0], x[1], x[2], x[3]) as any);
@@ -527,7 +527,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 return;
             }
 
-            edges.forEach(function(x: any) {
+            edges.forEach((x: any) => {
                 const p = Lib.segmentsIntersect(tailX, tailY, headX, headY,
                             x[0], x[1], x[2], x[3]);
                 if(p) {

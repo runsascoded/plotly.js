@@ -653,9 +653,7 @@ proto.plot = function(sceneData: any, fullLayout: any, layout: any) {
     }
 
     // order object per trace index
-    scene.glplot.objects.sort(function(a: any, b: any) {
-        return a._trace.data.index - b._trace.data.index;
-    });
+    scene.glplot.objects.sort((a: any, b: any) => a._trace.data.index - b._trace.data.index);
 
     // Update ranges (needs to be called *after* objects are added due to updates)
     const sceneBounds = [[0, 0, 0], [0, 0, 0]];

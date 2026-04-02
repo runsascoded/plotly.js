@@ -56,7 +56,7 @@ proto.update = function(graphInfo: any, buttons: any) {
 
     // set style for modebar-group directly instead of inline CSS that's not allowed by strict CSP's
     const groupSelector = '#' + modeBarId + ' .modebar-group';
-    document.querySelectorAll(groupSelector).forEach(function(group: any) {
+    document.querySelectorAll(groupSelector).forEach((group: any) => {
         group.style.backgroundColor = style.bgcolor;
     });
     // if buttons or logo have changed, redraw modebar interior
@@ -101,10 +101,10 @@ proto.updateButtons = function(buttons: any) {
     this.buttonElements = [];
     this.buttonsNames = [];
 
-    this.buttons.forEach(function(buttonGroup: any) {
+    this.buttons.forEach((buttonGroup: any) => {
         const group = _this.createGroup();
 
-        buttonGroup.forEach(function(buttonConfig: any) {
+        buttonGroup.forEach((buttonConfig: any) => {
             const buttonName = buttonConfig.name;
             if(!buttonName) {
                 throw new Error('must provide button \'name\' in button config');
@@ -249,7 +249,7 @@ proto.updateActiveButton = function(buttonClicked: any) {
         buttonClicked.getAttribute('data-attr') :
         null;
 
-    this.buttonElements.forEach(function(button: any) {
+    this.buttonElements.forEach((button: any) => {
         const thisval = button.getAttribute('data-val') || true;
         const dataAttr = button.getAttribute('data-attr');
         const isToggleButton = (button.getAttribute('data-toggle') === 'true');

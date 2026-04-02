@@ -468,12 +468,7 @@ proto.updateRadialAxis = function(fullLayout: any, polarLayout: any) {
         let labelShift = 0;
 
         const vals = isSmith ?
-            (ax.tickvals || []).filter(function(x: any) {
-                // filter negative
-                return x >= 0;
-            }).map(function(x: any) {
-                return Axes.tickText(ax, x, true, false);
-            }) : Axes.calcTicks(ax);
+            (ax.tickvals || []).filter((x: any) => x >= 0).map((x: any) => Axes.tickText(ax, x, true, false)) : Axes.calcTicks(ax);
 
         const valsClipped = isSmith ? vals : Axes.clipEnds(ax, vals);
         let tickSign = Axes.getTickSigns(ax)[2];
@@ -703,9 +698,7 @@ proto.updateAngularAxis = function(fullLayout: any, polarLayout: any) {
     }
 
     let vals = isSmith ?
-        [Infinity].concat(ax.tickvals || []).map(function(x) {
-            return Axes.tickText(ax, x, true, false);
-        }) : Axes.calcTicks(ax);
+        [Infinity].concat(ax.tickvals || []).map((x) => Axes.tickText(ax, x, true, false)) : Axes.calcTicks(ax);
 
     if(isSmith) {
         vals[0].text = '∞';
@@ -732,9 +725,7 @@ proto.updateAngularAxis = function(fullLayout: any, polarLayout: any) {
     // the range w.r.t sector, so that sectors that cross 360 can
     // show all their ticks.
     if(ax.type === 'category') {
-        vals = vals.filter(function(d: any) {
-            return Lib.isAngleInsideSector(t2g(d), _this.sectorInRad);
-        });
+        vals = vals.filter((d: any) => Lib.isAngleInsideSector(t2g(d), _this.sectorInRad));
     }
 
     if(ax.visible) {
