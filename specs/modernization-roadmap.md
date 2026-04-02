@@ -2,125 +2,126 @@
 
 What plotly.js would look like if written from scratch today, and how to get there incrementally.
 
-## Current state (after ESM + d3 v7 + factory)
+## Current state (2026-04-02)
 
-- ESM source, d3 v7, tree-shakeable factory entry point
-- Factory: 686 KB min (-37% vs upstream basic)
-- Registration system still intact (226 call sites)
-- All JS, no types, heavy `var` + mutation patterns
+- **ESM**: 835 source files converted from CJS
+- **d3 v7**: replaced `@plotly/d3` (v3) with modern d3 v7 ESM packages
+- **TypeScript**: 835/835 files converted (100%), real types (`GraphDiv`, `FullTrace`, etc.) on core signatures
+- **Tree-shakeable factory**: `createPlotly()` at `lib/factory.js` — 685 KB min (-37% vs upstream basic)
+- **Demo site**: 5 plot types with side-by-side upstream vs fork comparison + E2E tests
+- **CI**: perf benchmarks, bundle-compare, demo E2E, dist gated on perf passing
 
-## Target state
+## Remaining work (in priority order)
 
-### 1. No registration system
-
-**Status: partially done (factory works around it), not removed**
-
-Replace the 3 main Registry patterns:
-
-#### `Registry.getComponentMethod('name', 'method')` → direct imports (96 calls)
-```ts
-// Before:
-Registry.getComponentMethod('legend', 'draw')(gd);
-// After:
-import { draw as drawLegend } from './components/legend/draw.js';
-drawLegend(gd);
-// Or via context for optional components:
-gd._components.legend?.draw(gd);
-```
-
-#### `Registry.traceIs(trace, 'category')` → static metadata (61 calls)
-```ts
-// Before:
-Registry.traceIs(trace, 'cartesian')
-// After:
-trace._module.categories.cartesian  // already available after supplyDefaults
-```
-
-#### `Registry.call('apiMethod', ...args)` → direct function calls (69 calls)
-```ts
-// Before:
-Registry.call('relayout', gd, update);
-// After:
-import { relayout } from './plot_api/plot_api.js';
-relayout(gd, update);
-```
-The `Registry.call` pattern exists to avoid circular imports (plot_api ↔ plots). Fix with a thin internal dispatch module or by restructuring the dependency graph.
-
-### 2. TypeScript
-
+### 1. `var` → `const`/`let`
 **Status: not started**
+**Effort: large, mechanical**
 
-Priority order for TS conversion:
-1. **Core types** (new file): define `PlotlyGd`, `FullLayout`, `FullTrace`, `PlotInfo`, `CalcData` etc. — the shapes that flow through everything
-2. **lib/index.ts** — utility module, pure functions, easy to type
-3. **registry.ts** → **context.ts** — replace with typed component/trace context
-4. **plot_api/*.ts** — core API with typed signatures
-5. **plots/plots.ts** — core plotting infrastructure
-6. **traces/scatter/*.ts**, **traces/bar/*.ts** — trace modules
-7. **components/** — one at a time
-
-Benefits:
-- Self-documenting object shapes (no more guessing what's on `gd._fullLayout`)
-- Catch type errors at build time (currently caught at runtime or not at all)
-- Better IDE support for consumers
-- Enables stricter tree-shaking (TS compiler can identify dead code)
+The entire codebase uses `var`. Modern JS/TS uses `const` for values that don't change (vast majority) and `let` for the few that do. This is the single biggest code quality improvement remaining.
 
 Approach:
-- Use `allowJs: true` in tsconfig for incremental migration
-- Convert one module at a time, starting from leaves (lib utilities) toward the core
-- Define interface files first (`types/`) before converting implementations
-- Keep `.js` extension in imports (for ESM compat)
+- Convert `var` → `const` everywhere
+- Fix errors where `const` doesn't work (reassigned variables) → use `let`
+- Can be automated with eslint `--fix` or a codemod
+- ~10,000+ `var` declarations across 835 files
 
-### 3. Remove backward-compat default exports
+### 2. `strict: true` in tsconfig
+**Status: not started (currently `strict: false`)**
+**Effort: large, reveals real bugs**
 
-**Status: 3 modules converted to named exports but still have `export default` for backward compat**
+Enabling strict mode turns on:
+- `noImplicitAny` — no implicit `any` types
+- `strictNullChecks` — `null`/`undefined` must be explicitly handled
+- `strictFunctionTypes` — function parameter types checked contravariantly
+- `noImplicitThis` — `this` must be typed in functions
 
-The named-export conversions (drawing, lib, plots) only save ~13 KB because `export default { allMethods }` keeps everything alive. To get the full tree-shaking benefit:
-- Convert ALL consumers of each module to named imports (not just factory-bundle ones)
-- Remove `export default` entirely
-- This is ~400 files for lib, ~50 for drawing, ~40 for plots
+This will surface hundreds of real type issues that are currently hidden. Each is either a genuine bug or needs an explicit type annotation.
 
-Effort: large but mechanical. Could be automated with a codemod.
+Approach: enable one flag at a time, fix errors, repeat.
 
-### 4. Split monolithic files
+### 3. Remove d3-compat polyfill
+**Status: not started (~480 v3 patterns remain)**
+**Effort: large, high-value**
 
+`src/lib/d3-compat.ts` patches `Selection.prototype` at runtime to handle d3 v3 patterns. This is un-TypeScript and prevents proper d3 typing. Four patterns need native v7 conversion:
+
+| Pattern | Count | v7 equivalent |
+|---|---|---|
+| `enter().append()` auto-merge | ~130 | `enter().append().merge(update)` or `.join()` |
+| `.style({obj})` object form | ~52 | Individual `.style('key', val)` calls |
+| `.attr({obj})` object form | ~105 | Individual `.attr('key', val)` calls |
+| `.select()` data non-propagation | ~195 | Use `node.querySelector()` where data matters |
+
+Also: ~20+ `.on()` callbacks still use d3 v3 signature `(datum)` instead of v7 `(event, datum)`. The `fix-d3-event.mjs` script fixed most but missed custom handlers (pie, sunburst, parcats, sankey, etc.).
+
+### 4. Proper interfaces for common `any` patterns
+**Status: partially done (core types exist, ~2,500 `any`s remain)**
+**Effort: medium, ongoing**
+
+Key areas:
+- **`opts: any`** (83 occurrences) — define interfaces for tick options, drag options, hover options, etc.
+- **`coerce: any`** (24) — standardize coerce function signature
+- **`d: any`** (202) — many are `CalcDatum` but d3's typing makes this hard
+- **`s: any`** (65) — d3 `Selection<Element, Datum, ...>` types
+- **Schema-generated types** — `types/schema.d.ts` exists but isn't used in source yet; replace `[key: string]: any` escape hatches on `FullTrace`/`FullLayout` with exhaustive property lists
+
+### 5. Remove registration system
+**Status: partially done (factory works around it, shapes/modebar decoupled)**
+**Effort: large, high-value for tree-shaking**
+
+226 `Registry.*` call sites across ~91 files:
+- `Registry.getComponentMethod` (96 calls) → context object on `gd`
+- `Registry.call` (69 calls) → direct function imports
+- `Registry.traceIs` (61 calls) → `trace._module.categories` (static)
+
+See `specs/remove-registration-system.md` for detailed plan.
+
+### 6. Split monolithic files
 **Status: not started**
+**Effort: large**
 
-| File | Lines | Size | Split into |
-|---|---|---|---|
-| `axes.js` | 4,673 | 160 KB | tick-calc, tick-draw, grid, labels, autorange |
-| `plot_api.js` | 3,800+ | 143 KB | newPlot, restyle, relayout, animate, purge |
-| `plots.js` | 3,300+ | 115 KB | supplyDefaults, doCalcdata, style, autoMargin |
-| `drawing/index.js` | 1,967 | 89 KB | primitives, text, markers, gradients |
+| File | Lines | What to split |
+|---|---|---|
+| `axes.ts` | 4,673 | tick-calc, tick-draw, grid, labels, autorange |
+| `plot_api.ts` | 3,800+ | newPlot, restyle, relayout, animate, purge |
+| `plots.ts` | 3,300+ | supplyDefaults, doCalcdata, style, autoMargin |
+| `drawing/index.ts` | 1,967 | primitives, text, markers, gradients |
 
-Benefits: enables tree-shaking within modules (e.g., a plot without animations doesn't need `animate`).
+Enables tree-shaking within modules (e.g., a plot without animations doesn't need `animate`).
 
-### 5. Modern JS patterns
+### 7. Modern JS patterns
+**Status: not started (beyond ESM conversion)**
+**Effort: ongoing, can happen alongside any of the above**
 
-- `var` → `const`/`let` everywhere
-- Mutation-heavy patterns → immutable where practical
-- `arguments` object → rest params
-- `for(var i=0; ...)` → `for...of` or array methods
+- `arguments` object → rest params (`...args`)
+- `for(var i=0; i<arr.length; i++)` → `for...of` or array methods
 - String concatenation → template literals
 - `prototype` patterns → classes or plain functions
+- `Object.keys(x).forEach(function(k) {...})` → `for...of Object.entries()`
+- `typeof x !== 'undefined'` → optional chaining (`x?.prop`)
+- `a || defaultVal` → nullish coalescing (`a ?? defaultVal`)
+- Manual array/object cloning → spread (`{...obj}`, `[...arr]`)
 
-## Recommended order
+### 8. Remove backward-compat default exports
+**Status: drawing done, lib/plots still have default exports**
+**Effort: medium**
 
-1. **TypeScript types** — define core interfaces without converting code (immediate DX benefit)
-2. **Remove remaining `export default`** from drawing/lib/plots (unlock tree-shaking, ~20-30 KB)
-3. **Registry.traceIs → static** (61 calls, mechanical, enables trace-level tree-shaking)
-4. **Registry.call → direct imports** (69 calls, needs circular dep resolution)
-5. **Registry.getComponentMethod → context** (96 calls, biggest refactor)
-6. **TS conversion** of core files (incremental, module by module)
-7. **Split monolithic files** (axes, plot_api, plots, drawing)
-8. **Modern JS patterns** (can happen alongside any of the above)
+`lib/index.ts` and `plots/plots.ts` still export `export default` objects alongside named exports. The default export keeps all code alive for tree-shaking purposes. Converting ALL consumers (~350 for lib, ~40 for plots) to named imports enables removing the defaults.
 
 ## Measuring progress
 
-The `perf/bundle-compare/compare.mjs` CI job tracks fork vs upstream sizes. Each improvement should show up there, especially the factory line.
+- `perf/bundle-compare/compare.mjs` — fork vs upstream sizes
+- `demo/test.mjs` — E2E rendering tests
+- `npx tsc --noEmit` — type safety
+- `grep -r 'var ' src/ --include='*.ts' | wc -l` — modernization progress
+- `grep -r ': any' src/ --include='*.ts' | wc -l` — type coverage
 
-Current: 686 KB min (-37% vs upstream basic)
-Target after removing default exports: ~650-660 KB
-Target after full registry removal: ~600-620 KB (components fully tree-shakeable)
-Target after splitting monolithic files: ~550-580 KB
-Theoretical floor (scatter+bar+legend, no dead code): ~400-500 KB
+## Targets
+
+| Metric | Current | After var→const/let | After strict | After d3-compat removal |
+|---|---|---|---|---|
+| `var` count | ~10,000 | 0 | 0 | 0 |
+| `: any` count | ~2,500 | ~2,500 | ~500 | ~300 |
+| d3-compat polyfills | 4 | 4 | 4 | 0 |
+| Factory bundle | 685 KB | 685 KB | 685 KB | ~670 KB |
+| Registry calls | 226 | 226 | 226 | 0 (after step 5) |
