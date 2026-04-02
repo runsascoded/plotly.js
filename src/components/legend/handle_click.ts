@@ -9,9 +9,9 @@ export default function handleClick(g: any, gd: GraphDiv, numClicks: number): an
 
     if(gd._dragged || gd._editing) return;
 
-    const itemClick = fullLayout.legend.itemclick;
-    const itemDoubleClick = fullLayout.legend.itemdoubleclick;
-    const groupClick = fullLayout.legend.groupclick;
+    const itemClick = fullLayout.legend!.itemclick;
+    const itemDoubleClick = fullLayout.legend!.itemdoubleclick;
+    const groupClick = fullLayout.legend!.groupclick;
 
     if(numClicks === 1 && itemClick === 'toggle' && itemDoubleClick === 'toggleothers' &&
         SHOWISOLATETIP && gd.data && gd._context.showTips

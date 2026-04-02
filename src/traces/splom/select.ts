@@ -11,7 +11,7 @@ export default function select(searchInfo, selectionTester) {
     const cdata = scene.matrixOptions.cdata;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
 
     if(!scene) return selection;
 
@@ -27,7 +27,7 @@ export default function select(searchInfo, selectionTester) {
     const x = cdata[xi];
     const y = cdata[yi];
     const els = (searchInfo.scene.selectBatch || []).slice();
-    const unels = [];
+    const unels: any[] = [];
 
     // degenerate polygon does not enable selection
     // filter out points by visible scatter ones

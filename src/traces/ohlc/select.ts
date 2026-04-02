@@ -2,7 +2,7 @@ export default function selectPoints(searchInfo,  selectionTester) {
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
     let i;
     // for (potentially grouped) candlesticks
     const posOffset = cd[0].t.bPos || 0;

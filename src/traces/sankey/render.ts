@@ -214,7 +214,7 @@ function sankeyModel(layout, d, traceIndex) {
             return a.x0 - b.x0;
         });
 
-        const columns = [];
+        const columns: any[] = [];
         let colNumber = -1;
         let colX; // Position of column
         let lastX = -Infinity; // Position of last node
@@ -231,7 +231,7 @@ function sankeyModel(layout, d, traceIndex) {
 
             // Add node to its associated column
             if(!columns[colNumber]) columns[colNumber] = [];
-            columns[colNumber].push(node);
+            (columns[colNumber] as any).push(node);
 
             // Change node's x position to align it with its column
             dx = colX - node.x0;
@@ -795,8 +795,8 @@ function snappingForce(sankeyNode, forceKey, nodes, d) {
 // basic data utilities
 
 function persistFinalNodePositions(d, gd) {
-    const x = [];
-    const y = [];
+    const x: any[] = [];
+    const y: any[] = [];
     for(let i = 0; i < d.graph.nodes.length; i++) {
         const nodeX = (d.graph.nodes[i].x0 + d.graph.nodes[i].x1) / 2;
         const nodeY = (d.graph.nodes[i].y0 + d.graph.nodes[i].y1) / 2;
@@ -813,7 +813,7 @@ function persistFinalNodePositions(d, gd) {
 }
 
 function persistOriginalPlace(nodes) {
-    const distinctLayerPositions = [];
+    const distinctLayerPositions: any[] = [];
     let i;
     for(i = 0; i < nodes.length; i++) {
         nodes[i].originalX = (nodes[i].x0 + nodes[i].x1) / 2;

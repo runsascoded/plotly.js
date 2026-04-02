@@ -12,5 +12,5 @@ export default function cleanNumber(v: any): number {
 
     if(isNumeric(v)) return Number(v);
 
-    return BADNUM;
+    return BADNUM as any;
 }

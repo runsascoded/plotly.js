@@ -170,11 +170,11 @@ function getPow(a, b) {
 }
 
 function getFactors(a) {
-    const powers = [];
+    const powers: any[] = [];
     for(let i = 0; i < shortPrimes.length; i++) {
         const b = shortPrimes[i];
         powers.push(
-            getPow(a, b)
+            (getPow(a, b) as any)
         );
     }
     return powers;
@@ -209,14 +209,14 @@ function arrayLCM(A) {
     if(A.length === 0) return undefined;
     let n = 1;
     for(let i = 0; i < A.length; i++) {
-        n = leastCommonMultiple(n, A[i]);
+        n = (leastCommonMultiple(n, A[i]) as any);
     }
     return n;
 }
 
 proto.calcXnums = function(xlen) {
     let i;
-    const nums = [];
+    const nums: any[] = [];
     for(i = 1; i < xlen; i++) {
         const a = this.getXat(i - 1, 0);
         const b = this.getXat(i, 0);
@@ -224,9 +224,9 @@ proto.calcXnums = function(xlen) {
         if(b !== a &&
             a !== undefined && a !== null &&
             b !== undefined && b !== null) {
-            nums[i - 1] = Math.abs(b - a);
+            nums[i - 1] = (Math.abs(b - a) as any);
         } else {
-            nums[i - 1] = 0;
+            nums[i - 1] = (0 as any);
         }
     }
 
@@ -237,9 +237,9 @@ proto.calcXnums = function(xlen) {
 
     for(i = 1; i < xlen; i++) {
         if(nums[i - 1] === 0) {
-            nums[i - 1] = 1;
+            nums[i - 1] = (1 as any);
         } else {
-            nums[i - 1] = Math.round(totalDist / nums[i - 1]);
+            nums[i - 1] = (Math.round(totalDist / nums[i - 1]) as any);
         }
     }
 
@@ -248,7 +248,7 @@ proto.calcXnums = function(xlen) {
 
 proto.calcYnums = function(ylen) {
     let i;
-    const nums = [];
+    const nums: any[] = [];
     for(i = 1; i < ylen; i++) {
         const a = this.getYat(0, i - 1);
         const b = this.getYat(0, i);
@@ -256,9 +256,9 @@ proto.calcYnums = function(ylen) {
         if(b !== a &&
             a !== undefined && a !== null &&
             b !== undefined && b !== null) {
-            nums[i - 1] = Math.abs(b - a);
+            nums[i - 1] = (Math.abs(b - a) as any);
         } else {
-            nums[i - 1] = 0;
+            nums[i - 1] = (0 as any);
         }
     }
 
@@ -269,9 +269,9 @@ proto.calcYnums = function(ylen) {
 
     for(i = 1; i < ylen; i++) {
         if(nums[i - 1] === 0) {
-            nums[i - 1] = 1;
+            nums[i - 1] = (1 as any);
         } else {
-            nums[i - 1] = Math.round(totalDist / nums[i - 1]);
+            nums[i - 1] = (Math.round(totalDist / nums[i - 1]) as any);
         }
     }
 
@@ -288,7 +288,7 @@ proto.estimateScale = function(resSrc, axis) {
         this.calcXnums(resSrc) :
         this.calcYnums(resSrc);
 
-    let resDst = 1 + arrayLCM(nums);
+    let resDst = 1 + arrayLCM(nums)!;
 
     while(resDst < MIN_RESOLUTION) {
         resDst *= 2;
@@ -441,11 +441,11 @@ proto.update = function(data) {
      */
 
     let i, j, k, v;
-    let rawCoords = [];
+    let rawCoords: any[] = [];
     for(i = 0; i < 3; i++) {
-        rawCoords[i] = [];
+        rawCoords[i] = ([] as any);
         for(j = 0; j < xlen; j++) {
-            rawCoords[i][j] = [];
+            rawCoords[i][j] = ([] as any);
             /*
             for(k = 0; k < ylen; k++) {
                 rawCoords[i][j][k] = undefined;
@@ -457,9 +457,9 @@ proto.update = function(data) {
     // coords x, y & z
     for(j = 0; j < xlen; j++) {
         for(k = 0; k < ylen; k++) {
-            rawCoords[0][j][k] = this.getXat(j, k, data.xcalendar, sceneLayout.xaxis);
-            rawCoords[1][j][k] = this.getYat(j, k, data.ycalendar, sceneLayout.yaxis);
-            rawCoords[2][j][k] = this.getZat(j, k, data.zcalendar, sceneLayout.zaxis);
+            rawCoords[0][j][k] = (this.getXat(j, k, data.xcalendar, sceneLayout.xaxis) as any);
+            rawCoords[1][j][k] = (this.getYat(j, k, data.ycalendar, sceneLayout.yaxis) as any);
+            rawCoords[2][j][k] = (this.getZat(j, k, data.zcalendar, sceneLayout.zaxis) as any);
         }
     }
 
@@ -484,9 +484,9 @@ proto.update = function(data) {
             for(k = 0; k < ylen; k++) {
                 v = rawCoords[i][j][k];
                 if(v === null || v === undefined) {
-                    rawCoords[i][j][k] = NaN;
+                    rawCoords[i][j][k] = (NaN as any);
                 } else {
-                    v = rawCoords[i][j][k] *= scaleFactor[i];
+                    v = rawCoords[i][j][k] *= (scaleFactor[i] as any);
                 }
             }
         }
@@ -517,7 +517,7 @@ proto.update = function(data) {
             for(k = 0; k < ylen; k++) {
                 v = rawCoords[i][j][k];
                 if(v !== null && v !== undefined) {
-                    rawCoords[i][j][k] -= this.objectOffset[i];
+                    rawCoords[i][j][k] -= (this.objectOffset[i] as any);
                 }
             }
         }

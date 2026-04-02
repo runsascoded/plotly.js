@@ -20,7 +20,7 @@ export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Nam
     const col1vals = col1dv.vals;
     const col2dv = Lib.distinctVals(col2);
     const col2vals = col2dv.vals;
-    const newArrays = [];
+    const newArrays: any[] = [];
     let text;
     let hovertext;
 
@@ -28,7 +28,7 @@ export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Nam
     const nJ = col1vals.length;
 
     for(i = 0; i < arrayVarNames.length; i++) {
-        newArrays[i] = Lib.init2dArray(nI, nJ);
+        newArrays[i] = (Lib.init2dArray(nI, nJ) as any);
     }
 
     if(hasColumnText) {
@@ -49,7 +49,7 @@ export default function convertColumnData(trace,  ax1,  ax2,  var1Name,  var2Nam
                 const arrayVarName = arrayVarNames[j];
                 const arrayVar = trace[arrayVarName];
                 const newArray = newArrays[j];
-                newArray[i2][i1] = arrayVar[i];
+                newArray[i2][i1] = (arrayVar[i] as any);
                 after2before[i2][i1] = i;
             }
 

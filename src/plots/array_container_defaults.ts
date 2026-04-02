@@ -8,7 +8,7 @@ export default function handleArrayContainerDefaults(parentObjIn?: any, parentOb
     const previousContOut = parentObjOut[name];
 
     const contIn = isArrayOrTypedArray(parentObjIn[name]) ? parentObjIn[name] : [];
-    const contOut = parentObjOut[name] = [];
+    const contOut = parentObjOut[name] = [] as any[];
     const templater = Template.arrayTemplater(parentObjOut, name, inclusionAttr);
     let i, itemOut;
 
@@ -28,7 +28,7 @@ export default function handleArrayContainerDefaults(parentObjIn?: any, parentOb
             opts.handleItemDefaults(itemIn, itemOut, parentObjOut, opts);
         }
 
-        contOut.push(itemOut);
+        contOut.push((itemOut as any));
     }
 
     const defaultItems = templater.defaultItems();
@@ -36,7 +36,7 @@ export default function handleArrayContainerDefaults(parentObjIn?: any, parentOb
         itemOut = defaultItems[i];
         itemOut._index = contOut.length;
         opts.handleItemDefaults({}, itemOut, parentObjOut, opts, {});
-        contOut.push(itemOut);
+        contOut.push((itemOut as any));
     }
 
     // in case this array gets its defaults rebuilt independent of the whole layout,

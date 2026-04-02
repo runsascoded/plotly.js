@@ -430,7 +430,7 @@ function mouseoverPath(this: any, d) {
                 };
 
                 // Build hover text
-                const hovertextParts = [];
+                const hovertextParts: any[] = [];
                 if(d.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
                     hovertextParts.push(['Count:', labels.countLabel].join(' '));
                 }
@@ -503,7 +503,7 @@ function mouseoutPath(this: any, d) {
  * @param {PathViewModel} d
  */
 function buildPointsArrayForPath(d) {
-    const points = [];
+    const points: any[] = [];
     const curveNumber = getTraceIndex(d.parcatsViewModel);
 
     for(let i = 0; i < d.model.valueInds.length; i++) {
@@ -786,7 +786,7 @@ function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElemen
     };
 
     // Hover label text
-    const hoverinfoParts = [];
+    const hoverinfoParts: any[] = [];
     if(catViewModel.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
         hoverinfoParts.push(['Count:', labels.countLabel].join(' '));
     }
@@ -828,7 +828,7 @@ function createHoverLabelForCategoryHovermode(gd: GraphDiv, rootBBox, bandElemen
  *
  */
 function createHoverLabelForDimensionHovermode(gd: GraphDiv, rootBBox, bandElement) {
-    const allHoverlabels = [];
+    const allHoverlabels: any[] = [];
 
     select(bandElement.parentNode.parentNode)
         .selectAll('g.category')
@@ -915,7 +915,7 @@ function createHoverLabelForColorHovermode(gd: GraphDiv, rootBBox, bandElement) 
     };
 
     // Hover label text
-    const hoverinfoParts = [];
+    const hoverinfoParts: any[] = [];
     if(catViewModel.parcatsViewModel.hoverinfoItems.indexOf('count') !== -1) {
         hoverinfoParts.push(['Count:', labels.countLabel].join(' '));
     }
@@ -1517,10 +1517,10 @@ function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsMode
     const domain = trace.domain;
     const figureWidth = layout.width;
     const figureHeight = layout.height;
-    const traceWidth = Math.floor(figureWidth * (domain.x[1] - domain.x[0]));
-    const traceHeight = Math.floor(figureHeight * (domain.y[1] - domain.y[0]));
-    const traceX = domain.x[0] * figureWidth + margin.l;
-    const traceY = layout.height - domain.y[1] * layout.height + margin.t;
+    const traceWidth = Math.floor(figureWidth! * (domain.x[1] - domain.x[0]));
+    const traceHeight = Math.floor(figureHeight! * (domain.y[1] - domain.y[0]));
+    const traceX = domain.x[0] * figureWidth! + margin.l!;
+    const traceY = layout.height! - domain.y[1] * layout.height! + margin.t!;
 
     // Handle path shape
     // -----------------
@@ -1590,8 +1590,8 @@ function createParcatsViewModel(graphDiv, layout: FullLayout, wrappedParcatsMode
  */
 function buildSvgPath(leftXPositions, pathYs, dimWidths, pathHeight, curvature) {
     // Compute the x midpoint of each path segment
-    const xRefPoints1 = [];
-    const xRefPoints2 = [];
+    const xRefPoints1: any[] = [];
+    const xRefPoints2: any[] = [];
     let refInterpolator;
     let d;
 
@@ -1683,7 +1683,7 @@ function updatePathViewModels(parcatsViewModel) {
     const dimWidths = dimensionViewModels.map(function(d) {return d.width;});
 
     // Build sorted Array of PathModel objects
-    const pathModels = [];
+    const pathModels: any[] = [];
     for(const p in parcatsModel.paths) {
         if(parcatsModel.paths.hasOwnProperty(p)) {
             pathModels.push(parcatsModel.paths[p]);
@@ -1712,14 +1712,14 @@ function updatePathViewModels(parcatsViewModel) {
         }
 
         // Append the first value index of the path to break ties
-        sortArray1.push(v1.valueInds[0]);
-        sortArray2.push(v2.valueInds[0]);
+        sortArray1.push((v1 as any).valueInds[0]);
+        sortArray2.push((v2 as any).valueInds[0]);
 
         // Handle color bundling
         if(parcatsViewModel.bundlecolors) {
             // Prepend sort array with the raw color value
-            sortArray1.unshift(v1.rawColor);
-            sortArray2.unshift(v2.rawColor);
+            sortArray1.unshift((v1 as any).rawColor);
+            sortArray2.unshift((v2 as any).rawColor);
         }
 
         // colors equal, sort by display categories
@@ -1745,15 +1745,15 @@ function updatePathViewModels(parcatsViewModel) {
 
         let pathHeight;
         if(totalCount > 0) {
-            pathHeight = totalHeight * (pathModel.count / totalCount);
+            pathHeight = totalHeight * ((pathModel as any).count / totalCount);
         } else {
             pathHeight = 0;
         }
 
         // Build path y coords
         const pathYs = new Array(nextYPositions.length);
-        for(let d = 0; d < pathModel.categoryInds.length; d++) {
-            const catInd = pathModel.categoryInds[d];
+        for(let d = 0; d < (pathModel as any).categoryInds.length; d++) {
+            const catInd = (pathModel as any).categoryInds[d];
             const catDisplayInd = catToDisplayIndPerDim[d][catInd];
             const dimDisplayInd = dimToDisplayInd[d];
 
@@ -1766,16 +1766,16 @@ function updatePathViewModels(parcatsViewModel) {
             const numBands = catViewModle.bands.length;
             const lastCatBand = catViewModle.bands[numBands - 1];
 
-            if(lastCatBand === undefined || pathModel.rawColor !== lastCatBand.rawColor) {
+            if(lastCatBand === undefined || (pathModel as any).rawColor !== lastCatBand.rawColor) {
                 // Create a new band
                 const bandY = lastCatBand === undefined ? 0 : lastCatBand.y + lastCatBand.height;
                 catViewModle.bands.push({
                     key: bandY,
-                    color: pathModel.color,
-                    rawColor: pathModel.rawColor,
+                    color: (pathModel as any).color,
+                    rawColor: (pathModel as any).rawColor,
                     height: pathHeight,
                     width: catViewModle.width,
-                    count: pathModel.count,
+                    count: (pathModel as any).count,
                     y: bandY,
                     categoryViewModel: catViewModle,
                     parcatsViewModel: parcatsViewModel
@@ -1784,7 +1784,7 @@ function updatePathViewModels(parcatsViewModel) {
                 // Extend current band
                 const currentBand = catViewModle.bands[numBands - 1];
                 currentBand.height += pathHeight;
-                currentBand.count += pathModel.count;
+                currentBand.count += (pathModel as any).count;
             }
         }
 
@@ -1797,7 +1797,7 @@ function updatePathViewModels(parcatsViewModel) {
         }
 
         pathViewModels[pathNumber] = {
-            key: pathModel.valueInds[0],
+            key: (pathModel as any).valueInds[0],
             model: pathModel,
             height: pathHeight,
             leftXs: leftXPositions,
@@ -1836,7 +1836,7 @@ function updateDimensionViewModels(parcatsViewModel) {
         return a.displayInd - b.displayInd;
     });
 
-    const dimensions = [];
+    const dimensions: any[] = [];
     for(const displayInd in dimensionsIndInfo) {
         const dimensionInd = dimensionsIndInfo[displayInd].dimensionInd;
         const dimModel = parcatsViewModel.model.dimensions[dimensionInd];
@@ -1875,7 +1875,7 @@ function createDimensionViewModel(parcatsViewModel, dimensionModel) {
     dimX = dimX0 + dimDx * displayInd;
 
     // Compute categories
-    const categories = [];
+    const categories: any[] = [];
     const maxCats = parcatsViewModel.model.maxCats;
     const numCats = dimensionModel.categories.length;
     const catSpacing = 8;

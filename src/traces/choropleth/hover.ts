@@ -64,7 +64,7 @@ function makeHoverInfo(pointData, trace, pt) {
     const hasText = (parts.indexOf('text') !== -1);
     const hasIdAsNameLabel = !hasName && hasLocation;
 
-    const text = [];
+    const text: any[] = [];
 
     if(hasIdAsNameLabel) {
         pointData.nameOverride = loc;

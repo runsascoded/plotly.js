@@ -76,7 +76,7 @@ export default function draw(gd: GraphDiv) {
 
 function makeSelectorData(gd: GraphDiv) {
     const axes = axisIds.list(gd, 'x', true);
-    const data = [];
+    const data: any[] = [];
 
     for(let i = 0; i < axes.length; i++) {
         const axis = axes[i];

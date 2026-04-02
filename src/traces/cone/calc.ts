@@ -6,7 +6,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const v = trace.v;
     const w = trace.w;
     const len = Math.min(
-        trace.x.length, trace.y.length, trace.z.length,
+        trace.x!.length, trace.y!.length, trace.z!.length,
         u.length, v.length, w.length
     );
     let normMax = -Infinity;

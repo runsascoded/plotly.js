@@ -23,7 +23,7 @@ export default function convert(calcTrace) {
     // early return if not visible or placeholder
     if(!isVisible) return opts;
 
-    const features = [];
+    const features: any[] = [];
     let i;
 
     const z = trace.z;

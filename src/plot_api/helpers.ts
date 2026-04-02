@@ -368,7 +368,7 @@ export const coerceTraceIndices = function (gd?: any, traceIndices?: any) {
             return i;
         });
     } else if (Array.isArray(traceIndices)) {
-        const traceIndicesOut = [];
+        const traceIndicesOut: any[] = [];
         for (let i = 0; i < traceIndices.length; i++) {
             if (isIndex(traceIndices[i], gd.data.length)) {
                 traceIndicesOut.push(traceIndices[i]);

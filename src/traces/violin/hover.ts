@@ -14,7 +14,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
     const hoveron = trace.hoveron;
     const hasHoveronViolins = hoveron.indexOf('violins') !== -1;
     const hasHoveronKDE = hoveron.indexOf('kde') !== -1;
-    let closeData = [];
+    let closeData: any[] = [];
     let closePtData;
     let violinLineAttrs;
 
@@ -83,7 +83,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         }
 
         if(hasHoveronViolins) {
-            closeData = closeData.concat(closeBoxData);
+            closeData = closeData.concat((closeBoxData as any));
         }
     }
 

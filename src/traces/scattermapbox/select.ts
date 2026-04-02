@@ -7,7 +7,7 @@ export default function selectPoints(searchInfo, selectionTester) {
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
     const trace = cd[0].trace;
     let i;
 

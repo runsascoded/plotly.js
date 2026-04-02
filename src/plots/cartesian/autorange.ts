@@ -48,7 +48,7 @@ export default {
  */
 function getAutoRange(gd?: any, ax?: any): any {
     let i, j;
-    let newRange = [];
+    let newRange: any[] = [];
 
     const fullLayout = gd._fullLayout;
     const getPadMin = makePadFn(fullLayout, ax, 0);
@@ -137,19 +137,19 @@ function getAutoRange(gd?: any, ax?: any): any {
                 // autorange so zero is one end.
                 // In principle this could be [0, 1] or [-1, 0] but usually
                 // 'tozero' pins 0 to the low end, so follow that.
-                newRange = [0, 1];
+                newRange = ([0, 1] as any);
             } else {
                 const maxPad = (minmin > 0 ? maxArray : minArray).reduce(maximumPad, 0);
                 // we're pushing a single value away from the edge due to its
                 // padding, with the other end clamped at zero
                 // 0.5 means don't push it farther than the center.
                 const rangeEnd = minmin / (1 - Math.min(0.5, maxPad / axLen));
-                newRange = minmin > 0 ? [0, rangeEnd] : [rangeEnd, 0];
+                newRange = (minmin > 0 ? [0, rangeEnd] : [rangeEnd, 0] as any);
             }
         } else if(nonNegative) {
-            newRange = [Math.max(0, lower), Math.max(1, upper)];
+            newRange = ([Math.max(0, lower), Math.max(1, upper)] as any);
         } else {
-            newRange = [lower, upper];
+            newRange = ([lower, upper] as any);
         }
     } else {
         if(toZero) {

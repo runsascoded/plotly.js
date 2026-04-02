@@ -44,13 +44,13 @@ function onClick(gd: GraphDiv, hoverData: any) {
     if(!(onSet.length || offSet.length)) return;
 
     for(i = 0; i < onSet.length; i++) {
-        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut[onSet[i]]);
+        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut![onSet[i]]);
         editHelpers.modifyItem('visible', true);
         Lib.extendFlat(update, editHelpers.getUpdateObj());
     }
 
     for(i = 0; i < offSet.length; i++) {
-        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut[offSet[i]]);
+        editHelpers = arrayEditor(gd.layout, 'annotations', annotationsOut![offSet[i]]);
         editHelpers.modifyItem('visible', false);
         Lib.extendFlat(update, editHelpers.getUpdateObj());
     }
@@ -75,14 +75,14 @@ function onClick(gd: GraphDiv, hoverData: any) {
 function getToggleSets(gd: GraphDiv, hoverData: any) {
     const annotations = gd._fullLayout.annotations;
     const onSet = [];
-    const offSet = [];
+    const offSet: any[] = [];
     const explicitOffSet = [];
     const hoverLen = (hoverData || []).length;
 
     let i, j, anni, showMode, pointj, xa, ya, toggleType;
 
-    for(i = 0; i < annotations.length; i++) {
-        anni = annotations[i];
+    for(i = 0; i < annotations!.length; i++) {
+        anni = annotations![i];
         showMode = anni.clicktoshow;
 
         if(showMode) {

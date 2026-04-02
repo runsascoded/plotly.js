@@ -12,7 +12,7 @@ export default function autoType(array?: any, calendar?: any, opts?: any): strin
     if(isArrayOrTypedArray(a) && !a.length) return '-';
     if(!noMultiCategory && multiCategory(a)) return 'multicategory';
     if(noMultiCategory && Array.isArray(a[0])) { // no need to flat typed arrays here
-        const b = [];
+        const b: any[] = [];
         for(let i = 0; i < a.length; i++) {
             if(isArrayOrTypedArray(a[i])) {
                 for(let j = 0; j < a[i].length; j++) {

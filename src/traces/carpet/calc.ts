@@ -20,7 +20,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     let x = trace.x;
     let y = trace.y;
-    const cols = [];
+    const cols: any[] = [];
     if(x && isArray1D(x)) cols.push('x');
     if(y && isArray1D(y)) cols.push('y');
 
@@ -61,11 +61,11 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     let xrange = arrayMinmax(x);
     let yrange = arrayMinmax(y);
 
-    const dx = 0.5 * (xrange[1] - xrange[0]);
-    const xc = 0.5 * (xrange[1] + xrange[0]);
+    const dx = 0.5 * (xrange![1] - xrange![0]);
+    const xc = 0.5 * (xrange![1] + xrange![0]);
 
-    const dy = 0.5 * (yrange[1] - yrange[0]);
-    const yc = 0.5 * (yrange[1] + yrange[0]);
+    const dy = 0.5 * (yrange![1] - yrange![0]);
+    const yc = 0.5 * (yrange![1] + yrange![0]);
 
     // Expand the axes to fit the plot, except just grow it by a factor of 1.3
     // because the labels should be taken into account except that's difficult

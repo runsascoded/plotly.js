@@ -65,8 +65,8 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
             }
 
             const hoverPt: Record<string, any> = {};
-            let parts = [];
-            const thisText = [];
+            let parts: any[] = [];
+            const thisText: any[] = [];
             const hasFlag = function(flag) { return parts.indexOf(flag) !== -1; };
 
             if(hoverinfo) {
@@ -90,7 +90,7 @@ export default function attachFxHandlers(sliceTop: any, entry: any, gd: GraphDiv
             }
 
             let tx;
-            const allPercents = [];
+            const allPercents: any[] = [];
             const insertPercent = function() {
                 if(allPercents.indexOf(tx) === -1) { // no need to add redundant info
                     thisText.push(tx);

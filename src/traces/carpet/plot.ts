@@ -62,7 +62,7 @@ function drawClipPath(trace, t, layer, xaxis, yaxis) {
 
     const path = Lib.ensureSingle(clip, 'path', 'carpetboundary');
     const segments = t.clipsegments;
-    const segs = [];
+    const segs: any[] = [];
 
     for(i = 0; i < segments.length; i++) {
         seg = segments[i];
@@ -195,7 +195,7 @@ const lineSpacing = alignmentConstants.LINE_SPACING;
 const midShift = ((1 - alignmentConstants.MID_SHIFT) / lineSpacing) + 1;
 
 function drawAxisTitle(gd, layer, trace, t, xy, dxy, axis, xa, ya, labelOrientation, labelClass) {
-    const data = [];
+    const data: any[] = [];
     if(axis.title.text) data.push(axis.title.text);
     const titleJoin = layer.selectAll('text.' + labelClass).data(data);
     let offset = labelOrientation.maxExtent;

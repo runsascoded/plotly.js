@@ -91,7 +91,7 @@ function plotOne(gd: GraphDiv, cd0) {
             for(i = 0; i < selPts.length; i++) {
                 selDict[selPts[i]] = true;
             }
-            const unselPts = [];
+            const unselPts: any[] = [];
             for(i = 0; i < commonLength; i++) {
                 if(!selDict[i]) unselPts.push(i);
             }

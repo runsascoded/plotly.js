@@ -181,8 +181,8 @@ function model(layout: FullLayout, d, i) {
         canvasOverdrag: c.overdrag * c.canvasPixelRatio
     });
 
-    const groupWidth = Math.floor(width * (domain.x[1] - domain.x[0]));
-    const groupHeight = Math.floor(layout.height * (domain.y[1] - domain.y[0]));
+    const groupWidth = Math.floor(width! * (domain.x[1] - domain.x[0]));
+    const groupHeight = Math.floor(layout.height! * (domain.y[1] - domain.y[0]));
 
     const pad = layout.margin || {l: 80, r: 80, t: 100, b: 80};
     const rowContentWidth = groupWidth;
@@ -204,8 +204,8 @@ function model(layout: FullLayout, d, i) {
         layoutWidth: width,
         layoutHeight: layout.height,
         domain: domain,
-        translateX: domain.x[0] * width,
-        translateY: layout.height - domain.y[1] * layout.height,
+        translateX: domain.x[0] * width!,
+        translateY: layout.height! - domain.y[1] * layout.height!,
         pad: pad,
         canvasWidth: rowContentWidth * c.canvasPixelRatio + 2 * lines.canvasOverdrag,
         canvasHeight: rowHeight * c.canvasPixelRatio,

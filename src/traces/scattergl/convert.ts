@@ -149,9 +149,9 @@ function convertTextStyle(gd: GraphDiv, trace: FullTrace) {
             );
         }
     } else {
-        if (isArrayOrTypedArray(trace.text) && trace.text.length < count) {
+        if (isArrayOrTypedArray(trace.text) && trace.text!.length < count) {
             // if text array is shorter, we'll need to append to it, so let's slice to prevent mutating
-            optsOut.text = trace.text.slice();
+            optsOut.text = trace.text!.slice();
         } else {
             optsOut.text = trace.text;
         }
@@ -654,7 +654,7 @@ function convertErrorBarPositions(gd: GraphDiv, trace: FullTrace, positions, x, 
                 const dc = coords[i];
 
                 if (isNumeric(dc)) {
-                    const dl = positions[i * 2 + pOffset];
+                    const dl = positions[i * 2 + pOffset!];
                     const vals = computeError(dc, i);
                     const lv = vals[0];
                     const hv = vals[1];

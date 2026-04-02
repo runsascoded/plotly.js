@@ -22,7 +22,7 @@ function calc(gd: GraphDiv,  trace: FullTrace) {
 
     trace._extremes[xa._id] = Axes.findExtremes(xa, x, {vpad: minDiff / 2});
     if(cd.length) {
-        Lib.extendFlat(cd[0].t, {
+        Lib.extendFlat((cd[0] as any).t, {
             wHover: minDiff / 2,
             tickLen: tickLen
         });
@@ -58,7 +58,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
 
     const hasPeriod = !!trace.xperiodalignment;
 
-    const cd = [];
+    const cd: any[] = [];
     for(let i = 0; i < x.length; i++) {
         const xi = x[i];
         const oi = o[i];
@@ -87,7 +87,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
             pt.y = [li, hi];
 
             if(hasPeriod) pt.orig_p = origX[i]; // used by hover
-            if(hasTextArray) pt.tx = trace.text[i];
+            if(hasTextArray) pt.tx = trace.text![i];
             if(hasHovertextArray) pt.htx = trace.hovertext[i];
 
             cd.push(pt);
@@ -99,7 +99,7 @@ function calcCommon(gd: GraphDiv,  trace: FullTrace,  origX,  x,  ya: FullAxis, 
     trace._extremes[ya._id] = Axes.findExtremes(ya, Lib.concat(l, h), {padded: true});
 
     if(cd.length) {
-        cd[0].t = {
+        (cd[0] as any).t = {
             labels: {
                 open: _(gd, 'open:') + ' ',
                 high: _(gd, 'high:') + ' ',
@@ -125,7 +125,7 @@ function convertTickWidth(gd: GraphDiv,  xa: FullAxis,  trace: FullTrace) {
 
     if(!minDiff) {
         const fullData = gd._fullData;
-        const ohlcTracesOnThisXaxis = [];
+        const ohlcTracesOnThisXaxis: any[] = [];
 
         minDiff = Infinity;
 
@@ -157,7 +157,7 @@ function convertTickWidth(gd: GraphDiv,  xa: FullAxis,  trace: FullTrace) {
         if(minDiff === Infinity) minDiff = 1;
 
         for(i = 0; i < ohlcTracesOnThisXaxis.length; i++) {
-            ohlcTracesOnThisXaxis[i]._minDiff = minDiff;
+            (ohlcTracesOnThisXaxis[i] as any)._minDiff = minDiff;
         }
     }
 

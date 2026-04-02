@@ -101,7 +101,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
     if(prop === 'title.text') editAttr = 'titleText';
     else if(prop.indexOf('axis') !== -1) editAttr = 'axisTitleText';
     else if(prop.indexOf('colorbar') !== -1) editAttr = 'colorbarTitleText';
-    const editable = gd._context.edits[editAttr];
+    const editable = gd._context.edits[editAttr!];
 
     function matchesPlaceholder(text: string | undefined, placeholder: string | undefined): boolean {
         if(text === undefined || placeholder === undefined) return false;
@@ -288,8 +288,8 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
             const paperbb: Record<string, number> = {
                 left: reservedMargins.l,
                 top: reservedMargins.t,
-                right: fullLayout.width - reservedMargins.r,
-                bottom: fullLayout.height - reservedMargins.b
+                right: fullLayout.width! - reservedMargins.r,
+                bottom: fullLayout.height! - reservedMargins.b
             };
 
             const maxshift = avoid.maxShift ||

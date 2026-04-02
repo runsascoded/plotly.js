@@ -172,7 +172,7 @@ export default function plot(gd: GraphDiv, wrappedTraceHolders: any[]) {
     if(dynamic) {
         cellsColumnBlock.call(d3Drag()
             .origin(function(d) {
-                event.stopPropagation();
+                event!.stopPropagation();
                 return d;
             })
             // @ts-expect-error makeDragRow accepts variable args
@@ -364,7 +364,7 @@ function renderScrollbarKit(tableControlView, gd, bypassVisibleBar) {
         })
         .call(d3Drag()
             .origin(function(d) {
-                event.stopPropagation();
+                event!.stopPropagation();
                 d.scrollbarState.scrollbarScrollInProgress = true;
                 return d;
             })
@@ -644,7 +644,7 @@ function headerHeight(d) {
 }
 
 function findPagesAndCacheHeights(blocks, scrollY, scrollHeight) {
-    const pages = [];
+    const pages: any[] = [];
     let pTop = 0;
 
     for(let blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
@@ -766,7 +766,7 @@ function wrapTextMaker(columnBlock, element, tableControlView, gd) {
                 // last element is only for measuring the separator character, so it's ignored:
                 const separatorLength = fragments[fragments.length - 1].width;
                 const rest = fragments.slice(0, -1);
-                let currentRow = [];
+                let currentRow: any[] = [];
                 let currentAddition, currentAdditionLength;
                 let currentRowLength = 0;
                 const rowLengthLimit = d.column.columnWidth - 2 * c.cellPad;
@@ -776,10 +776,10 @@ function wrapTextMaker(columnBlock, element, tableControlView, gd) {
                     currentAdditionLength = currentAddition.width + separatorLength;
                     if(currentRowLength + currentAdditionLength > rowLengthLimit) {
                         d.value += currentRow.join(c.wrapSpacer) + c.lineBreaker;
-                        currentRow = [];
+                        currentRow = [] as any[];
                         currentRowLength = 0;
                     }
-                    currentRow.push(currentAddition.text);
+                    currentRow.push((currentAddition.text as any));
                     currentRowLength += currentAdditionLength;
                 }
                 if(currentRowLength) {

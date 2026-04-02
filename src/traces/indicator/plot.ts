@@ -530,7 +530,7 @@ function drawNumbers(gd, plotGroup, cd, opts) {
     let bignumberbBox, deltabBox;
     let numbersbBox;
 
-    const data = [];
+    const data: any[] = [];
     if(trace._hasNumber) data.push('number');
     if(trace._hasDelta) {
         data.push('delta');

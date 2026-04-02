@@ -9,11 +9,11 @@ function hoverPoints(pointData: any, xval: number, yval: number, hovermode: any)
     const cd = pointData.cd;
     const trace = cd[0].trace;
     const hoveron = trace.hoveron;
-    let closeBoxData = [];
+    let closeBoxData: any[] = [];
     let closePtData;
 
     if(hoveron.indexOf('boxes') !== -1) {
-        closeBoxData = closeBoxData.concat(hoverOnBoxes(pointData, xval, yval, hovermode));
+        closeBoxData = closeBoxData.concat((hoverOnBoxes(pointData, xval, yval, hovermode) as any));
     }
 
     if(hoveron.indexOf('points') !== -1) {
@@ -158,7 +158,7 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     const spikeDistance = pointData.spikeDistance;
     const spikePosition = pointData[spikePosAttr];
 
-    const closeBoxData = [];
+    const closeBoxData: any[] = [];
     for(let i = 0; i < attrs.length; i++) {
         const attr = attrs[i];
 
@@ -193,12 +193,12 @@ function hoverOnBoxes(pointData: any, xval: number, yval: number, hovermode: any
     pointData.spikeDistance = undefined;
     pointData[spikePosAttr] = undefined;
     for(let k = 0; k < closeBoxData.length; k++) {
-        if(closeBoxData[k].attr !== 'med') {
-            closeBoxData[k].name = '';
-            closeBoxData[k].spikeDistance = undefined;
+        if((closeBoxData[k] as any).attr !== 'med') {
+            (closeBoxData[k] as any).name = '';
+            (closeBoxData[k] as any).spikeDistance = undefined;
             closeBoxData[k][spikePosAttr] = undefined;
         } else {
-            closeBoxData[k].spikeDistance = spikeDistance;
+            (closeBoxData[k] as any).spikeDistance = spikeDistance;
             closeBoxData[k][spikePosAttr] = spikePosition;
         }
     }

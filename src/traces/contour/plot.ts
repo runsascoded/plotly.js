@@ -30,9 +30,9 @@ export const plot = function plot(gd: GraphDiv,  plotinfo: PlotInfo,  cdcontours
 
         // use a heatmap to fill - draw it behind the lines
         const heatmapColoringLayer = Lib.ensureSingle(plotGroup, 'g', 'heatmapcoloring');
-        let cdheatmaps = [];
+        let cdheatmaps: any[] = [];
         if(contours.coloring === 'heatmap') {
-            cdheatmaps = [cd];
+            cdheatmaps = ([cd] as any);
         }
         heatmapPlot(gd, plotinfo, cdheatmaps, heatmapColoringLayer);
 
@@ -220,7 +220,7 @@ function makeLinesAndLabels(plotgroup,  pathinfo,  gd: GraphDiv,  cd0,  contours
         .classed('contourlabels', true);
 
     if(showLabels) {
-        const labelClipPathData = [];
+        const labelClipPathData: any[] = [];
         const labelData = [];
 
         // invalidate the getTextLocation cache in case paths changed
@@ -373,7 +373,7 @@ export const createLineClip = function(lineContainer,  clipLinesForLabels,  gd: 
         .classed('contourlineclip', true)
         .attr('id', clipId);
 
-    setClipUrl(lineContainer, clipId, gd);
+    setClipUrl(lineContainer, (clipId as any), gd);
 
     return lineClip;
 };
@@ -652,18 +652,18 @@ function clipGaps(plotGroup,  plotinfo: PlotInfo,  gd: GraphDiv,  cd0,  perimete
             (clipPathInfo.prefixBoundary ? 'M' + perimeter.join('L') + 'Z' : '') +
             joinAllPaths(clipPathInfo, perimeter)
         );
-    } else clipId = null;
+    } else clipId = (null as any);
 
     setClipUrl(plotGroup, clipId, gd);
 }
 
 function makeClipMask(cd0) {
     const empties = cd0.trace._emptypoints;
-    const z = [];
+    const z: any[] = [];
     const m = cd0.z.length;
     const n = cd0.z[0].length;
     let i;
-    const row = [];
+    const row: any[] = [];
     let emptyPoint;
 
     for(i = 0; i < n; i++) row.push(1);

@@ -231,17 +231,17 @@ function generateIsoMeshes(data) {
     }
 
     function getCenter(A, B, C) {
-        const M = [];
+        const M: any[] = [];
         for(let i = 0; i < A.length; i++) {
-            M[i] = (A[i] + B[i] + C[i]) / 3.0;
+            M[i] = ((A[i] + B[i] + C[i]) / 3.0 as any);
         }
         return M;
     }
 
     function getBetween(A, B, r) {
-        const M = [];
+        const M: any[] = [];
         for(let i = 0; i < A.length; i++) {
-            M[i] = A[i] * (1 - r) + r * B[i];
+            M[i] = (A[i] * (1 - r) + r * B[i] as any);
         }
         return M;
     }
@@ -308,7 +308,7 @@ function generateIsoMeshes(data) {
             xyzv = allXYZVs[f];
             abc = allABCs[f];
 
-            const pnts = [];
+            const pnts: any[] = [];
             for(let i = 0; i < 3; i++) {
                 const x = xyzv[i][0];
                 const y = xyzv[i][1];
@@ -317,9 +317,9 @@ function generateIsoMeshes(data) {
 
                 const id = (abc[i] > -1) ? abc[i] : findVertexId(x, y, z);
                 if(id > -1) {
-                    pnts[i] = id;
+                    pnts[i] = (id as any);
                 } else {
-                    pnts[i] = addVertex(x, y, z, mapValue(style, v));
+                    pnts[i] = (addVertex(x, y, z, mapValue(style, v)) as any);
                 }
             }
 
@@ -355,9 +355,9 @@ function generateIsoMeshes(data) {
 
         const ratio = (pointOut[3] - value) / (pointOut[3] - pointIn[3] + 0.000000001); // we had to add this error to force solve the tiny caps
 
-        const result = [];
+        const result: any[] = [];
         for(let s = 0; s < 4; s++) {
-            result[s] = (1 - ratio) * pointOut[s] + ratio * pointIn[s];
+            result[s] = ((1 - ratio) * pointOut[s] + ratio * pointIn[s] as any);
         }
         return result;
     }
@@ -378,7 +378,7 @@ function generateIsoMeshes(data) {
     }
 
     function getXYZV(indecies) {
-        const xyzv = [];
+        const xyzv: any[] = [];
         for(let q = 0; q < 4; q++) {
             const index = indecies[q];
             xyzv.push(
@@ -387,7 +387,7 @@ function generateIsoMeshes(data) {
                     data._y[index],
                     data._z[index],
                     data._value[index]
-                ]
+                ] as any
             );
         }
 
@@ -692,7 +692,7 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dX(style, items, min, max, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const i = items[q];
@@ -718,7 +718,7 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dY(style, items, min, max, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const j = items[q];
@@ -744,7 +744,7 @@ function generateIsoMeshes(data) {
     }
 
     function draw2dZ(style, items, min, max, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const k = items[q];
@@ -804,7 +804,7 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionX(style, items, min, max, distRatios, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const i = items[q];
@@ -823,7 +823,7 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionY(style, items, min, max, distRatios, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const j = items[q];
@@ -842,7 +842,7 @@ function generateIsoMeshes(data) {
     }
 
     function drawSectionZ(style, items, min, max, distRatios, previousResult) {
-        const result = [];
+        const result: any[] = [];
         let n = 0;
         for(let q = 0; q < items.length; q++) {
             const k = items[q];
@@ -861,7 +861,7 @@ function generateIsoMeshes(data) {
     }
 
     function createRange(a, b) {
-        const range = [];
+        const range: any[] = [];
         for(let q = a; q < b; q++) {
             range.push(q);
         }
@@ -925,7 +925,7 @@ function generateIsoMeshes(data) {
         ];
 
         ['x', 'y', 'z'].forEach(function(e) {
-            const preRes = [];
+            const preRes: any[] = [];
             for(let s = 0; s < setupMinMax.length; s++) {
                 let count = 0;
 
@@ -937,9 +937,9 @@ function generateIsoMeshes(data) {
                 if(slice.show && slice.fill) {
                     setFill(slice.fill);
 
-                    let exactIndices = [];
-                    const ceilIndices = [];
-                    const distRatios = [];
+                    let exactIndices: any[] = [];
+                    const ceilIndices: any[] = [];
+                    const distRatios: any[] = [];
                     if(slice.locations.length) {
                         for(let q = 0; q < slice.locations.length; q++) {
                             const near = findNearestOnAxis(
@@ -973,22 +973,22 @@ function generateIsoMeshes(data) {
 
                     if(ceilIndices.length > 0) {
                         if(e === 'x') {
-                            preRes[count] = drawSectionX(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]);
+                            preRes[count] = (drawSectionX(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]) as any);
                         } else if(e === 'y') {
-                            preRes[count] = drawSectionY(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]);
+                            preRes[count] = (drawSectionY(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]) as any);
                         } else {
-                            preRes[count] = drawSectionZ(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]);
+                            preRes[count] = (drawSectionZ(activeStyle, ceilIndices, activeMin, activeMax, distRatios, preRes[count]) as any);
                         }
                         count++;
                     }
 
                     if(exactIndices.length > 0) {
                         if(e === 'x') {
-                            preRes[count] = draw2dX(activeStyle, exactIndices, activeMin, activeMax, preRes[count]);
+                            preRes[count] = (draw2dX(activeStyle, exactIndices, activeMin, activeMax, preRes[count]) as any);
                         } else if(e === 'y') {
-                            preRes[count] = draw2dY(activeStyle, exactIndices, activeMin, activeMax, preRes[count]);
+                            preRes[count] = (draw2dY(activeStyle, exactIndices, activeMin, activeMax, preRes[count]) as any);
                         } else {
-                            preRes[count] = draw2dZ(activeStyle, exactIndices, activeMin, activeMax, preRes[count]);
+                            preRes[count] = (draw2dZ(activeStyle, exactIndices, activeMin, activeMax, preRes[count]) as any);
                         }
                         count++;
                     }
@@ -999,11 +999,11 @@ function generateIsoMeshes(data) {
                 if(cap.show && cap.fill) {
                     setFill(cap.fill);
                     if(e === 'x') {
-                        preRes[count] = draw2dX(activeStyle, [0, width - 1], activeMin, activeMax, preRes[count]);
+                        preRes[count] = (draw2dX(activeStyle, [0, width - 1], activeMin, activeMax, preRes[count]) as any);
                     } else if(e === 'y') {
-                        preRes[count] = draw2dY(activeStyle, [0, height - 1], activeMin, activeMax, preRes[count]);
+                        preRes[count] = (draw2dY(activeStyle, [0, height - 1], activeMin, activeMax, preRes[count]) as any);
                     } else {
-                        preRes[count] = draw2dZ(activeStyle, [0, depth - 1], activeMin, activeMax, preRes[count]);
+                        preRes[count] = (draw2dZ(activeStyle, [0, depth - 1], activeMin, activeMax, preRes[count]) as any);
                     }
                     count++;
                 }

@@ -295,10 +295,10 @@ function makeItem(
     model, leftmost, rightmost, itemNumber, i0, i1, x, y, panelSizeX, panelSizeY,
     crossfilterDimensionIndex, drwLayer, constraints, plotGlPixelRatio
 ) {
-    const dims = [[], []];
+    const dims: any[][] = [[], []];
     for(let k = 0; k < 64; k++) {
-        dims[0][k] = (k === i0) ? 1 : 0;
-        dims[1][k] = (k === i1) ? 1 : 0;
+        dims[0][k] = ((k === i0) ? 1 : 0 as any);
+        dims[1][k] = ((k === i1) ? 1 : 0 as any);
     }
     x *= plotGlPixelRatio;
     y *= plotGlPixelRatio;
@@ -399,7 +399,7 @@ export default function(canvasGL, d) {
     let maskTexture;
     let paletteTexture = regl.texture(paletteTextureConfig);
 
-    const prevAxisOrder = [];
+    const prevAxisOrder: any[] = [];
 
     update(d);
 
@@ -513,13 +513,13 @@ export default function(canvasGL, d) {
     function makeConstraints(isContext) {
         let i, j, k;
 
-        const limits = [[], []];
+        const limits: any[][] = [[], []];
         for(k = 0; k < 64; k++) {
             const p = (!isContext && k < initialDims.length) ?
                 initialDims[k].brush.filter.getBounds() : [-Infinity, Infinity];
 
-            limits[0][k] = p[0];
-            limits[1][k] = p[1];
+            limits[0][k] = (p[0] as any);
+            limits[1][k] = (p[1] as any);
         }
 
         const len = maskHeight * 8;
@@ -612,7 +612,7 @@ export default function(canvasGL, d) {
                 prevAxisOrder[i0][0] !== x ||
                 prevAxisOrder[i0][1] !== nextX
             ) {
-                prevAxisOrder[i0] = [x, nextX];
+                prevAxisOrder[i0] = ([x, nextX] as any);
 
                 const item = makeItem(
                     model,

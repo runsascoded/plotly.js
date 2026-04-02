@@ -69,7 +69,7 @@ function calc(gd: GraphDiv, trace: FullTrace) {
 
 function crossTraceCalc(gd, polarLayout, subplotId) {
     const calcdata = gd.calcdata;
-    const barPolarCd = [];
+    const barPolarCd: any[] = [];
 
     for(let i = 0; i < calcdata.length; i++) {
         const cdi = calcdata[i];

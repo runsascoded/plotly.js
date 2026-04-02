@@ -63,9 +63,9 @@ export default function drawLabel(gd: GraphDiv, index: any, options: any, shapeG
         shapex1 = -Infinity;
         shapey1 = -Infinity;
         for (let i = 0; i < polygons.length; i++) {
-            for (let j = 0; j < polygons[i].length; j++) {
+            for (let j = 0; j < (polygons[i] as any).length; j++) {
                 const p = polygons[i][j];
-                for (let k = 1; k < p.length; k += 2) {
+                for (let k = 1; k < (p as any).length; k += 2) {
                     const _x = p[k];
                     const _y = p[k + 1];
 

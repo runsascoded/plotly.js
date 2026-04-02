@@ -34,18 +34,18 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     if(yPos0.length > serieslen) yPos0.splice(serieslen, yPos0.length - serieslen);
 
     // make the empty bin array & scale the map
-    const z = [];
-    const onecol = [];
-    const zerocol = [];
+    const z: any[] = [];
+    const onecol: any[] = [];
+    const zerocol: any[] = [];
     const nonuniformBinsX = typeof xBinSpec.size === 'string';
     const nonuniformBinsY = typeof yBinSpec.size === 'string';
-    const xEdges = [];
-    const yEdges = [];
+    const xEdges: any[] = [];
+    const yEdges: any[] = [];
     let xbins = nonuniformBinsX ? xEdges : xBinSpec;
     let ybins = nonuniformBinsY ? yEdges : yBinSpec;
     let total = 0;
-    const counts = [];
-    const inputPoints = [];
+    const counts: any[] = [];
+    const inputPoints: any[] = [];
     const norm = trace.histnorm;
     const func = trace.histfunc;
     const densitynorm = norm.indexOf('density') !== -1;
@@ -54,8 +54,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     let binfunc = binFunctions.count;
     const normfunc = normFunctions[norm];
     let doavg = false;
-    let xinc = [];
-    let yinc = [];
+    let xinc: any[] = [];
+    let yinc: any[] = [];
 
     // set a binning function other than count?
     // for binning functions: check first for 'z',
@@ -108,8 +108,8 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const y0 = yc2r(yBinStart + dy / 2);
 
     if(densitynorm) {
-        xinc = makeIncrements(onecol.length, xbins, dx, nonuniformBinsX);
-        yinc = makeIncrements(z.length, ybins, dy, nonuniformBinsY);
+        xinc = (makeIncrements(onecol.length, xbins, dx, nonuniformBinsX) as any);
+        yinc = (makeIncrements(z.length, ybins, dy, nonuniformBinsY) as any);
     }
 
     // for date axes we need bin bounds to be calcdata. For nonuniform bins
@@ -133,7 +133,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
         m = Lib.findBin(yi, ybins);
         if(n >= 0 && n < nx && m >= 0 && m < ny) {
             total += binfunc(n, i, z[m], rawCounterData, counts[m]);
-            inputPoints[m][n].push(i);
+            (inputPoints[m][n] as any).push(i);
 
             if(uniqueValsPerX) {
                 if(xVals[n] === undefined) xVals[n] = xi;

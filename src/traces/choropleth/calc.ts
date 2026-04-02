@@ -25,7 +25,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     for(let i = 0; i < len; i++) {
         const calcPt: any = calcTrace[i] = {};
         const loc = trace.locations[i];
-        const z = trace.z[i];
+        const z = trace.z![i];
 
         if(isValidLoc(loc) && isNumeric(z)) {
             calcPt.loc = loc;

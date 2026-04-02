@@ -155,7 +155,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
     }
 
     const throttleID = fullLayout._uid + constants.SELECTID;
-    let selection = [];
+    let selection: any[] = [];
 
     // find the traces to search for selection points
     const searchTraces = determineSearchTraces(gd, dragOptions.xaxes,
@@ -170,7 +170,7 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
             deselectSubplot(gd, xRef, yRef, searchTraces);
 
             const selections = (gd.layout || {}).selections || [];
-            const list = [];
+            const list: any[] = [];
             let selectionErased = false;
             for(let q = 0; q < selections.length; q++) {
                 const s = fullLayout.selections[q];
@@ -356,14 +356,14 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                         let found = false;
                         for(let u = 0; u < newPoints.length; u++) {
                             if(
-                                newPoints[u].curveNumber === p.curveNumber &&
-                                newPoints[u].pointNumber === p.pointNumber
+                                (newPoints[u] as any).curveNumber === p.curveNumber &&
+                                (newPoints[u] as any).pointNumber === p.pointNumber
                             ) {
                                 found = true;
                                 break;
                             }
                         }
-                        if(!found) newPoints.push(p);
+                        if(!found) newPoints.push((p as any));
                     }
 
                     if(newPoints.length) {
@@ -407,12 +407,12 @@ function prepSelect(evt: any, startX: any, startY: any, dragOptions: any, mode: 
                 emitDeselect(gd);
 
                 if(searchTraces.length) {
-                    const clickedXaxis = searchTraces[0].xaxis;
-                    const clickedYaxis = searchTraces[0].yaxis;
+                    const clickedXaxis = (searchTraces[0] as any).xaxis;
+                    const clickedYaxis = (searchTraces[0] as any).yaxis;
 
                     if(clickedXaxis && clickedYaxis) {
                         // drop selections in the clicked subplot
-                        const subSelections = [];
+                        const subSelections: any[] = [];
                         const allSelections = gd._fullLayout.selections;
                         for(let k = 0; k < allSelections.length; k++) {
                             const s = allSelections[k];
@@ -490,7 +490,7 @@ function selectOnClick(evt: any, gd: GraphDiv, xAxes: any, yAxes: any, subplot: 
     const fullLayout = gd._fullLayout;
     const clickmode = fullLayout.clickmode;
     const sendEvents = clickmode.indexOf('event') > -1;
-    let selection = [];
+    let selection: any[] = [];
     let searchTraces, searchInfo, currentSelectionDef, selectionTesters, traceSelection;
     let thisTracesSelection, pointOrBinSelected, subtract, eventData, i;
 
@@ -612,7 +612,7 @@ function newPointNumTester(pointSelectionDef: any) {
 function multiTester(list: any, _selectionTesters?: any) {
     if(!list.length) return;
 
-    const testers = [];
+    const testers: any[] = [];
     let xmin = isPointSelectionDef(list[0]) ? 0 : list[0][0][0];
     let xmax = xmin;
     let ymin = isPointSelectionDef(list[0]) ? 0 : list[0][0][1];
@@ -646,9 +646,9 @@ function multiTester(list: any, _selectionTesters?: any) {
     function contains(pt: any, arg: any, pointNumber: any, searchInfo: any) {
         let contained = false;
         for(let i = 0; i < testers.length; i++) {
-            if(testers[i].contains(pt, arg, pointNumber, searchInfo)) {
+            if((testers[i] as any).contains(pt, arg, pointNumber, searchInfo)) {
                 // if contained by subtract tester - exclude the point
-                contained = !testers[i].subtract;
+                contained = !(testers[i] as any).subtract;
             }
         }
 
@@ -775,7 +775,7 @@ function getAxId(ax: FullAxis) {
 function determineSearchTraces(gd: GraphDiv, xAxes: any, yAxes: any, subplot: any) {
     if(!gd.calcdata) return [];
 
-    const searchTraces = [];
+    const searchTraces: any[] = [];
     const xAxisIds = xAxes.map(getAxId);
     const yAxisIds = yAxes.map(getAxId);
     let cd, trace, i;
@@ -884,7 +884,7 @@ function isPointOrBinSelected(clickedPtInfo: any) {
 }
 
 function isOnlyThisBinSelected(searchTraces: any, clickedPtInfo: any) {
-    const tracesWithSelectedPts = [];
+    const tracesWithSelectedPts: any[] = [];
     let searchInfo, trace, isSameTrace, i;
 
     for(i = 0; i < searchTraces.length; i++) {
@@ -1044,21 +1044,21 @@ function fillSelectionItem(selection: any, searchInfo: any) {
 }
 
 function convertPoly(polygonsIn: any, isOpenMode: any) { // add M and L command to draft positions
-    const polygonsOut = [];
+    const polygonsOut: any[] = [];
     for(let i = 0; i < polygonsIn.length; i++) {
         polygonsOut[i] = [];
         for(let j = 0; j < polygonsIn[i].length; j++) {
             polygonsOut[i][j] = [];
             polygonsOut[i][j][0] = j ? 'L' : 'M';
             for(let k = 0; k < polygonsIn[i][j].length; k++) {
-                polygonsOut[i][j].push(
+                (polygonsOut[i][j] as any).push(
                     polygonsIn[i][j][k]
                 );
             }
         }
 
         if(!isOpenMode) {
-            polygonsOut[i].push([
+            (polygonsOut[i] as any).push([
                 'Z',
                 polygonsOut[i][0][1], // initial x
                 polygonsOut[i][0][2]  // initial y
@@ -1073,7 +1073,7 @@ function _doSelect(selectionTesters: any, searchTraces: any) {
     let allSelections = [];
 
     let thisSelection;
-    const traceSelections = [];
+    const traceSelections: any[] = [];
     let traceSelection;
     for(let i = 0; i < searchTraces.length; i++) {
         const searchInfo = searchTraces[i];
@@ -1126,7 +1126,7 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
                         for(let u = 0; u < outlinePolys.length; u++) {
                             const p = outlinePolys[u];
                             const polygon: any = [];
-                            for(let t = 0; t < p.length; t++) {
+                            for(let t = 0; t < (p as any).length; t++) {
                                 polygon.push([
                                     convert(xaxis, p[t][1]),
                                     convert(yaxis, p[t][2])
@@ -1140,7 +1140,7 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
                             draftPolygons.push(polygon);
                         }
 
-                        layoutPolygons = layoutPolygons.concat(draftPolygons);
+                        layoutPolygons = layoutPolygons.concat((draftPolygons as any));
                     }
                 }
             }
@@ -1221,8 +1221,8 @@ function reselect(gd: GraphDiv, mayEmitSelected: any, selectionTesters?: any, se
         const activePolygons = getLayoutPolygons(gd, true);
 
         if(activePolygons.length) {
-            const xref = activePolygons[0].xref;
-            const yref = activePolygons[0].yref;
+            const xref = (activePolygons[0] as any).xref;
+            const yref = (activePolygons[0] as any).yref;
             if(xref && yref) {
                 const poly = castMultiPolygon(activePolygons);
 
@@ -1340,7 +1340,7 @@ function addTester(layoutPolygons: any, xRef: any, yRef: any, selectionTesters: 
 }
 
 function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
-    const allPolygons = [];
+    const allPolygons: any[] = [];
 
     const fullLayout = gd._fullLayout;
     const allSelections = fullLayout.selections;
@@ -1390,7 +1390,7 @@ function getLayoutPolygons(gd: GraphDiv, onlyActiveOnes?: any) {
         } else if(selection.type === 'path') {
             const segments = selection.path.split('Z');
 
-            const multiPolygons = [];
+            const multiPolygons: any[] = [];
             for(let j = 0; j < segments.length; j++) {
                 let path = segments[j];
                 if(!path) continue;
@@ -1461,14 +1461,14 @@ function castMultiPolygon(allPolygons: any) {
     const len = allPolygons.length;
 
     // descibe multi polygons in one polygon
-    let p = [];
+    let p: any[] = [];
     for(let i = 0; i < len; i++) {
         const polygon = allPolygons[i];
         p = p.concat(polygon);
 
         // add starting vertex to close
         // which indicates next polygon
-        p = p.concat([polygon[0]]);
+        p = p.concat([(polygon[0] as any)]);
     }
 
     return computeRectAndRanges(p);

@@ -268,7 +268,7 @@ function plot(gd: GraphDiv, subplot: any, cdata: any) {
                 for(j = 0; j < selPts.length; j++) {
                     selDict[selPts[j]] = 1;
                 }
-                const unselPts = [];
+                const unselPts: any[] = [];
                 for(j = 0; j < len; j++) {
                     if(!selDict[j]) unselPts.push(j);
                 }

@@ -20,9 +20,9 @@ const BINDIRECTIONS = ['x', 'y'];
 
 export default function crossTraceDefaults(fullData: FullTrace[], fullLayout: FullLayout): void {
     const allBinOpts = fullLayout._histogramBinOpts = {};
-    const histTraces = [];
+    const histTraces: any[] = [];
     const mustMatchTracesLookup: any = {};
-    const otherTracesList = [];
+    const otherTracesList: any[] = [];
 
     let traceOut, traces, groupName, binDir;
     let i, j, k;

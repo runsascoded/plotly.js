@@ -47,8 +47,8 @@ export default function clean2dArray(zOld: any,  trace?: FullTrace,  xa?: FullAx
         }
     }
 
-    const xMap = axisMapping(xa);
-    const yMap = axisMapping(ya);
+    const xMap = axisMapping((xa as any));
+    const yMap = axisMapping((ya as any));
 
     if(ya && ya.type === 'category') rowlen = ya._categories.length;
     const zNew = new Array(rowlen);

@@ -99,14 +99,14 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
 
     Lib.coerceFont(coerce, 'labelfont', layoutFont, {
         overrideDflt: {
-            size: Math.round(layoutFont.size)
+            size: Math.round((layoutFont!.size as any))
         }
     });
 
     Lib.coerceFont(coerce, 'tickfont', layoutFont, {
         autoShadowDflt: true,
         overrideDflt: {
-            size: Math.round(layoutFont.size / 1.2)
+            size: Math.round(layoutFont!.size! / 1.2)
         }
     });
 }

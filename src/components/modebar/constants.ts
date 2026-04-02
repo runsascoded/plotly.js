@@ -18,7 +18,7 @@ const backButtons = [
     'togglespikelines'
 ].concat(DRAW_MODES);
 
-const foreButtons = [];
+const foreButtons: any[] = [];
 const addToForeButtons = function(b: any) {
     if(backButtons.indexOf(b._cat || b.name) !== -1) return;
     // for convenience add lowercase shotname e.g. zoomin as well fullname zoomInGeo

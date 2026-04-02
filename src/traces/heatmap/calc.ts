@@ -167,7 +167,7 @@ export default function calc(gd: GraphDiv,  trace: FullTrace) {
 }
 
 function skipBreaks(a) {
-    const b = [];
+    const b: any[] = [];
     const len = a.length;
     for(let i = 0; i < len; i++) {
         const v = a[i];
@@ -177,7 +177,7 @@ function skipBreaks(a) {
 }
 
 function dropZonBreaks(x,  y,  z) {
-    const newZ = [];
+    const newZ: any[] = [];
     let k = -1;
     for(let i = 0; i < z.length; i++) {
         if(y[i] === BADNUM) continue;
@@ -186,7 +186,7 @@ function dropZonBreaks(x,  y,  z) {
         for(let j = 0; j < z[i].length; j++) {
             if(x[j] === BADNUM) continue;
 
-            newZ[k].push(z[i][j]);
+            (newZ[k] as any).push(z[i][j]);
         }
     }
     return newZ;

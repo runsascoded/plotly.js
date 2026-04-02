@@ -41,7 +41,7 @@ function calcAxisExpansion(ann: any, ax: FullAxis) {
     const aref = ann['a' + letter + 'ref'];
     const padplus = ann['_' + letter + 'padplus'];
     const padminus = ann['_' + letter + 'padminus'];
-    const shift = {x: 1, y: -1}[letter] * ann[letter + 'shift'];
+    const shift = {x: 1, y: -1}[letter]! * ann[letter + 'shift'];
     const headSize = 3 * ann.arrowsize * ann.arrowwidth || 0;
     const headPlus = headSize + shift;
     const headMinus = headSize - shift;

@@ -46,7 +46,7 @@ export default function hoverPoints(pointData, xval, yval, hovermode) {
     newPointData.cLabel = labels.cLabel;
 
     const hoverinfo = cdi.hi || trace.hoverinfo;
-    const text = [];
+    const text: any[] = [];
     function textPart(ax: FullAxis, val) {
         text.push(ax._hovertitle + ': ' + val);
     }

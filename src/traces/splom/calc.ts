@@ -18,10 +18,10 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const opts: any = {};
     // 'c' for calculated, 'l' for linear,
     // only differ here for log axes, pass ldata to createMatrix as 'data'
-    const cdata = opts.cdata = [];
-    const ldata = opts.data = [];
+    const cdata = opts.cdata = [] as any[];
+    const ldata = opts.data = [] as any[];
     // keep track of visible dimensions
-    const visibleDims = trace._visibleDims = [];
+    const visibleDims = trace._visibleDims = [] as any[];
     let i, k, dim, xa, ya;
 
     function makeCalcdata(ax: FullAxis, dim) {
@@ -35,7 +35,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
             ccol[j] = ccol[j] === BADNUM ? NaN : ccol[j];
         }
         cdata.push(ccol);
-        ldata.push(ax.type === 'log' ? Lib.simpleMap(ccol, ax.c2l) : ccol);
+        ldata.push((ax.type === 'log' ? Lib.simpleMap(ccol, ax.c2l) : ccol as any));
     }
 
     for(i = 0; i < dimensions.length; i++) {

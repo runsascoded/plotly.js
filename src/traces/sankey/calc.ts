@@ -12,7 +12,7 @@ function convertToD3Sankey(trace: FullTrace) {
     const nodeSpec = trace.node;
     const linkSpec = trace.link;
 
-    const links = [];
+    const links: any[] = [];
     const hasLinkColorArray = isArrayOrTypedArray(linkSpec.color);
     const hasLinkHoverColorArray = isArrayOrTypedArray(linkSpec.hovercolor);
     const hasLinkCustomdataArray = isArrayOrTypedArray(linkSpec.customdata);
@@ -56,7 +56,7 @@ function convertToD3Sankey(trace: FullTrace) {
     }
 
     // Process links
-    const groupedLinks = {
+    const groupedLinks: { source: any[]; target: any[] } = {
         source: [],
         target: []
     };
@@ -106,15 +106,15 @@ function convertToD3Sankey(trace: FullTrace) {
             value: +val
         });
 
-        groupedLinks.source.push(source);
-        groupedLinks.target.push(target);
+        groupedLinks.source.push((source as any));
+        groupedLinks.target.push((target as any));
     }
 
     // Process nodes
     const totalCount = nodeCount + groups.length;
     const hasNodeColorArray = isArrayOrTypedArray(nodeSpec.color);
     const hasNodeCustomdataArray = isArrayOrTypedArray(nodeSpec.customdata);
-    const nodes = [];
+    const nodes: any[] = [];
     for(i = 0; i < totalCount; i++) {
         if(!linkedNodes[i]) continue;
         const l = nodeSpec.label[i];

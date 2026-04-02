@@ -21,7 +21,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
     const parents = trace.parents;
     const values = trace.values;
     const hasValues = Lib.isArrayOrTypedArray(values);
-    const cd = [];
+    const cd: any[] = [];
 
     const parent2children: any = {};
     const refs: any = {};
@@ -82,7 +82,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
     }
 
     if(!parent2children['']) {
-        const impliedRoots = [];
+        const impliedRoots: any[] = [];
         let k;
         for(k in parent2children) {
             if(!refs[k]) {
@@ -114,8 +114,8 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
         // add dummy "root of roots" node to make d3 build the hierarchy successfully
 
         for(let j = 0; j < cd.length; j++) {
-            if(cd[j].pid === '') {
-                cd[j].pid = dummyId;
+            if((cd[j] as any).pid === '') {
+                (cd[j] as any).pid = dummyId;
             }
         }
 
@@ -224,7 +224,7 @@ export const calc = function(gd: GraphDiv, trace: FullTrace) {
             pullColor(colors[cdi.i], cdi.id);
     });
 
-    cd[0].hierarchy = hierarchy;
+    (cd[0] as any).hierarchy = hierarchy;
 
     return cd;
 };

@@ -7,7 +7,7 @@ export const getSubplotCalcData = function(calcData?: any, type?: any, subplotId
     if(!basePlotModule) return [];
 
     const attr = basePlotModule.attr;
-    const subplotCalcData = [];
+    const subplotCalcData: any[] = [];
 
     for(let i = 0; i < calcData.length; i++) {
         const calcTrace = calcData[i];
@@ -20,8 +20,8 @@ export const getSubplotCalcData = function(calcData?: any, type?: any, subplotId
 };
 
 export const getModuleCalcData = function(calcdata?: any, arg1?: any, arg2?: any): any {
-    const moduleCalcData = [];
-    const remainingCalcData = [];
+    const moduleCalcData: any[] = [];
+    const remainingCalcData: any[] = [];
 
     let plotMethod;
     if(typeof arg1 === 'string') {
@@ -63,7 +63,7 @@ export const getSubplotData = function getSubplotData(data?: any, type?: any, su
     if(!Registry.subplotsRegistry[type]) return [];
 
     const attr = Registry.subplotsRegistry[type].attr;
-    const subplotData = [];
+    const subplotData: any[] = [];
     let trace, subplotX, subplotY;
 
     for(let i = 0; i < data.length; i++) {

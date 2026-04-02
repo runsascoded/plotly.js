@@ -90,7 +90,7 @@ import { formatDate, dateTime2ms } from './dates.js';
 
 const MAX_SAFE: number = numConstants.FP_SAFE;
 const MIN_SAFE: number = -MAX_SAFE;
-const BADNUM: number = numConstants.BADNUM;
+const BADNUM: number = (numConstants.BADNUM as any);
 
 export function adjustFormat(formatStr: string): string {
     if (!formatStr || /^\d[.]\df/.test(formatStr) || /[.]\d%/.test(formatStr)) return formatStr;
@@ -454,7 +454,7 @@ export function fillArray(traceAttr: any, cd: any[], cdAttr: string, fn?: (v: an
 
     if (isArrayOrTypedArray(traceAttr)) {
         for (let i = 0; i < cd.length; i++) {
-            cd[i][cdAttr] = fn(traceAttr[i]);
+            cd[i][cdAttr] = fn!(traceAttr[i]);
         }
     }
 }
@@ -475,9 +475,9 @@ export function castOption(trace: any, ptNumber: any, astr: string, fn?: (v: any
 
     if (isArrayOrTypedArray(val)) {
         if (Array.isArray(ptNumber) && isArrayOrTypedArray(val[ptNumber[0]])) {
-            return fn(val[ptNumber[0]][ptNumber[1]]);
+            return fn!(val[ptNumber[0]][ptNumber[1]]);
         } else {
-            return fn(val[ptNumber]);
+            return fn!(val[ptNumber]);
         }
     } else {
         return val;

@@ -1,6 +1,6 @@
 export default function selectPoints(searchInfo: any, selectionTester: any) {
     const cd = searchInfo.cd;
-    const selection = [];
+    const selection: any[] = [];
     const fullData = cd[0].trace;
 
     const nodes = fullData._sankey.graph.nodes;

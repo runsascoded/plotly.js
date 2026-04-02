@@ -10,7 +10,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     const len = trace._length;
     const calcTrace = new Array(len);
     const z = trace.z;
-    const hasZ = isArrayOrTypedArray(z) && z.length;
+    const hasZ = isArrayOrTypedArray(z) && z!.length;
 
     for(let i = 0; i < len; i++) {
         const cdi: any = calcTrace[i] = {};
@@ -23,7 +23,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
             [BADNUM, BADNUM];
 
         if(hasZ) {
-            const zi = z[i];
+            const zi = z![i];
             cdi.z = isNumeric(zi) ? zi : BADNUM;
         }
     }

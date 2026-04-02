@@ -13,7 +13,7 @@ function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     for(let i = 0; i < orientations.length; i++) {
         const orientation = orientations[i];
         const posAxis = orientation === 'h' ? ya : xa;
-        const boxList = [];
+        const boxList: any[] = [];
 
         // make list of boxes / candlesticks
         // For backward compatibility, candlesticks are treated as if they *are* box traces here
@@ -44,7 +44,7 @@ function setPositionOffset(traceType: string, gd: GraphDiv, boxList: number[], p
     const axLetter = axId.charAt(0);
 
     let i, j, calcTrace;
-    const pointList = [];
+    const pointList: any[] = [];
     let shownPts = 0;
 
     // make list of box points

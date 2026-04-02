@@ -7,15 +7,15 @@ import xmlnsNamespaces from '../../constants/xmlns_namespaces.js';
 
 export default function draw(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
-    const imageDataAbove = [];
+    const imageDataAbove: any[] = [];
     const imageDataSubplot: any = {};
-    const imageDataBelow = [];
+    const imageDataBelow: any[] = [];
     let subplot;
     let i;
 
     // Sort into top, subplot, and bottom layers
-    for(i = 0; i < fullLayout.images.length; i++) {
-        const img = fullLayout.images[i];
+    for(i = 0; i < fullLayout.images!.length; i++) {
+        const img = fullLayout.images![i];
 
         if(img.visible) {
             if(img.layer === 'below' && img.xref !== 'paper' && img.yref !== 'paper') {
@@ -87,7 +87,7 @@ export default function draw(gd: GraphDiv) {
                     canvas.height = this.height;
 
                     const ctx = canvas.getContext('2d', {willReadFrequently: true});
-                    ctx.drawImage(this as any, 0, 0);
+                    ctx!.drawImage(this as any, 0, 0);
 
                     const dataURL = canvas.toDataURL('image/png');
 
@@ -194,7 +194,7 @@ export default function draw(gd: GraphDiv) {
 
         setClipUrl(
             thisImage,
-            clipAxes ? ('clip' + fullLayout._uid + clipAxes) : null,
+            (clipAxes ? ('clip' + fullLayout._uid + clipAxes) : null as any),
             gd
         );
     }

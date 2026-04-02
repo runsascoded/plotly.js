@@ -80,11 +80,11 @@ export const supplyDefaults = function(transformIn, traceOut, layout) {
     coerce('nameformat', layout._dataLength > 1 ? '%{group} (%{trace})' : '%{group}');
 
     const styleIn = transformIn.styles;
-    const styleOut = transformOut.styles = [];
+    const styleOut = transformOut.styles = [] as any[];
 
     if(styleIn) {
         for(i = 0; i < styleIn.length; i++) {
-            const thisStyle: any = styleOut[i] = {};
+            const thisStyle: any = styleOut[i] = ({} as any);
             Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'target');
             const value = Lib.coerce(styleIn[i], styleOut[i], attributes.styles, 'value');
 
@@ -101,7 +101,7 @@ export const supplyDefaults = function(transformIn, traceOut, layout) {
 
 export const transform = function(data, state) {
     let newTraces, i, j;
-    const newData = [];
+    const newData: any[] = [];
 
     for(i = 0; i < data.length; i++) {
         newTraces = transformOne(data[i], state);

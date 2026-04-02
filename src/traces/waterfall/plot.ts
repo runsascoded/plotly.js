@@ -103,20 +103,20 @@ function plotConnectors(gd: GraphDiv,  plotinfo: PlotInfo,  cdModule,  traceLaye
 }
 
 function getXY(di,  xa: FullAxis,  ya: FullAxis,  isHorizontal) {
-    const s = [];
-    const p = [];
+    const s: any[] = [];
+    const p: any[] = [];
 
     const sAxis = isHorizontal ? xa : ya;
     const pAxis = isHorizontal ? ya : xa;
 
-    s[0] = sAxis.c2p(di.s0, true);
-    p[0] = pAxis.c2p(di.p0, true);
+    s[0] = (sAxis.c2p(di.s0, true) as any);
+    p[0] = (pAxis.c2p(di.p0, true) as any);
 
-    s[1] = sAxis.c2p(di.s1, true);
-    p[1] = pAxis.c2p(di.p1, true);
+    s[1] = (sAxis.c2p(di.s1, true) as any);
+    p[1] = (pAxis.c2p(di.p1, true) as any);
 
-    s[2] = sAxis.c2p(di.nextS0, true);
-    p[2] = pAxis.c2p(di.nextP0, true);
+    s[2] = (sAxis.c2p(di.nextS0, true) as any);
+    p[2] = (pAxis.c2p(di.nextP0, true) as any);
 
     return isHorizontal ? [s, p] : [p, s];
 }

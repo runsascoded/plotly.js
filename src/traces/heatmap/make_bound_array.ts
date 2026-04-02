@@ -4,7 +4,7 @@ import _index from '../../lib/index.js';
 const { isArrayOrTypedArray } = _index;
 
 export default function makeBoundArray(trace: FullTrace,  arrayIn,  v0In,  dvIn,  numbricks,  ax: FullAxis) {
-    let arrayOut = [];
+    let arrayOut: any[] = [];
     const isContour = Registry.traceIs(trace, 'contour');
     const isHist = Registry.traceIs(trace, 'histogram');
     let v0;

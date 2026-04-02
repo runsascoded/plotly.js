@@ -826,7 +826,7 @@ export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, g
         const angle = getMarkerAngle(d, trace);
         const standoff = getMarkerStandoff(d, trace);
 
-        sel.attr('d', makePointPath(x, r, angle, standoff));
+        sel.attr('d', makePointPath(x, r, (angle as any), standoff));
     }
 
     let perPointGradient = false;
@@ -1097,7 +1097,7 @@ export function selectedPointStyle(s: any, trace: FullTrace): void {
 
             pt.attr(
                 'd',
-                makePointPath(symbolNumber(mx), mrc2, getMarkerAngle(d, trace), getMarkerStandoff(d, trace))
+                makePointPath(symbolNumber(mx), mrc2, (getMarkerAngle(d, trace) as any), getMarkerStandoff(d, trace))
             );
 
             d.mrc2 = mrc2;
@@ -1635,7 +1635,7 @@ function getMarkerStandoff(d: any, trace: FullTrace): number {
 
     if (d) standoff = d.mf;
 
-    if (standoff === undefined) {
+    if (standoff! === undefined) {
         standoff = trace.marker ? trace.marker.standoff || 0 : 0;
     }
 

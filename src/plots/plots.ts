@@ -24,7 +24,7 @@ import type { GraphDiv, FullLayout, FullTrace, FullAxis, CalcData, CalcDatum } f
 
 
 export const attributes = _req0;
-attributes.type.values = Registry.allTypes;
+attributes.type.values = (Registry.allTypes as any);
 export const fontAttrs = _req1;
 export const layoutAttributes = _req2;
 
@@ -193,7 +193,7 @@ function positionPlayWithData(gd?: any, container?: any): void {
 
 export function sendDataToCloud(gd?: any): boolean {
     const baseUrl = ((window as any).PLOTLYENV || {}).BASE_URL || gd._context.plotlyServerURL;
-    if(!baseUrl) return;
+    if(!baseUrl) return undefined as any;
 
     gd.emit('plotly_beforeexport');
 
@@ -420,14 +420,14 @@ export function supplyDefaults(gd?: any, opts?: any): void {
     // This is after relinkPrivateKeys so we can use those in crossTraceDefaults
     // and after layout module defaults, so we can use eg barmode
     const _modules = newFullLayout._visibleModules;
-    const crossTraceDefaultsFuncs = [];
+    const crossTraceDefaultsFuncs: any[] = [];
     for(i = 0; i < _modules.length; i++) {
         const funci = _modules[i].crossTraceDefaults;
         // some trace types share crossTraceDefaults (ie histogram2d, histogram2dcontour)
         if(funci) pushUnique(crossTraceDefaultsFuncs, funci);
     }
     for(i = 0; i < crossTraceDefaultsFuncs.length; i++) {
-        crossTraceDefaultsFuncs[i](newFullData, newFullLayout);
+        (crossTraceDefaultsFuncs[i](newFullData, newFullLayout) as any);
     }
 
     // turn on flag to optimize large splom-only graphs
@@ -437,8 +437,8 @@ export function supplyDefaults(gd?: any, opts?: any): void {
         newFullLayout._basePlotModules[0].name === 'splom' &&
         splomXa.length > 15 &&
         splomYa.length > 15 &&
-        newFullLayout.shapes.length === 0 &&
-        newFullLayout.images.length === 0
+        newFullLayout.shapes!.length === 0 &&
+        newFullLayout.images!.length === 0
     );
 
     // relink / initialize subplot axis objects
@@ -537,7 +537,7 @@ export function supplyDefaultsUpdateCalc(oldCalcdata: CalcData[], newFullData: F
  */
 function getTraceUids(oldFullData?: any, newData?: any): any {
     const len = newData.length;
-    const oldFullInput = [];
+    const oldFullInput: any[] = [];
     let i, prevFullInput;
     for(i = 0; i < oldFullData.length; i++) {
         const thisFullInput = oldFullData[i]._fullInput;
@@ -565,7 +565,7 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
         if(typeof newUid === 'number') newUid = String(newUid);
 
         if(tryUid(newUid, i)) continue;
-        if(i < oldLen && tryUid(oldFullInput[i].uid, i)) continue;
+        if(i < oldLen && tryUid((oldFullInput[i] as any).uid, i)) continue;
         setUid(randstr(seenUids), i);
     }
 
@@ -581,12 +581,12 @@ function getTraceUids(oldFullData?: any, newData?: any): any {
  * do not need to be collected because we just draw all visible traces.
  */
 function emptySubplotLists(): any {
-    let collectableSubplotTypes = Registry.collectableSubplotTypes;
+    let collectableSubplotTypes: any[] | null = Registry.collectableSubplotTypes;
     const out: any = {};
     let i, j;
 
     if(!collectableSubplotTypes) {
-        collectableSubplotTypes = [];
+        collectableSubplotTypes = [] as any[];
 
         const subplotsRegistry = Registry.subplotsRegistry;
 
@@ -595,7 +595,7 @@ function emptySubplotLists(): any {
             const subplotAttr = subplotModule.attr;
 
             if(subplotAttr) {
-                collectableSubplotTypes.push(subplotType);
+                collectableSubplotTypes!.push(subplotType);
 
                 // special case, currently just for cartesian:
                 // we need to enumerate axes, not just subplots
@@ -608,8 +608,8 @@ function emptySubplotLists(): any {
         }
     }
 
-    for(i = 0; i < collectableSubplotTypes.length; i++) {
-        out[collectableSubplotTypes[i]] = [];
+    for(i = 0; i < collectableSubplotTypes!.length; i++) {
+        out[collectableSubplotTypes![i]] = [];
     }
     return out;
 }
@@ -703,7 +703,7 @@ function getFormatter(formatObj?: any, separators?: any): any {
 
 function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
     let _meta;
-    const meta4data = [];
+    const meta4data: any[] = [];
 
     if(newFullLayout.meta) {
         _meta = newFullLayout._meta = {
@@ -716,7 +716,7 @@ function fillMetaTextHelpers(newFullData?: any, newFullLayout?: any): void {
         const trace = newFullData[i];
 
         if(trace.meta) {
-            meta4data[trace.index] = trace._meta = {meta: trace.meta};
+            meta4data[trace.index] = (trace._meta = {meta: trace.meta} as any);
         } else if(newFullLayout.meta) {
             trace._meta = {meta: newFullLayout.meta};
         }
@@ -909,7 +909,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
             mainAx = axisIDs.getFromId(mockGd, ax.overlaying);
 
             // you cannot overlay an axis that's already overlaying another
-            if(mainAx && mainAx.overlaying) {
+            if(mainAx && (mainAx as any).overlaying) {
                 ax.overlaying = false;
                 mainAx = null;
             }
@@ -924,7 +924,7 @@ export function linkSubplots(newFullData?: any, newFullLayout?: any, oldFullData
          * the (possibly larger) dragger and background but don't
          * have to both be drawn over that whole domain
          */
-        if(mainAx) ax.domain = mainAx.domain.slice();
+        if(mainAx) ax.domain = (mainAx as any).domain.slice();
 
         ax._anchorAxis = ax.anchor === 'free' ?
             null :
@@ -1074,7 +1074,7 @@ export function supplyDataDefaults(dataIn: any, dataOut: FullTrace[], layout: an
     }
 
     const carpetIndex: any = {};
-    const carpetDependents = [];
+    const carpetDependents: any[] = [];
     const dataTemplate = (layout.template || {}).data || {};
     const templater = Template.traceTemplater(dataTemplate);
 
@@ -1670,7 +1670,7 @@ export function purge(gd?: any): void {
 
 export function style(gd: GraphDiv): void {
     const _modules = gd._fullLayout._visibleModules;
-    const styleModules = [];
+    const styleModules: any[] = [];
     let i;
 
     // some trace modules reuse the same style method,
@@ -1684,7 +1684,7 @@ export function style(gd: GraphDiv): void {
     }
 
     for(i = 0; i < styleModules.length; i++) {
-        styleModules[i](gd);
+        (styleModules[i](gd) as any);
     }
 };
 
@@ -1695,8 +1695,8 @@ export function sanitizeMargins(fullLayout: FullLayout): void {
     const width = fullLayout.width;
     const height = fullLayout.height;
     const margin = fullLayout.margin;
-    const plotWidth = width - (margin.l + margin.r);
-    const plotHeight = height - (margin.t + margin.b);
+    const plotWidth = width! - (margin.l! + margin.r!);
+    const plotHeight = height! - (margin.t! + margin.b!);
     let correction;
 
     // if margin.l + margin.r = 0 then plotWidth > 0
@@ -1704,15 +1704,15 @@ export function sanitizeMargins(fullLayout: FullLayout): void {
     // similarly for margin.t + margin.b
 
     if(plotWidth < 0) {
-        correction = (width - 1) / (margin.l + margin.r);
-        margin.l = Math.floor(correction * margin.l);
-        margin.r = Math.floor(correction * margin.r);
+        correction = (width! - 1) / (margin.l! + margin.r!);
+        margin.l = Math.floor(correction * margin.l!);
+        margin.r = Math.floor(correction * margin.r!);
     }
 
     if(plotHeight < 0) {
-        correction = (height - 1) / (margin.t + margin.b);
-        margin.t = Math.floor(correction * margin.t);
-        margin.b = Math.floor(correction * margin.b);
+        correction = (height! - 1) / (margin.t! + margin.b!);
+        margin.t = Math.floor(correction * margin.t!);
+        margin.b = Math.floor(correction * margin.b!);
     }
 };
 
@@ -1729,14 +1729,14 @@ function initMargins(fullLayout: FullLayout): void {
 
     if(!fullLayout._size) {
         const gs = fullLayout._size = {
-            l: Math.round(margin.l),
-            r: Math.round(margin.r),
-            t: Math.round(margin.t),
-            b: Math.round(margin.b),
-            p: Math.round(margin.pad),
+            l: Math.round((margin!.l as any)),
+            r: Math.round((margin!.r as any)),
+            t: Math.round((margin!.t as any)),
+            b: Math.round((margin!.b as any)),
+            p: Math.round((margin!.pad as any)),
         } as any;
-        gs.w = Math.round(fullLayout.width) - gs.l - gs.r;
-        gs.h = Math.round(fullLayout.height) - gs.t - gs.b;
+        gs.w = Math.round((fullLayout.width as any)) - gs.l - gs.r;
+        gs.h = Math.round((fullLayout.height as any)) - gs.t - gs.b;
     }
     if(!fullLayout._pushmargin) fullLayout._pushmargin = {};
     if(!fullLayout._pushmarginIds) fullLayout._pushmarginIds = {};
@@ -1764,31 +1764,31 @@ const MIN_SPECIFIED_HEIGHT = 2;
  */
 export function autoMargin(gd: GraphDiv, id?: any, o?: any): void {
     const fullLayout = gd._fullLayout;
-    const width = fullLayout.width;
-    const height = fullLayout.height;
-    const margin = fullLayout.margin;
+    const width = fullLayout!.width;
+    const height = fullLayout!.height;
+    const margin = fullLayout!.margin;
     const minreducedwidth = fullLayout.minreducedwidth;
     const minreducedheight = fullLayout.minreducedheight;
 
     const minFinalWidth = constrain(
-        width - margin.l - margin.r,
+        width! - margin!.l! - margin!.r!,
         MIN_SPECIFIED_WIDTH,
         minreducedwidth
     );
 
     const minFinalHeight = constrain(
-        height - margin.t - margin.b,
+        height! - margin!.t! - margin!.b!,
         MIN_SPECIFIED_HEIGHT,
         minreducedheight
     );
 
-    const maxSpaceW = Math.max(0, width - minFinalWidth);
-    const maxSpaceH = Math.max(0, height - minFinalHeight);
+    const maxSpaceW = Math.max(0, width! - minFinalWidth);
+    const maxSpaceH = Math.max(0, height! - minFinalHeight);
 
-    const pushMargin = fullLayout._pushmargin;
-    const pushMarginIds = fullLayout._pushmarginIds;
+    const pushMargin = fullLayout!._pushmargin;
+    const pushMarginIds = fullLayout!._pushmarginIds;
 
-    if(margin.autoexpand !== false) {
+    if(margin!.autoexpand !== false) {
         if(!o) {
             delete pushMargin[id];
             delete pushMarginIds[id];
@@ -1797,7 +1797,7 @@ export function autoMargin(gd: GraphDiv, id?: any, o?: any): void {
             if(pad === undefined) {
                 // if no explicit pad is given, use 12px unless there's a
                 // specified margin that's smaller than that
-                pad = Math.min(12, margin.l, margin.r, margin.t, margin.b);
+                pad = Math.min(12, margin!.l!, margin!.r!, margin!.t!, margin!.b!);
             }
 
             // if the item is too big, just give it enough automargin to
@@ -1864,16 +1864,16 @@ export function doAutoMargin(gd: GraphDiv): void {
     // adjust margins for outside components
     // fullLayout.margin is the requested margin,
     // fullLayout._size has margins and plotsize after adjustment
-    let ml = margin.l;
-    let mr = margin.r;
-    let mt = margin.t;
-    let mb = margin.b;
+    let ml = margin!.l;
+    let mr = margin!.r;
+    let mt = margin!.t;
+    let mb = margin!.b;
     const pushMargin = fullLayout._pushmargin;
     const pushMarginIds = fullLayout._pushmarginIds;
     const minreducedwidth = fullLayout.minreducedwidth;
     const minreducedheight = fullLayout.minreducedheight;
 
-    if(margin.autoexpand !== false) {
+    if(margin!.autoexpand !== false) {
         for(const k in pushMargin) {
             if(!pushMarginIds[k]) delete pushMargin[k];
         }
@@ -1903,7 +1903,7 @@ export function doAutoMargin(gd: GraphDiv): void {
                     }
                 }
             }
-            const extraMargin = Math.max(0, (margin[s] - autoMarginPush));
+            const extraMargin = Math.max(0, (margin![s] - autoMarginPush));
             reservedMargins[s] = Math.max(0, reservedMargins[s] - extraMargin);
         }
 
@@ -1916,8 +1916,8 @@ export function doAutoMargin(gd: GraphDiv): void {
             const pl = pushleft.size;
             const fb = pushbottom.val;
             const pb = pushbottom.size;
-            const availableWidth = width - reservedMargins.r - reservedMargins.l;
-            const availableHeight = height - reservedMargins.t - reservedMargins.b;
+            const availableWidth = width! - reservedMargins.r - reservedMargins.l;
+            const availableHeight = height! - reservedMargins.t - reservedMargins.b;
 
             for(const k2 in pushMargin) {
                 if(isNumeric(pl) && pushMargin[k2].r) {
@@ -1926,7 +1926,7 @@ export function doAutoMargin(gd: GraphDiv): void {
                     if(fr > fl) {
                         const newL = (pl * fr + (pr - availableWidth) * fl) / (fr - fl);
                         const newR = (pr * (1 - fl) + (pl - availableWidth) * (1 - fr)) / (fr - fl);
-                        if(newL + newR > ml + mr) {
+                        if(newL + newR > ml! + mr!) {
                             ml = newL;
                             mr = newR;
                         }
@@ -1939,7 +1939,7 @@ export function doAutoMargin(gd: GraphDiv): void {
                     if(ft > fb) {
                         const newB = (pb * ft + (pt - availableHeight) * fb) / (ft - fb);
                         const newT = (pt * (1 - fb) + (pb - availableHeight) * (1 - ft)) / (ft - fb);
-                        if(newB + newT > mb + mt) {
+                        if(newB + newT > mb! + mt!) {
                             mb = newB;
                             mt = newT;
                         }
@@ -1950,43 +1950,43 @@ export function doAutoMargin(gd: GraphDiv): void {
     }
 
     const minFinalWidth = constrain(
-        width - margin.l - margin.r,
+        width! - margin!.l! - margin!.r!,
         MIN_SPECIFIED_WIDTH,
         minreducedwidth
     );
 
     const minFinalHeight = constrain(
-        height - margin.t - margin.b,
+        height! - margin!.t! - margin!.b!,
         MIN_SPECIFIED_HEIGHT,
         minreducedheight
     );
 
-    const maxSpaceW = Math.max(0, width - minFinalWidth);
-    const maxSpaceH = Math.max(0, height - minFinalHeight);
+    const maxSpaceW = Math.max(0, width! - minFinalWidth);
+    const maxSpaceH = Math.max(0, height! - minFinalHeight);
 
     if(maxSpaceW) {
-        const rW = (ml + mr) / maxSpaceW;
+        const rW = (ml! + mr!) / maxSpaceW;
         if(rW > 1) {
-            ml /= rW;
-            mr /= rW;
+            ml! /= rW;
+            mr! /= rW;
         }
     }
 
     if(maxSpaceH) {
-        const rH = (mb + mt) / maxSpaceH;
+        const rH = (mb! + mt!) / maxSpaceH;
         if(rH > 1) {
-            mb /= rH;
-            mt /= rH;
+            mb! /= rH;
+            mt! /= rH;
         }
     }
 
-    gs.l = Math.round(ml) + reservedMargins.l;
-    gs.r = Math.round(mr) + reservedMargins.r;
-    gs.t = Math.round(mt) + reservedMargins.t;
-    gs.b = Math.round(mb) + reservedMargins.b;
-    gs.p = Math.round(margin.pad);
-    gs.w = Math.round(width) - gs.l - gs.r;
-    gs.h = Math.round(height) - gs.t - gs.b;
+    gs.l = Math.round((ml as any)) + reservedMargins.l;
+    gs.r = Math.round((mr as any)) + reservedMargins.r;
+    gs.t = Math.round((mt as any)) + reservedMargins.t;
+    gs.b = Math.round((mb as any)) + reservedMargins.b;
+    gs.p = Math.round((margin!.pad as any));
+    gs.w = Math.round((width as any)) - gs.l - gs.r;
+    gs.h = Math.round((height as any)) - gs.t - gs.b;
 
     // if things changed and we're not already redrawing, trigger a redraw
     if(!fullLayout._replotting && (didMarginChange(oldMargins, gs) || needsRedrawForShift(gd))) {
@@ -2465,7 +2465,7 @@ export function extendLayout(destLayout?: any, srcLayout?: any): any {
 export function transition(gd?: any, data?: any, layout?: any, traces?: any, frameOpts?: any, transitionOpts?: any): any {
     const opts: any = {redraw: frameOpts.redraw};
     const transitionedTraces: any = {};
-    const axEdits = [];
+    const axEdits: any[] = [];
 
     opts.prepareFn = function() {
         const dataLength = Array.isArray(data) ? data.length : 0;
@@ -2531,10 +2531,10 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
                 const xr0 = xa.range.slice();
                 const yr0 = ya.range.slice();
 
-                let xr1 = null;
-                let yr1 = null;
-                let editX = null;
-                let editY = null;
+                let xr1: any = null;
+                let yr1: any = null;
+                let editX: any = null;
+                let editY: any = null;
 
                 if(Array.isArray(newLayout[xa._name + '.range'])) {
                     xr1 = newLayout[xa._name + '.range'].slice();
@@ -2550,12 +2550,12 @@ export function transition(gd?: any, data?: any, layout?: any, traces?: any, fra
                 if(xr0 && xr1 &&
                     (xa.r2l(xr0[0]) !== xa.r2l(xr1[0]) || xa.r2l(xr0[1]) !== xa.r2l(xr1[1]))
                 ) {
-                    editX = {xr0: xr0, xr1: xr1};
+                    editX = ({xr0: xr0, xr1: xr1} as any);
                 }
                 if(yr0 && yr1 &&
                     (ya.r2l(yr0[0]) !== ya.r2l(yr1[0]) || ya.r2l(yr0[1]) !== ya.r2l(yr1[1]))
                 ) {
-                    editY = {yr0: yr0, yr1: yr1};
+                    editY = ({yr0: yr0, yr1: yr1} as any);
                 }
 
                 if(editX || editY) {
@@ -2622,7 +2622,7 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
     const fullLayout = gd._fullLayout;
     const transitionOpts: any = fullLayout.transition;
     const opts: any = {};
-    const axEdits = [];
+    const axEdits: any[] = [];
 
     opts.prepareFn = function() {
         const subplots = fullLayout._plots;
@@ -2649,10 +2649,10 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
             let editY = null;
 
             if(xa.r2l(xr0[0]) !== xa.r2l(xr1[0]) || xa.r2l(xr0[1]) !== xa.r2l(xr1[1])) {
-                editX = {xr0: xr0, xr1: xr1};
+                editX = ({xr0: xr0, xr1: xr1} as any);
             }
             if(ya.r2l(yr0[0]) !== ya.r2l(yr1[0]) || ya.r2l(yr0[1]) !== ya.r2l(yr1[1])) {
-                editY = {yr0: yr0, yr1: yr1};
+                editY = ({yr0: yr0, yr1: yr1} as any);
             }
 
             if(editX || editY) {
@@ -2672,7 +2672,7 @@ export function transitionFromReact(gd?: any, restyleFlags?: any, relayoutFlags?
         let traceTransitionOpts;
         let transitionedTraces;
 
-        const allTraceIndices = [];
+        const allTraceIndices: any[] = [];
         for(let i = 0; i < fullData.length; i++) {
             allTraceIndices.push(i);
         }
@@ -2965,7 +2965,7 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
 
         if(!!_module.isContainer !== isContainer) return;
 
-        let cd = [];
+        let cd: any[] = [];
 
         if(trace.visible === true && trace._length !== 0) {
             // clear existing ref in case it got relinked
@@ -2997,8 +2997,8 @@ export function doCalcdata(gd: GraphDiv, traces?: any): void {
         // add the trace-wide properties to the first point,
         // per point properties to every point
         // t is the holder for trace-wide properties
-        if(!cd[0].t) cd[0].t = {};
-        cd[0].trace = trace;
+        if(!(cd[0] as any).t) (cd[0] as any).t = {};
+        (cd[0] as any).trace = trace;
 
         calcdata[i] = cd;
     }
@@ -3097,7 +3097,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
             const isX = axLetter === 'x';
 
             // Store values associated with each category
-            const categoriesValue = [];
+            const categoriesValue: any[] = [];
             for(j = 0; j < ax._categories.length; j++) {
                 categoriesValue.push([ax._categories[j], []]);
             }
@@ -3142,7 +3142,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                             for(o = 0; o < cdi.trace.dimensions.length; o++) {
                                 if(o === currentDimensionIndex) continue;
                                 const dimension = cdi.trace.dimensions[o];
-                                categoriesValue[catIndex][1].push(dimension.values[l]);
+                                (categoriesValue[catIndex][1] as any).push(dimension.values[l]);
                             }
                         }
                     } else if(isScattergl) {
@@ -3155,7 +3155,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                                 catIndex = cdi.t.y[l];
                                 value = cdi.t.x[l];
                             }
-                            categoriesValue[catIndex][1].push(value);
+                            (categoriesValue[catIndex][1] as any).push(value);
                         }
                         // must clear scene 'batches', so that 2nd
                         // _module.calc call starts from scratch
@@ -3170,7 +3170,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                         for(l = 0; l < value.length; l++) {
                             for(o = 0; o < value[l].length; o++) {
                                 catIndex = mapping(o, l);
-                                if(catIndex + 1) categoriesValue[catIndex][1].push(value[l][o]);
+                                if(catIndex + 1) (categoriesValue[catIndex][1] as any).push(value[l][o]);
                             }
                         }
                     } else {
@@ -3187,7 +3187,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
                             else value = [value];
                         }
                         for(l = 0; l < value.length; l++) {
-                            categoriesValue[catIndex][1].push(value[l]);
+                            (categoriesValue[catIndex][1] as any).push(value[l]);
                         }
                     }
                 }
@@ -3195,7 +3195,7 @@ function sortAxisCategoriesByValue(axList?: any, gd?: any): any {
 
             ax._categoriesValue = categoriesValue;
 
-            const categoriesAggregatedValue = [];
+            const categoriesAggregatedValue: any[] = [];
             for(j = 0; j < categoriesValue.length; j++) {
                 categoriesAggregatedValue.push([
                     categoriesValue[j][0],

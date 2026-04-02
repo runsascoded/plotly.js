@@ -76,7 +76,7 @@ export default function plot(gd: GraphDiv, plotinfo, cdcontours, contourcarpetLa
 
         // Compute the boundary path
         let seg, xp, yp, i;
-        const segs = [];
+        const segs: any[] = [];
         for(i = carpetcd.clipsegments.length - 1; i >= 0; i--) {
             seg = carpetcd.clipsegments[i];
             xp = map1dArray([], seg.x, xa.c2p);
@@ -303,7 +303,7 @@ function makeBackground(plotgroup, clipsegments, xaxis, yaxis, isConstraint, col
     bgfill.enter().append('path');
     bgfill.exit().remove();
 
-    const segs = [];
+    const segs: any[] = [];
     for(i = 0; i < clipsegments.length; i++) {
         seg = clipsegments[i];
         xp = map1dArray([], seg.x, xaxis.c2p);

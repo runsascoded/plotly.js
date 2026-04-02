@@ -23,7 +23,7 @@ export const encodeDate = function(convertToDate: any) {
 };
 
 export const extractPathCoords = function(path: any, paramsToUse: any, isRaw?: any) {
-    const extractedCoordinates = [];
+    const extractedCoordinates: any[] = [];
 
     const segments = path.match(constants.segmentRE);
     segments.forEach(function(segment: any) {
@@ -101,7 +101,7 @@ export const roundPositionForSharpStrokeRendering = function(pos: any, strokeWid
 };
 
 export const makeShapesOptionsAndPlotinfo = function(gd: GraphDiv, index: any) {
-    const options = gd._fullLayout.shapes[index] || {};
+    const options = gd._fullLayout.shapes![index] || {};
 
     let plotinfo: any = gd._fullLayout._plots[options.xref + options.yref];
     const hasPlotinfo = !!plotinfo;

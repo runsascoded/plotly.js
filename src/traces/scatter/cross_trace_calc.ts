@@ -10,8 +10,8 @@ function groupCrossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     const fullLayout = gd._fullLayout;
     const fullTraces = gd._fullData;
     const calcTraces = gd.calcdata;
-    const calcTracesHorz = [];
-    const calcTracesVert = [];
+    const calcTracesHorz: any[] = [];
+    const calcTracesVert: any[] = [];
 
     for(let i = 0; i < fullTraces.length; i++) {
         const fullTrace = fullTraces[i];

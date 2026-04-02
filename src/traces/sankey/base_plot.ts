@@ -86,7 +86,7 @@ function subplotUpdateFx(gd: GraphDiv, index: number) {
             const traceNow = gd._fullData[index];
             let newGroups;
             const oldGroups = traceNow.node.groups.slice();
-            const newGroup = [];
+            const newGroup: any[] = [];
 
             function findNode(pt) {
                 const nodes = traceNow._sankey.graph.nodes;

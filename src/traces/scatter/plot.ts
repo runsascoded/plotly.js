@@ -78,11 +78,11 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
 function createFills(gd: GraphDiv, traceJoin: any, plotinfo: PlotInfo): void {
     traceJoin.each(function(this: any, d) {
         const fills = ensureSingle(select(this), 'g', 'fills');
-        setClipUrl(fills, plotinfo.layerClipId, gd);
+        setClipUrl(fills, (plotinfo.layerClipId as any), gd);
 
         const trace = d[0].trace;
 
-        const fillData = [];
+        const fillData: any[] = [];
         if(trace._ownfill) fillData.push('_ownFill');
         if(trace._nexttrace) fillData.push('_nextFill');
 
@@ -183,13 +183,13 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     // thisPolygons always contains only the polygons of this trace only
     // whereas trace._polygons may be extended to include those of the previous
     // trace as well for exclusion during hover detection
-    let thisPolygons = [];
+    let thisPolygons: any[] = [];
     trace._polygons = [];
 
-    let fillsegments = [];
+    let fillsegments: any[] = [];
 
     // initialize line join data / method
-    let segments = [];
+    let segments: any[] = [];
     let makeUpdate = noop;
 
     ownFillEl3 = trace._ownFill;
@@ -251,7 +251,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
             let curpoints;
             const pts = segments[i];
             if(!curpoints || !ownFillDir) {
-                curpoints = pts.slice();
+                curpoints = (pts as any).slice();
                 fillsegments[fillsegmentCount] = curpoints;
                 fillsegmentCount++;
             } else {
@@ -266,7 +266,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         fillsegments = trace._fillsegments;
 
         if(segments.length) {
-            pt0 = segments[0][0].slice();
+            pt0 = (segments[0][0] as any).slice();
             lastSegment = segments[segments.length - 1];
             pt1 = lastSegment[lastSegment.length - 1].slice();
         }
@@ -324,7 +324,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         .call(lineGroupStyle)
         .each(makeUpdate(true));
 
-    setClipUrl(lineJoin, plotinfo.layerClipId, gd);
+    setClipUrl(lineJoin, (plotinfo.layerClipId as any), gd);
 
     function clearFill(selection) {
         transition(selection).attr('d', 'M0,0Z');
@@ -346,8 +346,8 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
             // polygon to the relevant axis
             polygons = new Array(fillsegments.length);
             for(i = 0; i < fillsegments.length; i++) {
-                const pt0 = fillsegments[i][0].slice();
-                const pt1 = fillsegments[i][fillsegments[i].length - 1].slice();
+                const pt0 = (fillsegments[i][0] as any).slice();
+                const pt1 = (fillsegments[i][fillsegments[i].length - 1] as any).slice();
 
                 pt0[fillAxisIndex] = pt1[fillAxisIndex] = fillAxisZero;
 
@@ -369,7 +369,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
             reversedPrevFillsegment.reverse();
 
             for(i = 0; i < fillsegments.length; i++) {
-                polygons[prevFillsegments.length - 1 + i] = polygonTester(fillsegments[i].concat(reversedPrevFillsegment));
+                polygons[prevFillsegments.length - 1 + i] = polygonTester((fillsegments[i] as any).concat(reversedPrevFillsegment));
             }
         }
         return polygons;
@@ -399,7 +399,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                         .call(singleFillStyle, gd);
 
                     // and simply emit hover polygons for each segment
-                    thisPolygons = makeSelfPolygons();
+                    thisPolygons = (makeSelfPolygons() as any);
                 }
             }
             trace._polygons = thisPolygons;
@@ -416,7 +416,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                         .call(singleFillStyle, gd);
 
                                             // and simply emit hover polygons for each segment
-                    thisPolygons = makeSelfPolygons();
+                    thisPolygons = (makeSelfPolygons() as any);
 
                     // we add the polygons of the previous trace which causes hover
                     // detection to ignore points contained in them.
@@ -608,8 +608,8 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
     // on `plotinfo._hasClipOnAxisFalse === true` subplots
     const hasClipOnAxisFalse = trace.cliponaxis === false;
     const clipUrl = hasClipOnAxisFalse ? null : plotinfo.layerClipId;
-    setClipUrl(points, clipUrl, gd);
-    setClipUrl(text, clipUrl, gd);
+    setClipUrl(points, (clipUrl as any), gd);
+    setClipUrl(text, (clipUrl as any), gd);
 }
 
 function selectMarkers(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcDatum[], cdscatterAll: CalcDatum[][]): void {

@@ -25,7 +25,7 @@ function Sieve(this: any, traces: any[], opts: any) {
 
     const axLetter = opts.posAxis._id.charAt(0);
 
-    const positions = [];
+    const positions: any[] = [];
     for(let i = 0; i < traces.length; i++) {
         const trace = traces[i];
         for(let j = 0; j < trace.length; j++) {
@@ -104,7 +104,7 @@ Sieve.prototype.get = function get(position: number, group: number, value?: numb
  * true; otherwise prefixed with '^')
  */
 Sieve.prototype.getLabel = function getLabel(position: number, group: number, value?: number): string {
-    const prefix = (value < 0 && this.sepNegVal) ? 'v' : '^';
+    const prefix = (value! < 0 && this.sepNegVal) ? 'v' : '^';
     const label = (this.overlapNoMerge) ?
         position :
         Math.round(position / this.binWidth);

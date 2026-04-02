@@ -165,7 +165,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
 
     function getOverlayableAxes(axLetter?: any, axName?: any) {
         const list = (axLetter === 'x') ? xNames : yNames;
-        const out = [];
+        const out: any[] = [];
 
         for(let j = 0; j < list.length; j++) {
             const axName2 = list[j];
@@ -185,7 +185,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
     // lookup and list of axis ids that axes in axNames have a reference to,
     // even though they are missing from allAxisIds
     const missingMatchedAxisIdsLookup: any = {};
-    let missingMatchedAxisIds = [];
+    let missingMatchedAxisIds: any[] = [];
 
     // fill in 'missing' axis lookup when an axis is set to match an axis
     // not part of the allAxisIds list, save axis type so that we can propagate
@@ -194,7 +194,7 @@ export default function supplyLayoutDefaults(layoutIn?: any, layoutOut?: any, fu
         const matchesIn = axLayoutIn.matches;
         if(AX_ID_PATTERN.test(matchesIn) && allAxisIds.indexOf(matchesIn) === -1) {
             missingMatchedAxisIdsLookup[matchesIn] = axLayoutIn.type;
-            missingMatchedAxisIds = Object.keys(missingMatchedAxisIdsLookup);
+            missingMatchedAxisIds = (Object.keys(missingMatchedAxisIdsLookup) as any);
         }
     }
 

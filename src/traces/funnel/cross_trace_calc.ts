@@ -8,9 +8,9 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
     const calcdata = gd.calcdata;
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
-    const funnels = [];
-    const funnelsVert = [];
-    const funnelsHorz = [];
+    const funnels: any[] = [];
+    const funnelsVert: any[] = [];
+    const funnelsHorz: any[] = [];
     let cd, i;
 
     for(i = 0; i < fullData.length; i++) {

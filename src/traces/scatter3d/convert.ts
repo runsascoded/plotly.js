@@ -73,8 +73,8 @@ proto.handlePick = function (selection) {
 function constructDelaunay(points, color, axis) {
     const u = (axis + 1) % 3;
     const v = (axis + 2) % 3;
-    const filteredPoints = [];
-    const filteredIds = [];
+    const filteredPoints: any[] = [];
+    const filteredIds: any[] = [];
     let i;
 
     for (i = 0; i < points.length; ++i) {
@@ -168,7 +168,7 @@ function calculateSymbol(symbolIn) {
 }
 
 function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?: any) {
-    let paramOut = null;
+    let paramOut: any = null;
 
     if (Lib.isArrayOrTypedArray(paramIn)) {
         paramOut = [];
@@ -183,7 +183,7 @@ function formatParam(paramIn: any, len: any, calculate: any, dflt: any, extraFn?
 }
 
 function convertPlotlyOptions(scene, data) {
-    const points = [];
+    const points: any[] = [];
     const sceneLayout = scene.fullSceneLayout;
     const scaleFactor = scene.dataScale;
     const xaxis = sceneLayout.xaxis;
@@ -209,7 +209,7 @@ function convertPlotlyOptions(scene, data) {
         yc = yaxis.d2l(y[i], 0, ycalendar) * scaleFactor[1];
         zc = zaxis.d2l(z[i], 0, zcalendar) * scaleFactor[2];
 
-        points[i] = [xc, yc, zc];
+        points[i] = ([xc, yc, zc] as any);
     }
 
     // convert text

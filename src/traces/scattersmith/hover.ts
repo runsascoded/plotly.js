@@ -38,7 +38,7 @@ function makeHoverPointText(cdi, trace: FullTrace, subplot: PlotInfo, pointData)
     pointData.imagLabel = labels.imagLabel;
 
     const hoverinfo = cdi.hi || trace.hoverinfo;
-    const text = [];
+    const text: any[] = [];
     function textPart(ax: FullAxis, val) {
         text.push(ax._hovertitle + ': ' + val);
     }

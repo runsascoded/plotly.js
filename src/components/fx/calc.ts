@@ -48,6 +48,6 @@ function paste(traceAttr: any, cd: CalcDatum[], cdAttr: string, fn?: (val: any) 
     fn = fn || identity;
 
     if(Array.isArray(traceAttr)) {
-        cd[0][cdAttr] = fn(traceAttr);
+        cd[0][cdAttr] = fn!(traceAttr);
     }
 }

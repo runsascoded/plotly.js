@@ -7,7 +7,7 @@ export const getDimIndex = function getDimIndex(trace: FullTrace, ax: FullAxis) 
 
     for(let k = 0; k < visibleDims.length; k++) {
         const i = visibleDims[k];
-        if(trace._diag[i][ind] === axId) return k;
+        if(trace._diag[i][ind!] === axId) return k;
     }
     return false;
 };

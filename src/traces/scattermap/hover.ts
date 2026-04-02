@@ -14,7 +14,7 @@ function hoverPoints(pointData, xval, yval) {
     const xa = pointData.xa;
     const ya = pointData.ya;
     const subplot = pointData.subplot;
-    let clusteredPointsIds = [];
+    let clusteredPointsIds: any[] = [];
     const layer = LAYER_PREFIX + trace.uid + '-circle';
     const hasCluster = trace.cluster && trace.cluster.enabled;
 
@@ -88,7 +88,7 @@ function getExtraText(trace: FullTrace, di, labels) {
     const hasLon = parts.indexOf('lon') !== -1;
     const hasLat = parts.indexOf('lat') !== -1;
     const lonlat = di.lonlat;
-    const text = [];
+    const text: any[] = [];
 
     // TODO should we use a mock axis to format hover?
     // If so, we'll need to make precision be zoom-level dependent

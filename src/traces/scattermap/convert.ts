@@ -217,7 +217,7 @@ function makeCircleOpts(calcTrace) {
         };
     }
 
-    const features = [];
+    const features: any[] = [];
     for (i = 0; i < calcTrace.length; i++) {
         const calcPt = calcTrace[i];
         const lonlat = calcPt.lonlat;
@@ -243,7 +243,7 @@ function makeCircleOpts(calcTrace) {
         fns = makeSelectedPointStyleFns(trace);
 
         for (i = 0; i < features.length; i++) {
-            const d = features[i].properties;
+            const d = (features[i] as any).properties;
 
             if (fns.selectedOpacityFn) {
                 d.mo = addTraceOpacity(fns.selectedOpacityFn(d));
@@ -283,7 +283,7 @@ function makeSymbolGeoJSON(calcTrace, gd: GraphDiv) {
 
     const fillText = subTypes.hasText(trace) ? getFillFunc(trace.text) : blankFillFunc;
 
-    const features = [];
+    const features: any[] = [];
 
     for (let i = 0; i < calcTrace.length; i++) {
         const calcPt = calcTrace[i];

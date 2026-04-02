@@ -324,7 +324,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
             return styleBarLike(d, this, 'waterfall');
         }
 
-        let ptsData = [];
+        let ptsData: any[] = [];
         if(trace.visible && isWaterfall) {
             ptsData = d[0].hasTotals ?
                 [['increasing', 'M-6,-6V6H0Z'], ['totals', 'M6,6H0L-6,-6H-0Z'], ['decreasing', 'M6,6V-6H0Z']] :
@@ -559,7 +559,7 @@ export default function style(s: any, gd: GraphDiv, legend?: any): any {
         const trace = d[0].trace;
 
         let useGradient;
-        let ptsData = [];
+        let ptsData: any[] = [];
         if(trace.visible) {
             switch(trace.type) {
                 case 'histogram2d' :

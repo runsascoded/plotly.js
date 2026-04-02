@@ -15,7 +15,7 @@ export { isVisible };
 export const makeData = function(fullLayout: FullLayout) {
     const axes = axisIDs.list({ _fullLayout: fullLayout }, 'x', true);
     const margin = fullLayout.margin;
-    const rangeSliderData = [];
+    const rangeSliderData: any[] = [];
 
     for(let i = 0; i < axes.length; i++) {
         const ax = axes[i];
@@ -25,7 +25,7 @@ export const makeData = function(fullLayout: FullLayout) {
 
             const opts = ax[name];
             opts._id = name + ax._id;
-            opts._height = (fullLayout.height - margin.b - margin.t) * opts.thickness;
+            opts._height = (fullLayout.height! - margin!.b! - margin!.t!) * opts.thickness;
             opts._offsetShift = Math.floor(opts.borderwidth / 2);
         }
     }
@@ -58,7 +58,7 @@ export const autoMarginOpts = function(gd: GraphDiv, ax: FullAxis) {
         l: 0,
         r: 0,
         t: 0,
-        b: opts._height + bottomDepth + Math.max(fullLayout.margin.b, titleHeight),
+        b: opts._height + bottomDepth + Math.max((fullLayout.margin!.b as any), titleHeight),
         pad: constants.extraPad + opts._offsetShift * 2
     };
 };

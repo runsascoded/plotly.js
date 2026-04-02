@@ -5,9 +5,9 @@ import type { FullTrace, GraphDiv } from '../../../types/core';
 
 export default function calc(gd: GraphDiv, trace: FullTrace) {
     trace._len = Math.min(
-        trace.x.length,
-        trace.y.length,
-        trace.z.length,
+        trace.x!.length,
+        trace.y!.length,
+        trace.z!.length,
         trace.value.length
     );
 

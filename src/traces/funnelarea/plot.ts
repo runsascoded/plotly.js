@@ -92,7 +92,7 @@ export default function plot(gd: GraphDiv,  cdModule) {
                         s.attr('data-notex', 1);
                     });
 
-                    const font = Lib.ensureUniformFontSize(gd, determineInsideTextFont(trace, pt, fullLayout.font));
+                    const font = Lib.ensureUniformFontSize(gd, determineInsideTextFont(trace, pt, (fullLayout.font as any)));
 
                     sliceText.text(pt.text)
                         .attr({
@@ -214,7 +214,7 @@ function setCoords(cd) {
     }
 
     let p;
-    const allPoints = [];
+    const allPoints: any[] = [];
     allPoints.push(getPoint());
 
     let i, cdi;

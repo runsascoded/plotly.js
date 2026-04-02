@@ -92,7 +92,7 @@ function hoverSplit(pointData,  xval,  yval,  hovermode) {
     const ya = pointData.ya;
     const trace = cd[0].trace;
     const t = cd[0].t;
-    const closeBoxData = [];
+    const closeBoxData: any[] = [];
 
     const closestPoint = _getClosestPoint(pointData, xval, yval, hovermode);
     // skip the rest (for this trace) if we didn't find a close point

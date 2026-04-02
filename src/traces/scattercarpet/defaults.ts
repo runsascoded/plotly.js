@@ -53,7 +53,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    const dfltHoverOn = [];
+    const dfltHoverOn: any[] = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('marker.maxdisplayed');

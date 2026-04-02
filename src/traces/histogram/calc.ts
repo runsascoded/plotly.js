@@ -13,8 +13,8 @@ import doAvg from './average.js';
 import getBinSpanLabelRound from './bin_label_vals.js';
 
 function calc(gd: GraphDiv, trace: FullTrace): any[] {
-    const pos = [];
-    const size = [];
+    const pos: any[] = [];
+    const size: any[] = [];
     const isHorizontal = trace.orientation === 'h';
     const pa = Axes.getFromId(gd, isHorizontal ? trace.yaxis : trace.xaxis);
     const mainData = isHorizontal ? 'y' : 'x';
@@ -28,12 +28,12 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     const pos0 = binsAndPos[1];
 
     const nonuniformBins = typeof binSpec.size === 'string';
-    const binEdges = [];
+    const binEdges: any[] = [];
     let bins = nonuniformBins ? binEdges : binSpec;
     // make the empty bin array
-    const inc = [];
-    const counts = [];
-    const inputPoints = [];
+    const inc: any[] = [];
+    const counts: any[] = [];
+    const inputPoints: any[] = [];
     let total = 0;
     let norm = trace.histnorm;
     const func = trace.histfunc;
@@ -116,10 +116,10 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
         n = Lib.findBin(posi, bins);
         if(n >= 0 && n < nMax) {
             total += binFunc(n, i, size, rawCounterData, counts);
-            if(uniqueValsPerBin && inputPoints[n].length && posi !== pos0[inputPoints[n][0]]) {
+            if(uniqueValsPerBin && (inputPoints[n] as any).length && posi !== pos0[inputPoints[n][0]]) {
                 uniqueValsPerBin = false;
             }
-            inputPoints[n].push(i);
+            (inputPoints[n] as any).push(i);
             ptNumber2cdIndex[i] = n;
 
             leftGap = Math.min(leftGap, posi - binEdges[n]);
@@ -151,7 +151,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     if(cumulativeSpec.enabled) cdf(size, cumulativeSpec.direction, cumulativeSpec.currentbin);
 
     const seriesLen = Math.min(pos.length, size.length);
-    const cd = [];
+    const cd: any[] = [];
     let firstNonzero = 0;
     let lastNonzero = seriesLen - 1;
 
@@ -184,7 +184,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
             if(!cumulativeSpec.enabled) {
                 cdi.pts = inputPoints[i];
                 if(uniqueValsPerBin) {
-                    cdi.ph0 = cdi.ph1 = (inputPoints[i].length) ? pos0[inputPoints[i][0]] : pos[i];
+                    cdi.ph0 = cdi.ph1 = ((inputPoints[i] as any).length) ? pos0[inputPoints[i][0]] : pos[i];
                 } else {
                     // Defer evaluation of ph(0|1) in crossTraceCalc
                     trace._computePh = true;
@@ -199,7 +199,7 @@ function calc(gd: GraphDiv, trace: FullTrace): any[] {
     if(cd.length === 1) {
         // when we collapse to a single bin, calcdata no longer describes bin size
         // so we need to explicitly specify it
-        cd[0].width1 = Axes.tickIncrement(cd[0].p, binSpec.size, false, calendar) - cd[0].p;
+        (cd[0] as any).width1 = Axes.tickIncrement((cd[0] as any).p, binSpec.size, false, calendar) - (cd[0] as any).p;
     }
 
     // auto-z and autocolorscale if applicable
@@ -518,7 +518,7 @@ function getConnectedHistograms(gd: GraphDiv, trace: FullTrace): FullTrace[] {
     const yid = trace.yaxis;
     const orientation = trace.orientation;
 
-    const out = [];
+    const out: any[] = [];
     const fullData = gd._fullData;
     for(let i = 0; i < fullData.length; i++) {
         const tracei = fullData[i];

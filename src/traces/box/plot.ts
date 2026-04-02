@@ -205,7 +205,7 @@ function plotPoints(sel: any, axes: { x: FullAxis; y: FullAxis }, trace: FullTra
             const typicalSpread = Math.max((d.max - d.min) / 10, d.q3 - d.q1);
             const minSpread = typicalSpread * 1e-9;
             const spreadLimit = typicalSpread * JITTERSPREAD;
-            let jitterFactors = [];
+            let jitterFactors: any[] = [];
             let maxJitterFactor = 0;
             let newJitter;
 

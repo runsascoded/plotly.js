@@ -332,7 +332,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
 
         box = {l: x0, r: x0, w: 0, t: y0, b: y0, h: 0};
         lum = gd._hmpixcount ?
-            (gd._hmlumcount / gd._hmpixcount) :
+            (gd._hmlumcount! / gd._hmpixcount) :
             tinycolor(gd._fullLayout.plot_bgcolor).getLuminance();
         path0 = 'M0,0H' + pw + 'V' + ph + 'H0V0';
         dimmed = false;
@@ -475,7 +475,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
 
         recomputeAxisLists();
 
-        clearTimeout(redrawTimer);
+        clearTimeout(redrawTimer!);
 
         let wheelDelta = -e.deltaY;
         if(!isFinite(wheelDelta)) wheelDelta = e.wheelDelta / 10;
@@ -536,7 +536,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
             if(!gd._fullLayout) return;
             scrollViewBox = [0, 0, pw, ph];
             dragTail();
-        }, REDRAWDELAY);
+        }, REDRAWDELAY) as any;
 
         e.preventDefault();
         return;
@@ -716,7 +716,7 @@ function makeDragBox(gd: GraphDiv, plotinfo: PlotInfo, x?: any, y?: any, w?: any
     // Draw ticks and annotations (and other components) when ranges change.
     // Also records the ranges that have changed for use by update at the end.
     function ticksAndAnnotations() {
-        const activeAxIds = [];
+        const activeAxIds: any[] = [];
         let i;
 
         function pushActiveAxIds(axList?: any) {
@@ -1311,7 +1311,7 @@ function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?:
     }
 
     const xaHashLinked: any = {};
-    const xaxesLinked = [];
+    const xaxesLinked: any[] = [];
     for(xLinkID in xLinks) {
         const xa = getFromId(gd, xLinkID);
         xaxesLinked.push(xa);
@@ -1319,7 +1319,7 @@ function calcLinks(gd?: any, groups?: any, xaHash?: any, yaHash?: any, exclude?:
     }
 
     const yaHashLinked: any = {};
-    const yaxesLinked = [];
+    const yaxesLinked: any[] = [];
     for(yLinkID in yLinks) {
         const ya = getFromId(gd, yLinkID);
         yaxesLinked.push(ya);
@@ -1359,7 +1359,7 @@ function attachWheelEventHandler(element?: any, handler?: any): void {
 }
 
 function hashValues(hash?: any): any {
-    const out = [];
+    const out: any[] = [];
     for(const k in hash) out.push(hash[k]);
     return out;
 }

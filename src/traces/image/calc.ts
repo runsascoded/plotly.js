@@ -11,7 +11,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
     let h;
     let w;
     if(trace._hasZ) {
-        h = trace.z.length;
+        h = trace.z!.length;
         w = maxRowLength(trace.z);
     } else if(trace._hasSource) {
         const size = getImageSize(trace.source);

@@ -43,7 +43,7 @@ export default function hoverPoints(pointData,  xval,  yval,  hovermode,  opts) 
     point.initialLabel = formatNumber(point.initial);
 
     const hoverinfo = di.hi || trace.hoverinfo;
-    const text = [];
+    const text: any[] = [];
     if(hoverinfo && hoverinfo !== 'none' && hoverinfo !== 'skip') {
         const isAll = (hoverinfo === 'all');
         const parts = hoverinfo.split('+');

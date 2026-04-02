@@ -92,7 +92,7 @@ function iterateInterp2d(z: any, emptyPoints: any[], overshoot?: number) {
         } else {
             // we can make large empty regions converge faster
             // if we overshoot the change vs the previous value
-            z[i][j] = (1 + overshoot) * z[i][j] - overshoot * initialVal;
+            z[i][j] = (1 + overshoot!) * z[i][j] - overshoot! * initialVal;
 
             if(maxNeighbor > minNeighbor) {
                 maxFractionalChange = Math.max(maxFractionalChange,

@@ -7,9 +7,9 @@ function calc(gd: GraphDiv, trace: FullTrace) {
         trace.u.length,
         trace.v.length,
         trace.w.length,
-        trace.x.length,
-        trace.y.length,
-        trace.z.length
+        trace.x!.length,
+        trace.y!.length,
+        trace.z!.length
     );
 
     trace._u = filter(trace.u, trace._len);
@@ -231,9 +231,9 @@ function filter(arr: any, len?: number) {
     // no need for casting typed arrays to numbers
     if(Lib.isTypedArray(arr)) return arr.subarray(0, len);
 
-    const values = [];
-    for(let i = 0; i < len; i++) {
-        values[i] = +arr[i];
+    const values: any[] = [];
+    for(let i = 0; i < len!; i++) {
+        values[i] = (+arr[i] as any);
     }
     return values;
 }

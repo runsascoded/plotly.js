@@ -30,9 +30,9 @@ export default function alignPeriod(trace?: any, ax?: any, axLetter?: any, vals?
     const period0 = trace[axLetter + 'period0'];
     const base = dateTime2ms(period0, calendar) || 0;
 
-    const newVals = [];
-    const starts = [];
-    const ends = [];
+    const newVals: any[] = [];
+    const starts: any[] = [];
+    const ends: any[] = [];
 
     const len = vals.length;
     for(let i = 0; i < len; i++) {
@@ -75,10 +75,10 @@ export default function alignPeriod(trace?: any, ax?: any, axLetter?: any, vals?
             isStart ? startTime :
             isEnd ? endTime :
             (startTime + endTime) / 2
-        );
+        ) as any;
 
-        starts[i] = startTime;
-        ends[i] = endTime;
+        starts[i] = (startTime as any);
+        ends[i] = (endTime as any);
     }
 
     return {

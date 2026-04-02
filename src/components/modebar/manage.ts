@@ -70,10 +70,10 @@ function getButtonGroups(gd: GraphDiv) {
         return false;
     }
 
-    let layoutAdd = fullLayout.modebar.add;
+    let layoutAdd = fullLayout.modebar!.add;
     if(typeof layoutAdd === 'string') layoutAdd = [layoutAdd];
 
-    let layoutRemove = fullLayout.modebar.remove;
+    let layoutRemove = fullLayout.modebar!.remove;
     if(typeof layoutRemove === 'string') layoutRemove = [layoutRemove];
 
     let buttonsToAdd = context.modeBarButtonsToAdd.concat(
@@ -108,12 +108,12 @@ function getButtonGroups(gd: GraphDiv) {
     const allAxesFixed = areAllAxesFixed(fullLayout);
     const hasUnifiedHoverLabel = isUnifiedHover(fullLayout.hovermode);
 
-    const groups = [];
+    const groups: any[] = [];
 
     function addGroup(newGroup: any) {
         if(!newGroup.length) return;
 
-        const out = [];
+        const out: any[] = [];
 
         for(let i = 0; i < newGroup.length; i++) {
             const name = newGroup[i];
@@ -141,10 +141,10 @@ function getButtonGroups(gd: GraphDiv) {
     else if(context.showSendToCloud) commonGroup.push('sendDataToCloud');
     addGroup(commonGroup);
 
-    let zoomGroup = [];
-    let hoverGroup = [];
-    let resetGroup = [];
-    let dragModeGroup = [];
+    let zoomGroup: any[] = [];
+    let hoverGroup: any[] = [];
+    let resetGroup: any[] = [];
+    let dragModeGroup: any[] = [];
 
     if(+(hasCartesian || hasPie || hasFunnelarea || hasTernary) + +hasGeo + +hasGL3D + +hasMapbox + +hasMap + +hasPolar + +hasSmith > 1) {
         // graphs with more than one plot types get 'union buttons'
@@ -152,18 +152,18 @@ function getButtonGroups(gd: GraphDiv) {
         hoverGroup = ['toggleHover'];
         resetGroup = ['resetViews'];
     } else if(hasGeo) {
-        zoomGroup = ['zoomInGeo', 'zoomOutGeo'];
+        zoomGroup = (['zoomInGeo', 'zoomOutGeo'] as any);
         hoverGroup = ['hoverClosestGeo'];
         resetGroup = ['resetGeo'];
     } else if(hasGL3D) {
         hoverGroup = ['hoverClosest3d'];
         resetGroup = ['resetCameraDefault3d', 'resetCameraLastSave3d'];
     } else if(hasMapbox) {
-        zoomGroup = ['zoomInMapbox', 'zoomOutMapbox'];
+        zoomGroup = (['zoomInMapbox', 'zoomOutMapbox'] as any);
         hoverGroup = ['toggleHover'];
         resetGroup = ['resetViewMapbox'];
     } else if(hasMap) {
-        zoomGroup = ['zoomInMap', 'zoomOutMap'];
+        zoomGroup = (['zoomInMap', 'zoomOutMap'] as any);
         hoverGroup = ['toggleHover'];
         resetGroup = ['resetViewMap'];
     } else if(hasPie) {
@@ -182,11 +182,11 @@ function getButtonGroups(gd: GraphDiv) {
         hoverGroup.push('toggleSpikelines', 'hoverClosestCartesian', 'hoverCompareCartesian');
     }
     if(hasNoHover(fullData) || hasUnifiedHoverLabel) {
-        hoverGroup = [];
+        hoverGroup = [] as any[];
     }
 
     if(hasCartesian && !allAxesFixed) {
-        zoomGroup = ['zoomIn2d', 'zoomOut2d', 'autoScale2d'];
+        zoomGroup = (['zoomIn2d', 'zoomOut2d', 'autoScale2d'] as any);
         if(resetGroup[0] !== 'resetViews') resetGroup = ['resetScale2d'];
     }
 
@@ -203,7 +203,7 @@ function getButtonGroups(gd: GraphDiv) {
         dragModeGroup.push('select2d', 'lasso2d');
     }
 
-    const enabledHoverGroup = [];
+    const enabledHoverGroup: any[] = [];
     const enableHover = function(a: any) {
         // return if already added
         if(enabledHoverGroup.indexOf(a) !== -1) return;
@@ -213,7 +213,7 @@ function getButtonGroups(gd: GraphDiv) {
         }
     };
     if(Array.isArray(buttonsToAdd)) {
-        const newList = [];
+        const newList: any[] = [];
         for(let i = 0; i < buttonsToAdd.length; i++) {
             let b = buttonsToAdd[i];
             if(typeof b === 'string') {
@@ -251,7 +251,7 @@ function getButtonGroups(gd: GraphDiv) {
     }
 
     addGroup(dragModeGroup);
-    addGroup(zoomGroup.concat(resetGroup));
+    addGroup(zoomGroup.concat((resetGroup as any)));
     addGroup(enabledHoverGroup);
 
     return appendButtonsToGroups(groups, buttonsToAdd);

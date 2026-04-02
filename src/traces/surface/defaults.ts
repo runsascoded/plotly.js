@@ -7,7 +7,7 @@ import type { FullLayout, FullTrace, InputTrace } from '../../../types/core';
 const MIN = 0.1; // Note: often we don't want the data cube to be disappeared
 
 function createWave(n, minOpacity) {
-    const arr = [];
+    const arr: any[] = [];
     const steps = 32; // Max: 256
     for (let i = 0; i < steps; i++) {
         const u = i / (steps - 1);

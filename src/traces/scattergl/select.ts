@@ -6,7 +6,7 @@ export default function select(searchInfo, selectionTester) {
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
     const trace = cd[0].trace;
     const stash = cd[0].t;
     const len = trace._length;
@@ -23,8 +23,8 @@ export default function select(searchInfo, selectionTester) {
 
     if(trace.visible !== true || hasOnlyLines) return selection;
 
-    const els = [];
-    const unels = [];
+    const els: any[] = [];
+    const unels: any[] = [];
 
     // degenerate polygon does not enable selection
     // filter out points by visible scatter ones

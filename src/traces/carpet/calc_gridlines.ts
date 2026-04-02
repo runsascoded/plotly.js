@@ -9,9 +9,9 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
     const data = trace['_' + axisLetter];
     const axis = trace[axisLetter + 'axis'];
 
-    const gridlines = axis._gridlines = [];
-    const minorgridlines = axis._minorgridlines = [];
-    const boundarylines = axis._boundarylines = [];
+    const gridlines = axis._gridlines = [] as any[];
+    const minorgridlines = axis._minorgridlines = [] as any[];
+    const boundarylines = axis._boundarylines = [] as any[];
 
     const crossData = trace['_' + crossAxisLetter];
     const crossAxis = trace[crossAxisLetter + 'axis'];
@@ -42,8 +42,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
 
     function constructValueGridline(value) {
         let i, j, j0, tj, pxy, i0, ti, xy, dxydi0, dxydi1, dxydj0, dxydj1;
-        const xpoints = [];
-        const ypoints = [];
+        const xpoints: any[] = [];
+        const ypoints: any[] = [];
         const ret: any = {};
         // Search for the fractional grid index giving this line:
         if(axisLetter === 'b') {
@@ -144,8 +144,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
 
     function constructArrayGridline(idx) {
         let j, i0, j0, ti, tj;
-        const xpoints = [];
-        const ypoints = [];
+        const xpoints: any[] = [];
+        const ypoints: any[] = [];
         const ret: any = {};
         ret.length = data.length;
         ret.crossLength = crossData.length;
@@ -165,8 +165,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             // In the tickmode: array case, this operation is a simple
             // transfer of data:
             for(j = 0; j < nea; j++) {
-                xpoints[j] = xcp[idx * stride][j];
-                ypoints[j] = ycp[idx * stride][j];
+                xpoints[j] = (xcp[idx * stride][j] as any);
+                ypoints[j] = (ycp[idx * stride][j] as any);
             }
         } else {
             i0 = Math.max(0, Math.min(na - 2, idx));
@@ -183,8 +183,8 @@ export default function calcGridlines(trace, axisLetter, crossAxisLetter) {
             // In the tickmode: array case, this operation is a simple
             // transfer of data:
             for(j = 0; j < neb; j++) {
-                xpoints[j] = xcp[j][idx * stride];
-                ypoints[j] = ycp[j][idx * stride];
+                xpoints[j] = (xcp[j][idx * stride] as any);
+                ypoints[j] = (ycp[j][idx * stride] as any);
             }
         }
 

@@ -913,14 +913,14 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
     const maxTicks = Math.max(1000, ax._length || 0);
 
-    let ticksOut = [];
-    let minorTicks = [];
+    let ticksOut: any[] = [];
+    let minorTicks: any[] = [];
 
-    let tickVals = [];
-    let minorTickVals = [];
+    let tickVals: any[] = [];
+    let minorTickVals: any[] = [];
     // all ticks for which labels are drawn which is not necessarily the major ticks when
     // `ticklabelindex` is set.
-    let allTicklabelVals = [];
+    let allTicklabelVals: any[] = [];
 
     const hasMinor = ax.minor && (ax.minor.ticks || ax.minor.showgrid);
 
@@ -951,7 +951,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
                 tickVals = [];
                 ticksOut = arrayTicks(ax, !isMinor);
             } else {
-                minorTickVals = [];
+                minorTickVals = [] as any[];
                 minorTicks = arrayTicks(ax, !isMinor);
             }
             continue;
@@ -959,7 +959,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
         // fill tickVals based on overlaying axis
         if(mockAx.tickmode === 'sync') {
-            tickVals = [];
+            tickVals = [] as any[];
             ticksOut = syncTicks(ax);
             continue;
         }
@@ -1066,11 +1066,11 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
                     obj.skipLabel = true;
                 }
 
-                tickVals.push(obj);
+                tickVals.push((obj as any));
             } else {
                 obj.minor = true;
 
-                minorTickVals.push(obj);
+                minorTickVals.push((obj as any));
             }
         }
     }
@@ -1079,7 +1079,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
     if(!minorTickVals || minorTickVals.length < 2) {
         ticklabelIndex = false;
     } else {
-        const diff = (minorTickVals[1].value - minorTickVals[0].value) * (isReversed ? -1 : 1);
+        const diff = ((minorTickVals[1] as any).value - (minorTickVals[0] as any).value) * (isReversed ? -1 : 1);
         if(!periodCompatibleWithTickformat(diff, ax.tickformat)) {
             ticklabelIndex = false;
         }
@@ -1099,15 +1099,15 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
         allTickVals =
             allTickVals
-            .sort(function(a, b) { return a.value - b.value; })
+            .sort(function(a, b) { return (a as any).value - (b as any).value; })
             .filter(function(tick, index, self) {
-                return index === 0 || tick.value !== self[index - 1].value;
+                return index === 0 || (tick as any).value !== (self[index - 1] as any).value;
             });
 
         const majorTickIndices =
             allTickVals
             .map(function(item, index) {
-                return item.minor === undefined && !item.skipLabel ? index : null;
+                return (item as any).minor === undefined && !(item as any).skipLabel ? index : null;
             })
             .filter(function(index) { return index !== null; });
 
@@ -1129,12 +1129,12 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
         if(!canOverlap) {
             // remove duplicate minors
 
-            const majorValues = tickVals.map(function(d) { return d.value; });
+            const majorValues = tickVals.map(function(d) { return (d as any).value; });
 
-            const list = [];
+            const list: any[] = [];
             for(let k = 0; k < minorTickVals.length; k++) {
                 const T = minorTickVals[k];
-                const v = T.value;
+                const v = (T as any).value;
                 if(majorValues.indexOf(v) !== -1) {
                     continue;
                 }
@@ -1142,7 +1142,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
                 for(let q = 0; !found && (q < tickVals.length); q++) {
                     if(
                         // add 10e6 to eliminate problematic digits
-                        10e6 + tickVals[q].value ===
+                        10e6 + (tickVals[q] as any).value ===
                         10e6 + v
                     ) {
                         found = true;
@@ -1167,15 +1167,15 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
         let prevL = NaN;
         for(i = tickVals.length - 1; i > -1; i--) {
-            if(tickVals[i].drop) {
+            if((tickVals[i] as any).drop) {
                 tickVals.splice(i, 1);
                 continue;
             }
 
-            tickVals[i].value = moveOutsideBreak(tickVals[i].value, ax);
+            (tickVals[i] as any).value = moveOutsideBreak((tickVals[i] as any).value, ax);
 
             // avoid overlaps
-            const l = ax.c2p(tickVals[i].value);
+            const l = ax.c2p((tickVals[i] as any).value);
             if(flip ?
                 (prevL > l - fontSize) :
                 (prevL < l + fontSize)
@@ -1195,7 +1195,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
     // save the last tick as well as first, so we can
     // show the exponent only on the last one
-    ax._tmax = (tickVals[tickVals.length - 1] || {}).value;
+    ax._tmax = ((tickVals[tickVals.length - 1] || {}) as any).value;
 
     // for showing the rest of a date when the main tick label is only the
     // latter part: ax._prevDateHead holds what we showed most recently.
@@ -1234,8 +1234,8 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
     let t;
     for(i = 0; i < tickVals.length; i++) {
-        const _minor = tickVals[i].minor;
-        const _value = tickVals[i].value;
+        const _minor = (tickVals[i] as any).minor;
+        const _value = (tickVals[i] as any).value;
 
         if(_minor) {
             if(ticklabelIndex && allTicklabelVals.indexOf(tickVals[i]) !== -1) {
@@ -1244,16 +1244,16 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
                 t = { x: _value };
             }
             t.minor = true;
-            minorTicks.push(t);
+            minorTicks.push((t as any));
         } else {
             lastVisibleHead = ax._prevDateHead;
             t = setTickLabel(ax, tickVals[i]);
-            if(tickVals[i].skipLabel ||
+            if((tickVals[i] as any).skipLabel ||
                 ticklabelIndex && allTicklabelVals.indexOf(tickVals[i]) === -1) {
                 hideLabel(t);
             }
 
-            ticksOut.push(t);
+            ticksOut.push((t as any));
         }
     }
     ticksOut = ticksOut.concat(minorTicks);
@@ -1262,7 +1262,7 @@ axes.calcTicks = function calcTicks(ax?: any, opts?: any) {
 
     if(isPeriod && ticksOut.length) {
         // drop very first tick that we added to handle period
-        ticksOut[0].noTick = true;
+        (ticksOut[0] as any).noTick = true;
     }
 
     return ticksOut;
@@ -1283,7 +1283,7 @@ function syncTicks(ax?: any): any {
     // get the overlaying axis
     const baseAxis = ax._mainAxis;
 
-    let ticksOut = [];
+    let ticksOut: any[] = [];
     if(baseAxis._vals) {
         for(let i = 0; i < baseAxis._vals.length; i++) {
             // filter vals with noTick flag
@@ -1329,7 +1329,7 @@ function arrayTicks(ax?: any, majorOnly?: any): any {
         ax.dtick = 'L' + Math.pow(10, Math.floor(Math.min(ax.range[0], ax.range[1])) - 1);
     }
 
-    let ticksOut = [];
+    let ticksOut: any[] = [];
     for(let isMinor = 0; isMinor <= 1; isMinor++) {
         if((majorOnly !== undefined) && ((majorOnly && isMinor) || (majorOnly === false && !isMinor))) continue;
         if(isMinor && !ax.minor) continue;
@@ -2298,7 +2298,7 @@ axes.findSubplotsWithAxis = function(subplots?: any, ax?: any) {
     const axMatch = new RegExp(
         (ax._id.charAt(0) === 'x') ? ('^' + ax._id + 'y') : (ax._id + '$')
     );
-    const subplotsWithAx = [];
+    const subplotsWithAx: any[] = [];
 
     for(let i = 0; i < subplots.length; i++) {
         const sp = subplots[i];
@@ -2319,7 +2319,7 @@ axes.makeClipPaths = function(gd?: any) {
     const fullHeight = {_offset: 0, _length: fullLayout.height, _id: ''};
     const xaList = axes.list(gd, 'x', true);
     const yaList = axes.list(gd, 'y', true);
-    const clipList = [];
+    const clipList: any[] = [];
     let i, j;
 
     for(i = 0; i < xaList.length; i++) {
@@ -2699,7 +2699,7 @@ axes.drawOne = function(gd?: any, ax?: any, opts?: any) {
         }
     }
 
-    const seq = [];
+    const seq: any[] = [];
 
     // tick labels - for now just the main labels.
     // TODO: mirror labels, esp for subplots
@@ -3607,7 +3607,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     const tickLabels = opts.layer.selectAll('g.' + cls)
         .data(ax.showticklabels ? vals : [], tickDataFn);
 
-    const labelsReady = [];
+    const labelsReady: any[] = [];
 
     tickLabels.enter().append('g')
         .classed(cls, 1)
@@ -3779,7 +3779,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
     ax._hideCounterAxisInsideTickLabels = function(partialOpts?: any) {
         const isX = ax._id.charAt(0) === 'x';
 
-        const anchoredAxes = [];
+        const anchoredAxes: any[] = [];
         for(const subplot in fullLayout._plots) {
             const plotinfo = fullLayout._plots[subplot];
             if(ax._id !== plotinfo.xaxis._id && ax._id !== plotinfo.yaxis._id) continue;
@@ -3821,8 +3821,8 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
                             const t: any = select(this);
                             if(
-                                q < ax['_visibleLabelMax_' + anchorAx._id] &&
-                                q > ax['_visibleLabelMin_' + anchorAx._id]
+                                q < ax['_visibleLabelMax_' + (anchorAx as any)._id] &&
+                                q > ax['_visibleLabelMin_' + (anchorAx as any)._id]
                             ) {
                                 t.style('display', 'none'); // hidden
                             } else if(e.K === 'tick' && !idx && t.node().style.display !== 'none') {
@@ -3860,7 +3860,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             autoangle = ax.autotickangles[0];
 
             let maxFontSize = 0;
-            const lbbArray = [];
+            const lbbArray: any[] = [];
             let i;
             let maxLines = 1;
             tickLabels.each(function(this: any, d) {
@@ -3923,10 +3923,10 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                     const xbnd = vals[i].xbnd;
                     const lbb = lbbArray[i];
                     if(
-                        (xbnd[0] !== null && (lbb.left - ax.l2p(xbnd[0])) < gap) ||
-                        (xbnd[1] !== null && (ax.l2p(xbnd[1]) - lbb.right) < gap)
+                        (xbnd[0] !== null && ((lbb as any).left - ax.l2p(xbnd[0])) < gap) ||
+                        (xbnd[1] !== null && (ax.l2p(xbnd[1]) - (lbb as any).right) < gap)
                     ) {
-                        autoangle = newAngle;
+                        autoangle = (newAngle as any);
                         break;
                     }
                 }
@@ -3947,7 +3947,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
                 for(i = 0; i < lbbArray.length - 1; i++) {
                     if(bBoxIntersect(lbbArray[i], lbbArray[i + 1], pad)) {
-                        autoangle = newAngle;
+                        autoangle = (newAngle as any);
                         break;
                     }
                 }
@@ -4044,8 +4044,8 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             const index = sgn === 1 ? 1 : 0;
             const otherIndex = sgn === 1 ? 0 : 1;
 
-            const newRange = [];
-            newRange[otherIndex] = anchorAx.range[otherIndex];
+            const newRange: any[] = [];
+            newRange[otherIndex] = (anchorAx.range[otherIndex] as any);
 
             const anchorAxRange = anchorAx.range;
 
@@ -4061,12 +4061,12 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
                 if(dir * p0 < dir * q0) {
                     p0 = q0;
-                    newRange[index] = anchorAxRange[index] = _tempNewRange[index];
+                    newRange[index] = (anchorAxRange[index] = _tempNewRange[index] as any);
                 }
 
                 if(dir * p1 > dir * q1) {
                     p1 = q1;
-                    newRange[otherIndex] = anchorAxRange[otherIndex] = _tempNewRange[otherIndex];
+                    newRange[otherIndex] = (anchorAxRange[otherIndex] = _tempNewRange[otherIndex] as any);
                 }
             }
 
@@ -4083,14 +4083,14 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
             newRange[index] = anchorAx.p2r(
                 anchorAx.r2p(anchorAxRange[index]) +
                 sgn * move
-            );
+            ) as any;
 
             // handle partial ranges in insiderange
             if(
                 anchorAx.autorange === 'min' ||
                 anchorAx.autorange === 'max reversed'
             ) {
-                newRange[0] = null;
+                newRange[0] = (null as any);
 
                 anchorAx._rangeInitial0 = undefined;
                 anchorAx._rangeInitial1 = undefined;
@@ -4098,7 +4098,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
                 anchorAx.autorange === 'max' ||
                 anchorAx.autorange === 'min reversed'
             ) {
-                newRange[1] = null;
+                newRange[1] = (null as any);
 
                 anchorAx._rangeInitial0 = undefined;
                 anchorAx._rangeInitial1 = undefined;
@@ -4462,17 +4462,17 @@ axes.swap = function(gd?: any, traces?: any) {
 };
 
 function makeAxisGroups(gd?: any, traces?: any): any {
-    const groups = [];
+    const groups: any[] = [];
     let i, j;
 
     for(i = 0; i < traces.length; i++) {
-        const groupsi = [];
+        const groupsi: any[] = [];
         const xi = gd._fullData[traces[i]].xaxis;
         const yi = gd._fullData[traces[i]].yaxis;
         if(!xi || !yi) continue; // not a 2D cartesian trace?
 
         for(j = 0; j < groups.length; j++) {
-            if(groups[j].x.indexOf(xi) !== -1 || groups[j].y.indexOf(yi) !== -1) {
+            if((groups[j] as any).x.indexOf(xi) !== -1 || (groups[j] as any).y.indexOf(yi) !== -1) {
                 groupsi.push(j);
             }
         }
@@ -4488,12 +4488,12 @@ function makeAxisGroups(gd?: any, traces?: any): any {
         if(groupsi.length > 1) {
             for(j = 1; j < groupsi.length; j++) {
                 groupj = groups[groupsi[j]];
-                mergeAxisGroups(group0.x, groupj.x);
-                mergeAxisGroups(group0.y, groupj.y);
+                mergeAxisGroups((group0 as any).x, groupj.x);
+                mergeAxisGroups((group0 as any).y, groupj.y);
             }
         }
-        mergeAxisGroups(group0.x, [xi]);
-        mergeAxisGroups(group0.y, [yi]);
+        mergeAxisGroups((group0 as any).x, [xi]);
+        mergeAxisGroups((group0 as any).y, [yi]);
     }
 
     return groups;
@@ -4506,8 +4506,8 @@ function mergeAxisGroups(intoSet?: any, fromSet?: any): void {
 }
 
 function swapAxisGroup(gd?: any, xIds?: any, yIds?: any): void {
-    const xFullAxes = [];
-    const yFullAxes = [];
+    const xFullAxes: any[] = [];
+    const yFullAxes: any[] = [];
     const layout = gd.layout;
     let i, j;
 
@@ -4551,8 +4551,8 @@ function swapAxisGroup(gd?: any, xIds?: any, yIds?: any): void {
             } else if(yFullAxes[j][keyi] !== yVal) allEqual = false;
         }
         if(allEqual) {
-            if(coerceLinearX) layout[xFullAxes[0]._name].type = 'linear';
-            if(coerceLinearY) layout[yFullAxes[0]._name].type = 'linear';
+            if(coerceLinearX) layout[(xFullAxes[0] as any)._name].type = 'linear';
+            if(coerceLinearY) layout[(yFullAxes[0] as any)._name].type = 'linear';
             swapAxisAttrs(layout, keyi, xFullAxes, yFullAxes, gd._fullLayout._dfltTitle);
         }
     }

@@ -15,7 +15,7 @@ export default function(gd, trace) {
     const cd = calcCommon(gd, trace, origX, x, ya, ptFunc);
 
     if(cd.length) {
-        Lib.extendFlat(cd[0].t, {
+        Lib.extendFlat((cd[0] as any).t, {
             num: fullLayout._numBoxes,
             dPos: Lib.distinctVals(x).minDiff / 2,
             posLetter: 'x',

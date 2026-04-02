@@ -82,7 +82,7 @@ export default function newSelections(outlines: any, dragOptions: any) {
     const editHelpers = dragOptions.editHelpers;
     const modifyItem = (editHelpers || {}).modifyItem;
 
-    const allSelections = [];
+    const allSelections: any[] = [];
     for(let q = 0; q < selections.length; q++) {
         const beforeEdit = gd._fullLayout.selections[q];
         if(!beforeEdit) {

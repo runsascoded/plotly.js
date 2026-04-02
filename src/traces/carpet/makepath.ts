@@ -3,7 +3,7 @@ export default function makePath(xp, yp, isBicubic) {
     if(xp.length === 0) return '';
 
     let i;
-    const path = [];
+    const path: any[] = [];
     const stride = isBicubic ? 3 : 1;
     for(i = 0; i < xp.length; i += stride) {
         path.push(xp[i] + ',' + yp[i]);

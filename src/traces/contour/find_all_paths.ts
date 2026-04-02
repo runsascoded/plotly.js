@@ -63,7 +63,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
             delete pi.crossings[locStr];
         }
 
-        marchStep = constants.NEWDELTA[mi];
+        marchStep = (constants.NEWDELTA[mi] as any);
         if(!marchStep) {
             Lib.log('Found bad marching index:', mi, loc, pi.level);
             break;
@@ -96,7 +96,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
     const closedpath = equalPts(pts[0], pts[pts.length - 1], xtol, ytol);
     let totaldist = 0;
     const distThresholdFactor = 0.2 * pi.smoothing;
-    const alldists = [];
+    const alldists: any[] = [];
     let cropstart = 0;
     let distgroup, cnt2, cnt3, newpt, ptcnt, ptavg, thisdist,
         i, j, edgepathi, edgepathj;
@@ -123,7 +123,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
         if(distgroup < distThreshold) {
             cnt3 = 0;
             for(cnt2 = cnt - 1; cnt2 >= cropstart; cnt2--) {
-                if(distgroup + alldists[cnt2] < distThreshold) {
+                if(distgroup! + alldists[cnt2] < distThreshold) {
                     distgroup += alldists[cnt2];
                 } else break;
             }
@@ -131,7 +131,7 @@ function makePath(pi,  loc,  edgeflag,  xtol,  ytol) {
             // closed path with close points wrapping around the boundary?
             if(closedpath && cnt === pts.length - 2) {
                 for(cnt3 = 0; cnt3 < cnt2; cnt3++) {
-                    if(distgroup + alldists[cnt3] < distThreshold) {
+                    if(distgroup! + alldists[cnt3] < distThreshold) {
                         distgroup += alldists[cnt3];
                     } else break;
                 }

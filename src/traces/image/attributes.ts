@@ -7,8 +7,8 @@ import _constants from './constants.js';
 const { colormodel } = _constants;
 
 const cm = ['rgb', 'rgba', 'rgba256', 'hsl', 'hsla'];
-const zminDesc = [];
-const zmaxDesc = [];
+const zminDesc: any[] = [];
+const zmaxDesc: any[] = [];
 for (let i = 0; i < cm.length; i++) {
     const cr = colormodel[cm[i]];
     zminDesc.push('For the `' + cm[i] + '` colormodel, it is [' + (cr.zminDflt || cr.min).join(', ') + '].');

@@ -226,13 +226,13 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 if(isPaperX) {
                     lx = gs.l + gs.w * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
                 } else {
-                    lx = fullLayout.width * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
+                    lx = fullLayout.width! * legendObj.x - FROM_TL[getXanchor(legendObj)] * legendObj._width;
                 }
 
                 if(isPaperY) {
                     ly = gs.t + gs.h * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
                 } else {
-                    ly = fullLayout.height * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
+                    ly = fullLayout.height! * (1 - legendObj.y) - FROM_TL[getYanchor(legendObj)] * legendObj._effHeight;
                 }
 
                 const expMargin = expandMargin(gd, legendId, lx, ly);
@@ -242,12 +242,12 @@ function drawOne(gd: GraphDiv, opts: any): any {
                 // draw the remaining pieces below
                 if(expMargin) return;
 
-                if(fullLayout.margin.autoexpand) {
+                if(fullLayout.margin!.autoexpand) {
                     const lx0 = lx;
                     const ly0 = ly;
 
-                    lx = isPaperX ? constrain(lx, 0, fullLayout.width - legendObj._width) : lx0;
-                    ly = isPaperY ? constrain(ly, 0, fullLayout.height - legendObj._effHeight) : ly0;
+                    lx = isPaperX ? constrain(lx, 0, fullLayout.width! - legendObj._width) : lx0;
+                    ly = isPaperY ? constrain(ly, 0, fullLayout.height! - legendObj._effHeight) : ly0;
 
                     if(lx !== lx0) {
                         log('Constrain ' + legendId + '.x to make legend fit inside graph');
@@ -484,7 +484,7 @@ function clickOrDoubleClick(gd: GraphDiv, legend: any, legendItem: any, numClick
         expandedIndex: trace.index,
         data: gd.data,
         layout: gd.layout,
-        frames: gd._transitionData._frames,
+        frames: gd._transitionData!._frames,
         config: gd._context,
         fullData: gd._fullData,
         fullLayout: gd._fullLayout
@@ -601,7 +601,7 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
 
     traceToggle.on('mousedown', function(event) {
         newMouseDownTime = (new Date()).getTime();
-        if(newMouseDownTime - gd._legendMouseDownTime < doubleClickDelay) {
+        if(newMouseDownTime - gd._legendMouseDownTime! < doubleClickDelay) {
             // in a click train
             numClicks += 1;
         } else {
@@ -614,7 +614,7 @@ function setupTraceToggle(g: any, gd: GraphDiv, legendId: string): void {
         if(gd._dragged || gd._editing) return;
         const legend = gd._fullLayout[legendId];
 
-        if((new Date()).getTime() - gd._legendMouseDownTime > doubleClickDelay) {
+        if((new Date()).getTime() - gd._legendMouseDownTime! > doubleClickDelay) {
             numClicks = Math.max(numClicks - 1, 1);
         }
 
@@ -777,7 +777,7 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
     // Set default maxheight here since it depends on values passed in by user
     maxheight ||= useFullLayoutHeight ? 0.5 : 1;
     const heightToBeScaled = useFullLayoutHeight ? fullLayout.height : gs.h;
-    legendObj._maxHeight = Math.max(maxheight > 1 ? maxheight : maxheight * heightToBeScaled, 30);
+    legendObj._maxHeight = Math.max(maxheight > 1 ? maxheight : maxheight * heightToBeScaled!, 30);
 
     let toggleRectWidth = 0;
     legendObj._width = 0;
@@ -810,7 +810,7 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
         const isLeftOfPlotArea = legendObj.x < 0 || (legendObj.x === 0 && xanchor === 'right');
         const isRightOfPlotArea = legendObj.x > 1 || (legendObj.x === 1 && xanchor === 'left');
         const isBeyondPlotAreaY = isAbovePlotArea || isBelowPlotArea;
-        const hw = fullLayout.width / 2;
+        const hw = fullLayout.width! / 2;
 
         // - if placed within x-margins, extend the width of the plot area
         // - else if below/above plot area and anchored in the margin, extend to opposite margin,
@@ -828,7 +828,7 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
             combinedItemWidth += w;
         });
 
-        toggleRectWidth = null;
+        toggleRectWidth = (null as any);
         let maxRowWidth = 0;
 
         if(isGrouped) {
@@ -968,9 +968,9 @@ function expandMargin(gd: GraphDiv, legendId: string, lx: number, ly: number): a
     const sideY = legendObj.y < 0.5 ? 'b' : 't';
     const sideX = legendObj.x < 0.5 ? 'l' : 'r';
     const possibleReservedMargins: any = {
-        r: (fullLayout.width - lx),
+        r: (fullLayout.width! - lx),
         l: lx + legendObj._width,
-        b: (fullLayout.height - ly),
+        b: (fullLayout.height! - ly),
         t: ly + legendObj._effHeight
     };
 

@@ -7,7 +7,7 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
     const trace = cd[0].trace;
     const isFunnel = (trace.type === 'funnel');
     const isHorizontal = (trace.orientation === 'h');
-    const selection = [];
+    const selection: any[] = [];
     let i;
 
     if(selectionTester === false) {

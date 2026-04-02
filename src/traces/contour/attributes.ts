@@ -186,7 +186,7 @@ export default extendFlat(
             },
             operation: {
                 valType: 'enumerated',
-                values: [].concat(COMPARISON_OPS2).concat(INTERVAL_OPS),
+                values: [].concat((COMPARISON_OPS2 as any)).concat((INTERVAL_OPS as any)),
                 dflt: '=',
                 editType: 'calc',
                 description: [

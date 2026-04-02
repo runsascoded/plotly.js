@@ -81,7 +81,7 @@ function drawOne(gd: GraphDiv, index: any) {
             opacity = gd._fullLayout.activeselection.opacity;
         }
 
-        const allPaths = [];
+        const allPaths: any[] = [];
         for(let sensory = 1; sensory >= 0; sensory--) {
             const path = selectionLayer.append('path')
                 .attr(attrs)
@@ -118,13 +118,13 @@ function drawOne(gd: GraphDiv, index: any) {
                 path.style('pointer-events', sensory ? 'all' : 'none');
             }
 
-            allPaths[sensory] = path;
+            allPaths[sensory] = (path as any);
         }
 
         const forePath = allPaths[0];
         const backPath = allPaths[1];
 
-        backPath.node().addEventListener('click', function() { return activateSelection(gd, forePath); });
+        (backPath as any).node().addEventListener('click', function() { return activateSelection(gd, forePath); });
     }
 }
 

@@ -44,17 +44,17 @@ function dirSign(a: number, b: number): number {
 }
 
 function getXY(di: any, xa: any, ya: any, isHorizontal: boolean): number[][] {
-    const s = [];
-    const p = [];
+    const s: any[] = [];
+    const p: any[] = [];
 
     const sAxis = isHorizontal ? xa : ya;
     const pAxis = isHorizontal ? ya : xa;
 
-    s[0] = sAxis.c2p(di.s0, true);
-    p[0] = pAxis.c2p(di.p0, true);
+    s[0] = (sAxis.c2p(di.s0, true) as any);
+    p[0] = (pAxis.c2p(di.p0, true) as any);
 
-    s[1] = sAxis.c2p(di.s1, true);
-    p[1] = pAxis.c2p(di.p1, true);
+    s[1] = (sAxis.c2p(di.s1, true) as any);
+    p[1] = (pAxis.c2p(di.p1, true) as any);
 
     return isHorizontal ? [s, p] : [p, s];
 }
@@ -211,12 +211,12 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
 
                 // if it's not in danger of disappearing entirely,
                 // round more precisely
-                return Math.abs(v - vc) >= 2
+                return Math.abs(v - vc!) >= 2
                     ? roundWithLine(v)
                     : // but if it's very thin, expand it so it's
                       // necessarily visible, even if it might overlap
                       // its neighbor
-                      v > vc
+                      v > vc!
                       ? Math.ceil(v)
                       : Math.floor(v);
             }
@@ -517,7 +517,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         // lastly, clip points groups of `cliponaxis !== false` traces
         // on `plotinfo._hasClipOnAxisFalse === true` subplots
         const hasClipOnAxisFalse = trace.cliponaxis === false;
-        setClipUrl(plotGroup, hasClipOnAxisFalse ? null : plotinfo.layerClipId, gd);
+        setClipUrl(plotGroup, (hasClipOnAxisFalse ? null : plotinfo.layerClipId as any), gd);
     });
 
     // error bars are on the top
@@ -1098,7 +1098,7 @@ function calcTextinfo(cd: any[], index: number, xa: any, ya: any): string {
     const cdi = cd[index];
 
     const parts = textinfo.split('+');
-    const text = [];
+    const text: any[] = [];
     let tx;
 
     const hasFlag = function (flag) {

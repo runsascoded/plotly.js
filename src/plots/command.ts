@@ -268,7 +268,7 @@ function computeAnimateBindings(gd?: any, args?: any): any {
 }
 
 function computeLayoutBindings(gd?: any, args?: any): any {
-    const bindings = [];
+    const bindings: any[] = [];
 
     const astr = args[0];
     let aobj: any = {};
@@ -289,7 +289,7 @@ function computeLayoutBindings(gd?: any, args?: any): any {
 
 function computeDataBindings(gd?: any, args?: any): any {
     let traces, astr, val, aobj;
-    const bindings = [];
+    const bindings: any[] = [];
 
     // Logic copied from Plotly.restyle:
     astr = args[0];

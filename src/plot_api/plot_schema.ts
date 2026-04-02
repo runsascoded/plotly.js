@@ -90,14 +90,14 @@ export const isValObject = function(obj?: any): boolean {
 };
 
 export const findArrayAttributes = function(trace?: any): any {
-    const arrayAttributes = [];
-    let stack = [];
-    let isArrayStack = [];
+    const arrayAttributes: any[] = [];
+    let stack: any[] = [];
+    let isArrayStack: any[] = [];
     let baseContainer, baseAttrName;
 
     function callback(attr?: any, attrName?: any, attrs?: any, level?: any) {
-        stack = stack.slice(0, level).concat([attrName]);
-        isArrayStack = isArrayStack.slice(0, level).concat([attr && attr._isLinkedToArray]);
+        stack = stack.slice(0, level).concat([(attrName as any)]);
+        isArrayStack = isArrayStack.slice(0, level).concat([(attr && attr._isLinkedToArray as any)]);
 
         const splittableAttr = (
             attr &&

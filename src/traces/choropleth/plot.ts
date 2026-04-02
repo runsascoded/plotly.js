@@ -39,8 +39,8 @@ function calcGeoJSON(calcTrace, fullLayout) {
         geoUtils.extractTraceFeature(calcTrace) :
         getTopojsonFeatures(trace, geo.topojson);
 
-    let lonArray = [];
-    let latArray = [];
+    let lonArray: any[] = [];
+    let latArray: any[] = [];
 
     for(let i = 0; i < len; i++) {
         const calcPt = calcTrace[i];

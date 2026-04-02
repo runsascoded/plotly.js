@@ -92,8 +92,8 @@ function makeGridData(gd: GraphDiv) {
     const gs = fullLayout._size;
     const fullView = [
         0, 0,
-        fullLayout.width * plotGlPixelRatio,
-        fullLayout.height * plotGlPixelRatio
+        fullLayout.width! * plotGlPixelRatio,
+        fullLayout.height! * plotGlPixelRatio
     ];
     const lookup: any = {};
     let k;
@@ -162,7 +162,7 @@ function makeGridData(gd: GraphDiv) {
         }
     }
 
-    const gridBatches = [];
+    const gridBatches: any[] = [];
     for(k in lookup) {
         gridBatches.push(lookup[k]);
     }

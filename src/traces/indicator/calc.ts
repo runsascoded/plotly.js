@@ -1,7 +1,7 @@
 import type { FullTrace, GraphDiv } from '../../../types/core';
 
 function calc(gd: GraphDiv, trace: FullTrace) {
-    const cd = [];
+    const cd: any[] = [];
 
     const lastReading = trace.value;
     if(!(typeof trace._lastValue === 'number')) trace._lastValue = trace.value;
@@ -16,7 +16,7 @@ function calc(gd: GraphDiv, trace: FullTrace) {
 
         delta: lastReading - deltaRef,
         relativeDelta: (lastReading - deltaRef) / deltaRef,
-    };
+    } as any;
     return cd;
 }
 

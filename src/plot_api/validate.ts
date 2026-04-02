@@ -150,7 +150,7 @@ function crawl(objIn?: any, objOut?: any, schema?: any, list?: any, base?: any, 
             }
         } else if(nestedSchema.items && !isInfoArray && isArray(valIn)) {
             const _nestedSchema = items[Object.keys(items)[0]];
-            const indexList = [];
+            const indexList: any[] = [];
 
             let j, _p;
 

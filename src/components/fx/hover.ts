@@ -295,13 +295,13 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     if (spikedistance === -1) spikedistance = Infinity;
 
     // hoverData: the set of candidate points we've found to highlight
-    let hoverData = [];
+    let hoverData: any[] = [];
 
     // searchData: the data to search in. Mostly this is just a copy of
     // gd.calcdata, filtered to the subplot and overlays we're on
     // but if a point array is supplied it will be a mapping
     // of indicated curves
-    const searchData = [];
+    const searchData: any[] = [];
 
     // [x|y]valArray: the axis values of the hover event
     // mapped onto each of the currently selected overlaid subplots
@@ -544,7 +544,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                         for (let newPointNum = 0; newPointNum < newPoints.length; newPointNum++) {
                             newPoint = newPoints[newPointNum];
                             if (isNumeric(newPoint.x0) && isNumeric(newPoint.y0)) {
-                                hoverData.push(cleanPoint(newPoint, hovermode));
+                                hoverData.push((cleanPoint(newPoint, hovermode) as any));
                             }
                         }
                     }
@@ -558,7 +558,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             // traces like box & violin make multiple hover labels at once)
             if (hovermode === 'closest' && hoverData.length > closedataPreviousLength) {
                 hoverData.splice(0, closedataPreviousLength);
-                distance = hoverData[0].distance;
+                distance = (hoverData[0] as any).distance;
             }
 
             // Now if there is range to look in, find the points to draw the spikelines
@@ -588,7 +588,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                                 tmpPoint = fillSpikePoint(closestVPt);
                                 if (
                                     !spikePoints.vLinePoint ||
-                                    spikePoints.vLinePoint.spikeDistance > tmpPoint.spikeDistance
+                                    (spikePoints.vLinePoint as any).spikeDistance > tmpPoint.spikeDistance
                                 ) {
                                     spikePoints.vLinePoint = tmpPoint;
                                 }
@@ -604,7 +604,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
                                 tmpPoint = fillSpikePoint(closestHPt);
                                 if (
                                     !spikePoints.hLinePoint ||
-                                    spikePoints.hLinePoint.spikeDistance > tmpPoint.spikeDistance
+                                    (spikePoints.hLinePoint as any).spikeDistance > tmpPoint.spikeDistance
                                 ) {
                                     spikePoints.hLinePoint = tmpPoint;
                                 }
@@ -670,11 +670,11 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         // then add points in other subplots
 
         const hoverDataInSubplot = hoverData.filter(function (a) {
-            return firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id;
+            return firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id;
         });
 
         const hoverDataOutSubplot = hoverData.filter(function (a) {
-            return !(firstXaxis && firstXaxis._id === a.xa._id && firstYaxis && firstYaxis._id === a.ya._id);
+            return !(firstXaxis && firstXaxis._id === (a as any).xa._id && firstYaxis && firstYaxis._id === (a as any).ya._id);
         });
 
         hoverDataInSubplot.sort(distanceSort);
@@ -682,25 +682,25 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         hoverData = hoverDataInSubplot.concat(hoverDataOutSubplot);
 
         // move period positioned points and box/bar-like traces to the end of the list
-        hoverData = orderRangePoints(hoverData, hovermode);
+        hoverData = (orderRangePoints(hoverData, hovermode) as any);
     };
     sortHoverData();
 
     const axLetter = hovermode.charAt(0);
     const spikeOnWinning =
-        (axLetter === 'x' || axLetter === 'y') && hoverData[0] && cartesianScatterPoints[hoverData[0].trace.type];
+        (axLetter === 'x' || axLetter === 'y') && hoverData[0] && cartesianScatterPoints[(hoverData[0] as any).trace.type];
 
     // Now if it is not restricted by spikedistance option, set the points to draw the spikelines
     if (hasCartesian && spikedistance !== 0) {
         if (hoverData.length !== 0) {
             const tmpHPointData = hoverData.filter(function (point) {
-                return point.ya.showspikes;
+                return (point as any).ya.showspikes;
             });
             const tmpHPoint = selectClosestPoint(tmpHPointData, spikedistance, spikeOnWinning);
             spikePoints.hLinePoint = fillSpikePoint(tmpHPoint);
 
             const tmpVPointData = hoverData.filter(function (point) {
-                return point.xa.showspikes;
+                return (point as any).xa.showspikes;
             });
             const tmpVPoint = selectClosestPoint(tmpVPointData, spikedistance, spikeOnWinning);
             spikePoints.vLinePoint = fillSpikePoint(tmpVPoint);
@@ -726,14 +726,14 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
 
     if (
         helpers.isXYhover(_mode) &&
-        hoverData[0].length !== 0 &&
-        hoverData[0].trace.type !== 'splom' // TODO: add support for splom
+        (hoverData[0] as any).length !== 0 &&
+        (hoverData[0] as any).trace.type !== 'splom' // TODO: add support for splom
     ) {
         // pick winning point
         const winningPoint = hoverData[0];
         // discard other points
-        if (multipleHoverPoints[winningPoint.trace.type]) {
-            hoverData = hoverData.filter((d) => d.trace.index === winningPoint.trace.index);
+        if (multipleHoverPoints[(winningPoint as any).trace.type]) {
+            hoverData = hoverData.filter((d) => (d as any).trace.index === (winningPoint as any).trace.index);
         } else {
             hoverData = [winningPoint];
         }
@@ -745,7 +745,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         // in compare mode, select every point at position
         findHoverPoints(winX, winY);
 
-        const finalPoints = [];
+        const finalPoints: any[] = [];
         const seen: any = {};
         let id = 0;
         const insert = function (newHd) {
@@ -757,7 +757,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             } else {
                 const oldId = seen[key] - 1;
                 const oldHd = finalPoints[oldId];
-                if (oldId > 0 && Math.abs(newHd.distance) < Math.abs(oldHd.distance)) {
+                if (oldId > 0 && Math.abs(newHd.distance) < Math.abs((oldHd as any).distance)) {
                     // replace with closest
                     finalPoints[oldId] = newHd;
                 }
@@ -773,13 +773,13 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
         for (k = hoverData.length - 1; k > initLen - 1; k--) {
             insert(hoverData[k]);
         }
-        hoverData = finalPoints;
+        hoverData = (finalPoints as any);
         sortHoverData();
     }
 
     // lastly, emit custom hover/unhover events
     const oldhoverdata = gd._hoverdata;
-    const newhoverdata = [];
+    const newhoverdata: any[] = [];
 
     const gTop = getTopOffset(gd);
     const gLeft = getLeftOffset(gd);
@@ -787,21 +787,21 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
     // pull out just the data that's useful to
     // other people and send it to the event
     for (const pt of hoverData) {
-        const eventData = helpers.makeEventData(pt, pt.trace, pt.cd);
+        const eventData = helpers.makeEventData(pt, (pt as any).trace, (pt as any).cd);
 
-        if (pt.hovertemplate !== false) {
+        if ((pt as any).hovertemplate !== false) {
             let ht = false;
-            if (pt.cd[pt.index] && pt.cd[pt.index].ht) {
-                ht = pt.cd[pt.index].ht;
+            if ((pt as any).cd[(pt as any).index] && (pt as any).cd[(pt as any).index].ht) {
+                ht = (pt as any).cd[(pt as any).index].ht;
             }
-            pt.hovertemplate = ht || pt.trace.hovertemplate || false;
+            (pt as any).hovertemplate = ht || (pt as any).trace.hovertemplate || false;
         }
 
-        if (pt.xa && pt.ya) {
-            const _x0 = pt.x0 + pt.xa._offset;
-            const _x1 = pt.x1 + pt.xa._offset;
-            const _y0 = pt.y0 + pt.ya._offset;
-            const _y1 = pt.y1 + pt.ya._offset;
+        if ((pt as any).xa && (pt as any).ya) {
+            const _x0 = (pt as any).x0 + (pt as any).xa._offset;
+            const _x1 = (pt as any).x1 + (pt as any).xa._offset;
+            const _y0 = (pt as any).y0 + (pt as any).ya._offset;
+            const _y1 = (pt as any).y1 + (pt as any).ya._offset;
 
             const x0 = Math.min(_x0, _x1);
             const x1 = Math.max(_x0, _x1);
@@ -816,7 +816,7 @@ function _hover(gd: GraphDiv, evt: any, subplot: any, noHoverEvent: any, eventTa
             };
         }
 
-        pt.eventData = [eventData];
+        (pt as any).eventData = [eventData];
         newhoverdata.push(eventData);
     }
 
@@ -1161,7 +1161,7 @@ function createHoverText(hoverData: any[], opts: any): any {
             textClip.enter().append('clipPath').attr('id', clipId).append('path');
             textClip.exit().remove();
             textClip.select('path').attr('d', clipPath);
-            setClipUrl(ltext, clipPath ? clipId : null, gd);
+            setClipUrl(ltext, (clipPath ? clipId : null as any), gd);
         }
 
         label.attr('transform', strTranslate(lx, ly));
@@ -2361,9 +2361,9 @@ function plainText(s: any, len: any): string {
 function orderRangePoints(hoverData: any[], hovermode: any): any[] {
     const axLetter = hovermode.charAt(0);
 
-    const first = [];
-    const second = [];
-    const last = [];
+    const first: any[] = [];
+    const second: any[] = [];
+    const last: any[] = [];
 
     for (let i = 0; i < hoverData.length; i++) {
         const d = hoverData[i];

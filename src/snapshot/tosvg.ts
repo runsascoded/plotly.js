@@ -141,8 +141,8 @@ export default function toSVG(gd: GraphDiv, format?: string, scale?: number) {
     }
 
     if(format === 'svg' && scale) {
-        svg.attr('width', scale * width);
-        svg.attr('height', scale * height);
+        svg.attr('width', scale * width!);
+        svg.attr('height', scale * height!);
         svg.attr('viewBox', '0 0 ' + width + ' ' + height);
     }
 

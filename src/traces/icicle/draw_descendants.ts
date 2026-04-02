@@ -88,7 +88,7 @@ export default function drawDescendants(gd: GraphDiv, cd: any[], entry: any, sli
                     x1: pt.x1,
                     y0: pt.y0,
                     y1: pt.y1
-                };
+                } as any;
             }
         });
     }

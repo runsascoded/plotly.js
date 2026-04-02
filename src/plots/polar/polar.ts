@@ -1455,7 +1455,7 @@ proto.updateAngularDrag = function(fullLayout) {
     // I don't what we should do in this case, skip we now
     if(_this.vangles && !Lib.isFullCircle(_this.sectorInRad)) {
         dragOpts.prepFn = Lib.noop;
-        setCursor(select(angularDrag), null);
+        setCursor(select(angularDrag), null!);
     }
 
     dragElement.init(dragOpts);

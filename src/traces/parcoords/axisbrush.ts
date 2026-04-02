@@ -443,7 +443,7 @@ function dedupeRealRanges(intervals) {
     // Fuses elements of intervals if they overlap, yielding discontiguous intervals, results.length <= intervals.length
     // Currently uses closed intervals, ie. dedupeRealRanges([[400, 800], [300, 400]]) -> [300, 800]
     const queue = intervals.slice();
-    let result = [];
+    let result: any[] = [];
     let currentInterval;
     let current = queue.shift();
     while(current) { // [].shift === undefined, so we don't descend into an empty array
@@ -466,7 +466,7 @@ function dedupeRealRanges(intervals) {
 }
 
 function makeFilter() {
-    let filter = [];
+    let filter: any[] = [];
     let consolidated;
     let bounds;
     return {
@@ -479,7 +479,7 @@ function makeFilter() {
             if(filter.length === 1 &&
                 filter[0][0] === -Infinity &&
                 filter[0][1] === Infinity) {
-                filter = [[0, -1]];
+                filter = ([[0, -1]] as any);
             }
 
             consolidated = dedupeRealRanges(filter);

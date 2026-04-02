@@ -41,9 +41,9 @@ export const attributes = {
     operation: {
         valType: 'enumerated',
         values: []
-            .concat(COMPARISON_OPS)
-            .concat(INTERVAL_OPS)
-            .concat(SET_OPS),
+            .concat((COMPARISON_OPS as any))
+            .concat((INTERVAL_OPS as any))
+            .concat((SET_OPS as any)),
         dflt: '=',
         editType: 'calc',
         description: [
@@ -204,7 +204,7 @@ export const calcTransform = function(gd, trace, opts) {
 
     // loop through filter array, fill trace arrays if passed
     for(let i = 0; i < len; i++) {
-        const passed = filterFunc(targetArray[i]);
+        const passed = filterFunc!(targetArray[i]);
         if(passed) {
             forAllAttrs(fillFn, i);
             indexToPoints[index++] = originalPointsAccessor(i);

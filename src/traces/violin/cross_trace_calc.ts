@@ -11,7 +11,7 @@ export default function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     for(let i = 0; i < orientations.length; i++) {
         const orientation = orientations[i];
         const posAxis = orientation === 'h' ? ya : xa;
-        const violinList = [];
+        const violinList: any[] = [];
 
         for(let j = 0; j < calcdata.length; j++) {
             const cd = calcdata[j];

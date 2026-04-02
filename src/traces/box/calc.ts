@@ -11,7 +11,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     const fullLayout = gd._fullLayout;
     const xa = Axes.getFromId(gd, trace.xaxis || 'x');
     const ya = Axes.getFromId(gd, trace.yaxis || 'y');
-    const cd = [];
+    const cd: any[] = [];
 
     // N.B. violin reuses same Box.calc
     const numKey = trace.type === 'violin' ? '_numViolins' : '_numBoxes';
@@ -274,7 +274,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace): any[] {
     calcSelection(cd, trace);
 
     if(cd.length > 0) {
-        cd[0].t = {
+        (cd[0] as any).t = {
             num: fullLayout[numKey],
             dPos: dPos,
             posLetter: posLetter,

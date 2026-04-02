@@ -68,7 +68,7 @@ function newShapes(outlines: any, dragOptions: any) {
     const editHelpers = dragOptions.editHelpers;
     const modifyItem = (editHelpers || {}).modifyItem;
 
-    const allShapes = [];
+    const allShapes: any[] = [];
     for(let q = 0; q < shapes.length; q++) {
         const beforeEdit = gd._fullLayout.shapes[q];
         allShapes[q] = beforeEdit._input;

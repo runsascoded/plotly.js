@@ -46,7 +46,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
             slices.enter().append('g').classed('slice', true);
             slices.exit().remove();
 
-            const quadrants = [
+            const quadrants: any[][][] = [
                 [[], []], // y<0: x<0, x>=0
                 [[], []] // y>=0: x<0, x>=0
             ];
@@ -62,7 +62,7 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                 pt.pointNumber = pt.i;
                 pt.curveNumber = trace.index;
 
-                quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push(pt);
+                quadrants[pt.pxmid[1] < 0 ? 0 : 1][pt.pxmid[0] < 0 ? 0 : 1].push((pt as any));
 
                 let cx = cd0.cx;
                 let cy = cd0.cy;
@@ -174,8 +174,8 @@ function plot(gd: GraphDiv, cdModule: any[]): any {
                     const font = Lib.ensureUniformFontSize(
                         gd,
                         textPosition === 'outside'
-                            ? determineOutsideTextFont(trace, pt, fullLayout.font)
-                            : determineInsideTextFont(trace, pt, fullLayout.font)
+                            ? determineOutsideTextFont(trace, pt, (fullLayout.font as any))
+                            : determineInsideTextFont(trace, pt, (fullLayout.font as any))
                     );
 
                     sliceText
@@ -424,7 +424,7 @@ function attachFxHandlers(sliceTop: any, gd: GraphDiv, cd: any[]): any {
             const hoverCenterX = cx + pt.pxmid[0] * (1 - rInscribed);
             const hoverCenterY = cy + pt.pxmid[1] * (1 - rInscribed);
             const separators = fullLayout2.separators;
-            const text = [];
+            const text: any[] = [];
 
             if (hoverinfo && hoverinfo.indexOf('label') !== -1) text.push(pt.label);
             pt.text = helpers.castOption(trace2.hovertext || trace2.text, pt.pts);
@@ -700,7 +700,7 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
     const isRadial = orientation === 'radial';
     const isAuto = orientation === 'auto';
 
-    const allTransforms = [];
+    const allTransforms: any[] = [];
     let newT;
 
     if (!isAuto) {
@@ -777,7 +777,7 @@ function transformInsideText(textBB: any, pt: any, cd0: any): any {
     let id = 0;
     let maxScale = 0;
     for (let k = 0; k < allTransforms.length; k++) {
-        const s = allTransforms[k].scale;
+        const s = (allTransforms[k] as any).scale;
         if (maxScale < s) {
             maxScale = s;
             id = k;
@@ -1075,7 +1075,7 @@ function scootLabels(quadrants: any[][], trace: FullTrace): any {
 }
 
 function layoutAreas(cdModule: any[], plotSize: LayoutSize): void {
-    const scaleGroups = [];
+    const scaleGroups: any[] = [];
 
     // figure out the center and maximum radius
     for (let i = 0; i < cdModule.length; i++) {

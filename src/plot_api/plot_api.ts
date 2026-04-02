@@ -631,7 +631,7 @@ function newPlot(gd?: any, data?: any, layout?: any, config?: any): any {
  */
 function positivifyIndices(indices?: any, maxIndex?: any): any {
     const parentLength = maxIndex + 1;
-    const positiveIndices = [];
+    const positiveIndices: any[] = [];
     let i;
     let index;
 
@@ -819,7 +819,7 @@ function assertExtendTracesArgs(gd?: any, update?: any, indices?: any, maxPoints
  */
 function getExtendProperties(gd?: any, update?: any, indices?: any, maxPoints?: any): any {
     const maxPointsIsObject = isPlainObject(maxPoints);
-    const updateProps = [];
+    const updateProps: any[] = [];
     let trace, target, prop, insert, maxp;
 
     // allow scalar index to represent a single trace position
@@ -1066,7 +1066,7 @@ function prependTraces(gd?: any, update?: any, indices?: any, maxPoints?: any): 
 function addTraces(gd?: any, traces?: any, newIndices?: any): any {
     gd = getGraphDiv(gd);
 
-    const currentIndices = [];
+    const currentIndices: any[] = [];
     const undoFunc = deleteTraces;
     const redoFunc = addTraces;
     const undoArgs = [gd, currentIndices];
@@ -1140,7 +1140,7 @@ function addTraces(gd?: any, traces?: any, newIndices?: any): any {
 function deleteTraces(gd?: any, indices?: any): any {
     gd = getGraphDiv(gd);
 
-    const traces = [];
+    const traces: any[] = [];
     const undoFunc = addTraces;
     const redoFunc = deleteTraces;
     const undoArgs = [gd, traces, indices];
@@ -1206,8 +1206,8 @@ function deleteTraces(gd?: any, indices?: any): any {
 function moveTraces(gd?: any, currentIndices?: any, newIndices?: any): any {
     gd = getGraphDiv(gd);
 
-    const newData = [];
-    const movingTraceMap = [];
+    const newData: any[] = [];
+    const movingTraceMap: any[] = [];
     const undoFunc = moveTraces;
     const redoFunc = moveTraces;
     const undoArgs = [gd, newIndices, currentIndices];
@@ -1258,7 +1258,7 @@ function moveTraces(gd?: any, currentIndices?: any, newIndices?: any): any {
 
     // now, add the moving traces back in, in order!
     for (i = 0; i < movingTraceMap.length; i += 1) {
-        newData.splice(movingTraceMap[i].newIndex, 0, movingTraceMap[i].trace);
+        newData.splice((movingTraceMap[i] as any).newIndex, 0, (movingTraceMap[i] as any).trace);
     }
 
     gd.data = newData;
@@ -1326,7 +1326,7 @@ function restyle(gd?: any, astr?: any, val?: any, _traces?: any): any {
     if (flags.clearAxisTypes) helpers.clearAxisTypes(gd, traces, {});
 
     // fill in redraw sequence
-    const seq = [];
+    const seq: any[] = [];
 
     if (flags.fullReplot) {
         seq.push(_doPlot);
@@ -1874,7 +1874,7 @@ function addAxRangeSequence(seq?: any, rangesAltered?: any): void {
     // executed after drawData
     const drawAxes = rangesAltered
         ? function (gd?: any) {
-              const axIds = [];
+              const axIds: any[] = [];
               const skipTitle = true;
 
               for (const id in rangesAltered) {
@@ -2319,7 +2319,7 @@ function update(gd?: any, traceUpdate?: any, layoutUpdate?: any, _traces?: any):
     if (restyleFlags.clearAxisTypes) helpers.clearAxisTypes(gd, traces, layoutUpdate);
 
     // fill in redraw sequence
-    const seq = [];
+    const seq: any[] = [];
 
     if (relayoutFlags.layoutReplot) {
         // N.B. works fine when both
@@ -2484,7 +2484,7 @@ function valsMatch(v1?: any, v2?: any): boolean {
 function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLayout?: any): any {
     const layoutPreGUI = oldFullLayout._preGUI;
     let key, revAttr, oldRev, newRev, match, preGUIVal, newNP, newVal, head, tail;
-    const bothInheritAutorange = [];
+    const bothInheritAutorange: any[] = [];
     const newAutorangeIn: any = {};
     const newRangeAccepted: any = {};
     for (key in layoutPreGUI) {
@@ -2595,7 +2595,7 @@ function applyUIRevisions(data?: any, layout?: any, oldFullData?: any, oldFullLa
                 } else {
                     oldRev = fullInput.uirevision;
                     // inheritance for trace.uirevision is simple, just layout.uirevision
-                    newRev = newTrace.uirevision;
+                    newRev = (newTrace as any)!.uirevision;
                     if (newRev === undefined) newRev = layout.uirevision;
                 }
 
@@ -2739,7 +2739,7 @@ function react(gd?: any, data?: any, layout?: any, config?: any): void {
             // must be handled by the user when using Plotly.react.
 
             // fill in redraw sequence
-            const seq = [];
+            const seq: any[] = [];
 
             if (frames) {
                 gd._transitionData = {};
@@ -3014,7 +3014,7 @@ function getDiffFlags(oldContainer?: any, newContainer?: any, outerparts?: any, 
             if (canBeDataArray && wasArray) flags.calc = true;
             else changed();
         } else if (valObject._isLinkedToArray) {
-            const arrayEditIndices = [];
+            const arrayEditIndices: any[] = [];
             let extraIndices = false;
             if (!inArray) flags.arrays[key] = arrayEditIndices;
 
@@ -3441,7 +3441,7 @@ function animate(gd?: any, frameOrGroupNameOrFrameList?: any, animationOpts?: an
             }
 
             if (idx > 0 && idx < frameList.length - 1) {
-                const filteredFrameList = [];
+                const filteredFrameList: any[] = [];
                 for (i = 0; i < frameList.length; i++) {
                     frame = frameList[i];
                     if (frameList[i].type !== 'byname' || i > idx) {
@@ -3514,7 +3514,7 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
     // already-exisisting indices:
     const bigIndex = _frames.length + frameList.length * 2;
 
-    const insertions = [];
+    const insertions: any[] = [];
     const _frameHashLocal: any = {};
     for (i = frameList.length - 1; i >= 0; i--) {
         if (!isPlainObject(frameList[i])) continue;
@@ -3569,12 +3569,12 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
         return 0;
     });
 
-    const ops = [];
-    const revops = [];
+    const ops: any[] = [];
+    const revops: any[] = [];
     let frameCount = _frames.length;
 
     for (i = insertions.length - 1; i >= 0; i--) {
-        frame = insertions[i].frame;
+        frame = (insertions[i] as any).frame;
 
         if (typeof frame.name === 'number') {
             warn(
@@ -3598,7 +3598,7 @@ function addFrames(gd?: any, frameList?: any, indices?: any): any {
             revops.unshift({ type: 'replace', index: j, value: _frames[j] });
         } else {
             // Otherwise insert it at the end of the list:
-            idx = Math.max(0, Math.min(insertions[i].index, frameCount));
+            idx = Math.max(0, Math.min((insertions[i] as any).index, frameCount));
 
             ops.push({ type: 'insert', index: idx, value: frame });
             revops.unshift({ type: 'delete', index: idx });
@@ -3634,8 +3634,8 @@ function deleteFrames(gd?: any, frameList?: any): any {
 
     let i, idx;
     const _frames = gd._transitionData._frames;
-    const ops = [];
-    const revops = [];
+    const ops: any[] = [];
+    const revops: any[] = [];
 
     if (!frameList) {
         frameList = [];

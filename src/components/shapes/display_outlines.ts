@@ -173,11 +173,11 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
         if(!polygons[indexI]) return;
         if(!polygons[indexI].length) return;
 
-        const newPolygon = [];
+        const newPolygon: any[] = [];
         for(let j = 0; j < polygons[indexI].length; j++) {
             if(j !== indexJ) {
                 newPolygon.push(
-                    polygons[indexI][j]
+                    (polygons[indexI][j] as any)
                 );
             }
         }
@@ -186,7 +186,7 @@ export default function displayOutlines(polygons: any, outlines: any, dragOption
             newPolygon.length === 2 && newPolygon[1][0] === 'Z')
         ) {
             if(indexJ === 0) {
-                newPolygon[0][0] = 'M';
+                newPolygon[0][0] = ('M' as any);
             }
 
             polygons[indexI] = newPolygon;
@@ -386,7 +386,7 @@ function eraseActiveSelection(gd: GraphDiv) {
     const id = gd._fullLayout._activeSelectionIndex;
     const selections = (gd.layout || {}).selections || [];
     if(id < selections.length) {
-        const list = [];
+        const list: any[] = [];
         for(let q = 0; q < selections.length; q++) {
             if(q !== id) {
                 list.push(selections[q]);

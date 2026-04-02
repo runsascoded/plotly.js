@@ -23,7 +23,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     const shape = opts.shape;
     const linear = shape === 'linear';
     const fill = trace.fill && trace.fill !== 'none';
-    const segments = [];
+    const segments: any[] = [];
     const minTolerance = constants.minTolerance;
     const len = d.length;
     const pts = new Array(len);
@@ -185,7 +185,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
     // for line shapes hv and vh, movement in the two dimensions is decoupled,
     // so all we need to do is constrain each dimension independently
     function getHVEdgeIntersections(pt1, pt2) {
-        const out = [];
+        const out: any[] = [];
         const ptInt1 = onlyConstrainedPoint(pt1);
         const ptInt2 = onlyConstrainedPoint(pt2);
         if(ptInt1 && ptInt2 && sameEdge(ptInt1, ptInt2)) return out;
@@ -203,7 +203,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
             const ptInt1 = onlyConstrainedPoint(pt1);
             const ptInt2 = onlyConstrainedPoint(pt2);
 
-            const out = [];
+            const out: any[] = [];
             if(ptInt1 && ptInt2 && sameEdge(ptInt1, ptInt2)) return out;
 
             if(ptInt1) out.push(ptInt1);
@@ -453,17 +453,17 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
         // to get fills right - repeat what we did at the start
         if(lastFarPt) updateEdge([lastXEdge || lastFarPt[0], lastYEdge || lastFarPt[1]]);
 
-        segments.push(pts.slice(0, pti));
+        segments.push((pts.slice(0, pti) as any));
     }
 
     const lastShapeChar = shape.slice(shape.length - 1);
     if(backoff && lastShapeChar !== 'h' && lastShapeChar !== 'v') {
         let trimmed = false;
         let n = -1;
-        const newSegments = [];
+        const newSegments: any[] = [];
 
         for(let j = 0; j < segments.length; j++) {
-            for(let k = 0; k < segments[j].length - 1; k++) {
+            for(let k = 0; k < (segments[j] as any).length - 1; k++) {
                 const start = segments[j][k];
                 const end = segments[j][k + 1];
 
@@ -478,7 +478,7 @@ export default function linePoints(d: CalcDatum[], opts: any): any[][] {
                     n++;
                     newSegments[n] = [
                         start, [xy[0], xy[1]]
-                    ];
+                    ] as any;
                 }
             }
         }

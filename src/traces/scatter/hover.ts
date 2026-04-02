@@ -144,7 +144,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // back to the existing relatively simple code, accepting some small inaccuracies
         // of label positioning for curved/jagged edges.
         let i;
-        const polygonsIn = [];
+        const polygonsIn: any[] = [];
         let xmin = Infinity;
         let xmax = -Infinity;
         let ymin = Infinity;
@@ -183,7 +183,7 @@ export default function hoverPoints(pointData: any, xval: number, yval: number, 
         // whole trace, if it's disjoint.
         let j, pts, xAtYPos, x0, x1, y0, y1;
         for(i = 0; i < polygonsIn.length; i++) {
-            pts = polygonsIn[i].pts;
+            pts = (polygonsIn[i] as any).pts;
             for(j = 1; j < pts.length; j++) {
                 y0 = pts[j - 1][1];
                 y1 = pts[j][1];

@@ -108,12 +108,12 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                     if(jpx1 === jpx0 || isNaN(jpx1) || isNaN(jpx0) || !readPixel(i, j)) continue;
                     c = trace._scaler(readPixel(i, j));
                     if(c) {
-                        context.fillStyle = colormodel + '(' + fmt(c).join(',') + ')';
+                        context!.fillStyle = colormodel + '(' + fmt(c).join(',') + ')';
                     } else {
                         // Return a transparent pixel
-                        context.fillStyle = 'rgba(0,0,0,0)';
+                        context!.fillStyle = 'rgba(0,0,0,0)';
                     }
-                    context.fillRect(ipx0, jpx0, ipx1 - ipx0, jpx1 - jpx0);
+                    context!.fillRect(ipx0, jpx0, ipx1 - ipx0, jpx1 - jpx0);
                 }
             }
 
@@ -171,7 +171,7 @@ export default function plot(gd: GraphDiv, plotinfo: any, cdimage: any[], imageL
                     trace._image = trace._image || new Image();
                     const image = trace._image;
                     image.onload = function() {
-                        context.drawImage(image, 0, 0);
+                        context!.drawImage(image, 0, 0);
                         trace._canvas = {
                             el: canvas,
                             source: trace.source

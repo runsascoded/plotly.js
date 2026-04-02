@@ -62,7 +62,7 @@ function lsInner(gd: GraphDiv): any {
     })
     .selectAll('.main-svg')
     .call(setSize, fullLayout.width, fullLayout.height);
-    gd._context.setBackground(gd, fullLayout.paper_bgcolor);
+    gd._context.setBackground(gd, (fullLayout.paper_bgcolor as any));
 
     drawMainTitle(gd);
     Registry.getComponentMethod('modebar', 'manage')(gd);
@@ -111,9 +111,9 @@ function lsInner(gd: GraphDiv): any {
 
     // figure out which backgrounds we need to draw,
     // and in which layers to put them
-    const lowerBackgroundIDs = [];
-    const backgroundIds = [];
-    const lowerDomains = [];
+    const lowerBackgroundIDs: any[] = [];
+    const backgroundIds: any[] = [];
+    const lowerDomains: any[] = [];
     // no need to draw background when paper and plot color are the same color,
     // activate mode just for large splom (which benefit the most from this
     // optimization), but this could apply to all cartesian subplots.
@@ -626,7 +626,7 @@ function getMainTitleDy(fullLayout?: any): any {
 
 export const doTraceStyle = function(gd: GraphDiv): any {
     const calcdata = gd.calcdata;
-    const editStyleCalls = [];
+    const editStyleCalls: any[] = [];
     let i;
 
     for(i = 0; i < calcdata.length; i++) {
@@ -649,7 +649,7 @@ export const doTraceStyle = function(gd: GraphDiv): any {
     if(editStyleCalls.length) {
         for(i = 0; i < editStyleCalls.length; i++) {
             const edit = editStyleCalls[i];
-            edit.fn(gd, edit.cd0);
+            (edit as any).fn(gd, (edit as any).cd0);
         }
         clearGlCanvases(gd);
         redrawReglTraces(gd);
@@ -668,7 +668,7 @@ export const doColorBars = function(gd: GraphDiv): any {
 
 export const layoutReplot = function(gd: GraphDiv): any {
     const layout = gd.layout;
-    gd.layout = undefined;
+    gd.layout = (undefined as any);
     return Registry.call('_doPlot', gd, '', layout);
 };
 
@@ -723,7 +723,7 @@ export const drawData = function(gd: GraphDiv): any {
     // loop over the base plot modules present on graph
     const basePlotModules = fullLayout._basePlotModules;
     for(let i = 0; i < basePlotModules.length; i++) {
-        basePlotModules[i].plot(gd);
+        basePlotModules[i].plot!(gd);
     }
 
     redrawReglTraces(gd);

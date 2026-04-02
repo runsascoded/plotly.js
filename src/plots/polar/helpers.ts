@@ -120,7 +120,7 @@ function makeRegularPolygon(r, vangles) {
 
 function makeClippedPolygon(r, a0, a1, vangles) {
     const len = vangles.length;
-    const vertices = [];
+    const vertices: any[] = [];
     let i, j;
 
     function a2xy(a) {
@@ -163,7 +163,7 @@ function makeClippedPolygon(r, a0, a1, vangles) {
     vertices.push(xyN);
 
     vertices.push([0, 0]);
-    vertices.push(vertices[0].slice());
+    vertices.push((vertices[0] as any).slice());
 
     return vertices;
 }

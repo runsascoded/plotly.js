@@ -213,7 +213,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
     const thisType = axOut.type;
     let i, idi;
 
-    let linkableAxes = [];
+    let linkableAxes: any[] = [];
     for(i = 0; i < axIds.length; i++) {
         idi = axIds[i];
         if(idi === thisID) continue;
@@ -226,7 +226,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
 
     const thisGroup = getConstraintGroup(constraintGroups, thisID);
     if(thisGroup) {
-        const linkableAxesNoLoops = [];
+        const linkableAxesNoLoops: any[] = [];
         for(i = 0; i < linkableAxes.length; i++) {
             idi = linkableAxes[i];
             if(!thisGroup[idi]) linkableAxesNoLoops.push(idi);
@@ -256,7 +256,7 @@ function handleOneAxDefaults(axIn?: any, axOut?: any, opts?: any): void {
         scaleanchor = Lib.coerce(axIn, axOut, {
             scaleanchor: {
                 valType: 'enumerated',
-                values: linkableAxes.concat([false])
+                values: linkableAxes.concat([(false as any)])
             }
         }, 'scaleanchor', scaleanchorDflt);
     }
@@ -382,13 +382,13 @@ function multiplyScales(a?: any, b?: any): any {
     let aLen, bLen;
 
     if(typeof a === 'string') {
-        aPrefix = a.match(/^[xy]*/)[0];
+        aPrefix = a.match(/^[xy]*/)![0];
         aLen = aPrefix.length;
         a = +a.slice(aLen);
     }
 
     if(typeof b === 'string') {
-        bPrefix = b.match(/^[xy]*/)[0];
+        bPrefix = b.match(/^[xy]*/)![0];
         bLen = bPrefix.length;
         b = +b.slice(bLen);
     }
@@ -424,7 +424,7 @@ function finalRatios(group?: any, fullLayout?: any): any {
         let val = group[key];
 
         if(typeof val === 'string') {
-            const prefix = val.match(/^[xy]*/)[0];
+            const prefix = val.match(/^[xy]*/)![0];
             const pLen = prefix.length;
             val = +val.slice(pLen);
             const mult = prefix.charAt(0) === 'y' ? yRatio : (1 / yRatio);

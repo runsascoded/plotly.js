@@ -80,7 +80,7 @@ function getExtraText(trace: FullTrace, pt, pointData, labels) {
     const hasLon = (parts.indexOf('lon') !== -1);
     const hasLat = (parts.indexOf('lat') !== -1);
     const hasText = (parts.indexOf('text') !== -1);
-    const text = [];
+    const text: any[] = [];
 
     function format(val) { return val + '\u00B0'; }
 

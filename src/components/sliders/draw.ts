@@ -96,7 +96,7 @@ function autoMarginId(sliderOpts: any) {
 // This really only just filters by visibility:
 function makeSliderData(fullLayout: FullLayout, gd: GraphDiv) {
     const contOpts = fullLayout[constants.name];
-    const sliderData = [];
+    const sliderData: any[] = [];
 
     for(let i = 0; i < contOpts.length; i++) {
         const item = contOpts[i];
@@ -468,8 +468,8 @@ function attachGripEvents(item: any, gd: GraphDiv, sliderGroup: any) {
 
         const grip = sliderGroup.select('.' + constants.gripRectClass);
 
-        event.stopPropagation();
-        event.preventDefault();
+        event!.stopPropagation();
+        event!.preventDefault();
         grip.call(Color.fill, sliderOpts.activebgcolor);
 
         const normalizedPosition = positionToNormalizedValue(sliderOpts, pointer(event, node)[0]);

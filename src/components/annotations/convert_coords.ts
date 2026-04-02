@@ -19,8 +19,8 @@ export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExt
         const currentVal = ann[attr];
         let newVal = null;
 
-        if(toLog) newVal = toLogRange(currentVal, ax.range);
-        else newVal = Math.pow(10, currentVal);
+        if(toLog) newVal = (toLogRange(currentVal, ax.range) as any);
+        else newVal = (Math.pow(10, currentVal) as any);
 
         // if conversion failed, delete the value so it gets a default value
         if(!isNumeric(newVal)) newVal = null;
@@ -28,8 +28,8 @@ export default function convertCoords(gd: GraphDiv, ax: any, newType: any, doExt
         doExtra(attrPrefix + attr, newVal);
     }
 
-    for(let i = 0; i < annotations.length; i++) {
-        ann = annotations[i];
+    for(let i = 0; i < annotations!.length; i++) {
+        ann = annotations![i];
         attrPrefix = 'annotations[' + i + '].';
 
         if(ann[axLetter + 'ref'] === ax._id) convert(axLetter);

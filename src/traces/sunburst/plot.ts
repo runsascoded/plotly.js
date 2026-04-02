@@ -549,7 +549,7 @@ export const formatSliceLabel = function (pt, entry, trace, cd, fullLayout) {
         const hasFlag = function (flag) {
             return parts.indexOf(flag) !== -1;
         };
-        const thisText = [];
+        const thisText: any[] = [];
         let tx;
 
         if (hasFlag('label') && cdi.label) {

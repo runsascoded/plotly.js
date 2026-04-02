@@ -41,8 +41,8 @@ function draw(gd: GraphDiv) {
         }
     }
 
-    for(let i = 0; i < fullLayout.shapes.length; i++) {
-        if(fullLayout.shapes[i].visible === true) {
+    for(let i = 0; i < fullLayout.shapes!.length; i++) {
+        if(fullLayout.shapes![i].visible === true) {
             drawOne(gd, i);
         }
     }
@@ -184,7 +184,7 @@ function setClipPath(shapePath: any, gd: GraphDiv, shapeOptions: any) {
 
     setClipUrl(
         shapePath,
-        clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null,
+        (clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null as any),
         gd
     );
 }
@@ -590,7 +590,7 @@ function setupDragElement(gd: GraphDiv, shapePath: any, shapeOptions: any, index
 
         setClipUrl(
             shapePath,
-            clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null,
+            (clipAxes ? 'clip' + gd._fullLayout._uid + clipAxes : null as any),
             gd
         );
     }
@@ -656,7 +656,7 @@ function eraseActiveShape(gd: GraphDiv) {
     const id = gd._fullLayout._activeShapeIndex;
     const shapes = (gd.layout || {}).shapes || [];
     if(id < shapes.length) {
-        const list = [];
+        const list: any[] = [];
         for(let q = 0; q < shapes.length; q++) {
             if(q !== id) {
                 list.push(shapes[q]);

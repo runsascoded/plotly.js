@@ -68,7 +68,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     const clusterEnabled = coerce('cluster.enabled', clusterEnabledDflt);
 
     if (clusterEnabled || subTypes.hasText(traceOut)) {
-        const layoutFontFamily = layout.font.family;
+        const layoutFontFamily = layout.font!.family;
 
         handleTextDefaults(traceIn, traceOut, layout, coerce, {
             noSelect: true,
@@ -78,10 +78,10 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
             noFontTextcase: true,
             font: {
                 family: isSupportedFont(layoutFontFamily) ? layoutFontFamily : 'Open Sans Regular',
-                weight: layout.font.weight,
-                style: layout.font.style,
-                size: layout.font.size,
-                color: layout.font.color
+                weight: layout.font!.weight,
+                style: layout.font!.style,
+                size: layout.font!.size,
+                color: layout.font!.color
             }
         });
     }

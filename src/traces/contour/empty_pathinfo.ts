@@ -9,7 +9,7 @@ export default function emptyPathinfo(contours,  plotinfo: PlotInfo,  cd0) {
         contours;
 
     const cs = contoursFinal.size;
-    const pathinfo = [];
+    const pathinfo: any[] = [];
     const end = endPlus(contoursFinal);
 
     const carpet = cd0.trace._carpetTrace;

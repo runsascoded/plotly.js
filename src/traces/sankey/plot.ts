@@ -182,7 +182,7 @@ export default function plot(gd: GraphDiv, calcData: any[]) {
         let obj = d.link.trace.link;
         if(obj.hoverinfo === 'none' || obj.hoverinfo === 'skip') return;
 
-        const hoverItems = [];
+        const hoverItems: any[] = [];
 
         function hoverCenterPosition(link) {
             let hoverCenterX, hoverCenterY;

@@ -46,7 +46,7 @@ function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace, defaultColor: 
         handleTextDefaults(traceIn, traceOut, layout, coerce);
     }
 
-    const dfltHoverOn = [];
+    const dfltHoverOn: any[] = [];
 
     if (subTypes.hasMarkers(traceOut) || subTypes.hasText(traceOut)) {
         coerce('cliponaxis');

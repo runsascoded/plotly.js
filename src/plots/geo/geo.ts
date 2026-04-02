@@ -69,7 +69,7 @@ proto.plot = function(geoCalcData, fullLayout, promises, replot) {
     _this._fullLayout = fullLayout;
 
     const geoLayout = fullLayout[this.id];
-    let geoPromises = [];
+    let geoPromises: any[] = [];
 
     let needsTopojson = false;
     for(const k in constants.layerNameToAdjective) {
@@ -108,7 +108,7 @@ proto.plot = function(geoCalcData, fullLayout, promises, replot) {
         }
     }
 
-    geoPromises = geoPromises.concat(geoUtils.fetchTraceGeoData(geoCalcData));
+    geoPromises = geoPromises.concat((geoUtils.fetchTraceGeoData(geoCalcData) as any));
 
     promises.push(new Promise<void>(function(resolve, reject) {
         Promise.all(geoPromises).then(function() {
@@ -757,9 +757,9 @@ function makeGraticule(axisName, geoLayout, fullLayout) {
 
     for(let i = 0; i < len; i++) {
         const v = vals[i].x;
-        const line = coords[i] = [];
+        const line = coords[i] = [] as any[];
         for(let l = oppRng[0]; l < oppRng[1] + precision; l += precision) {
-            line.push(coordFn(v, l));
+            line.push((coordFn(v, l) as any));
         }
     }
 

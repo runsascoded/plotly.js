@@ -55,7 +55,7 @@ export const applyContainerArrayChanges = function applyContainerArrayChanges(gd
     // true after we extend this to restyle
     const componentArrayFull = _nestedProperty(fullLayout, componentType).get();
 
-    const deletes = [];
+    const deletes: any[] = [];
     let firstIndexChange = -1;
     let maxIndex = componentArray.length;
     let i;

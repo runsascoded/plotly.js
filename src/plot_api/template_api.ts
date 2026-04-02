@@ -253,7 +253,7 @@ export const validateTemplate = function(figureIn?: any, template?: any): any {
     if(!isPlainObject(template)) template = layout.template || {};
     const layoutTemplate = template.layout;
     const dataTemplate = template.data;
-    const errorList = [];
+    const errorList: any[] = [];
 
     figure.layout = layout;
     figure.layout.template = template;
@@ -267,7 +267,7 @@ export const validateTemplate = function(figureIn?: any, template?: any): any {
         for(const key in obj) {
             if(key.charAt(0) !== '_' && isPlainObject(obj[key])) {
                 const baseKey = getBaseKey(key);
-                const nextPaths = [];
+                const nextPaths: any[] = [];
                 let i;
                 for(i = 0; i < paths.length; i++) {
                     nextPaths.push(getNextPath(obj, key, paths[i]));

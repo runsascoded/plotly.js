@@ -8,9 +8,9 @@ export default function crossTraceCalc(gd: GraphDiv,  plotinfo: PlotInfo) {
     const calcdata = gd.calcdata;
     const xa = plotinfo.xaxis;
     const ya = plotinfo.yaxis;
-    const waterfalls = [];
-    const waterfallsVert = [];
-    const waterfallsHorz = [];
+    const waterfalls: any[] = [];
+    const waterfallsVert: any[] = [];
+    const waterfallsHorz: any[] = [];
     let cd, i;
 
     for(i = 0; i < fullData.length; i++) {

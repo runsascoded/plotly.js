@@ -22,8 +22,8 @@ function crossTraceCalc(gd: GraphDiv, plotinfo: PlotInfo): void {
     const fullLayout = gd._fullLayout;
     const fullTraces = gd._fullData;
     const calcTraces = gd.calcdata;
-    const calcTracesHorz = [];
-    const calcTracesVert = [];
+    const calcTracesHorz: any[] = [];
+    const calcTracesVert: any[] = [];
 
     for(let i = 0; i < fullTraces.length; i++) {
         const fullTrace = fullTraces[i];
@@ -504,7 +504,7 @@ function updatePositionAxis(pa: FullAxis, sieve: any, allowMinDtick?: boolean): 
         const calcTrace = calcTraces[i];
         const calcTrace0 = calcTrace[0];
         const fullTrace = calcTrace0.trace;
-        const pts = [];
+        const pts: any[] = [];
         let bar, l, r, j;
 
         for(j = 0; j < calcTrace.length; j++) {
@@ -547,7 +547,7 @@ function setBaseAndTop(sa: FullAxis, sieve: any): void {
         const fullTrace = calcTrace[0].trace;
         const isScatter = fullTrace.type === 'scatter';
         const isVertical = fullTrace.orientation === 'v';
-        const pts = [];
+        const pts: any[] = [];
         let tozero = false;
 
         for(let j = 0; j < calcTrace.length; j++) {
@@ -608,7 +608,7 @@ function stackBars(sa: FullAxis, sieve: any, opts: any): void {
 
         offsetIndex = fullTrace.type === 'barpolar' ? 0 : calcTrace[0].t.offsetindex;
 
-        const pts = [];
+        const pts: any[] = [];
 
         for(j = 0; j < calcTrace.length; j++) {
             bar = calcTrace[j];
@@ -721,7 +721,7 @@ function normalizeBars(sa: FullAxis, sieve: any, opts: any): void {
         const calcTrace = calcTraces[i];
         const offsetIndex = calcTrace[0].t.offsetindex;
         const fullTrace = calcTrace[0].trace;
-        const pts = [];
+        const pts: any[] = [];
         let tozero = false;
         let padded = false;
 

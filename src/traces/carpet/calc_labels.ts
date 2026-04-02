@@ -4,7 +4,7 @@ import { extendFlat } from '../../lib/extend.js';
 export default function calcLabels(trace, axis) {
     let i, tobj, prefix, suffix, gridline;
 
-    const labels = axis._labels = [];
+    const labels = axis._labels = [] as any[];
     const gridlines = axis._gridlines;
 
     for(i = 0; i < gridlines.length; i++) {

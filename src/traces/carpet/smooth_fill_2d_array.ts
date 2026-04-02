@@ -2,8 +2,8 @@ import Lib from '../../lib/index.js';
 
 export default function smoothFill2dArray(data, a, b) {
     let i, j, k;
-    const ip = [];
-    const jp = [];
+    const ip: any[] = [];
+    const jp: any[] = [];
     // const neighborCnts = [];
 
     const ni = data[0].length;

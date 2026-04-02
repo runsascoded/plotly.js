@@ -1,6 +1,6 @@
 export default function makeClipPath(xctrl, yctrl, aax, bax) {
     let i, x, y;
-    const segments = [];
+    const segments: any[] = [];
 
     const asmoothing = !!aax.smoothing;
     const bsmoothing = !!bax.smoothing;

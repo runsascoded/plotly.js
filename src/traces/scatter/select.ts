@@ -5,7 +5,7 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
     const cd: CalcDatum[] = searchInfo.cd;
     const xa: FullAxis = searchInfo.xaxis;
     const ya: FullAxis = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
     const trace = cd[0].trace;
     let i;
     let di;

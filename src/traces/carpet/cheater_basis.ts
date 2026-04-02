@@ -3,7 +3,7 @@ const { isArrayOrTypedArray } = _index;
 
 export default function(a, b, cheaterslope) {
     let i, j, ascal, bscal, aval, bval;
-    const data = [];
+    const data: any[] = [];
 
     const na = isArrayOrTypedArray(a) ? a.length : a;
     const nb = isArrayOrTypedArray(b) ? b.length : b;
@@ -26,14 +26,14 @@ export default function(a, b, cheaterslope) {
     let xmin = Infinity;
     let xmax = -Infinity;
     for(j = 0; j < nb; j++) {
-        data[j] = [];
+        data[j] = ([] as any);
         bval = bdata ? (bdata[j] - bdata[0]) * bscal : j / (nb - 1);
         for(i = 0; i < na; i++) {
             aval = adata ? (adata[i] - adata[0]) * ascal : i / (na - 1);
             xval = aval - bval * cheaterslope;
             xmin = Math.min(xval, xmin);
             xmax = Math.max(xval, xmax);
-            data[j][i] = xval;
+            data[j][i] = (xval as any);
         }
     }
 
@@ -45,7 +45,7 @@ export default function(a, b, cheaterslope) {
     const offset = -xmin * slope;
     for(j = 0; j < nb; j++) {
         for(i = 0; i < na; i++) {
-            data[j][i] = slope * data[j][i] + offset;
+            data[j][i] = (slope * data[j][i] + offset as any);
         }
     }
 

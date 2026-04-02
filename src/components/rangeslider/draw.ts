@@ -514,7 +514,7 @@ function drawRangePlot(rangeSlider: any, gd: GraphDiv, axisOpts: any, opts: any)
 }
 
 function filterRangePlotCalcData(calcData: any, subplotId: any) {
-    const out = [];
+    const out: any[] = [];
 
     for(let i = 0; i < calcData.length; i++) {
         const calcTrace = calcData[i];

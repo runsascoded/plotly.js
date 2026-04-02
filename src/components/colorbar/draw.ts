@@ -65,7 +65,7 @@ function draw(gd: GraphDiv) {
 function makeColorBarData(gd: GraphDiv) {
     const fullLayout = gd._fullLayout;
     const calcdata = gd.calcdata;
-    const out = [];
+    const out: any[] = [];
 
     // single out item
     let opts;
@@ -224,8 +224,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
     // x positioning: do it initially just for left anchor,
     // then fix at the end (since we don't know the width yet)
     const uPx = Math.round(isVertical ?
-        optsX * posW + xpad :
-        optsY * posH + ypad
+        optsX * posW! + xpad :
+        optsY * posH! + ypad
     );
 
     const xRatio = {center: 0.5, right: 1}[xanchor] || 0;
@@ -242,8 +242,8 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
         optsX - xRatio * lenFrac;
 
     const vPx = Math.round(isVertical ?
-        posH * (1 - vFrac) :
-        posW * vFrac
+        posH! * (1 - vFrac) :
+        posW! * vFrac
     );
 
     // stash a few things for makeEditable
@@ -356,18 +356,18 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
             let x, y;
 
             if(titleSide === 'top') {
-                x = xpad + gs.l + posW * optsX;
-                y = ypad + gs.t + posH * (1 - vFrac - lenFrac) + 3 + titleFontSize * 0.75;
+                x = xpad + gs.l + posW! * optsX;
+                y = ypad + gs.t + posH! * (1 - vFrac - lenFrac) + 3 + titleFontSize * 0.75;
             }
 
             if(titleSide === 'bottom') {
-                x = xpad + gs.l + posW * optsX;
-                y = ypad + gs.t + posH * (1 - vFrac) - 3 - titleFontSize * 0.25;
+                x = xpad + gs.l + posW! * optsX;
+                y = ypad + gs.t + posH! * (1 - vFrac) - 3 - titleFontSize * 0.25;
             }
 
             if(titleSide === 'right') {
-                y = ypad + gs.t + posH * optsY + 3 + titleFontSize * 0.75;
-                x = xpad + gs.l + posW * vFrac;
+                y = ypad + gs.t + posH! * optsY + 3 + titleFontSize * 0.75;
+                x = xpad + gs.l + posW! * vFrac;
             }
 
             drawTitle(ax._id + 'title', {
@@ -387,14 +387,14 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
             if(titleSide === 'right') {
                 y = mid;
-                x = gs.l + posW * pos + 10 + titleFontSize * (
+                x = gs.l + posW! * pos + 10 + titleFontSize * (
                     ax.showticklabels ? 1 : 0.5
                 );
             } else {
                 x = mid;
 
                 if(titleSide === 'bottom') {
-                    y = gs.t + posH * pos + 10 + (
+                    y = gs.t + posH! * pos + 10 + (
                         ticklabelposition.indexOf('inside') === -1 ?
                             ax.tickfont.size :
                             0
@@ -407,7 +407,7 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
                 if(titleSide === 'top') {
                     const nlines = title.text.split('<br>').length;
-                    y = gs.t + posH * pos + 10 - thickPx - LINE_SPACING * titleFontSize * nlines;
+                    y = gs.t + posH! * pos + 10 - thickPx - LINE_SPACING * titleFontSize * nlines;
                 }
             }
 
@@ -821,9 +821,9 @@ function drawColorBar(g: any, opts: any, gd: GraphDiv) {
 
         gd._fullLayout._reservedMargin[opts._id] = {};
         const possibleReservedMargins: any = {
-            r: (fullLayout.width - lx - xShift),
+            r: (fullLayout.width! - lx - xShift),
             l: lx + marginOpts.r,
-            b: (fullLayout.height - ly - yShift),
+            b: (fullLayout.height! - ly - yShift),
             t: ly + marginOpts.b
         };
 
@@ -899,8 +899,8 @@ function makeEditable(g: any, opts: any, gd: GraphDiv) {
 
 function calcLevels(gd: GraphDiv, opts: any, zrange: any) {
     const levelsIn = opts._levels;
-    const lineLevels = [];
-    let fillLevels = [];
+    const lineLevels: any[] = [];
+    let fillLevels: any[] = [];
     let l;
     let i;
 

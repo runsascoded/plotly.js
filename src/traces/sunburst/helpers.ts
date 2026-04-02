@@ -63,7 +63,7 @@ export const setSliceCursor = function(sliceTop, gd, opts) {
             (opts.hideOnLeaves && isLeaf(pt))
         );
     }
-    setCursor(sliceTop, hide ? null : 'pointer');
+    setCursor(sliceTop, (hide ? null : 'pointer' as any));
 };
 
 function determineOutsideTextFont(trace, pt, layoutFont) {

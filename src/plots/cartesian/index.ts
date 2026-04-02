@@ -145,7 +145,7 @@ export const plot = function(gd: GraphDiv, traces?: any, transitionOpts?: any, m
             }
 
             // Get all calcdata (traces) for this subplot:
-            const cdSubplot = [];
+            const cdSubplot: any[] = [];
             let pcd;
 
             // For each trace
@@ -198,8 +198,8 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     const modules = fullLayout._modules;
     let _module, cdModuleAndOthers, cdModule;
 
-    const layerData = [];
-    const zoomScaleQueryParts = [];
+    const layerData: any[] = [];
+    const zoomScaleQueryParts: any[] = [];
 
     // Plot each zorder group in ascending order
     for(let z = 0; z < zindices.length; z++) {
@@ -241,8 +241,8 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
     // Sort the layers primarily by zindex, then by i
     layerData.sort(function(a, b) {
         return (
-            (a.zindex || 0) - (b.zindex || 0) ||
-            (a.i - b.i)
+            ((a as any).zindex || 0) - ((b as any).zindex || 0) ||
+            ((a as any).i - (b as any).i)
         );
     });
 
@@ -269,7 +269,7 @@ function plotOne(gd: GraphDiv, plotinfo: PlotInfo, cdSubplot?: any, transitionOp
 
         // layers that allow `cliponaxis: false`
         if(constants.clipOnAxisFalseQuery.indexOf('.' + className) === -1) {
-            setClipUrl(sel, plotinfo.layerClipId, gd);
+            setClipUrl(sel, (plotinfo.layerClipId as any), gd);
         }
     });
 
@@ -394,16 +394,16 @@ export const drawFramework = function(gd: GraphDiv): any {
     const initialSubplotData = makeSubplotData(gd);
 
     const len = initialSubplotData.length;
-    let subplotData = [];
+    let subplotData: any[] = [];
     for(i = 0; i < len; i++) {
-        subplotData[i] = initialSubplotData[i].slice();
+        subplotData[i] = (initialSubplotData[i].slice() as any);
     }
 
     for(let z = 1; z < zindices.length; z++) {
-        const newSubplotData = [];
+        const newSubplotData: any[] = [];
         for(i = 0; i < len; i++) {
-            newSubplotData[i] = initialSubplotData[i].slice();
-            newSubplotData[i][0] += zindexSeparator + (z + 1);
+            newSubplotData[i] = (initialSubplotData[i].slice() as any);
+            newSubplotData[i][0] += (zindexSeparator + (z + 1) as any);
         }
         subplotData = subplotData.concat(newSubplotData);
     }
@@ -467,8 +467,8 @@ function makeSubplotData(gd?: any): any {
     let i, j, id, plotinfo, xa, ya;
 
     // split 'regular' and 'overlaying' subplots
-    const regulars = [];
-    const overlays = [];
+    const regulars: any[] = [];
+    const overlays: any[] = [];
 
     for(i = 0; i < len; i++) {
         id = ids[i];
@@ -502,7 +502,7 @@ function makeSubplotData(gd?: any): any {
 
     // put 'regular' subplot data before 'overlaying'
     const subplotIds = regulars.concat(overlays);
-    const subplotData = [];
+    const subplotData: any[] = [];
 
     for(i = 0; i < len; i++) {
         id = subplotIds[i];
@@ -510,7 +510,7 @@ function makeSubplotData(gd?: any): any {
         xa = plotinfo.xaxis;
         ya = plotinfo.yaxis;
 
-        let d = [];
+        let d: any[] = [];
 
         for(let z = 1; z <= numZ; z++) {
             let zStr = '';
@@ -529,7 +529,7 @@ function makeSubplotData(gd?: any): any {
             ya.layer,
             xa.overlaying || '',
             ya.overlaying || ''
-        ]);
+        ] as any);
 
         subplotData.push(d);
     }

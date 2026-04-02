@@ -6,7 +6,7 @@ const { mod } = _mod;
 import constants from '../constants/numerical.js';
 import Registry from '../registry.js';
 import { utcFormat } from 'd3-time-format';
-const BADNUM: number = constants.BADNUM;
+const BADNUM: number = (constants.BADNUM as any);
 const ONEDAY: number = constants.ONEDAY;
 const ONEHOUR: number = constants.ONEHOUR;
 const ONEMIN: number = constants.ONEMIN;

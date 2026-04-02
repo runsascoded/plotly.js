@@ -28,8 +28,8 @@ function draw(gd: GraphDiv) {
 
     fullLayout._infolayer.selectAll('.annotation').remove();
 
-    for(let i = 0; i < fullLayout.annotations.length; i++) {
-        if(fullLayout.annotations[i].visible) {
+    for(let i = 0; i < fullLayout.annotations!.length; i++) {
+        if(fullLayout.annotations![i].visible) {
             drawOne(gd, i);
         }
     }
@@ -44,7 +44,7 @@ function draw(gd: GraphDiv) {
  */
 function drawOne(gd: GraphDiv, index: any) {
     const fullLayout = gd._fullLayout;
-    const options = fullLayout.annotations[index] || {};
+    const options = fullLayout.annotations![index] || {};
     const xa = Axes.getFromId(gd, options.xref);
     const ya = Axes.getFromId(gd, options.yref);
 
@@ -335,12 +335,12 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 if(axLetter === 'x') {
                     alignPosition = options[axLetter];
                     basePx = axRefTypeEqDomain ?
-                        ax._offset + ax._length * alignPosition :
+                        ax!._offset + ax!._length * alignPosition :
                         basePx = gs.l + gs.w * alignPosition;
                 } else {
                     alignPosition = 1 - options[axLetter];
                     basePx = axRefTypeEqDomain ?
-                        ax._offset + ax._length * alignPosition :
+                        ax!._offset + ax!._length * alignPosition :
                         basePx = gs.t + gs.h * alignPosition;
                 }
                 autoAlignFraction = options.showarrow ? 0.5 : alignPosition;
@@ -367,7 +367,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                         if(axLetter === 'y') {
                             arrowLength = 1 - arrowLength;
                         }
-                        posPx.tail = ax._offset + ax._length * arrowLength;
+                        posPx.tail = ax!._offset + ax!._length * arrowLength;
                     } else if(tailRefType === 'paper') {
                         if(axLetter === 'y') {
                             arrowLength = 1 - arrowLength;
@@ -377,7 +377,7 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                         }
                     } else {
                         // assumed tailRef is range or paper referenced
-                        posPx.tail = ax._offset + ax.r2p(arrowLength);
+                        posPx.tail = ax!._offset + ax!.r2p(arrowLength);
                     }
                     // tail is range- or domain-referenced: autorange pads the
                     // text in px from the tail
@@ -394,11 +394,11 @@ function drawRaw(gd: GraphDiv, options: any, index: any, subplotId: any, xa: Ful
                 // partially visible
                 const maxPx = fullLayout[(axLetter === 'x') ? 'width' : 'height'];
                 if(axRef === 'paper') {
-                    posPx.head = Lib.constrain(posPx.head, 1, maxPx - 1);
+                    posPx.head = Lib.constrain(posPx.head, 1, maxPx! - 1);
                 }
                 if(tailRef === 'pixel') {
                     const shiftPlus = -Math.max(posPx.tail - 3, posPx.text);
-                    const shiftMinus = Math.min(posPx.tail + 3, posPx.text) - maxPx;
+                    const shiftMinus = Math.min(posPx.tail + 3, posPx.text) - maxPx!;
                     if(shiftPlus > 0) {
                         posPx.tail += shiftPlus;
                         posPx.text += shiftPlus;

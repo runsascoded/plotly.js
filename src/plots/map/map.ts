@@ -128,13 +128,13 @@ proto.createMap = function(calcData, fullLayout, resolve, reject) {
         self.initFx(calcData, fullLayout);
     }
 
-    let promises = [];
+    let promises: any[] = [];
 
     promises.push(new Promise(function(resolve) {
         map.once('load', resolve);
     }));
 
-    promises = promises.concat(geoUtils.fetchTraceGeoData(calcData));
+    promises = promises.concat((geoUtils.fetchTraceGeoData(calcData) as any));
 
     Promise.all(promises).then(function() {
         self.fillBelowLookup(calcData, fullLayout);
@@ -151,7 +151,7 @@ proto.updateMap = function(calcData, fullLayout, resolve, reject) {
 
     self.rejectOnError(reject);
 
-    let promises = [];
+    let promises: any[] = [];
     const styleObj = getStyleObj(opts.style);
 
     if(JSON.stringify(self.styleObj) !== JSON.stringify(styleObj)) {
@@ -167,7 +167,7 @@ proto.updateMap = function(calcData, fullLayout, resolve, reject) {
         }));
     }
 
-    promises = promises.concat(geoUtils.fetchTraceGeoData(calcData));
+    promises = promises.concat((geoUtils.fetchTraceGeoData(calcData) as any));
 
     Promise.all(promises).then(function() {
         self.fillBelowLookup(calcData, fullLayout);

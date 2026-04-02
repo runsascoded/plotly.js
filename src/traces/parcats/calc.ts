@@ -110,7 +110,7 @@ export default function calc(gd: GraphDiv, trace: FullTrace) {
 
     for(valueInd = 0; valueInd < numValues; valueInd++) {
         // Category inds for this input value across dimensions
-        const categoryIndsPath = [];
+        const categoryIndsPath: any[] = [];
         for(d = 0; d < categoryIndsDims.length; d++) {
             categoryIndsPath.push(categoryIndsDims[d][valueInd]);
         }
@@ -389,7 +389,7 @@ function getUniqueInfo(values, uniqueValues) {
     // Initialize Variables
     const uniqueValueCounts: any = {};
     const uniqueValueInds: any = {};
-    const inds = [];
+    const inds: any[] = [];
 
     // Initialize uniqueValueCounts and
     uniqueValues.forEach(function(uniqueVal, valInd) {

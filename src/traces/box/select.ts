@@ -4,7 +4,7 @@ export default function selectPoints(searchInfo: any, selectionTester: any): any
     const cd = searchInfo.cd;
     const xa = searchInfo.xaxis;
     const ya = searchInfo.yaxis;
-    const selection = [];
+    const selection: any[] = [];
     let i, j;
 
     if(selectionTester === false) {

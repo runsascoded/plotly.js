@@ -49,40 +49,40 @@ proto.handlePick = function(selection) {
 };
 
 function parseColorArray(colors) {
-    const b = [];
+    const b: any[] = [];
     const len = colors.length;
     for(let i = 0; i < len; i++) {
-        b[i] = str2RgbaArray(colors[i]);
+        b[i] = (str2RgbaArray(colors[i]) as any);
     }
     return b;
 }
 
 // Unpack position data
 function toDataCoords(axis, coord, scale, calendar) {
-    const b = [];
+    const b: any[] = [];
     const len = coord.length;
     for(let i = 0; i < len; i++) {
-        b[i] = axis.d2l(coord[i], 0, calendar) * scale;
+        b[i] = (axis.d2l(coord[i], 0, calendar) * scale as any);
     }
     return b;
 }
 
 // Round indices if passed as floats
 function toRoundIndex(a) {
-    const b = [];
+    const b: any[] = [];
     const len = a.length;
     for(let i = 0; i < len; i++) {
-        b[i] = Math.round(a[i]);
+        b[i] = (Math.round(a[i]) as any);
     }
     return b;
 }
 
 function delaunayCells(delaunayaxis, positions) {
     const d = ['x', 'y', 'z'].indexOf(delaunayaxis);
-    const b = [];
+    const b: any[] = [];
     const len = positions.length;
     for(let i = 0; i < len; i++) {
-        b[i] = [positions[i][(d + 1) % 3], positions[i][(d + 2) % 3]];
+        b[i] = ([positions[i][(d + 1) % 3], positions[i][(d + 2) % 3]] as any);
     }
     return triangulate(b);
 }

@@ -96,7 +96,7 @@ export default function supplyDefaults(traceIn: InputTrace, traceOut: FullTrace,
     // make default font size 10px (default is 12),
     // scale linearly with global font size
     const fontDflt = Lib.extendFlat({}, layout.font, {
-        size: Math.round(layout.font.size / 1.2)
+        size: Math.round(layout.font!.size! / 1.2)
     });
 
     Lib.coerceFont(coerce, 'labelfont', fontDflt);

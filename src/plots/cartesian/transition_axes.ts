@@ -47,20 +47,20 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
         const ylen = ya._length;
         const editX = !!edit.xr1;
         const editY = !!edit.yr1;
-        const viewBox = [];
+        const viewBox: any[] = [];
 
         if(editX) {
             const xr0 = simpleMap(edit.xr0, xa.r2l);
             const xr1 = simpleMap(edit.xr1, xa.r2l);
             const dx0 = xr0[1] - xr0[0];
             const dx1 = xr1[1] - xr1[0];
-            viewBox[0] = (xr0[0] * (1 - progress) + progress * xr1[0] - xr0[0]) / (xr0[1] - xr0[0]) * xlen;
-            viewBox[2] = xlen * ((1 - progress) + progress * dx1 / dx0);
+            viewBox[0] = ((xr0[0] * (1 - progress) + progress * xr1[0] - xr0[0]) / (xr0[1] - xr0[0]) * xlen as any);
+            viewBox[2] = (xlen * ((1 - progress) + progress * dx1 / dx0) as any);
             xa.range[0] = xa.l2r(xr0[0] * (1 - progress) + progress * xr1[0]);
             xa.range[1] = xa.l2r(xr0[1] * (1 - progress) + progress * xr1[1]);
         } else {
-            viewBox[0] = 0;
-            viewBox[2] = xlen;
+            viewBox[0] = (0 as any);
+            viewBox[2] = (xlen as any);
         }
 
         if(editY) {
@@ -68,13 +68,13 @@ export default function transitionAxes(gd?: any, edits?: any, transitionOpts?: a
             const yr1 = simpleMap(edit.yr1, ya.r2l);
             const dy0 = yr0[1] - yr0[0];
             const dy1 = yr1[1] - yr1[0];
-            viewBox[1] = (yr0[1] * (1 - progress) + progress * yr1[1] - yr0[1]) / (yr0[0] - yr0[1]) * ylen;
-            viewBox[3] = ylen * ((1 - progress) + progress * dy1 / dy0);
+            viewBox[1] = ((yr0[1] * (1 - progress) + progress * yr1[1] - yr0[1]) / (yr0[0] - yr0[1]) * ylen as any);
+            viewBox[3] = (ylen * ((1 - progress) + progress * dy1 / dy0) as any);
             ya.range[0] = xa.l2r(yr0[0] * (1 - progress) + progress * yr1[0]);
             ya.range[1] = ya.l2r(yr0[1] * (1 - progress) + progress * yr1[1]);
         } else {
-            viewBox[1] = 0;
-            viewBox[3] = ylen;
+            viewBox[1] = (0 as any);
+            viewBox[3] = (ylen as any);
         }
 
         Axes.drawOne(gd, xa, {skipTitle: true});

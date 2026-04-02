@@ -337,7 +337,7 @@ proto.render = function() {
 
     if(lastPicked !== null) {
         const pdata = project(scene.glplot.cameraParams, selection.dataCoordinate);
-        trace = lastPicked.data;
+        trace = (lastPicked as any).data;
         const traceNow = gd._fullData[trace.index];
         const ptNumber = selection.index;
 
@@ -356,11 +356,11 @@ proto.render = function() {
             if(hoverinfoParts.indexOf('y') === -1) labels.yLabel = undefined;
             if(hoverinfoParts.indexOf('z') === -1) labels.zLabel = undefined;
             if(hoverinfoParts.indexOf('text') === -1) selection.textLabel = undefined;
-            if(hoverinfoParts.indexOf('name') === -1) lastPicked.name = undefined;
+            if(hoverinfoParts.indexOf('name') === -1) (lastPicked as any).name = undefined;
         }
 
         let tx;
-        const vectorTx = [];
+        const vectorTx: any[] = [];
 
         if(trace.type === 'cone' || trace.type === 'streamtube') {
             labels.uLabel = formatter('x', selection.traceCoordinate[3], trace.uhoverformat);
@@ -431,8 +431,8 @@ proto.render = function() {
                 yLabel: labels.yLabel,
                 zLabel: labels.zLabel,
                 text: tx,
-                name: lastPicked.name,
-                color: Fx.castHoverOption(traceNow, ptNumber, 'bgcolor') || lastPicked.color,
+                name: (lastPicked as any).name,
+                color: Fx.castHoverOption(traceNow, ptNumber, 'bgcolor') || (lastPicked as any).color,
                 borderColor: Fx.castHoverOption(traceNow, ptNumber, 'bordercolor'),
                 fontFamily: Fx.castHoverOption(traceNow, ptNumber, 'font.family'),
                 fontSize: Fx.castHoverOption(traceNow, ptNumber, 'font.size'),
@@ -659,7 +659,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
 
     // Update ranges (needs to be called *after* objects are added due to updates)
     const sceneBounds = [[0, 0, 0], [0, 0, 0]];
-    const axisDataRange = [];
+    const axisDataRange: any[] = [];
     const axisTypeRatios: any = {};
 
     for(i = 0; i < 3; ++i) {
@@ -748,7 +748,7 @@ proto.plot = function(sceneData, fullLayout, layout) {
             sceneBounds[0][i] -= 1;
             sceneBounds[1][i] += 1;
         }
-        axisDataRange[i] = sceneBounds[1][i] - sceneBounds[0][i];
+        axisDataRange[i] = (sceneBounds[1][i] - sceneBounds[0][i] as any);
 
         axis.range = [
             sceneBounds[0][i],
@@ -1107,9 +1107,9 @@ proto.toImage = function(format) {
     canvas.width = w;
     canvas.height = h;
     const context = canvas.getContext('2d', {willReadFrequently: true});
-    const imageData = context.createImageData(w, h);
+    const imageData = context!.createImageData(w, h);
     imageData.data.set(pixels);
-    context.putImageData(imageData, 0, 0);
+    context!.putImageData(imageData, 0, 0);
 
     let dataURL;
 

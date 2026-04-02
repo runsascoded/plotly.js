@@ -188,7 +188,7 @@ export const calcTransform = function(gd, trace, opts) {
 
     const groupIndices: any = {};
     const indexToPoints: any = {};
-    const groupings = [];
+    const groupings: any[] = [];
 
     const originalPointsAccessor = pointsAccessorFunction(trace.transforms, opts);
 
@@ -204,7 +204,7 @@ export const calcTransform = function(gd, trace, opts) {
             groupings.push(newGrouping);
             indexToPoints[groupIndices[vi]] = originalPointsAccessor(i);
         } else {
-            groupings[groupIndex].push(i);
+            (groupings[groupIndex] as any).push(i);
             indexToPoints[groupIndices[vi]] = (indexToPoints[groupIndices[vi]] || []).concat(originalPointsAccessor(i));
         }
     }
@@ -239,7 +239,7 @@ function aggregateOneArray(gd, trace, groupings, aggregation) {
 
     const arrayOut = new Array(groupings.length);
     for(let i = 0; i < groupings.length; i++) {
-        arrayOut[i] = func(arrayIn, groupings[i]);
+        arrayOut[i] = func!(arrayIn, groupings[i]);
     }
     targetNP.set(arrayOut);
 
@@ -335,7 +335,7 @@ function getAggregateFunction(opts, conversions) {
 
         case 'median':
             return function(array, indices) {
-                const sortCalc = [];
+                const sortCalc: any[] = [];
                 for(let i = 0; i < indices.length; i++) {
                     const vi = d2c(array[indices[i]]);
                     if(vi !== BADNUM) sortCalc.push(vi);

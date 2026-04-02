@@ -205,10 +205,10 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 c[1] = Math.round(c[1]);
                 c[2] = Math.round(c[2]);
 
-                pixcount += pixsize;
-                rcount += c[0] * pixsize;
-                gcount += c[1] * pixsize;
-                bcount += c[2] * pixsize;
+                pixcount += pixsize!;
+                rcount += c[0] * pixsize!;
+                gcount += c[1] * pixsize!;
+                bcount += c[2] * pixsize!;
                 return c;
             }
             return [0, 0, 0, 0];
@@ -295,7 +295,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 }
             }
 
-            const imageData = context.createImageData(canvasW, canvasH);
+            const imageData = context!.createImageData(canvasW, canvasH);
             try {
                 imageData.data.set(pixels);
             } catch (e) {
@@ -306,7 +306,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                 }
             }
 
-            context.putImageData(imageData, 0, 0);
+            context!.putImageData(imageData, 0, 0);
         } else {
             // rawingMethod = "default" (zsmooth = false)
             // filling potentially large bricks works fastest with fillRect
@@ -333,9 +333,9 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
                     }
                     v = row[i];
                     c = setColor(v, (xb[1] - xb[0]) * (yb[1] - yb[0]));
-                    context.fillStyle = 'rgba(' + c.join(',') + ')';
+                    context!.fillStyle = 'rgba(' + c.join(',') + ')';
 
-                    context.fillRect(xb[0] + xGapLeft, yb[0] + yGapTop, xb[1] - xb[0] - xGap, yb[1] - yb[0] - yGap);
+                    context!.fillRect(xb[0] + xGapLeft, yb[0] + yGapTop, xb[1] - xb[0] - xGap, yb[1] - yb[0] - yGap);
                 }
             }
         }
@@ -387,7 +387,7 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
             const jStart = aContour ? 1 : 0;
             const jStop = aContour ? n - 1 : n;
 
-            const textData = [];
+            const textData: any[] = [];
             for (i = iStart; i < iStop; i++) {
                 let yVal;
                 if (aContour) {
@@ -486,13 +486,13 @@ export default function(gd, plotinfo, cdheatmaps, heatmapLayer) {
 
                 for (k = 0; k < textData.length; k++) {
                     const d = textData[k];
-                    maxL = Math.max(maxL, d.l);
-                    maxC = Math.max(maxC, d.c);
+                    maxL = Math.max(maxL, (d as any).l);
+                    maxC = Math.max(maxC, (d as any).c);
 
                     if (k < textData.length - 1) {
                         const nextD = textData[k + 1];
-                        const dx = Math.abs(nextD.x - d.x);
-                        const dy = Math.abs(nextD.y - d.y);
+                        const dx = Math.abs((nextD as any).x - (d as any).x);
+                        const dy = Math.abs((nextD as any).y - (d as any).y);
 
                         if (dx) minW = Math.min(minW, dx);
                         if (dy) minH = Math.min(minH, dy);

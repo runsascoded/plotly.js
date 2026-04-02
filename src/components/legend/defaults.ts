@@ -33,7 +33,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     const globalFont = layoutOut.font || {};
     const grouptitlefont = coerceFont(coerce, 'grouptitlefont', globalFont, {
         overrideDflt: {
-            size: Math.round(globalFont.size * 1.1)
+            size: Math.round(globalFont.size! * 1.1)
         }
     });
 

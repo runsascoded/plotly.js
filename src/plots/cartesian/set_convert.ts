@@ -341,7 +341,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             // [ [cnt, {$cat: index}], for 1,2 ]
             const seen: any = [[0, {}], [0, {}]];
             // [ [arrayIn[0][i], arrayIn[1][i]], for i .. N ]
-            const list = [];
+            const list: any[] = [];
 
             for(i = 0; i < traceIndices.length; i++) {
                 const trace = fullData[traceIndices[i]];
@@ -690,7 +690,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
     ax.locateBreaks = function(r0?: any, r1?: any) {
         let i, bnds, b0, b1;
 
-        const rangebreaksOut = [];
+        const rangebreaksOut: any[] = [];
         if(!ax.rangebreaks) return rangebreaksOut;
 
         const rangebreaksIn: any = ax.rangebreaks.slice().sort(function(a, b) {
@@ -798,7 +798,7 @@ export default function setConvert(ax?: any, fullLayout?: any): any {
             }
         }
 
-        rangebreaksOut.sort(function(a, b) { return a.min - b.min; });
+        rangebreaksOut.sort(function(a, b) { return (a as any).min - (b as any).min; });
 
         return rangebreaksOut;
     };

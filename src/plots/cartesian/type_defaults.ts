@@ -61,7 +61,7 @@ function setAutoType(ax?: any, data?: any): any {
     // if they're dates, numbers, or categories
     if(isBoxWithoutPositionCoords(d0, axLetter)) {
         const posLetter = getBoxPosLetter(d0);
-        const boxPositions = [];
+        const boxPositions: any[] = [];
 
         for(i = 0; i < data.length; i++) {
             const trace = data[i];

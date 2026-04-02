@@ -47,7 +47,7 @@ export const writePaths = function(polygons: any) {
 export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActiveShape?: any) {
     const cmd = parseSvgPath(str);
 
-    const polys = [];
+    const polys: any[] = [];
     let n = -1;
     const newPoly = function() {
         n++;
@@ -66,7 +66,7 @@ export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActi
 
     recStart();
     for(let i = 0; i < cmd.length; i++) {
-        const newPos = [];
+        const newPos: any[] = [];
 
         let x1, x2, y1, y2; // i.e. extra params for curves
 
@@ -197,8 +197,8 @@ export const readPaths = function(str: any, gd: GraphDiv, plotinfo?: any, isActi
                 newPos[j][k + 1] = _x;
                 newPos[j][k + 2] = _y;
             }
-            polys[n].push(
-                newPos[j].slice()
+            (polys[n] as any).push(
+                (newPos[j] as any).slice()
             );
         }
     }
@@ -286,7 +286,7 @@ export const handleEllipse = function(isEllipse: any, start: any, end: any) {
     if(!rx) rx = ry = ry / SQRT2;
     if(!ry) ry = rx = rx / SQRT2;
 
-    const cell = [];
+    const cell: any[] = [];
     for(let i = 0; i < CIRCLE_SIDES; i++) {
         const t = i * 2 * Math.PI / CIRCLE_SIDES;
         cell.push([

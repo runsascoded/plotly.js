@@ -61,7 +61,7 @@ function calculateErrors(data, scaleFactor, sceneLayout) {
         for(let j = 0; j < 3; j++) {
             if(errors[j]) {
                 for(let k = 0; k < 2; k++) {
-                    bound[k][j] = errors[j][i][k];
+                    bound[k][j] = errors[j]![i][k];
                 }
             }
         }
