@@ -6,7 +6,7 @@ import { interpolateNumber } from 'd3-interpolate';
 import Lib from '../../lib/index.js';
 import _alignment from '../../constants/alignment.js';
 const { MID_SHIFT } = _alignment;
-import { font, bBox as drawingBBox } from '../../components/drawing/index.js';
+import { font as drawingFont, bBox as drawingBBox } from '../../components/drawing/index.js';
 import cn from './constants.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -186,7 +186,7 @@ export default function plot(gd: any, cdModule: any, transitionOpts: any, makeOn
                 return isBullet ? anchor.right : anchor[trace.title.align];
             })
             .text(trace.title.text)
-            .call(font, trace.title.font)
+            .call(drawingFont, trace.title.font)
             .call(svgTextUtils.convertToTspans, gd);
 
         // Position title
@@ -597,7 +597,7 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
                 bignumberPrefix + bignumberFmt(cd[0].y) + bignumberSuffix :
                 '-';
             number.text(txt)
-                .call(font, trace.number.font)
+                .call(drawingFont, trace.number.font)
                 .call(svgTextUtils.convertToTspans, gd);
         }
 
@@ -651,7 +651,7 @@ function drawNumbers(gd: any, plotGroup: any, cd: any, opts: any) {
         }
         const delta = numbers.select('text.delta');
         delta
-            .call(font, trace.delta.font)
+            .call(drawingFont, trace.delta.font)
             .call(Color.fill, deltaFill({delta: trace._deltaLastValue}));
 
         function writeDelta() {
@@ -877,7 +877,7 @@ function measureText(txt: any, font: any, textAnchor: any, gd: any) {
       .attr('text-anchor', textAnchor)
       .attr('data-unformatted', txt)
       .call(svgTextUtils.convertToTspans, gd)
-      .call(font, font);
+      .call(drawingFont, font);
     return drawingBBox(sel.node());
 }
 
