@@ -1,0 +1,24 @@
+import isNumeric from 'fast-isnumeric';
+export default function makeBubbleSizeFn(trace, factor) {
+    if (!factor) {
+        factor = 2;
+    }
+    const marker = trace.marker;
+    const sizeRef = marker.sizeref || 1;
+    const sizeMin = marker.sizemin || 0;
+    // for bubble charts, allow scaling the provided value linearly
+    // and by area or diameter.
+    // Note this only applies to the array-value sizes
+    const baseFn = (marker.sizemode === 'area') ?
+        function (v) { return Math.sqrt(v / sizeRef); } :
+        function (v) { return v / sizeRef; };
+    // TODO add support for position/negative bubbles?
+    // TODO add 'sizeoffset' attribute?
+    return function (v) {
+        const baseSize = baseFn(v / factor);
+        // don't show non-numeric and negative sizes
+        return (isNumeric(baseSize) && (baseSize > 0)) ?
+            Math.max(baseSize, sizeMin) :
+            0;
+    };
+}

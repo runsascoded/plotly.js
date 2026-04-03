@@ -1,0 +1,11 @@
+import { pointStyle } from '../../components/drawing/index.js';
+import Color from '../../components/color/index.js';
+export default function fillOne(s, pt, trace, gd) {
+    const pattern = trace.marker.pattern;
+    if (pattern && pattern.shape) {
+        pointStyle(s, trace, gd, pt);
+    }
+    else {
+        Color.fill(s, pt.color);
+    }
+}

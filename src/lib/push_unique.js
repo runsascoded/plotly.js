@@ -1,0 +1,14 @@
+export default function pushUnique(array, item) {
+    if (item instanceof RegExp) {
+        const itemStr = item.toString();
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] instanceof RegExp && array[i].toString() === itemStr) {
+                return array;
+            }
+        }
+        array.push(item);
+    }
+    else if ((item || item === 0) && array.indexOf(item) === -1)
+        array.push(item);
+    return array;
+}

@@ -1,0 +1,66 @@
+const timerCache = {};
+export function throttle(id, minInterval, callback) {
+    let cache = timerCache[id];
+    const now = Date.now();
+    if (!cache) {
+        /*
+         * Throw out old items before making a new one, to prevent the cache
+         * getting overgrown, for example from old plots that have been replaced.
+         * 1 minute age is arbitrary.
+         */
+        for (const idi in timerCache) {
+            if (timerCache[idi].ts < now - 60000) {
+                delete timerCache[idi];
+            }
+        }
+        cache = timerCache[id] = { ts: 0, timer: null };
+    }
+    _clearTimeout(cache);
+    function exec() {
+        callback();
+        cache.ts = Date.now();
+        if (cache.onDone) {
+            cache.onDone();
+            cache.onDone = null;
+        }
+    }
+    if (now > cache.ts + minInterval) {
+        exec();
+        return;
+    }
+    cache.timer = setTimeout(function () {
+        exec();
+        cache.timer = null;
+    }, minInterval);
+}
+export function done(id) {
+    const cache = timerCache[id];
+    if (!cache || !cache.timer)
+        return Promise.resolve();
+    return new Promise(function (resolve) {
+        const previousOnDone = cache.onDone;
+        cache.onDone = function onDone() {
+            if (previousOnDone)
+                previousOnDone();
+            resolve();
+            cache.onDone = null;
+        };
+    });
+}
+export function clear(id) {
+    if (id) {
+        _clearTimeout(timerCache[id]);
+        delete timerCache[id];
+    }
+    else {
+        for (const idi in timerCache)
+            clear(idi);
+    }
+}
+function _clearTimeout(cache) {
+    if (cache && cache.timer !== null) {
+        clearTimeout(cache.timer);
+        cache.timer = null;
+    }
+}
+export default { throttle, done, clear };

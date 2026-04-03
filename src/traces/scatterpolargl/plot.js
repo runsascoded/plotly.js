@@ -1,0 +1,101 @@
+import cluster from '@plotly/point-cluster';
+import isNumeric from 'fast-isnumeric';
+import scatterglPlot from '../scattergl/plot.js';
+import sceneUpdate from '../scattergl/scene_update.js';
+import convert from '../scattergl/convert.js';
+import Lib from '../../lib/index.js';
+import _constants from '../scattergl/constants.js';
+const { TOO_MANY_POINTS } = _constants;
+const reglPrecompiled = {};
+export default function plot(gd, subplot, cdata) {
+    if (!cdata.length)
+        return;
+    const radialAxis = subplot.radialAxis;
+    const angularAxis = subplot.angularAxis;
+    const scene = sceneUpdate(gd, subplot);
+    cdata.forEach((cdscatter) => {
+        if (!cdscatter || !cdscatter[0] || !cdscatter[0].trace)
+            return;
+        const cd = cdscatter[0];
+        const trace = cd.trace;
+        const stash = cd.t;
+        const len = trace._length;
+        const rArray = stash.r;
+        const thetaArray = stash.theta;
+        const opts = stash.opts;
+        let i;
+        const subRArray = rArray.slice();
+        const subThetaArray = thetaArray.slice();
+        // filter out by range
+        for (i = 0; i < rArray.length; i++) {
+            if (!subplot.isPtInside({ r: rArray[i], theta: thetaArray[i] })) {
+                subRArray[i] = NaN;
+                subThetaArray[i] = NaN;
+            }
+        }
+        const positions = new Array(len * 2);
+        const x = Array(len);
+        const y = Array(len);
+        for (i = 0; i < len; i++) {
+            const r = subRArray[i];
+            let xx, yy;
+            if (isNumeric(r)) {
+                const rg = radialAxis.c2g(r);
+                const thetag = angularAxis.c2g(subThetaArray[i], trace.thetaunit);
+                xx = rg * Math.cos(thetag);
+                yy = rg * Math.sin(thetag);
+            }
+            else {
+                xx = yy = NaN;
+            }
+            x[i] = positions[i * 2] = xx;
+            y[i] = positions[i * 2 + 1] = yy;
+        }
+        stash.tree = cluster(positions);
+        // FIXME: see scattergl.js#109
+        if (opts.marker && len >= TOO_MANY_POINTS) {
+            opts.marker.cluster = stash.tree;
+        }
+        if (opts.marker) {
+            opts.markerSel.positions = opts.markerUnsel.positions = opts.marker.positions = positions;
+        }
+        if (opts.line && positions.length > 1) {
+            Lib.extendFlat(opts.line, convert.linePositions(gd, trace, positions));
+        }
+        if (opts.text) {
+            Lib.extendFlat(opts.text, { positions: positions }, convert.textPosition(gd, trace, opts.text, opts.marker));
+            Lib.extendFlat(opts.textSel, { positions: positions }, convert.textPosition(gd, trace, opts.text, opts.markerSel));
+            Lib.extendFlat(opts.textUnsel, { positions: positions }, convert.textPosition(gd, trace, opts.text, opts.markerUnsel));
+        }
+        if (opts.fill && !scene.fill2d)
+            scene.fill2d = true;
+        if (opts.marker && !scene.scatter2d)
+            scene.scatter2d = true;
+        if (opts.line && !scene.line2d)
+            scene.line2d = true;
+        if (opts.text && !scene.glText)
+            scene.glText = true;
+        scene.lineOptions.push(opts.line);
+        scene.fillOptions.push(opts.fill);
+        scene.markerOptions.push(opts.marker);
+        scene.markerSelectedOptions.push(opts.markerSel);
+        scene.markerUnselectedOptions.push(opts.markerUnsel);
+        scene.textOptions.push(opts.text);
+        scene.textSelectedOptions.push(opts.textSel);
+        scene.textUnselectedOptions.push(opts.textUnsel);
+        scene.selectBatch.push([]);
+        scene.unselectBatch.push([]);
+        stash.x = x;
+        stash.y = y;
+        stash.rawx = x;
+        stash.rawy = y;
+        stash.r = rArray;
+        stash.theta = thetaArray;
+        stash.positions = positions;
+        stash._scene = scene;
+        stash.index = scene.count;
+        scene.count++;
+    });
+    return scatterglPlot(gd, subplot, cdata);
+}
+export { reglPrecompiled };

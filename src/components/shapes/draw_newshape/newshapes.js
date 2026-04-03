@@ -1,0 +1,228 @@
+import axis_ids from '../../../plots/cartesian/axis_ids.js';
+import dragHelpers from '../../dragelement/helpers.js';
+import constants from './constants.js';
+import cartesianHelpers from '../../selections/helpers.js';
+import handleOutline from '.././handle_outline.js';
+import helpers from './helpers.js';
+const drawMode = dragHelpers.drawMode;
+const openMode = dragHelpers.openMode;
+const i000 = constants.i000;
+const i090 = constants.i090;
+const i180 = constants.i180;
+const i270 = constants.i270;
+const cos45 = constants.cos45;
+const sin45 = constants.sin45;
+const p2r = cartesianHelpers.p2r;
+const r2p = cartesianHelpers.r2p;
+const clearOutline = handleOutline.clearOutline;
+const readPaths = helpers.readPaths;
+const writePaths = helpers.writePaths;
+const ellipseOver = helpers.ellipseOver;
+const fixDatesForPaths = helpers.fixDatesForPaths;
+function newShapes(outlines, dragOptions) {
+    if (!outlines.length)
+        return;
+    const e = outlines[0][0]; // pick first
+    if (!e)
+        return;
+    const gd = dragOptions.gd;
+    const isActiveShape = dragOptions.isActiveShape;
+    let dragmode = dragOptions.dragmode;
+    const shapes = (gd.layout || {}).shapes || [];
+    if (!drawMode(dragmode) && isActiveShape !== undefined) {
+        const id = gd._fullLayout._activeShapeIndex;
+        if (id < shapes.length) {
+            switch (gd._fullLayout.shapes[id].type) {
+                case 'rect':
+                    dragmode = 'drawrect';
+                    break;
+                case 'circle':
+                    dragmode = 'drawcircle';
+                    break;
+                case 'line':
+                    dragmode = 'drawline';
+                    break;
+                case 'path':
+                    const path = shapes[id].path || '';
+                    if (path[path.length - 1] === 'Z') {
+                        dragmode = 'drawclosedpath';
+                    }
+                    else {
+                        dragmode = 'drawopenpath';
+                    }
+                    break;
+            }
+        }
+    }
+    const newShape = createShapeObj(outlines, dragOptions, dragmode);
+    clearOutline(gd);
+    const editHelpers = dragOptions.editHelpers;
+    const modifyItem = (editHelpers || {}).modifyItem;
+    const allShapes = [];
+    for (let q = 0; q < shapes.length; q++) {
+        const beforeEdit = gd._fullLayout.shapes[q];
+        allShapes[q] = beforeEdit._input;
+        if (isActiveShape !== undefined &&
+            q === gd._fullLayout._activeShapeIndex) {
+            const afterEdit = newShape;
+            switch (beforeEdit.type) {
+                case 'line':
+                case 'rect':
+                case 'circle':
+                    const xaxis = axis_ids.getFromId(gd, beforeEdit.xref);
+                    if (beforeEdit.xref.charAt(0) === 'x' && xaxis.type.includes('category')) {
+                        modifyItem('x0', afterEdit.x0 - (beforeEdit.x0shift || 0));
+                        modifyItem('x1', afterEdit.x1 - (beforeEdit.x1shift || 0));
+                    }
+                    else {
+                        modifyItem('x0', afterEdit.x0);
+                        modifyItem('x1', afterEdit.x1);
+                    }
+                    const yaxis = axis_ids.getFromId(gd, beforeEdit.yref);
+                    if (beforeEdit.yref.charAt(0) === 'y' && yaxis.type.includes('category')) {
+                        modifyItem('y0', afterEdit.y0 - (beforeEdit.y0shift || 0));
+                        modifyItem('y1', afterEdit.y1 - (beforeEdit.y1shift || 0));
+                    }
+                    else {
+                        modifyItem('y0', afterEdit.y0);
+                        modifyItem('y1', afterEdit.y1);
+                    }
+                    break;
+                case 'path':
+                    modifyItem('path', afterEdit.path);
+                    break;
+            }
+        }
+    }
+    if (isActiveShape === undefined) {
+        allShapes.push(newShape); // add new shape
+        return allShapes;
+    }
+    return editHelpers ? editHelpers.getUpdateObj() : {};
+}
+function createShapeObj(outlines, dragOptions, dragmode) {
+    const e = outlines[0][0]; // pick first outline
+    const gd = dragOptions.gd;
+    const d = e.getAttribute('d');
+    const newStyle = gd._fullLayout.newshape;
+    const plotinfo = dragOptions.plotinfo;
+    const isActiveShape = dragOptions.isActiveShape;
+    const xaxis = plotinfo.xaxis;
+    const yaxis = plotinfo.yaxis;
+    const xPaper = !!plotinfo.domain || !plotinfo.xaxis;
+    const yPaper = !!plotinfo.domain || !plotinfo.yaxis;
+    const isOpenMode = openMode(dragmode);
+    const polygons = readPaths(d, gd, plotinfo, isActiveShape);
+    const newShape = {
+        editable: true,
+        visible: newStyle.visible,
+        name: newStyle.name,
+        showlegend: newStyle.showlegend,
+        legend: newStyle.legend,
+        legendwidth: newStyle.legendwidth,
+        legendgroup: newStyle.legendgroup,
+        legendgrouptitle: {
+            text: newStyle.legendgrouptitle.text,
+            font: newStyle.legendgrouptitle.font
+        },
+        legendrank: newStyle.legendrank,
+        label: newStyle.label,
+        xref: xPaper ? 'paper' : xaxis._id,
+        yref: yPaper ? 'paper' : yaxis._id,
+        layer: newStyle.layer,
+        opacity: newStyle.opacity,
+        line: {
+            color: newStyle.line.color,
+            width: newStyle.line.width,
+            dash: newStyle.line.dash
+        }
+    };
+    if (!isOpenMode) {
+        newShape.fillcolor = newStyle.fillcolor;
+        newShape.fillrule = newStyle.fillrule;
+    }
+    let cell;
+    // line, rect and circle can be in one cell
+    // only define cell if there is single cell
+    if (polygons.length === 1)
+        cell = polygons[0];
+    if (cell &&
+        cell.length === 5 && // ensure we only have 4 corners for a rect
+        dragmode === 'drawrect') {
+        newShape.type = 'rect';
+        newShape.x0 = cell[0][1];
+        newShape.y0 = cell[0][2];
+        newShape.x1 = cell[2][1];
+        newShape.y1 = cell[2][2];
+    }
+    else if (cell &&
+        dragmode === 'drawline') {
+        newShape.type = 'line';
+        newShape.x0 = cell[0][1];
+        newShape.y0 = cell[0][2];
+        newShape.x1 = cell[1][1];
+        newShape.y1 = cell[1][2];
+    }
+    else if (cell &&
+        dragmode === 'drawcircle') {
+        newShape.type = 'circle'; // an ellipse!
+        let xA = cell[i000][1];
+        let xB = cell[i090][1];
+        let xC = cell[i180][1];
+        let xD = cell[i270][1];
+        let yA = cell[i000][2];
+        let yB = cell[i090][2];
+        let yC = cell[i180][2];
+        let yD = cell[i270][2];
+        const xDateOrLog = plotinfo.xaxis && (plotinfo.xaxis.type === 'date' ||
+            plotinfo.xaxis.type === 'log');
+        const yDateOrLog = plotinfo.yaxis && (plotinfo.yaxis.type === 'date' ||
+            plotinfo.yaxis.type === 'log');
+        if (xDateOrLog) {
+            xA = r2p(plotinfo.xaxis, xA);
+            xB = r2p(plotinfo.xaxis, xB);
+            xC = r2p(plotinfo.xaxis, xC);
+            xD = r2p(plotinfo.xaxis, xD);
+        }
+        if (yDateOrLog) {
+            yA = r2p(plotinfo.yaxis, yA);
+            yB = r2p(plotinfo.yaxis, yB);
+            yC = r2p(plotinfo.yaxis, yC);
+            yD = r2p(plotinfo.yaxis, yD);
+        }
+        const x0 = (xB + xD) / 2;
+        const y0 = (yA + yC) / 2;
+        const rx = (xD - xB + xC - xA) / 2;
+        const ry = (yD - yB + yC - yA) / 2;
+        const pos = ellipseOver({
+            x0: x0,
+            y0: y0,
+            x1: x0 + rx * cos45,
+            y1: y0 + ry * sin45
+        });
+        if (xDateOrLog) {
+            pos.x0 = p2r(plotinfo.xaxis, pos.x0);
+            pos.x1 = p2r(plotinfo.xaxis, pos.x1);
+        }
+        if (yDateOrLog) {
+            pos.y0 = p2r(plotinfo.yaxis, pos.y0);
+            pos.y1 = p2r(plotinfo.yaxis, pos.y1);
+        }
+        newShape.x0 = pos.x0;
+        newShape.y0 = pos.y0;
+        newShape.x1 = pos.x1;
+        newShape.y1 = pos.y1;
+    }
+    else {
+        newShape.type = 'path';
+        if (xaxis && yaxis)
+            fixDatesForPaths(polygons, xaxis, yaxis);
+        newShape.path = writePaths(polygons);
+        cell = null;
+    }
+    return newShape;
+}
+export default {
+    newShapes: newShapes,
+    createShapeObj: createShapeObj,
+};

@@ -1,0 +1,1372 @@
+import { select } from 'd3-selection';
+import tinycolor from 'tinycolor2';
+import { _guiRelayout } from '../../plot_api/plot_api.js';
+import { traceIs } from '../../lib/trace_categories.js';
+import Lib from '../../lib/index.js';
+import Color from '../../components/color/index.js';
+import { bBox, getTranslate, hideOutsideRangePoints, setClipUrl } from '../../components/drawing/index.js';
+import Plots from '../plots.js';
+import Axes from '../../plots/cartesian/axes.js';
+import setConvertCartesian from '../cartesian/set_convert.js';
+import setConvertPolar from './set_convert.js';
+import _autorange from '../cartesian/autorange.js';
+const { doAutoRange } = _autorange;
+import dragBox from '../cartesian/dragbox.js';
+import dragElement from '../../components/dragelement/index.js';
+import Fx from '../../components/fx/index.js';
+import Titles from '../../components/titles/index.js';
+import _index from '../../components/selections/index.js';
+const { prepSelect, selectOnClick, clearOutline } = _index;
+import setCursor from '../../lib/setcursor.js';
+import clearGlCanvases from '../../lib/clear_gl_canvases.js';
+import { redrawReglTraces } from '../../plot_api/subroutines.js';
+import _alignment from '../../constants/alignment.js';
+const { MID_SHIFT } = _alignment;
+import constants from './constants.js';
+import helpers from './helpers.js';
+import smithHelpers from '../smith/helpers.js';
+const strRotate = Lib.strRotate;
+const strTranslate = Lib.strTranslate;
+const smith = smithHelpers.smith;
+const reactanceArc = smithHelpers.reactanceArc;
+const resistanceArc = smithHelpers.resistanceArc;
+const smithTransform = smithHelpers.smithTransform;
+const _ = Lib._;
+const mod = Lib.mod;
+const deg2rad = Lib.deg2rad;
+const rad2deg = Lib.rad2deg;
+function Polar(gd, id, isSmith) {
+    this.isSmith = isSmith || false;
+    this.id = id;
+    this.gd = gd;
+    this._hasClipOnAxisFalse = null;
+    this.vangles = null;
+    this.radialAxisAngle = null;
+    this.traceHash = {};
+    this.layers = {};
+    this.clipPaths = {};
+    this.clipIds = {};
+    this.viewInitial = {};
+    const fullLayout = gd._fullLayout;
+    const clipIdBase = 'clip' + fullLayout._uid + id;
+    this.clipIds.forTraces = clipIdBase + '-for-traces';
+    this.clipPaths.forTraces = fullLayout._clips.append('clipPath')
+        .attr('id', this.clipIds.forTraces);
+    this.clipPaths.forTraces.append('path');
+    this.framework = fullLayout['_' + (isSmith ? 'smith' : 'polar') + 'layer'].append('g')
+        .attr('class', id);
+    this.getHole = function (s) {
+        return this.isSmith ? 0 : s.hole;
+    };
+    this.getSector = function (s) {
+        return this.isSmith ? [0, 360] : s.sector;
+    };
+    this.getRadial = function (s) {
+        return this.isSmith ? s.realaxis : s.radialaxis;
+    };
+    this.getAngular = function (s) {
+        return this.isSmith ? s.imaginaryaxis : s.angularaxis;
+    };
+    if (!isSmith) {
+        // unfortunately, we have to keep track of some axis tick settings
+        // as polar subplots do not implement the 'ticks' editType
+        this.radialTickLayout = null;
+        this.angularTickLayout = null;
+    }
+}
+const proto = Polar.prototype;
+export default function createPolar(gd, id, isSmith) {
+    // @ts-ignore TS7009
+    return new Polar(gd, id, isSmith);
+}
+proto.plot = function (polarCalcData, fullLayout) {
+    const _this = this;
+    const polarLayout = fullLayout[_this.id];
+    let found = false;
+    for (let i = 0; i < polarCalcData.length; i++) {
+        const trace = polarCalcData[i][0].trace;
+        if (trace.cliponaxis === false) {
+            found = true;
+            break;
+        }
+    }
+    _this._hasClipOnAxisFalse = found;
+    _this.updateLayers(fullLayout, polarLayout);
+    _this.updateLayout(fullLayout, polarLayout);
+    Plots.generalUpdatePerTraceModule(_this.gd, _this, polarCalcData, polarLayout);
+    _this.updateFx(fullLayout, polarLayout);
+    if (_this.isSmith) {
+        delete polarLayout.realaxis.range;
+        delete polarLayout.imaginaryaxis.range;
+    }
+};
+proto.updateLayers = function (fullLayout, polarLayout) {
+    const _this = this;
+    const isSmith = _this.isSmith;
+    const layers = _this.layers;
+    const radialLayout = _this.getRadial(polarLayout);
+    const angularLayout = _this.getAngular(polarLayout);
+    const layerNames = constants.layerNames;
+    const frontPlotIndex = layerNames.indexOf('frontplot');
+    const layerData = layerNames.slice(0, frontPlotIndex);
+    const isAngularAxisBelowTraces = angularLayout.layer === 'below traces';
+    const isRadialAxisBelowTraces = radialLayout.layer === 'below traces';
+    if (isAngularAxisBelowTraces)
+        layerData.push('angular-line');
+    if (isRadialAxisBelowTraces)
+        layerData.push('radial-line');
+    if (isAngularAxisBelowTraces)
+        layerData.push('angular-axis');
+    if (isRadialAxisBelowTraces)
+        layerData.push('radial-axis');
+    layerData.push('frontplot');
+    if (!isAngularAxisBelowTraces)
+        layerData.push('angular-line');
+    if (!isRadialAxisBelowTraces)
+        layerData.push('radial-line');
+    if (!isAngularAxisBelowTraces)
+        layerData.push('angular-axis');
+    if (!isRadialAxisBelowTraces)
+        layerData.push('radial-axis');
+    const subLayer = (isSmith ? 'smith' : 'polar') + 'sublayer';
+    const join = _this.framework.selectAll('.' + subLayer)
+        .data(layerData, String);
+    const joinEnter = join.enter().append('g')
+        .attr('class', function (d) { return subLayer + ' ' + d; })
+        .each(function (d) {
+        const sel = layers[d] = select(this);
+        switch (d) {
+            case 'frontplot':
+                // TODO add option to place in 'backplot' layer??
+                if (!isSmith) {
+                    sel.append('g').classed('barlayer', true);
+                }
+                sel.append('g').classed('scatterlayer', true);
+                break;
+            case 'backplot':
+                sel.append('g').classed('maplayer', true);
+                break;
+            case 'plotbg':
+                layers.bg = sel.append('path');
+                break;
+            case 'radial-grid':
+                sel.style('fill', 'none');
+                break;
+            case 'angular-grid':
+                sel.style('fill', 'none');
+                break;
+            case 'radial-line':
+                sel.append('line').style('fill', 'none');
+                break;
+            case 'angular-line':
+                sel.append('path').style('fill', 'none');
+                break;
+        }
+    });
+    join.merge(joinEnter).order();
+};
+/* Polar subplots juggle with 6 'axis objects' (!), these are:
+ *
+ * - getRadial(polarLayout) (aka radialLayout in this file):
+ * - getAngular(polarLayout) (aka angularLayout in this file):
+ *   used for data -> calcdata conversions (aka d2c) during the calc step
+ *
+ * - this.radialAxis
+ *   extends getRadial(polarLayout), adds mocked 'domain' and
+ *   few other keys in order to reuse Cartesian doAutoRange and the Axes
+ *   drawing routines.
+ *   used for calcdata -> geometric conversions (aka c2g) during the plot step
+ *   + setGeometry setups ax.c2g for given ax.range
+ *   + setScale setups ax._m,ax._b for given ax.range
+ *
+ * - this.angularAxis
+ *   extends getAngular(polarLayout), adds mocked 'range' and 'domain' and
+ *   a few other keys in order to reuse the Axes drawing routines.
+ *   used for calcdata -> geometric conversions (aka c2g) during the plot step
+ *   + setGeometry setups ax.c2g given ax.rotation, ax.direction & ax._categories,
+ *                 and mocks ax.range
+ *   + setScale setups ax._m,ax._b with that mocked ax.range
+ *
+ * - this.xaxis
+ * - this.yaxis
+ *   setup so that polar traces can reuse plot methods of Cartesian traces
+ *   which mostly rely on 2pixel methods (e.g ax.c2p)
+ */
+proto.updateLayout = function (fullLayout, polarLayout) {
+    const _this = this;
+    const layers = _this.layers;
+    const gs = fullLayout._size;
+    // axis attributes
+    const radialLayout = _this.getRadial(polarLayout);
+    const angularLayout = _this.getAngular(polarLayout);
+    // layout domains
+    const xDomain = polarLayout.domain.x;
+    const yDomain = polarLayout.domain.y;
+    // offsets from paper edge to layout domain box
+    _this.xOffset = gs.l + gs.w * xDomain[0];
+    _this.yOffset = gs.t + gs.h * (1 - yDomain[1]);
+    // lengths of the layout domain box
+    const xLength = _this.xLength = gs.w * (xDomain[1] - xDomain[0]);
+    const yLength = _this.yLength = gs.h * (yDomain[1] - yDomain[0]);
+    // sector to plot
+    const sector = _this.getSector(polarLayout);
+    _this.sectorInRad = sector.map(deg2rad);
+    const sectorBBox = _this.sectorBBox = computeSectorBBox(sector);
+    const dxSectorBBox = sectorBBox[2] - sectorBBox[0];
+    const dySectorBBox = sectorBBox[3] - sectorBBox[1];
+    // aspect ratios
+    const arDomain = yLength / xLength;
+    const arSector = Math.abs(dySectorBBox / dxSectorBBox);
+    // actual lengths and domains of subplot box
+    let xLength2, yLength2;
+    let xDomain2, yDomain2;
+    let gap;
+    if (arDomain > arSector) {
+        xLength2 = xLength;
+        yLength2 = xLength * arSector;
+        gap = (yLength - yLength2) / gs.h / 2;
+        xDomain2 = [xDomain[0], xDomain[1]];
+        yDomain2 = [yDomain[0] + gap, yDomain[1] - gap];
+    }
+    else {
+        xLength2 = yLength / arSector;
+        yLength2 = yLength;
+        gap = (xLength - xLength2) / gs.w / 2;
+        xDomain2 = [xDomain[0] + gap, xDomain[1] - gap];
+        yDomain2 = [yDomain[0], yDomain[1]];
+    }
+    _this.xLength2 = xLength2;
+    _this.yLength2 = yLength2;
+    _this.xDomain2 = xDomain2;
+    _this.yDomain2 = yDomain2;
+    // actual offsets from paper edge to the subplot box top-left corner
+    const xOffset2 = _this.xOffset2 = gs.l + gs.w * xDomain2[0];
+    const yOffset2 = _this.yOffset2 = gs.t + gs.h * (1 - yDomain2[1]);
+    // circle radius in px
+    const radius = _this.radius = xLength2 / dxSectorBBox;
+    // 'inner' radius in px (when polar.hole is set)
+    const innerRadius = _this.innerRadius = _this.getHole(polarLayout) * radius;
+    // circle center position in px
+    const cx = _this.cx = xOffset2 - radius * sectorBBox[0];
+    const cy = _this.cy = yOffset2 + radius * sectorBBox[3];
+    // circle center in the coordinate system of plot area
+    const cxx = _this.cxx = cx - xOffset2;
+    const cyy = _this.cyy = cy - yOffset2;
+    let side = radialLayout.side;
+    let trueSide;
+    if (side === 'counterclockwise') {
+        trueSide = side;
+        side = 'top';
+    }
+    else if (side === 'clockwise') {
+        trueSide = side;
+        side = 'bottom';
+    }
+    _this.radialAxis = _this.mockAxis(fullLayout, polarLayout, radialLayout, {
+        // make this an 'x' axis to make positioning (especially rotation) easier
+        _id: 'x',
+        // convert to 'x' axis equivalent
+        side: side,
+        // keep track of real side
+        _trueSide: trueSide,
+        // spans length 1 radius
+        domain: [innerRadius / gs.w, radius / gs.w]
+    });
+    _this.angularAxis = _this.mockAxis(fullLayout, polarLayout, angularLayout, {
+        side: 'right',
+        // to get auto nticks right
+        domain: [0, Math.PI],
+        // don't pass through autorange logic
+        autorange: false
+    });
+    _this.doAutoRange(fullLayout, polarLayout);
+    // N.B. this sets _this.vangles
+    _this.updateAngularAxis(fullLayout, polarLayout);
+    // N.B. this sets _this.radialAxisAngle
+    _this.updateRadialAxis(fullLayout, polarLayout);
+    _this.updateRadialAxisTitle(fullLayout, polarLayout);
+    _this.xaxis = _this.mockCartesianAxis(fullLayout, polarLayout, {
+        _id: 'x',
+        domain: xDomain2
+    });
+    _this.yaxis = _this.mockCartesianAxis(fullLayout, polarLayout, {
+        _id: 'y',
+        domain: yDomain2
+    });
+    const dPath = _this.pathSubplot();
+    _this.clipPaths.forTraces.select('path')
+        .attr('d', dPath)
+        .attr('transform', strTranslate(cxx, cyy));
+    layers.frontplot
+        .attr('transform', strTranslate(xOffset2, yOffset2))
+        .call(setClipUrl, _this._hasClipOnAxisFalse ? null : _this.clipIds.forTraces, _this.gd);
+    layers.bg
+        .attr('d', dPath)
+        .attr('transform', strTranslate(cx, cy))
+        .call(Color.fill, polarLayout.bgcolor);
+};
+proto.mockAxis = function (fullLayout, polarLayout, axLayout, opts) {
+    const ax = Lib.extendFlat({}, axLayout, opts);
+    setConvertPolar(ax, polarLayout, fullLayout);
+    return ax;
+};
+proto.mockCartesianAxis = function (fullLayout, polarLayout, opts) {
+    const _this = this;
+    const isSmith = _this.isSmith;
+    const axId = opts._id;
+    const ax = Lib.extendFlat({ type: 'linear' }, opts);
+    setConvertCartesian(ax, fullLayout);
+    const bboxIndices = {
+        x: [0, 2],
+        y: [1, 3]
+    };
+    ax.setRange = function () {
+        const sectorBBox = _this.sectorBBox;
+        const ind = bboxIndices[axId];
+        const rl = _this.radialAxis._rl;
+        const drl = (rl[1] - rl[0]) / (1 - _this.getHole(polarLayout));
+        ax.range = [sectorBBox[ind[0]] * drl, sectorBBox[ind[1]] * drl];
+    };
+    ax.isPtWithinRange = axId === 'x' && !isSmith ?
+        function (d) { return _this.isPtInside(d); } :
+        function () { return true; };
+    ax.setRange();
+    ax.setScale();
+    return ax;
+};
+proto.doAutoRange = function (fullLayout, polarLayout) {
+    const _this = this;
+    const gd = _this.gd;
+    const radialAxis = _this.radialAxis;
+    const radialLayout = _this.getRadial(polarLayout);
+    doAutoRange(gd, radialAxis);
+    const rng = radialAxis.range;
+    radialLayout.range = rng.slice();
+    radialLayout._input.range = rng.slice();
+    radialAxis._rl = [
+        radialAxis.r2l(rng[0], null, 'gregorian'),
+        radialAxis.r2l(rng[1], null, 'gregorian')
+    ];
+    if (radialAxis.minallowed !== undefined) {
+        const minallowed = radialAxis.r2l(radialAxis.minallowed);
+        if (radialAxis._rl[0] > radialAxis._rl[1]) {
+            radialAxis._rl[1] = Math.max(radialAxis._rl[1], minallowed);
+        }
+        else {
+            radialAxis._rl[0] = Math.max(radialAxis._rl[0], minallowed);
+        }
+    }
+    if (radialAxis.maxallowed !== undefined) {
+        const maxallowed = radialAxis.r2l(radialAxis.maxallowed);
+        if (radialAxis._rl[0] < radialAxis._rl[1]) {
+            radialAxis._rl[1] = Math.min(radialAxis._rl[1], maxallowed);
+        }
+        else {
+            radialAxis._rl[0] = Math.min(radialAxis._rl[0], maxallowed);
+        }
+    }
+};
+proto.updateRadialAxis = function (fullLayout, polarLayout) {
+    const _this = this;
+    const gd = _this.gd;
+    const layers = _this.layers;
+    const radius = _this.radius;
+    const innerRadius = _this.innerRadius;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const radialLayout = _this.getRadial(polarLayout);
+    const a0 = mod(_this.getSector(polarLayout)[0], 360);
+    const ax = _this.radialAxis;
+    const hasRoomForIt = innerRadius < radius;
+    const isSmith = _this.isSmith;
+    if (!isSmith) {
+        _this.fillViewInitialKey('radialaxis.angle', radialLayout.angle);
+        _this.fillViewInitialKey('radialaxis.range', ax.range.slice());
+        ax.setGeometry();
+    }
+    // rotate auto tick labels by 180 if in quadrant II and III to make them
+    // readable from left-to-right
+    //
+    // TODO try moving deeper in Axes.drawLabels for better results?
+    if (ax.tickangle === 'auto' && (a0 > 90 && a0 <= 270)) {
+        ax.tickangle = 180;
+    }
+    // easier to set rotate angle with custom translate function
+    const transFn = isSmith ?
+        function (d) {
+            const t = smithTransform(_this, smith([d.x, 0]));
+            return strTranslate(t[0] - cx, t[1] - cy);
+        } :
+        function (d) {
+            return strTranslate(ax.l2p(d.x) + innerRadius, 0);
+        };
+    // set special grid path function
+    const gridPathFn = isSmith ?
+        function (d) {
+            return resistanceArc(_this, d.x, -Infinity, Infinity);
+        } :
+        function (d) {
+            return _this.pathArc(ax.r2p(d.x) + innerRadius);
+        };
+    const newTickLayout = strTickLayout(radialLayout);
+    if (_this.radialTickLayout !== newTickLayout) {
+        layers['radial-axis'].selectAll('.xtick').remove();
+        _this.radialTickLayout = newTickLayout;
+    }
+    if (hasRoomForIt) {
+        ax.setScale();
+        let labelShift = 0;
+        const vals = isSmith ?
+            (ax.tickvals || []).filter((x) => x >= 0).map((x) => Axes.tickText(ax, x, true, false)) : Axes.calcTicks(ax);
+        const valsClipped = isSmith ? vals : Axes.clipEnds(ax, vals);
+        let tickSign = Axes.getTickSigns(ax)[2];
+        if (isSmith) {
+            if ((ax.ticks === 'top' && ax.side === 'bottom') ||
+                (ax.ticks === 'bottom' && ax.side === 'top')) {
+                // invert sign
+                tickSign = -tickSign;
+            }
+            if (ax.ticks === 'top' && ax.side === 'top')
+                labelShift = -ax.ticklen;
+            if (ax.ticks === 'bottom' && ax.side === 'bottom')
+                labelShift = ax.ticklen;
+        }
+        Axes.drawTicks(gd, ax, {
+            vals: vals,
+            layer: layers['radial-axis'],
+            path: Axes.makeTickPath(ax, 0, tickSign),
+            transFn: transFn,
+            crisp: false
+        });
+        Axes.drawGrid(gd, ax, {
+            vals: valsClipped,
+            layer: layers['radial-grid'],
+            path: gridPathFn,
+            transFn: Lib.noop,
+            crisp: false
+        });
+        Axes.drawLabels(gd, ax, {
+            vals: vals,
+            layer: layers['radial-axis'],
+            transFn: transFn,
+            labelFns: Axes.makeLabelFns(ax, labelShift)
+        });
+    }
+    // stash 'actual' radial axis angle for drag handlers (in degrees)
+    const angle = _this.radialAxisAngle = _this.vangles ?
+        rad2deg(snapToVertexAngle(deg2rad(radialLayout.angle), _this.vangles)) :
+        radialLayout.angle;
+    const tLayer = strTranslate(cx, cy);
+    const tLayer2 = tLayer + strRotate(-angle);
+    updateElement(layers['radial-axis'], hasRoomForIt && (radialLayout.showticklabels || radialLayout.ticks), { transform: tLayer2 });
+    updateElement(layers['radial-grid'], hasRoomForIt && radialLayout.showgrid, { transform: isSmith ? '' : tLayer });
+    updateElement(layers['radial-line'].select('line'), hasRoomForIt && radialLayout.showline, {
+        x1: isSmith ? -radius : innerRadius,
+        y1: 0,
+        x2: radius,
+        y2: 0,
+        transform: tLayer2
+    })
+        .attr('stroke-width', radialLayout.linewidth)
+        .call(Color.stroke, radialLayout.linecolor);
+};
+proto.updateRadialAxisTitle = function (fullLayout, polarLayout, _angle) {
+    if (this.isSmith)
+        return;
+    const _this = this;
+    const gd = _this.gd;
+    const radius = _this.radius;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const radialLayout = _this.getRadial(polarLayout);
+    const titleClass = _this.id + 'title';
+    let pad = 0;
+    // Hint: no need to check if there is in fact a title.text set
+    // because if plot is editable, pad needs to be calculated anyways
+    // to properly show placeholder text when title is empty.
+    if (radialLayout.title) {
+        const h = bBox(_this.layers['radial-axis'].node()).height;
+        const ts = radialLayout.title.font.size;
+        const side = radialLayout.side;
+        pad =
+            side === 'top' ? ts :
+                side === 'counterclockwise' ?
+                    -(h + ts * 0.4) :
+                    h + ts * 0.8;
+    }
+    const angle = _angle !== undefined ? _angle : _this.radialAxisAngle;
+    const angleRad = deg2rad(angle);
+    const cosa = Math.cos(angleRad);
+    const sina = Math.sin(angleRad);
+    const x = cx + (radius / 2) * cosa + pad * sina;
+    const y = cy - (radius / 2) * sina + pad * cosa;
+    _this.layers['radial-axis-title'] = Titles.draw(gd, titleClass, {
+        propContainer: radialLayout,
+        propName: _this.id + '.radialaxis.title.text',
+        placeholder: _(gd, 'Click to enter radial axis title'),
+        attributes: {
+            x: x,
+            y: y,
+            'text-anchor': 'middle'
+        },
+        transform: { rotate: -angle }
+    });
+};
+proto.updateAngularAxis = function (fullLayout, polarLayout) {
+    const _this = this;
+    const gd = _this.gd;
+    const layers = _this.layers;
+    const radius = _this.radius;
+    const innerRadius = _this.innerRadius;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const angularLayout = _this.getAngular(polarLayout);
+    const ax = _this.angularAxis;
+    const isSmith = _this.isSmith;
+    if (!isSmith) {
+        _this.fillViewInitialKey('angularaxis.rotation', angularLayout.rotation);
+        ax.setGeometry();
+        ax.setScale();
+    }
+    // 't'ick to 'g'eometric radians is used all over the place here
+    const t2g = isSmith ?
+        function (d) {
+            const t = smithTransform(_this, smith([0, d.x]));
+            return Math.atan2(t[0] - cx, t[1] - cy) - Math.PI / 2;
+        } :
+        function (d) { return ax.t2g(d.x); };
+    // run rad2deg on tick0 and ditck for thetaunit: 'radians' axes
+    if (ax.type === 'linear' && ax.thetaunit === 'radians') {
+        ax.tick0 = rad2deg(ax.tick0);
+        ax.dtick = rad2deg(ax.dtick);
+    }
+    const _transFn = (rad) => {
+        return strTranslate(cx + radius * Math.cos(rad), cy - radius * Math.sin(rad));
+    };
+    const transFn = isSmith ?
+        function (d) {
+            const t = smithTransform(_this, smith([0, d.x]));
+            return strTranslate(t[0], t[1]);
+        } :
+        function (d) {
+            return _transFn(t2g(d));
+        };
+    const transFn2 = isSmith ?
+        function (d) {
+            const t = smithTransform(_this, smith([0, d.x]));
+            const rad = Math.atan2(t[0] - cx, t[1] - cy) - Math.PI / 2;
+            return strTranslate(t[0], t[1]) + strRotate(-rad2deg(rad));
+        } :
+        function (d) {
+            const rad = t2g(d);
+            return _transFn(rad) + strRotate(-rad2deg(rad));
+        };
+    const gridPathFn = isSmith ?
+        function (d) {
+            return reactanceArc(_this, d.x, 0, Infinity);
+        } :
+        function (d) {
+            const rad = t2g(d);
+            const cosRad = Math.cos(rad);
+            const sinRad = Math.sin(rad);
+            return 'M' + [cx + innerRadius * cosRad, cy - innerRadius * sinRad] +
+                'L' + [cx + radius * cosRad, cy - radius * sinRad];
+        };
+    const out = Axes.makeLabelFns(ax, 0);
+    const labelStandoff = out.labelStandoff;
+    const labelFns = {};
+    labelFns.xFn = function (d) {
+        const rad = t2g(d);
+        return Math.cos(rad) * labelStandoff;
+    };
+    labelFns.yFn = function (d) {
+        const rad = t2g(d);
+        const ff = Math.sin(rad) > 0 ? 0.2 : 1;
+        return -Math.sin(rad) * (labelStandoff + d.fontSize * ff) +
+            Math.abs(Math.cos(rad)) * (d.fontSize * MID_SHIFT);
+    };
+    labelFns.anchorFn = function (d) {
+        const rad = t2g(d);
+        const cos = Math.cos(rad);
+        return Math.abs(cos) < 0.1 ?
+            'middle' :
+            (cos > 0 ? 'start' : 'end');
+    };
+    labelFns.heightFn = function (d, a, h) {
+        const rad = t2g(d);
+        return -0.5 * (1 + Math.sin(rad)) * h;
+    };
+    const newTickLayout = strTickLayout(angularLayout);
+    if (_this.angularTickLayout !== newTickLayout) {
+        layers['angular-axis'].selectAll('.' + ax._id + 'tick').remove();
+        _this.angularTickLayout = newTickLayout;
+    }
+    let vals = isSmith ?
+        [Infinity].concat(ax.tickvals || []).map((x) => Axes.tickText(ax, x, true, false)) : Axes.calcTicks(ax);
+    if (isSmith) {
+        vals[0].text = '∞';
+        vals[0].fontSize *= 1.75;
+    }
+    // angle of polygon vertices in geometric radians (null means circles)
+    // TODO what to do when ax.period > ax._categories ??
+    let vangles;
+    if (polarLayout.gridshape === 'linear') {
+        vangles = vals.map(t2g);
+        // ax._vals should be always ordered, make them
+        // always turn counterclockwise for convenience here
+        if (Lib.angleDelta(vangles[0], vangles[1]) < 0) {
+            vangles = vangles.slice().reverse();
+        }
+    }
+    else {
+        vangles = null;
+    }
+    _this.vangles = vangles;
+    // Use tickval filter for category axes instead of tweaking
+    // the range w.r.t sector, so that sectors that cross 360 can
+    // show all their ticks.
+    if (ax.type === 'category') {
+        vals = vals.filter((d) => Lib.isAngleInsideSector(t2g(d), _this.sectorInRad));
+    }
+    if (ax.visible) {
+        const tickSign = ax.ticks === 'inside' ? -1 : 1;
+        const pad = (ax.linewidth || 1) / 2;
+        Axes.drawTicks(gd, ax, {
+            vals: vals,
+            layer: layers['angular-axis'],
+            path: 'M' + (tickSign * pad) + ',0h' + (tickSign * ax.ticklen),
+            transFn: transFn2,
+            crisp: false
+        });
+        Axes.drawGrid(gd, ax, {
+            vals: vals,
+            layer: layers['angular-grid'],
+            path: gridPathFn,
+            transFn: Lib.noop,
+            crisp: false
+        });
+        Axes.drawLabels(gd, ax, {
+            vals: vals,
+            layer: layers['angular-axis'],
+            repositionOnUpdate: true,
+            transFn: transFn,
+            labelFns: labelFns
+        });
+    }
+    // TODO maybe two arcs is better here?
+    // maybe split style attributes between inner and outer angular axes?
+    updateElement(layers['angular-line'].select('path'), angularLayout.showline, {
+        d: _this.pathSubplot(),
+        transform: strTranslate(cx, cy)
+    })
+        .attr('stroke-width', angularLayout.linewidth)
+        .call(Color.stroke, angularLayout.linecolor);
+};
+proto.updateFx = function (fullLayout, polarLayout) {
+    if (!this.gd._context.staticPlot) {
+        const hasDrag = !this.isSmith;
+        if (hasDrag) {
+            this.updateAngularDrag(fullLayout);
+            this.updateRadialDrag(fullLayout, polarLayout, 0);
+            this.updateRadialDrag(fullLayout, polarLayout, 1);
+        }
+        this.updateHoverAndMainDrag(fullLayout);
+    }
+};
+proto.updateHoverAndMainDrag = function (fullLayout) {
+    const _this = this;
+    const isSmith = _this.isSmith;
+    const gd = _this.gd;
+    const layers = _this.layers;
+    const zoomlayer = fullLayout._zoomlayer;
+    const MINZOOM = constants.MINZOOM;
+    const OFFEDGE = constants.OFFEDGE;
+    const radius = _this.radius;
+    const innerRadius = _this.innerRadius;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const cxx = _this.cxx;
+    const cyy = _this.cyy;
+    const sectorInRad = _this.sectorInRad;
+    const vangles = _this.vangles;
+    const radialAxis = _this.radialAxis;
+    const clampTiny = helpers.clampTiny;
+    const findXYatLength = helpers.findXYatLength;
+    const findEnclosingVertexAngles = helpers.findEnclosingVertexAngles;
+    const chw = constants.cornerHalfWidth;
+    const chl = constants.cornerLen / 2;
+    let scaleX;
+    let scaleY;
+    const mainDrag = dragBox.makeDragger(layers, 'path', 'maindrag', fullLayout.dragmode === false ? 'none' : 'crosshair');
+    select(mainDrag)
+        .attr('d', _this.pathSubplot())
+        .attr('transform', strTranslate(cx, cy));
+    mainDrag.onmousemove = function (evt) {
+        Fx.hover(gd, evt, _this.id);
+        gd._fullLayout._lasthover = mainDrag;
+        gd._fullLayout._hoversubplot = _this.id;
+    };
+    mainDrag.onmouseout = function (evt) {
+        if (gd._dragging)
+            return;
+        dragElement.unhover(gd, evt);
+    };
+    const dragOpts = {
+        element: mainDrag,
+        gd: gd,
+        subplot: _this.id,
+        plotinfo: {
+            id: _this.id,
+            xaxis: _this.xaxis,
+            yaxis: _this.yaxis
+        },
+        xaxes: [_this.xaxis],
+        yaxes: [_this.yaxis]
+    };
+    // mouse px position at drag start (0), move (1)
+    let x0, y0;
+    // radial distance from circle center at drag start (0), move (1)
+    let r0, r1;
+    // zoombox persistent quantities
+    let path0, dimmed, lum;
+    // zoombox, corners elements
+    let zb, corners;
+    function norm(x, y) {
+        return Math.sqrt(x * x + y * y);
+    }
+    function xy2r(x, y) {
+        return norm(x - cxx, y - cyy);
+    }
+    function xy2a(x, y) {
+        return Math.atan2(cyy - y, x - cxx);
+    }
+    function ra2xy(r, a) {
+        return [r * Math.cos(a), r * Math.sin(-a)];
+    }
+    function pathCorner(r, a) {
+        if (r === 0)
+            return _this.pathSector(2 * chw);
+        const da = chl / r;
+        const am = a - da;
+        const ap = a + da;
+        const rb = Math.max(0, Math.min(r, radius));
+        const rm = rb - chw;
+        const rp = rb + chw;
+        return 'M' + ra2xy(rm, am) +
+            'A' + [rm, rm] + ' 0,0,0 ' + ra2xy(rm, ap) +
+            'L' + ra2xy(rp, ap) +
+            'A' + [rp, rp] + ' 0,0,1 ' + ra2xy(rp, am) +
+            'Z';
+    }
+    // (x,y) is the pt at middle of the va0 <-> va1 edge
+    //
+    // ... we could eventually add another mode for cursor
+    // angles 'close to' enough to a particular vertex.
+    function pathCornerForPolygons(r, va0, va1) {
+        if (r === 0)
+            return _this.pathSector(2 * chw);
+        const xy0 = ra2xy(r, va0);
+        const xy1 = ra2xy(r, va1);
+        const x = clampTiny((xy0[0] + xy1[0]) / 2);
+        const y = clampTiny((xy0[1] + xy1[1]) / 2);
+        let innerPts, outerPts;
+        if (x && y) {
+            const m = y / x;
+            const mperp = -1 / m;
+            const midPts = findXYatLength(chw, m, x, y);
+            innerPts = findXYatLength(chl, mperp, midPts[0][0], midPts[0][1]);
+            outerPts = findXYatLength(chl, mperp, midPts[1][0], midPts[1][1]);
+        }
+        else {
+            let dx, dy;
+            if (y) {
+                // horizontal handles
+                dx = chl;
+                dy = chw;
+            }
+            else {
+                // vertical handles
+                dx = chw;
+                dy = chl;
+            }
+            innerPts = [[x - dx, y - dy], [x + dx, y - dy]];
+            outerPts = [[x - dx, y + dy], [x + dx, y + dy]];
+        }
+        return 'M' + innerPts.join('L') +
+            'L' + outerPts.reverse().join('L') + 'Z';
+    }
+    function zoomPrep(_evt, _startX, _startY) {
+        r0 = null;
+        r1 = null;
+        path0 = _this.pathSubplot();
+        dimmed = false;
+        const polarLayoutNow = gd._fullLayout[_this.id];
+        lum = tinycolor(polarLayoutNow.bgcolor).getLuminance();
+        zb = dragBox.makeZoombox(zoomlayer, lum, cx, cy, path0);
+        zb.attr('fill-rule', 'evenodd');
+        corners = dragBox.makeCorners(zoomlayer, cx, cy);
+        clearOutline(gd);
+    }
+    // N.B. this sets scoped 'r0' and 'r1'
+    // return true if 'valid' zoom distance, false otherwise
+    function clampAndSetR0R1(rr0, rr1) {
+        rr1 = Math.max(Math.min(rr1, radius), innerRadius);
+        // starting or ending drag near center (outer edge),
+        // clamps radial distance at origin (at r=radius)
+        if (rr0 < OFFEDGE)
+            rr0 = 0;
+        else if ((radius - rr0) < OFFEDGE)
+            rr0 = radius;
+        else if (rr1 < OFFEDGE)
+            rr1 = 0;
+        else if ((radius - rr1) < OFFEDGE)
+            rr1 = radius;
+        // make sure r0 < r1,
+        // to get correct fill pattern in path1 below
+        if (Math.abs(rr1 - rr0) > MINZOOM) {
+            if (rr0 < rr1) {
+                r0 = rr0;
+                r1 = rr1;
+            }
+            else {
+                r0 = rr1;
+                r1 = rr0;
+            }
+            return true;
+        }
+        else {
+            r0 = null;
+            r1 = null;
+            return false;
+        }
+    }
+    function applyZoomMove(path1, cpath) {
+        path1 = path1 || path0;
+        cpath = cpath || 'M0,0Z';
+        zb.attr('d', path1);
+        corners.attr('d', cpath);
+        dragBox.transitionZoombox(zb, corners, dimmed, lum);
+        dimmed = true;
+        const updateObj = {};
+        computeZoomUpdates(updateObj);
+        gd.emit('plotly_relayouting', updateObj);
+    }
+    function zoomMove(dx, dy) {
+        dx = dx * scaleX;
+        dy = dy * scaleY;
+        const x1 = x0 + dx;
+        const y1 = y0 + dy;
+        const rr0 = xy2r(x0, y0);
+        const rr1 = Math.min(xy2r(x1, y1), radius);
+        const a0 = xy2a(x0, y0);
+        let path1;
+        let cpath;
+        if (clampAndSetR0R1(rr0, rr1)) {
+            path1 = path0 + _this.pathSector(r1);
+            if (r0)
+                path1 += _this.pathSector(r0);
+            // keep 'starting' angle
+            cpath = pathCorner(r0, a0) + pathCorner(r1, a0);
+        }
+        applyZoomMove(path1, cpath);
+    }
+    function findPolygonRadius(x, y, va0, va1) {
+        const xy = helpers.findIntersectionXY(va0, va1, va0, [x - cxx, cyy - y]);
+        return norm(xy[0], xy[1]);
+    }
+    function zoomMoveForPolygons(dx, dy) {
+        const x1 = x0 + dx;
+        const y1 = y0 + dy;
+        const a0 = xy2a(x0, y0);
+        const a1 = xy2a(x1, y1);
+        const vangles0 = findEnclosingVertexAngles(a0, vangles);
+        const vangles1 = findEnclosingVertexAngles(a1, vangles);
+        const rr0 = findPolygonRadius(x0, y0, vangles0[0], vangles0[1]);
+        const rr1 = Math.min(findPolygonRadius(x1, y1, vangles1[0], vangles1[1]), radius);
+        let path1;
+        let cpath;
+        if (clampAndSetR0R1(rr0, rr1)) {
+            path1 = path0 + _this.pathSector(r1);
+            if (r0)
+                path1 += _this.pathSector(r0);
+            // keep 'starting' angle here too
+            cpath = [
+                pathCornerForPolygons(r0, vangles0[0], vangles0[1]),
+                pathCornerForPolygons(r1, vangles0[0], vangles0[1])
+            ].join(' ');
+        }
+        applyZoomMove(path1, cpath);
+    }
+    function zoomDone() {
+        dragBox.removeZoombox(gd);
+        if (r0 === null || r1 === null)
+            return;
+        const updateObj = {};
+        computeZoomUpdates(updateObj);
+        dragBox.showDoubleClickNotifier(gd);
+        _guiRelayout(gd, updateObj);
+    }
+    function computeZoomUpdates(update) {
+        const rl = radialAxis._rl;
+        const m = (rl[1] - rl[0]) / (1 - innerRadius / radius) / radius;
+        const newRng = [
+            rl[0] + (r0 - innerRadius) * m,
+            rl[0] + (r1 - innerRadius) * m
+        ];
+        update[_this.id + '.radialaxis.range'] = newRng;
+    }
+    function zoomClick(numClicks, evt) {
+        const clickMode = gd._fullLayout.clickmode;
+        dragBox.removeZoombox(gd);
+        // TODO double once vs twice logic (autorange vs fixed range)
+        if (numClicks === 2) {
+            const updateObj = {};
+            for (const k in _this.viewInitial) {
+                updateObj[_this.id + '.' + k] = _this.viewInitial[k];
+            }
+            gd.emit('plotly_doubleclick', null);
+            _guiRelayout(gd, updateObj);
+        }
+        if (clickMode.indexOf('select') > -1 && numClicks === 1) {
+            selectOnClick(evt, gd, [_this.xaxis], [_this.yaxis], _this.id, dragOpts);
+        }
+        if (clickMode.indexOf('event') > -1) {
+            Fx.click(gd, evt, _this.id);
+        }
+    }
+    dragOpts.prepFn = function (evt, startX, startY) {
+        const dragModeNow = gd._fullLayout.dragmode;
+        const bbox = mainDrag.getBoundingClientRect();
+        gd._fullLayout._calcInverseTransform(gd);
+        const inverse = gd._fullLayout._invTransform;
+        scaleX = gd._fullLayout._invScaleX;
+        scaleY = gd._fullLayout._invScaleY;
+        const transformedCoords = Lib.apply3DTransform(inverse)(startX - bbox.left, startY - bbox.top);
+        x0 = transformedCoords[0];
+        y0 = transformedCoords[1];
+        // need to offset x/y as bbox center does not
+        // match origin for asymmetric polygons
+        if (vangles) {
+            const offset = helpers.findPolygonOffset(radius, sectorInRad[0], sectorInRad[1], vangles);
+            x0 += cxx + offset[0];
+            y0 += cyy + offset[1];
+        }
+        switch (dragModeNow) {
+            case 'zoom':
+                dragOpts.clickFn = zoomClick;
+                if (!isSmith) {
+                    if (vangles) {
+                        dragOpts.moveFn = zoomMoveForPolygons;
+                    }
+                    else {
+                        dragOpts.moveFn = zoomMove;
+                    }
+                    dragOpts.doneFn = zoomDone;
+                    zoomPrep(evt, startX, startY);
+                }
+                break;
+            case 'select':
+            case 'lasso':
+                prepSelect(evt, startX, startY, dragOpts, dragModeNow);
+                break;
+        }
+    };
+    dragElement.init(dragOpts);
+};
+proto.updateRadialDrag = function (fullLayout, polarLayout, rngIndex) {
+    const _this = this;
+    const gd = _this.gd;
+    const layers = _this.layers;
+    const radius = _this.radius;
+    const innerRadius = _this.innerRadius;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const radialAxis = _this.radialAxis;
+    const bl = constants.radialDragBoxSize;
+    const bl2 = bl / 2;
+    if (!radialAxis.visible)
+        return;
+    const angle0 = deg2rad(_this.radialAxisAngle);
+    const rl = radialAxis._rl;
+    const rl0 = rl[0];
+    const rl1 = rl[1];
+    const rbase = rl[rngIndex];
+    const m = 0.75 * (rl[1] - rl[0]) / (1 - _this.getHole(polarLayout)) / radius;
+    let tx, ty, className;
+    if (rngIndex) {
+        tx = cx + (radius + bl2) * Math.cos(angle0);
+        ty = cy - (radius + bl2) * Math.sin(angle0);
+        className = 'radialdrag';
+    }
+    else {
+        // the 'inner' box can get called:
+        // - when polar.hole>0
+        // - when polar.sector isn't a full circle
+        // otherwise it is hidden behind the main drag.
+        tx = cx + (innerRadius - bl2) * Math.cos(angle0);
+        ty = cy - (innerRadius - bl2) * Math.sin(angle0);
+        className = 'radialdrag-inner';
+    }
+    const radialDrag = dragBox.makeRectDragger(layers, className, 'crosshair', -bl2, -bl2, bl, bl);
+    const dragOpts = { element: radialDrag, gd: gd };
+    if (fullLayout.dragmode === false) {
+        dragOpts.dragmode = false;
+    }
+    updateElement(select(radialDrag), radialAxis.visible && innerRadius < radius, {
+        transform: strTranslate(tx, ty)
+    });
+    // move function (either rotate or re-range flavor)
+    let moveFn2;
+    // rotate angle on done
+    let angle1;
+    // re-range range[1] (or range[0]) on done
+    let rprime;
+    function moveFn(dx, dy) {
+        if (moveFn2) {
+            moveFn2(dx, dy);
+        }
+        else {
+            const dvec = [dx, -dy];
+            const rvec = [Math.cos(angle0), Math.sin(angle0)];
+            const comp = Math.abs(Lib.dot(dvec, rvec) / Math.sqrt(Lib.dot(dvec, dvec)));
+            // mostly perpendicular motions rotate,
+            // mostly parallel motions re-range
+            if (!isNaN(comp)) {
+                moveFn2 = comp < 0.5 ? rotateMove : rerangeMove;
+            }
+        }
+        const update = {};
+        computeRadialAxisUpdates(update);
+        gd.emit('plotly_relayouting', update);
+    }
+    function computeRadialAxisUpdates(update) {
+        if (angle1 !== null) {
+            update[_this.id + '.radialaxis.angle'] = angle1;
+        }
+        else if (rprime !== null) {
+            update[_this.id + '.radialaxis.range[' + rngIndex + ']'] = rprime;
+        }
+    }
+    function doneFn() {
+        if (angle1 !== null) {
+            _guiRelayout(gd, _this.id + '.radialaxis.angle', angle1);
+        }
+        else if (rprime !== null) {
+            _guiRelayout(gd, _this.id + '.radialaxis.range[' + rngIndex + ']', rprime);
+        }
+    }
+    function rotateMove(dx, dy) {
+        // disable for inner drag boxes
+        if (rngIndex === 0)
+            return;
+        const x1 = tx + dx;
+        const y1 = ty + dy;
+        angle1 = Math.atan2(cy - y1, x1 - cx);
+        if (_this.vangles)
+            angle1 = snapToVertexAngle(angle1, _this.vangles);
+        angle1 = rad2deg(angle1);
+        const transform = strTranslate(cx, cy) + strRotate(-angle1);
+        layers['radial-axis'].attr('transform', transform);
+        layers['radial-line'].select('line').attr('transform', transform);
+        const fullLayoutNow = _this.gd._fullLayout;
+        const polarLayoutNow = fullLayoutNow[_this.id];
+        _this.updateRadialAxisTitle(fullLayoutNow, polarLayoutNow, angle1);
+    }
+    function rerangeMove(dx, dy) {
+        // project (dx, dy) unto unit radial axis vector
+        const dr = Lib.dot([dx, -dy], [Math.cos(angle0), Math.sin(angle0)]);
+        rprime = rbase - m * dr;
+        // make sure rprime does not change the range[0] -> range[1] sign
+        if ((m > 0) !== (rngIndex ? rprime > rl0 : rprime < rl1)) {
+            rprime = null;
+            return;
+        }
+        const fullLayoutNow = gd._fullLayout;
+        const polarLayoutNow = fullLayoutNow[_this.id];
+        // update radial range -> update c2g -> update _m,_b
+        radialAxis.range[rngIndex] = rprime;
+        radialAxis._rl[rngIndex] = rprime;
+        _this.updateRadialAxis(fullLayoutNow, polarLayoutNow);
+        _this.xaxis.setRange();
+        _this.xaxis.setScale();
+        _this.yaxis.setRange();
+        _this.yaxis.setScale();
+        let hasRegl = false;
+        for (const traceType in _this.traceHash) {
+            const moduleCalcData = _this.traceHash[traceType];
+            const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
+            const _module = moduleCalcData[0][0].trace._module;
+            _module.plot(gd, _this, moduleCalcDataVisible, polarLayoutNow);
+            if (traceIs(traceType, 'gl') && moduleCalcDataVisible.length)
+                hasRegl = true;
+        }
+        if (hasRegl) {
+            clearGlCanvases(gd);
+            redrawReglTraces(gd);
+        }
+    }
+    dragOpts.prepFn = function () {
+        moveFn2 = null;
+        angle1 = null;
+        rprime = null;
+        dragOpts.moveFn = moveFn;
+        dragOpts.doneFn = doneFn;
+        clearOutline(gd);
+    };
+    dragOpts.clampFn = function (dx, dy) {
+        if (Math.sqrt(dx * dx + dy * dy) < constants.MINDRAG) {
+            dx = 0;
+            dy = 0;
+        }
+        return [dx, dy];
+    };
+    dragElement.init(dragOpts);
+};
+proto.updateAngularDrag = function (fullLayout) {
+    const _this = this;
+    const gd = _this.gd;
+    const layers = _this.layers;
+    const radius = _this.radius;
+    const angularAxis = _this.angularAxis;
+    const cx = _this.cx;
+    const cy = _this.cy;
+    const cxx = _this.cxx;
+    const cyy = _this.cyy;
+    const dbs = constants.angularDragBoxSize;
+    const angularDrag = dragBox.makeDragger(layers, 'path', 'angulardrag', fullLayout.dragmode === false ? 'none' : 'move');
+    const dragOpts = { element: angularDrag, gd: gd };
+    if (fullLayout.dragmode === false) {
+        dragOpts.dragmode = false;
+    }
+    else {
+        select(angularDrag)
+            .attr('d', _this.pathAnnulus(radius, radius + dbs))
+            .attr('transform', strTranslate(cx, cy))
+            .call(setCursor, 'move');
+    }
+    function xy2a(x, y) {
+        return Math.atan2(cyy + dbs - y, x - cxx - dbs);
+    }
+    // scatter trace, points and textpoints selections
+    const scatterTraces = layers.frontplot.select('.scatterlayer').selectAll('.trace');
+    const scatterPoints = scatterTraces.selectAll('.point');
+    const scatterTextPoints = scatterTraces.selectAll('.textpoint');
+    // mouse px position at drag start (0), move (1)
+    let x0, y0;
+    // angular axis angle rotation at drag start (0), move (1)
+    let rot0, rot1;
+    // induced radial axis rotation (only used on polygon grids)
+    let rrot1;
+    // angle about circle center at drag start
+    let a0;
+    function moveFn(dx, dy) {
+        const fullLayoutNow = _this.gd._fullLayout;
+        const polarLayoutNow = fullLayoutNow[_this.id];
+        const x1 = x0 + dx * fullLayout._invScaleX;
+        const y1 = y0 + dy * fullLayout._invScaleY;
+        const a1 = xy2a(x1, y1);
+        const da = rad2deg(a1 - a0);
+        rot1 = rot0 + da;
+        layers.frontplot.attr('transform', strTranslate(_this.xOffset2, _this.yOffset2) + strRotate([-da, cxx, cyy]));
+        if (_this.vangles) {
+            rrot1 = _this.radialAxisAngle + da;
+            const trans = strTranslate(cx, cy) + strRotate(-da);
+            const trans2 = strTranslate(cx, cy) + strRotate(-rrot1);
+            layers.bg.attr('transform', trans);
+            layers['radial-grid'].attr('transform', trans);
+            layers['radial-axis'].attr('transform', trans2);
+            layers['radial-line'].select('line').attr('transform', trans2);
+            _this.updateRadialAxisTitle(fullLayoutNow, polarLayoutNow, rrot1);
+        }
+        else {
+            _this.clipPaths.forTraces.select('path').attr('transform', strTranslate(cxx, cyy) + strRotate(da));
+        }
+        // 'un-rotate' marker and text points
+        scatterPoints.each(function () {
+            const sel = select(this);
+            const xy = getTranslate(sel);
+            sel.attr('transform', strTranslate(xy.x, xy.y) + strRotate([da]));
+        });
+        scatterTextPoints.each(function () {
+            const sel = select(this);
+            const tx = sel.select('text');
+            const xy = getTranslate(sel);
+            // N.B rotate -> translate ordering matters
+            sel.attr('transform', strRotate([da, tx.attr('x'), tx.attr('y')]) + strTranslate(xy.x, xy.y));
+        });
+        // update rotation -> range -> _m,_b
+        angularAxis.rotation = Lib.modHalf(rot1, 360);
+        _this.updateAngularAxis(fullLayoutNow, polarLayoutNow);
+        if (_this._hasClipOnAxisFalse && !Lib.isFullCircle(_this.sectorInRad)) {
+            scatterTraces.call(hideOutsideRangePoints, _this);
+        }
+        let hasRegl = false;
+        for (const traceType in _this.traceHash) {
+            if (traceIs(traceType, 'gl')) {
+                const moduleCalcData = _this.traceHash[traceType];
+                const moduleCalcDataVisible = Lib.filterVisible(moduleCalcData);
+                const _module = moduleCalcData[0][0].trace._module;
+                _module.plot(gd, _this, moduleCalcDataVisible, polarLayoutNow);
+                if (moduleCalcDataVisible.length)
+                    hasRegl = true;
+            }
+        }
+        if (hasRegl) {
+            clearGlCanvases(gd);
+            redrawReglTraces(gd);
+        }
+        const update = {};
+        computeRotationUpdates(update);
+        gd.emit('plotly_relayouting', update);
+    }
+    function computeRotationUpdates(updateObj) {
+        updateObj[_this.id + '.angularaxis.rotation'] = rot1;
+        if (_this.vangles) {
+            updateObj[_this.id + '.radialaxis.angle'] = rrot1;
+        }
+    }
+    function doneFn() {
+        scatterTextPoints.select('text').attr('transform', null);
+        const updateObj = {};
+        computeRotationUpdates(updateObj);
+        _guiRelayout(gd, updateObj);
+    }
+    dragOpts.prepFn = function (evt, startX, startY) {
+        const polarLayoutNow = fullLayout[_this.id];
+        rot0 = polarLayoutNow.angularaxis.rotation;
+        const bbox = angularDrag.getBoundingClientRect();
+        x0 = startX - bbox.left;
+        y0 = startY - bbox.top;
+        gd._fullLayout._calcInverseTransform(gd);
+        const transformedCoords = Lib.apply3DTransform(fullLayout._invTransform)(x0, y0);
+        x0 = transformedCoords[0];
+        y0 = transformedCoords[1];
+        a0 = xy2a(x0, y0);
+        dragOpts.moveFn = moveFn;
+        dragOpts.doneFn = doneFn;
+        clearOutline(gd);
+    };
+    // I don't what we should do in this case, skip we now
+    if (_this.vangles && !Lib.isFullCircle(_this.sectorInRad)) {
+        dragOpts.prepFn = Lib.noop;
+        setCursor(select(angularDrag), null);
+    }
+    dragElement.init(dragOpts);
+};
+proto.isPtInside = function (d) {
+    if (this.isSmith)
+        return true;
+    const sectorInRad = this.sectorInRad;
+    const vangles = this.vangles;
+    const thetag = this.angularAxis.c2g(d.theta);
+    const radialAxis = this.radialAxis;
+    const r = radialAxis.c2l(d.r);
+    const rl = radialAxis._rl;
+    const fn = vangles ? helpers.isPtInsidePolygon : Lib.isPtInsideSector;
+    return fn(r, thetag, rl, sectorInRad, vangles);
+};
+proto.pathArc = function (r) {
+    const sectorInRad = this.sectorInRad;
+    const vangles = this.vangles;
+    const fn = vangles ? helpers.pathPolygon : Lib.pathArc;
+    return fn(r, sectorInRad[0], sectorInRad[1], vangles);
+};
+proto.pathSector = function (r) {
+    const sectorInRad = this.sectorInRad;
+    const vangles = this.vangles;
+    const fn = vangles ? helpers.pathPolygon : Lib.pathSector;
+    return fn(r, sectorInRad[0], sectorInRad[1], vangles);
+};
+proto.pathAnnulus = function (r0, r1) {
+    const sectorInRad = this.sectorInRad;
+    const vangles = this.vangles;
+    const fn = vangles ? helpers.pathPolygonAnnulus : Lib.pathAnnulus;
+    return fn(r0, r1, sectorInRad[0], sectorInRad[1], vangles);
+};
+proto.pathSubplot = function () {
+    const r0 = this.innerRadius;
+    const r1 = this.radius;
+    return r0 ? this.pathAnnulus(r0, r1) : this.pathSector(r1);
+};
+proto.fillViewInitialKey = function (key, val) {
+    if (!(key in this.viewInitial)) {
+        this.viewInitial[key] = val;
+    }
+};
+function strTickLayout(axLayout) {
+    let out = axLayout.ticks + String(axLayout.ticklen) + String(axLayout.showticklabels);
+    if ('side' in axLayout)
+        out += axLayout.side;
+    return out;
+}
+// Finds the bounding box of a given circle sector,
+// inspired by https://math.stackexchange.com/q/1852703
+//
+// assumes:
+// - sector[0] < sector[1]
+// - counterclockwise rotation
+function computeSectorBBox(sector) {
+    const s0 = sector[0];
+    const s1 = sector[1];
+    const arc = s1 - s0;
+    const a0 = mod(s0, 360);
+    const a1 = a0 + arc;
+    const ax0 = Math.cos(deg2rad(a0));
+    const ay0 = Math.sin(deg2rad(a0));
+    const ax1 = Math.cos(deg2rad(a1));
+    const ay1 = Math.sin(deg2rad(a1));
+    let x0, y0, x1, y1;
+    if ((a0 <= 90 && a1 >= 90) || (a0 > 90 && a1 >= 450)) {
+        y1 = 1;
+    }
+    else if (ay0 <= 0 && ay1 <= 0) {
+        y1 = 0;
+    }
+    else {
+        y1 = Math.max(ay0, ay1);
+    }
+    if ((a0 <= 180 && a1 >= 180) || (a0 > 180 && a1 >= 540)) {
+        x0 = -1;
+    }
+    else if (ax0 >= 0 && ax1 >= 0) {
+        x0 = 0;
+    }
+    else {
+        x0 = Math.min(ax0, ax1);
+    }
+    if ((a0 <= 270 && a1 >= 270) || (a0 > 270 && a1 >= 630)) {
+        y0 = -1;
+    }
+    else if (ay0 >= 0 && ay1 >= 0) {
+        y0 = 0;
+    }
+    else {
+        y0 = Math.min(ay0, ay1);
+    }
+    if (a1 >= 360) {
+        x1 = 1;
+    }
+    else if (ax0 <= 0 && ax1 <= 0) {
+        x1 = 0;
+    }
+    else {
+        x1 = Math.max(ax0, ax1);
+    }
+    return [x0, y0, x1, y1];
+}
+function snapToVertexAngle(a, vangles) {
+    const fn = (v) => { return Lib.angleDist(a, v); };
+    const ind = Lib.findIndexOfMin(vangles, fn);
+    return vangles[ind];
+}
+function updateElement(sel, showAttr, attrs) {
+    if (showAttr) {
+        sel.attr('display', null);
+        for (const k in attrs)
+            sel.attr(k, attrs[k]);
+    }
+    else if (sel) {
+        sel.attr('display', 'none');
+    }
+    return sel;
+}
