@@ -83,10 +83,9 @@ function writeLibFiles(obj) {
         var targetPath = '../' + obj[name];
         var fullPath = path.join(constants.pathToLib, '..', obj[name]);
         if(fs.existsSync(path.join(fullPath, 'index.js')) || fs.existsSync(path.join(fullPath, 'index.ts'))) {
-            targetPath += '/index.js';
-        } else {
-            targetPath += '.js';
+            targetPath += '/index';
         }
+        // No extension — Vite/esbuild resolve .ts (local) or .js (dist)
 
         fs.writeFileSync(
             path.join(constants.pathToLib, name + '.js'),

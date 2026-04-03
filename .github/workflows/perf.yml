@@ -93,6 +93,9 @@ jobs:
       - name: Run demo E2E tests
         run: node demo/test.mjs
 
+      - name: Test ESM imports through lib/
+        run: node tasks/test_esm_import.mjs
+
   dist-smoke:
     runs-on: ubuntu-latest
     steps:
