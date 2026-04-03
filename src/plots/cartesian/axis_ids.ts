@@ -89,6 +89,7 @@ export function getFromTrace(gd?: any, fullTrace?: any, type?: any): any {
 }
 
 export function idSort(id1?: any, id2?: any): any {
+    if(typeof id1 !== 'string' || typeof id2 !== 'string') return 0;
     const letter1 = id1.charAt(0);
     const letter2 = id2.charAt(0);
     if(letter1 !== letter2) return letter1 > letter2 ? 1 : -1;
