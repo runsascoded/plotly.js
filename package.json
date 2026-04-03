@@ -37,7 +37,7 @@
     "empty-draftlogs": "node tasks/empty_draftlogs.cjs",
     "empty-dist": "node tasks/empty_dist.cjs",
     "fork-bundles": "node tasks/fork_bundles.mjs",
-    "build": "npm run empty-dist && npm run preprocess && npm run find-strings && npm run bundle && npm run extra-bundles && npm run fork-bundles && npm run locales && npm run schema dist",
+    "build": "npm run empty-dist && npm run preprocess && npm run find-strings && npm run bundle && npm run extra-bundles && npm run fork-bundles && npm run locales && npm run schema dist && node tasks/compile_src.mjs",
     "regl-codegen": "node devtools/regl_codegen/server.mjs",
     "cibuild": "npm run empty-dist && npm run preprocess && node tasks/cibundle.mjs",
     "lint": "npx @biomejs/biome lint",
