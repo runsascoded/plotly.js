@@ -1,7 +1,7 @@
 import type { CalcDatum, FullTrace, GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
-import { font, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
+import { font as drawingFont, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
 import { ensureUniformFontSize } from '../../lib/index.js';
 import { getComponentMethod } from '../../registry.js';
 import _uniform_text from './uniform_text.js';
@@ -53,7 +53,7 @@ function styleTextPoints(sel: any, trace: FullTrace, gd: GraphDiv): void {
         const tx = select(this);
         const textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
 
-        font(tx, textFont);
+        drawingFont(tx, textFont);
     });
 }
 
@@ -86,7 +86,7 @@ function styleTextInSelectionMode(txs: any, trace: FullTrace, gd: GraphDiv): voi
                 textFont.color = selectedFontColor;
             }
 
-            font(tx, textFont);
+            drawingFont(tx, textFont);
         } else {
             selectedTextStyle(tx, trace);
         }

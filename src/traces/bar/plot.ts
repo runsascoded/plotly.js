@@ -5,7 +5,7 @@ import isNumeric from 'fast-isnumeric';
 import { castOption, ensureSingle, ensureUniformFontSize, formatPercent, identity, makeTraceGroups, setTransormAndDisplay, texttemplateString } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
-import { bBox, font, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
+import { bBox, font as drawingFont, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
 import { getComponentMethod } from '../../registry.js';
 import _axes from '../../plots/cartesian/axes.js';
 const { tickText } = _axes;
@@ -539,7 +539,7 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
             // prohibit tex interpretation until we can handle
             // tex and regular text together
             .attr('data-notex', 1)
-            .call(font, textFont)
+            .call(drawingFont, textFont)
             .call(svgTextUtils.convertToTspans, gd);
 
         return textSelection;
@@ -717,7 +717,7 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
         });
     }
 
-    transform.fontSize = (font as any).size;
+    transform.fontSize = (textFont as any).size;
     recordMinTextSize(trace.type === 'histogram' ? 'bar' : trace.type, transform, fullLayout);
     calcBar.transform = transform;
 

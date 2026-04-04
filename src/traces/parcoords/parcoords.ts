@@ -12,7 +12,7 @@ import Lib from '../../lib/index.js';
 import { default as rgba } from 'color-rgba';
 import Axes from '../../plots/cartesian/axes.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-import { font } from '../../components/drawing/index.js';
+import { font as drawingFont } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 import gup from '../../lib/gup.js';
 import helpers from './helpers.js';
@@ -652,7 +652,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
                         return helpers.isOrdinal(d) ? v : linearFormat(d.model.dimensions[d.visibleIndex], v);
                     })
                     .scale(scale));
-            font(axis.selectAll('text'), d.model.tickFont);
+            drawingFont(axis.selectAll('text'), d.model.tickFont);
         });
 
     axis.selectAll('.domain, .tick>line')
@@ -687,7 +687,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
         .text(function(d: any) { return d.label; })
         .each(function(this: any, d: any) {
             const e = select(this);
-            font(e, d.model.labelFont);
+            drawingFont(e, d.model.labelFont);
             svgTextUtils.convertToTspans(e, gd);
         })
         .attr('transform', function(d: any) {
@@ -741,7 +741,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisExtentTopText
         .text(function(d: any) { return extremeText(d, true); })
-        .each(function(this: any, d: any) { font(select(this), d.model.rangeFont); });
+        .each(function(this: any, d: any) { drawingFont(select(this), d.model.rangeFont); });
 
     const axisExtentBottomJoin = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
@@ -768,7 +768,7 @@ export default function parcoords(gd: GraphDiv, cdModule: any, layout: any, call
 
     axisExtentBottomText
         .text(function(d: any) { return extremeText(d, false); })
-        .each(function(this: any, d: any) { font(select(this), d.model.rangeFont); });
+        .each(function(this: any, d: any) { drawingFont(select(this), d.model.rangeFont); });
 
     brush.ensureAxisBrush(axisOverlays, paperColor, gd);
 }

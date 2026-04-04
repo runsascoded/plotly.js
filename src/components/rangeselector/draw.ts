@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 import { _guiRelayout } from '../../plot_api/plot_api.js';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import { bBox, font } from '../drawing/index.js';
+import { bBox, font as drawingFont } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import axisIds from '../../plots/cartesian/axis_ids.js';
@@ -138,7 +138,7 @@ function drawButtonText(button: any, selectorLayout: any, d: any, gd: GraphDiv) 
         s.attr('text-anchor', 'middle');
     });
 
-    text.call(font, selectorLayout.font)
+    text.call(drawingFont, selectorLayout.font)
         .text(getLabel(d, gd._fullLayout._meta))
         .call(textLayout);
 }

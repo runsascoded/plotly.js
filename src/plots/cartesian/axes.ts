@@ -8,7 +8,7 @@ import Lib, { aggNums, bBoxIntersect, bigFont, coerce, constrain, dateTick0, deg
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Titles from '../../components/titles/index.js';
 import Color from '../../components/color/index.js';
-import { bBox, crispRound, dashStyle, font, getTranslate } from '../../components/drawing/index.js';
+import { bBox, crispRound, dashStyle, font as drawingFont, getTranslate } from '../../components/drawing/index.js';
 import axAttrs from './layout_attributes.js';
 import cleanTicks from './clean_ticks.js';
 import constants from '../../constants/numerical.js';
@@ -3609,7 +3609,7 @@ axes.drawLabels = function(gd?: any, ax?: any, opts?: any) {
 
                 thisLabel
                     .call(svgTextUtils.positionText, labelFns.xFn(d), labelFns.yFn(d))
-                    .call(font, {
+                    .call(drawingFont, {
                         family: d.font,
                         size: d.fontSize,
                         color: d.fontColor,

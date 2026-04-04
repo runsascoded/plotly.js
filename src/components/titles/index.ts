@@ -5,7 +5,7 @@ import isNumeric from 'fast-isnumeric';
 import { previousPromises } from '../../plots/plots.js';
 import { _guiRelayout, _guiRestyle } from '../../plot_api/plot_api.js';
 import { bBoxIntersect, ensureSingle, extendFlat, setAttrs, strTranslate, syncOrAsync, templateString } from '../../lib/index.js';
-import { bBox, font } from '../drawing/index.js';
+import { bBox, font as drawingFont } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import interactConstants from '../../constants/interactions.js';
@@ -214,7 +214,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
         }
 
         titleEl.style('opacity', opacity * Color.opacity(fontColor))
-        .call(font, {
+        .call(drawingFont, {
             color: Color.rgb(fontColor),
             size: d3Round(fontSize, 2),
             family: fontFamily,
@@ -243,7 +243,7 @@ function draw(gd: GraphDiv, titleClass: string, options: any): any {
 
             subtitleEl.attr('transform', transformVal);
             subtitleEl.style('opacity', subtitleOpacity * Color.opacity(subFontColor))
-            .call(font, {
+            .call(drawingFont, {
                 color: Color.rgb(subFontColor),
                 size: d3Round(subFontSize, 2),
                 family: subFontFamily,

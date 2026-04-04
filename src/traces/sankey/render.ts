@@ -9,7 +9,7 @@ import * as d3SankeyCircular from '@plotly/d3-sankey-circular';
 import c from './constants.js';
 import tinycolor from 'tinycolor2';
 import Color from '../../components/color/index.js';
-import { font } from '../../components/drawing/index.js';
+import { font as drawingFont } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import gup from '../../lib/gup.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
@@ -1043,7 +1043,7 @@ export default function(gd: any, svg: any, calcData: any, layout: any, callbacks
         .text(function(d: any) { return d.node.label; })
         .each(function(this: any, d: any) {
             const e = select(this);
-            font(e, d.textFont);
+            drawingFont(e, d.textFont);
             svgTextUtils.convertToTspans(e, gd);
         })
         .attr('text-anchor', function(d: any) {

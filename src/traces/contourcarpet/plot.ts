@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import map1dArray from '../carpet/map_1d_array.js';
 import makepath from '../carpet/makepath.js';
-import { font, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
+import { font as drawingFont, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
 import Lib from '../../lib/index.js';
 import makeCrossings from '../contour/make_crossings.js';
 import findAllPaths from '../contour/find_all_paths.js';
@@ -176,7 +176,7 @@ function makeLinesAndLabels(plotgroup: any, pathinfo: any, gd: any, cd0: any, co
 
         const dummyText = tester.append('text')
             .attr('data-notex', 1)
-            .call(font, contours.labelfont);
+            .call(drawingFont, contours.labelfont);
 
         // use `bounds` only to keep labels away from the x/y boundaries
         // `constrainToCarpet` below ensures labels don't go off the
