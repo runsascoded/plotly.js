@@ -474,9 +474,9 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         }
     }
 
-    function hideFilter() {
-        return false;
-    }
+    // Empty array replaces d3 v3 hideFilter pattern.
+    // In v3, data(fn) used fn as a filter; in v7, data() expects an array.
+    const HIDE: any[] = [];
 
     function makePoints(points: any, text: any, cdscatter: any) {
         let join, selection, hasNode;
@@ -486,8 +486,8 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         const showText = subTypes.hasText(trace);
 
         const keyFunc = getKeyFunc(trace);
-        let markerFilter = hideFilter;
-        let textFilter = hideFilter;
+        let markerFilter: any = HIDE;
+        let textFilter: any = HIDE;
 
         if(showMarkers || showText) {
             let showFilter = identity;
