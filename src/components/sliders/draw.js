@@ -2,7 +2,7 @@ import { select } from 'd3-selection';
 import { pointer } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import { bBox, font, setTranslate, tester } from '../drawing/index.js';
+import { bBox, font as drawingFont, setTranslate, tester } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
@@ -263,7 +263,7 @@ function drawCurrentValue(sliderGroup, sliderOpts, valueOverride) {
     if (sliderOpts.currentvalue.suffix) {
         str += sliderOpts.currentvalue.suffix;
     }
-    text.call(font, sliderOpts.currentvalue.font)
+    text.call(drawingFont, sliderOpts.currentvalue.font)
         .text(str)
         .call(svgTextUtils.convertToTspans, sliderOpts._gd);
     const lines = svgTextUtils.lineCount(text);
@@ -296,7 +296,7 @@ function drawLabel(item, data, sliderOpts) {
     const _meta = sliderOpts._gd._fullLayout._meta;
     if (_meta)
         tx = Lib.templateString(tx, _meta);
-    text.call(font, sliderOpts.font)
+    text.call(drawingFont, sliderOpts.font)
         .text(tx)
         .call(svgTextUtils.convertToTspans, sliderOpts._gd);
     return text;

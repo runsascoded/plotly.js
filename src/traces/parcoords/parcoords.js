@@ -8,7 +8,7 @@ import Lib from '../../lib/index.js';
 import { default as rgba } from 'color-rgba';
 import Axes from '../../plots/cartesian/axes.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
-import { font } from '../../components/drawing/index.js';
+import { font as drawingFont } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 import gup from '../../lib/gup.js';
 import helpers from './helpers.js';
@@ -562,7 +562,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
             return helpers.isOrdinal(d) ? v : linearFormat(d.model.dimensions[d.visibleIndex], v);
         })
             .scale(scale));
-        font(axis.selectAll('text'), d.model.tickFont);
+        drawingFont(axis.selectAll('text'), d.model.tickFont);
     });
     axis.selectAll('.domain, .tick>line')
         .attr('fill', 'none')
@@ -590,7 +590,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
         .text(function (d) { return d.label; })
         .each(function (d) {
         const e = select(this);
-        font(e, d.model.labelFont);
+        drawingFont(e, d.model.labelFont);
         svgTextUtils.convertToTspans(e, gd);
     })
         .attr('transform', function (d) {
@@ -634,7 +634,7 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
         .merge(axisExtentTopTextJoin);
     axisExtentTopText
         .text(function (d) { return extremeText(d, true); })
-        .each(function (d) { font(select(this), d.model.rangeFont); });
+        .each(function (d) { drawingFont(select(this), d.model.rangeFont); });
     const axisExtentBottomJoin = axisExtent.selectAll('.' + c.cn.axisExtentBottom)
         .data(repeat, keyFun);
     const axisExtentBottom = axisExtentBottomJoin.enter()
@@ -655,6 +655,6 @@ export default function parcoords(gd, cdModule, layout, callbacks) {
         .merge(axisExtentBottomTextJoin);
     axisExtentBottomText
         .text(function (d) { return extremeText(d, false); })
-        .each(function (d) { font(select(this), d.model.rangeFont); });
+        .each(function (d) { drawingFont(select(this), d.model.rangeFont); });
     brush.ensureAxisBrush(axisOverlays, paperColor, gd);
 }

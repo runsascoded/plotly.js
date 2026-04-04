@@ -6,7 +6,7 @@ import { _guiRelayout, _guiRestyle } from '../../plot_api/plot_api.js';
 import { traceIs } from '../../lib/trace_categories.js';
 import Events from '../../lib/events.js';
 import dragElement from '../dragelement/index.js';
-import { bBox, font, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
+import { bBox, font as drawingFont, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
 import Color from '../color/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import handleClick from './handle_click.js';
@@ -150,7 +150,7 @@ function drawOne(gd, opts) {
     if (title.text) {
         titleEl = ensureSingle(scrollBox, 'text', legendId + 'titletext');
         titleEl.attr('text-anchor', 'start')
-            .call(font, title.font)
+            .call(drawingFont, title.font)
             .text(title.text);
         textLayout(titleEl, scrollBox, gd, legendObj, MAIN_TITLE); // handle mathjax or multi-line text and compute title height
     }
@@ -473,7 +473,7 @@ function drawTexts(g, gd, legendObj) {
     }
     const textEl = ensureSingle(g, 'text', legendId + 'text');
     textEl.attr('text-anchor', 'start')
-        .call(font, textFont)
+        .call(drawingFont, textFont)
         .text(isEditable ? ensureLength(name, maxNameLength) : name);
     const textGap = legendObj.indentation + legendObj.itemwidth + constants.itemGap * 2;
     svgTextUtils.positionText(textEl, textGap, 0);

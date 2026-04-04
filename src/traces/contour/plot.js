@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Lib from '../../lib/index.js';
-import { bBox, font, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
+import { bBox, font as drawingFont, setClipUrl, smoothclosed, smoothopen, tester } from '../../components/drawing/index.js';
 import Colorscale from '../../components/colorscale/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Axes from '../../plots/cartesian/axes.js';
@@ -200,7 +200,7 @@ function makeLinesAndLabels(plotgroup, pathinfo, gd, cd0, contours) {
         const contourFormat = labelFormatter(gd, cd0);
         const dummyText = tester.append('text')
             .attr('data-notex', 1)
-            .call(font, contours.labelfont);
+            .call(drawingFont, contours.labelfont);
         const xa = pathinfo[0].xaxis;
         const ya = pathinfo[0].yaxis;
         const xLen = xa._length;

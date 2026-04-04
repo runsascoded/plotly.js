@@ -1,6 +1,6 @@
 import type { GraphDiv } from '../../../types/core';
 import { select } from 'd3-selection';
-import { font, lineGroupStyle } from '../../components/drawing/index.js';
+import { font as drawingFont, lineGroupStyle } from '../../components/drawing/index.js';
 import heatmapStyle from '../heatmap/style.js';
 import makeColorMap from './make_color_map.js';
 
@@ -36,7 +36,7 @@ export default function style(gd: GraphDiv) {
 
         const labelFont = contours.labelfont;
         c.selectAll('g.contourlabels text').each(function(this: any, d: any) {
-            font(select(this), {
+            drawingFont(select(this), {
                 weight: labelFont.weight,
                 style: labelFont.style,
                 variant: labelFont.variant,

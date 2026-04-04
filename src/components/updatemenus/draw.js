@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 import Plots from '../../plots/plots.js';
 import Color from '../color/index.js';
-import { bBox, font, setTranslate, tester } from '../drawing/index.js';
+import { bBox, font as drawingFont, setTranslate, tester } from '../drawing/index.js';
 import Lib from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import { arrayEditor } from '../../plot_api/plot_template.js';
@@ -158,7 +158,7 @@ function drawHeader(gd, gHeader, gButton, scrollBox, menuOpts) {
     // draw drop arrow at the right edge
     const arrow = Lib.ensureSingle(gHeader, 'text', constants.headerArrowClassName, function (s) {
         s.attr('text-anchor', 'end')
-            .call(font, menuOpts.font)
+            .call(drawingFont, menuOpts.font)
             .text(constants.arrowSymbol[menuOpts.direction]);
     });
     arrow
@@ -366,7 +366,7 @@ function drawItemText(item, menuOpts, itemOpts, gd) {
     const _meta = gd._fullLayout._meta;
     if (_meta)
         tx = Lib.templateString(tx, _meta);
-    text.call(font, menuOpts.font)
+    text.call(drawingFont, menuOpts.font)
         .text(tx)
         .call(svgTextUtils.convertToTspans, gd);
 }

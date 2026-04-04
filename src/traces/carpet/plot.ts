@@ -1,5 +1,5 @@
 import { select } from 'd3-selection';
-import { bBox, dashStyle, font } from '../../components/drawing/index.js';
+import { bBox, dashStyle, font as drawingFont } from '../../components/drawing/index.js';
 import map1dArray from './map_1d_array.js';
 import makepath from './makepath.js';
 import orientText from './orient_text.js';
@@ -138,7 +138,7 @@ function drawAxisLabels(gd: any, xaxis: any, yaxis: any, trace: any, t: any, lay
         const labelEl = select(this)
             .attr('text-anchor', direction > 0 ? 'start' : 'end')
             .attr('data-notex', 1)
-            .call(font, label.font)
+            .call(drawingFont, label.font)
             .text(label.text)
             .call(svgTextUtils.convertToTspans, gd);
 
@@ -232,7 +232,7 @@ function drawAxisTitle(gd: any, layer: any, trace: any, t: any, xy: any, dxy: an
                 strTranslate(0, offset)
             )
             .attr('text-anchor', 'middle')
-            .call(font, axis.title.font);
+            .call(drawingFont, axis.title.font);
     });
 
     titleJoin.exit().remove();

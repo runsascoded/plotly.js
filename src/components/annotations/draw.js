@@ -4,7 +4,7 @@ import Plots from '../../plots/plots.js';
 import Lib from '../../lib/index.js';
 import Axes from '../../plots/cartesian/axes.js';
 import Color from '../color/index.js';
-import { bBox, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
+import { bBox, font as drawingFont, getTranslate, setClipUrl, setRect, setTranslate } from '../drawing/index.js';
 import Fx from '../fx/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import setCursor from '../../lib/setcursor.js';
@@ -206,7 +206,7 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
         .classed('annotation-text', true)
         .text(text);
     function textLayout(s) {
-        s.call(font, font)
+        s.call(drawingFont, font)
             .attr('text-anchor', {
             left: 'start',
             right: 'end'

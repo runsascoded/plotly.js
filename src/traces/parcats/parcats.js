@@ -7,7 +7,7 @@ import { interpolateNumber } from 'd3-interpolate';
 import Plotly from '../../plot_api/plot_api.js';
 import Fx from '../../components/fx/index.js';
 import Lib from '../../lib/index.js';
-import { font } from '../../components/drawing/index.js';
+import { font as drawingFont } from '../../components/drawing/index.js';
 import tinycolor from 'tinycolor2';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 const strTranslate = Lib.strTranslate;
@@ -227,7 +227,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
     /** @param {CategoryViewModel} catModel*/
     function (catModel) {
-        font(select(this), catModel.parcatsViewModel.categorylabelfont);
+        drawingFont(select(this), catModel.parcatsViewModel.categorylabelfont);
         svgTextUtils.convertToTspans(select(this), graphDiv);
     });
     // Initialize dimension label
@@ -264,7 +264,7 @@ function performPlot(parcatsModels, graphDiv, layout, svg) {
         .each(
     /** @param {CategoryViewModel} catModel*/
     function (catModel) {
-        font(select(this), catModel.parcatsViewModel.labelfont);
+        drawingFont(select(this), catModel.parcatsViewModel.labelfont);
     });
     // Category hover
     // categorySelection.select('rect.catrect')

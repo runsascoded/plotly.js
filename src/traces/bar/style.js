@@ -1,6 +1,6 @@
 import { select } from 'd3-selection';
 import Color from '../../components/color/index.js';
-import { font, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
+import { font as drawingFont, pointStyle, selectedPointStyle, selectedTextStyle } from '../../components/drawing/index.js';
 import { ensureUniformFontSize } from '../../lib/index.js';
 import { getComponentMethod } from '../../registry.js';
 import _uniform_text from './uniform_text.js';
@@ -43,7 +43,7 @@ function styleTextPoints(sel, trace, gd) {
     sel.selectAll('text').each(function (d) {
         const tx = select(this);
         const textFont = ensureUniformFontSize(gd, determineFont(tx, d, trace, gd));
-        font(tx, textFont);
+        drawingFont(tx, textFont);
     });
 }
 function styleOnSelect(gd, cd, sel) {
@@ -70,7 +70,7 @@ function styleTextInSelectionMode(txs, trace, gd) {
             if (selectedFontColor) {
                 textFont.color = selectedFontColor;
             }
-            font(tx, textFont);
+            drawingFont(tx, textFont);
         }
         else {
             selectedTextStyle(tx, trace);

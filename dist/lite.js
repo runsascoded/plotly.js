@@ -12755,6 +12755,7 @@ var Plotly = (() => {
     return ax;
   }
   function idSort(id1, id2) {
+    if (typeof id1 !== "string" || typeof id2 !== "string") return 0;
     const letter1 = id1.charAt(0);
     const letter2 = id2.charAt(0);
     if (letter1 !== letter2) return letter1 > letter2 ? 1 : -1;
@@ -48292,7 +48293,7 @@ var Plotly = (() => {
         overhead
       });
     }
-    transform.fontSize = font2.size;
+    transform.fontSize = textFont.size;
     recordMinTextSize2(trace.type === "histogram" ? "bar" : trace.type, transform, fullLayout);
     calcBar.transform = transform;
     const s = transition3(textSelection, fullLayout, opts, makeOnCompleteCallback);

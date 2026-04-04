@@ -15215,6 +15215,7 @@ var Plotly = (() => {
     return ax;
   }
   function idSort(id1, id2) {
+    if (typeof id1 !== "string" || typeof id2 !== "string") return 0;
     const letter1 = id1.charAt(0);
     const letter2 = id2.charAt(0);
     if (letter1 !== letter2) return letter1 > letter2 ? 1 : -1;
@@ -44958,7 +44959,7 @@ var Plotly = (() => {
     const text = fullLayout._meta ? lib_default.templateString(options.text, fullLayout._meta) : options.text;
     const annText = annTextGroupInner.append("text").classed("annotation-text", true).text(text);
     function textLayout2(s) {
-      s.call(font3, font3).attr("text-anchor", {
+      s.call(font2, font3).attr("text-anchor", {
         left: "start",
         right: "end"
       }[options.align] || "middle");
