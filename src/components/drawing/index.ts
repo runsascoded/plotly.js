@@ -796,6 +796,7 @@ export function pointStyle(s: any, trace: FullTrace, gd: GraphDiv, pt?: any): vo
 
 export function singlePointStyle(d: any, sel: any, trace: FullTrace, fns: any, gd: GraphDiv, pt?: any): void {
     const marker = trace.marker;
+    if(!marker) return;
     const markerLine = marker.line;
 
     if (pt && pt.i >= 0 && d.i === undefined) d.i = pt.i;

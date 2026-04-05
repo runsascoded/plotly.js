@@ -416,17 +416,17 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
             return keyFunc;
         }
     }
-    function hideFilter() {
-        return false;
-    }
+    // Empty array replaces d3 v3 hideFilter pattern.
+    // In v3, data(fn) used fn as a filter; in v7, data() expects an array.
+    const HIDE = [];
     function makePoints(points, text, cdscatter) {
         let join, selection, hasNode;
         const trace = cdscatter[0].trace;
         const showMarkers = subTypes.hasMarkers(trace);
         const showText = subTypes.hasText(trace);
         const keyFunc = getKeyFunc(trace);
-        let markerFilter = hideFilter;
-        let textFilter = hideFilter;
+        let markerFilter = HIDE;
+        let textFilter = HIDE;
         if (showMarkers || showText) {
             let showFilter = identity;
             // if we're stacking, "infer zero" gap mode gets markers in the

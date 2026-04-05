@@ -122,7 +122,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         const pointGroup = ensureSingle(plotGroup, 'g', 'points');
 
         const keyFunc = getKeyFunc(trace);
-        const bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
+        const bars = pointGroup.selectAll('g.point').data(cd, keyFunc);
 
         const barsEnter = bars.enter().append('g').classed('point', true);
 
@@ -557,6 +557,7 @@ function appendBarText(gd: GraphDiv, plotinfo: any, bar: any, cd: any[], i: numb
     const inStackOrRelativeMode = opts.mode === 'stack' || opts.mode === 'relative';
 
     const calcBar = cd[i];
+    if(!calcBar) return; // stale element from previous data (d3 v7 data join)
     const isOutmostBar = !inStackOrRelativeMode || calcBar._outmost;
     const hasB = calcBar.hasB;
     const barIsRounded = r && r - overhead > TEXTPAD;

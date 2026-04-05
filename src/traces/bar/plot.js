@@ -1,7 +1,7 @@
 import { select } from 'd3-selection';
 function d3Round(x, n) { return n ? Math.round(x * (n = Math.pow(10, n))) / n : Math.round(x); }
 import isNumeric from 'fast-isnumeric';
-import { castOption, ensureSingle, ensureUniformFontSize, formatPercent, identity, makeTraceGroups, setTransormAndDisplay, texttemplateString } from '../../lib/index.js';
+import { castOption, ensureSingle, ensureUniformFontSize, formatPercent, makeTraceGroups, setTransormAndDisplay, texttemplateString } from '../../lib/index.js';
 import svgTextUtils from '../../lib/svg_text_utils.js';
 import Color from '../../components/color/index.js';
 import { bBox, font as drawingFont, hideOutsideRangePoint, makePointStyleFns, setClipUrl, singlePointStyle } from '../../components/drawing/index.js';
@@ -103,7 +103,7 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
         const withTransition = hasTransition(opts);
         const pointGroup = ensureSingle(plotGroup, 'g', 'points');
         const keyFunc = getKeyFunc(trace);
-        const bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
+        const bars = pointGroup.selectAll('g.point').data(cd, keyFunc);
         const barsEnter = bars.enter().append('g').classed('point', true);
         bars.exit().remove();
         bars.merge(barsEnter).each(function (di, i) {
@@ -508,6 +508,8 @@ function appendBarText(gd, plotinfo, bar, cd, i, x0, x1, y0, y1, r, overhead, op
     // compute text position
     const inStackOrRelativeMode = opts.mode === 'stack' || opts.mode === 'relative';
     const calcBar = cd[i];
+    if (!calcBar)
+        return; // stale element from previous data (d3 v7 data join)
     const isOutmostBar = !inStackOrRelativeMode || calcBar._outmost;
     const hasB = calcBar.hasB;
     const barIsRounded = r && r - overhead > TEXTPAD;

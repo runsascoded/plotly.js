@@ -51924,6 +51924,7 @@ void main() {
   }
   function singlePointStyle(d2, sel, trace, fns, gd, pt) {
     const marker = trace.marker;
+    if (!marker) return;
     const markerLine = marker.line;
     if (pt && pt.i >= 0 && d2.i === void 0) d2.i = pt.i;
     sel.style("opacity", fns.selectedOpacityFn ? fns.selectedOpacityFn(d2) : d2.mo === void 0 ? marker.opacity : d2.mo);
@@ -71083,17 +71084,15 @@ void main() {
         return keyFunc;
       }
     }
-    function hideFilter() {
-      return false;
-    }
+    const HIDE = [];
     function makePoints2(points2, text2, cdscatter2) {
       let join, selection2, hasNode;
       const trace2 = cdscatter2[0].trace;
       const showMarkers = subtypes_default.hasMarkers(trace2);
       const showText = subtypes_default.hasText(trace2);
       const keyFunc2 = getKeyFunc(trace2);
-      let markerFilter = hideFilter;
-      let textFilter = hideFilter;
+      let markerFilter = HIDE;
+      let textFilter = HIDE;
       if (showMarkers || showText) {
         let showFilter = identity3;
         const stackGroup = trace2.stackgroup;

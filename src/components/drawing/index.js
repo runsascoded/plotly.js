@@ -672,6 +672,8 @@ export function pointStyle(s, trace, gd, pt) {
 }
 export function singlePointStyle(d, sel, trace, fns, gd, pt) {
     const marker = trace.marker;
+    if (!marker)
+        return;
     const markerLine = marker.line;
     if (pt && pt.i >= 0 && d.i === undefined)
         d.i = pt.i;

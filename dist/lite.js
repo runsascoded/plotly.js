@@ -20649,6 +20649,7 @@ var Plotly = (() => {
   }
   function singlePointStyle(d, sel, trace, fns, gd, pt) {
     const marker2 = trace.marker;
+    if (!marker2) return;
     const markerLine2 = marker2.line;
     if (pt && pt.i >= 0 && d.i === void 0) d.i = pt.i;
     sel.style("opacity", fns.selectedOpacityFn ? fns.selectedOpacityFn(d) : d.mo === void 0 ? marker2.opacity : d.mo);
@@ -39808,17 +39809,15 @@ var Plotly = (() => {
         return keyFunc2;
       }
     }
-    function hideFilter() {
-      return false;
-    }
+    const HIDE = [];
     function makePoints(points2, text2, cdscatter2) {
       let join, selection2, hasNode;
       const trace2 = cdscatter2[0].trace;
       const showMarkers = subtypes_default.hasMarkers(trace2);
       const showText = subtypes_default.hasText(trace2);
       const keyFunc3 = getKeyFunc2(trace2);
-      let markerFilter = hideFilter;
-      let textFilter = hideFilter;
+      let markerFilter = HIDE;
+      let textFilter = HIDE;
       if (showMarkers || showText) {
         let showFilter = identity3;
         const stackGroup = trace2.stackgroup;
@@ -48012,7 +48011,7 @@ var Plotly = (() => {
       const withTransition = hasTransition(opts);
       const pointGroup = ensureSingle(plotGroup, "g", "points");
       const keyFunc2 = getKeyFunc(trace);
-      const bars = pointGroup.selectAll("g.point").data(identity3, keyFunc2);
+      const bars = pointGroup.selectAll("g.point").data(cd, keyFunc2);
       const barsEnter = bars.enter().append("g").classed("point", true);
       bars.exit().remove();
       bars.merge(barsEnter).each(function(di, i) {
@@ -48174,6 +48173,7 @@ var Plotly = (() => {
     textPosition = getTextPosition(trace, i);
     const inStackOrRelativeMode = opts.mode === "stack" || opts.mode === "relative";
     const calcBar = cd[i];
+    if (!calcBar) return;
     const isOutmostBar = !inStackOrRelativeMode || calcBar._outmost;
     const hasB = calcBar.hasB;
     const barIsRounded = r && r - overhead > TEXTPAD3;
