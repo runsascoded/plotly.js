@@ -122,7 +122,7 @@ function plot(gd: GraphDiv, plotinfo: PlotInfo, cdModule: CalcDatum[][], traceLa
         const pointGroup = ensureSingle(plotGroup, 'g', 'points');
 
         const keyFunc = getKeyFunc(trace);
-        const bars = pointGroup.selectAll('g.point').data(identity, keyFunc);
+        const bars = pointGroup.selectAll('g.point').data(cd, keyFunc);
 
         const barsEnter = bars.enter().append('g').classed('point', true);
 
