@@ -1227,7 +1227,12 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        mockLegend.entries.sort((a: any, b: any) => a[0].trace.index - b[0].trace.index);
+        const legendTraceOrder = fullLayout.legend ? fullLayout.legend.traceorder || '' : '';
+        const reverseEntries = legendTraceOrder.indexOf('reversed') !== -1;
+        mockLegend.entries.sort((a: any, b: any) => {
+            const diff = a[0].trace.index - b[0].trace.index;
+            return reverseEntries ? -diff : diff;
+        });
         mockLegend.layer = container;
 
         // Draw unified hover label
