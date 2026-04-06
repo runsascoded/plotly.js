@@ -543,7 +543,9 @@ function drawTexts(g: any, gd: GraphDiv, legendObj: any): void {
         .call(drawingFont, textFont)
         .text(isEditable ? ensureLength(name, maxNameLength) : name);
 
-    const textGap = legendObj.indentation + legendObj.itemwidth + constants.itemGap * 2;
+    const gap = legendObj.itemgap ?? constants.itemGap;
+    const symTextGap = legendObj.textgap ?? gap * 2;
+    const textGap = legendObj.indentation + legendObj.itemwidth + symTextGap;
     svgTextUtils.positionText(textEl, textGap, 0);
 
     if(isEditable) {
@@ -688,7 +690,8 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
         if(aTitle === MAIN_TITLE) {
             if(legendObj.title.side === 'left') {
                 // add extra space between legend title and itmes
-                width += constants.itemGap * 2;
+                const gap2 = legendObj.itemgap ?? constants.itemGap;
+                width += gap2 * 2;
             }
 
             svgTextUtils.positionText(textEl,
@@ -696,9 +699,11 @@ function computeTextDimensions(g: any, gd: GraphDiv, legendObj: any, aTitle?: nu
                 bw + lineHeight
             );
         } else { // legend item
-            let x = constants.itemGap * 2 + legendObj.indentation + legendObj.itemwidth;
+            const gap2 = legendObj.itemgap ?? constants.itemGap;
+            const symTextGap2 = legendObj.textgap ?? gap2 * 2;
+            let x = symTextGap2 + legendObj.indentation + legendObj.itemwidth;
             if(legendItem.groupTitle) {
-                x = constants.itemGap;
+                x = gap2;
                 width -= legendObj.indentation + legendObj.itemwidth;
             }
 
@@ -760,8 +765,9 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
 
     const bw = legendObj.borderwidth;
     const bw2 = 2 * bw;
-    const itemGap = constants.itemGap;
-    const textGap = legendObj.indentation + legendObj.itemwidth + itemGap * 2;
+    const itemGap = legendObj.itemgap ?? constants.itemGap;
+    const symTextGap = legendObj.textgap ?? itemGap * 2;
+    const textGap = legendObj.indentation + legendObj.itemwidth + symTextGap;
     const endPad = 2 * (bw + itemGap);
 
     const yanchor = getYanchor(legendObj);
@@ -931,7 +937,7 @@ function computeLegendDimensions(gd: GraphDiv, groups: any, traces: any, legendO
     legendObj._height = Math.ceil(
         Math.max(
             legendObj._height + titleSize[1],
-            legendObj._titleHeight + 2 * (bw + constants.itemGap)
+            legendObj._titleHeight + 2 * (bw + (legendObj.itemgap ?? constants.itemGap))
         )
     );
 

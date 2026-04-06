@@ -185,6 +185,8 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     coerce('indentation');
     coerce('itemsizing');
     coerce('itemwidth');
+    coerce('itemgap');
+    coerce('textgap');
     coerce('itemclick');
     coerce('itemdoubleclick');
     coerce('groupclick');

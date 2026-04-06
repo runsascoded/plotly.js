@@ -2876,6 +2876,13 @@
             false
           ]
         },
+        "itemgap": {
+          "description": "Sets the gap (in px) between legend items in both x and y directions.",
+          "dflt": 5,
+          "editType": "legend",
+          "min": 0,
+          "valType": "number"
+        },
         "itemsizing": {
           "description": "Determines if the legend items symbols scale with their corresponding *trace* attributes or remain *constant* independent of the symbol size on the graph.",
           "dflt": "trace",
@@ -2890,7 +2897,7 @@
           "description": "Sets the width (in px) of the legend item symbols (the part other than the title.text).",
           "dflt": 30,
           "editType": "legend",
-          "min": 30,
+          "min": 10,
           "valType": "number"
         },
         "maxheight": {
@@ -2910,6 +2917,12 @@
           ]
         },
         "role": "object",
+        "textgap": {
+          "description": "Sets the gap (in px) between the legend symbol and the item text. Defaults to `itemgap * 2` if not set.",
+          "editType": "legend",
+          "min": 0,
+          "valType": "number"
+        },
         "title": {
           "editType": "legend",
           "font": {

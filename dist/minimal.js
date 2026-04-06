@@ -28027,10 +28027,26 @@ var Plotly = (() => {
     },
     itemwidth: {
       valType: "number",
-      min: 30,
+      min: 10,
       dflt: 30,
       editType: "legend",
       description: "Sets the width (in px) of the legend item symbols (the part other than the title.text)."
+    },
+    itemgap: {
+      valType: "number",
+      min: 0,
+      dflt: 5,
+      editType: "legend",
+      description: "Sets the gap (in px) between legend items in both x and y directions."
+    },
+    textgap: {
+      valType: "number",
+      min: 0,
+      editType: "legend",
+      description: [
+        "Sets the gap (in px) between the legend symbol and the item text.",
+        "Defaults to `itemgap * 2` if not set."
+      ].join(" ")
     },
     itemclick: {
       valType: "enumerated",
@@ -28357,6 +28373,8 @@ var Plotly = (() => {
     coerce3("indentation");
     coerce3("itemsizing");
     coerce3("itemwidth");
+    coerce3("itemgap");
+    coerce3("textgap");
     coerce3("itemclick");
     coerce3("itemdoubleclick");
     coerce3("groupclick");
@@ -29032,11 +29050,13 @@ var Plotly = (() => {
   var MAX_LINE_WIDTH = 10;
   var MAX_MARKER_LINE_WIDTH = 5;
   function style2(s, gd, legend) {
+    var _a, _b;
     const fullLayout = gd._fullLayout;
     if (!legend) legend = fullLayout.legend;
     const constantItemSizing = legend.itemsizing === "constant";
     const itemWidth = legend.itemwidth;
-    const centerPos = (itemWidth + constants_default3.itemGap * 2) / 2;
+    const symTextGap = (_b = legend.textgap) != null ? _b : ((_a = legend.itemgap) != null ? _a : constants_default3.itemGap) * 2;
+    const centerPos = (itemWidth + symTextGap) / 2;
     const centerTransform = strTranslate(centerPos, 0);
     const boundLineWidth = (mlw, cont, max2, cst) => {
       let v;
@@ -29938,6 +29958,7 @@ var Plotly = (() => {
     }
   }
   function drawTexts(g, gd, legendObj) {
+    var _a, _b;
     const legendId = getId(legendObj);
     const legendItem = g.data()[0][0];
     const trace = legendItem.trace;
@@ -29961,7 +29982,9 @@ var Plotly = (() => {
     }
     const textEl = ensureSingle(g, "text", legendId + "text");
     textEl.attr("text-anchor", "start").call(font2, textFont).text(isEditable ? ensureLength(name6, maxNameLength) : name6);
-    const textGap = legendObj.indentation + legendObj.itemwidth + constants_default3.itemGap * 2;
+    const gap = (_a = legendObj.itemgap) != null ? _a : constants_default3.itemGap;
+    const symTextGap = (_b = legendObj.textgap) != null ? _b : gap * 2;
+    const textGap = legendObj.indentation + legendObj.itemwidth + symTextGap;
     svg_text_utils_default.positionText(textEl, textGap, 0);
     if (isEditable) {
       textEl.call(svg_text_utils_default.makeEditable, { gd, text: name6 }).call(textLayout, g, gd, legendObj).on("edit", function(event) {
@@ -30023,6 +30046,7 @@ var Plotly = (() => {
     });
   }
   function computeTextDimensions(g, gd, legendObj, aTitle) {
+    var _a, _b, _c;
     const legendItem = g.data()[0][0];
     let showlegend = legendItem && legendItem.trace.showlegend;
     if (Array.isArray(showlegend)) {
@@ -30067,7 +30091,8 @@ var Plotly = (() => {
       width = textNode ? bBox(textNode).width : 0;
       if (aTitle === MAIN_TITLE) {
         if (legendObj.title.side === "left") {
-          width += constants_default3.itemGap * 2;
+          const gap2 = (_a = legendObj.itemgap) != null ? _a : constants_default3.itemGap;
+          width += gap2 * 2;
         }
         svg_text_utils_default.positionText(
           textEl,
@@ -30075,9 +30100,11 @@ var Plotly = (() => {
           bw + lineHeight
         );
       } else {
-        let x = constants_default3.itemGap * 2 + legendObj.indentation + legendObj.itemwidth;
+        const gap2 = (_b = legendObj.itemgap) != null ? _b : constants_default3.itemGap;
+        const symTextGap2 = (_c = legendObj.textgap) != null ? _c : gap2 * 2;
+        let x = symTextGap2 + legendObj.indentation + legendObj.itemwidth;
         if (legendItem.groupTitle) {
-          x = constants_default3.itemGap;
+          x = gap2;
           width -= legendObj.indentation + legendObj.itemwidth;
         }
         svg_text_utils_default.positionText(
@@ -30111,6 +30138,7 @@ var Plotly = (() => {
     return [w, h];
   }
   function computeLegendDimensions(gd, groups, traces, legendObj) {
+    var _a, _b, _c;
     const fullLayout = gd._fullLayout;
     const legendId = getId(legendObj);
     if (!legendObj) {
@@ -30122,8 +30150,9 @@ var Plotly = (() => {
     const isFraction = legendObj.entrywidthmode === "fraction";
     const bw = legendObj.borderwidth;
     const bw2 = 2 * bw;
-    const itemGap = constants_default3.itemGap;
-    const textGap = legendObj.indentation + legendObj.itemwidth + itemGap * 2;
+    const itemGap = (_a = legendObj.itemgap) != null ? _a : constants_default3.itemGap;
+    const symTextGap = (_b = legendObj.textgap) != null ? _b : itemGap * 2;
+    const textGap = legendObj.indentation + legendObj.itemwidth + symTextGap;
     const endPad = 2 * (bw + itemGap);
     const yanchor = getYanchor(legendObj);
     const isBelowPlotArea = legendObj.y < 0 || legendObj.y === 0 && yanchor === "top";
@@ -30264,7 +30293,7 @@ var Plotly = (() => {
     legendObj._height = Math.ceil(
       Math.max(
         legendObj._height + titleSize[1],
-        legendObj._titleHeight + 2 * (bw + constants_default3.itemGap)
+        legendObj._titleHeight + 2 * (bw + ((_c = legendObj.itemgap) != null ? _c : constants_default3.itemGap))
       )
     );
     legendObj._effHeight = Math.min(legendObj._height, legendObj._maxHeight);

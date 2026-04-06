@@ -20,7 +20,8 @@ export default function style(s, gd, legend) {
         legend = fullLayout.legend;
     const constantItemSizing = legend.itemsizing === 'constant';
     const itemWidth = legend.itemwidth;
-    const centerPos = (itemWidth + constants.itemGap * 2) / 2;
+    const symTextGap = legend.textgap ?? (legend.itemgap ?? constants.itemGap) * 2;
+    const centerPos = (itemWidth + symTextGap) / 2;
     const centerTransform = strTranslate(centerPos, 0);
     const boundLineWidth = (mlw, cont, max, cst) => {
         let v;
