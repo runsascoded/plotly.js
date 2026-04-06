@@ -133,14 +133,13 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
           legendTraceCount > (legendId === 'legend' ? 1 : 0))
     );
 
-    // delete legend
-    if(showLegend === false) layoutOut[legendId] = undefined;
-
-    if(showLegend === false && !containerIn.uirevision) return;
-
-    coerce('uirevision', layoutOut.uirevision);
-
-    if(showLegend === false) return;
+    if(showLegend === false) {
+        // Always process traceorder (needed by unified hover even when legend hidden)
+        coerce('traceorder', defaultOrder);
+        if(!containerIn.uirevision) return;
+        coerce('uirevision', layoutOut.uirevision);
+        return;
+    }
 
     coerce('borderwidth');
 
