@@ -1233,7 +1233,11 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        // Sort is handled by getLegendData inside legendDraw,
+        // Normalize to trace index order before getLegendData applies traceorder.
+        // groupedHoverData may arrive in inconsistent order depending on
+        // showlegend and hover collection order.
+        mockLegend.entries.sort((a: any, b: any) => a[0].trace.index - b[0].trace.index);
+        // Reversal (if traceorder includes 'reversed') is handled by getLegendData inside legendDraw.
         // which respects traceorder (including 'reversed').
         mockLegend.layer = container;
 
