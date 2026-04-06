@@ -124,6 +124,7 @@ export default function getLegendData(calcdata: any[], opts: any, hasMultipleLeg
     // sort considering minimum group legendrank
     legendData.forEach((a: any, k: number) => { a[0]._preGroupSort = k; });
     legendData.sort(orderFn1);
+    if(reversed) legendData.reverse();
     for(i = 0; i < legendData.length; i++) {
         // sort considering trace.legendrank and legend.traceorder
         legendData[i].forEach((a: any, k: number) => { a._preSort = k; });

@@ -1046,6 +1046,11 @@ function createHoverText(hoverData, opts) {
         };
         legendSupplyDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
         const mockLegend = mockLayoutOut.legend;
+        // Force traceorder from fullLayout — legendSupplyDefaults may
+        // override it to 'normal' when traces have showlegend: false
+        if (fullLayout.legend && fullLayout.legend.traceorder) {
+            mockLegend.traceorder = fullLayout.legend.traceorder;
+        }
         // prepare items for the legend
         mockLegend.entries = [];
         for (let j = 0; j < groupedHoverData.length; j++) {
@@ -1083,7 +1088,12 @@ function createHoverText(hoverData, opts) {
             pt._distinct = true;
             mockLegend.entries.push([pt]);
         }
+        // Normalize to trace index order before getLegendData applies traceorder.
+        // groupedHoverData may arrive in inconsistent order depending on
+        // showlegend and hover collection order.
         mockLegend.entries.sort((a, b) => a[0].trace.index - b[0].trace.index);
+        // Reversal (if traceorder includes 'reversed') is handled by getLegendData inside legendDraw.
+        // which respects traceorder (including 'reversed').
         mockLegend.layer = container;
         // Draw unified hover label
         mockLegend._inHover = true;

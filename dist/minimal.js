@@ -28288,10 +28288,12 @@ var Plotly = (() => {
       "showlegend",
       layoutOut.showlegend || legendReallyHasATrace && legendTraceCount > (legendId === "legend" ? 1 : 0)
     );
-    if (showLegend === false) layoutOut[legendId] = void 0;
-    if (showLegend === false && !containerIn.uirevision) return;
-    coerce3("uirevision", layoutOut.uirevision);
-    if (showLegend === false) return;
+    if (showLegend === false) {
+      coerce3("traceorder", defaultOrder);
+      if (!containerIn.uirevision) return;
+      coerce3("uirevision", layoutOut.uirevision);
+      return;
+    }
     coerce3("borderwidth");
     const orientation = coerce3("orientation");
     const yref = coerce3("yref");
@@ -28944,6 +28946,7 @@ var Plotly = (() => {
       a[0]._preGroupSort = k;
     });
     legendData.sort(orderFn1);
+    if (reversed) legendData.reverse();
     for (i = 0; i < legendData.length; i++) {
       legendData[i].forEach((a, k) => {
         a._preSort = k;
@@ -31156,6 +31159,9 @@ var Plotly = (() => {
       };
       legendDefaults(mockLayoutIn, mockLayoutOut, gd._fullData);
       const mockLegend = mockLayoutOut.legend;
+      if (fullLayout.legend && fullLayout.legend.traceorder) {
+        mockLegend.traceorder = fullLayout.legend.traceorder;
+      }
       mockLegend.entries = [];
       for (let j = 0; j < groupedHoverData.length; j++) {
         const pt = groupedHoverData[j];

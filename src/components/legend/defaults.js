@@ -105,14 +105,14 @@ function groupDefaults(legendId, layoutIn, layoutOut, fullData) {
     const showLegend = Lib.coerce(layoutIn, layoutOut, basePlotLayoutAttributes, 'showlegend', layoutOut.showlegend ||
         (legendReallyHasATrace &&
             legendTraceCount > (legendId === 'legend' ? 1 : 0)));
-    // delete legend
-    if (showLegend === false)
-        layoutOut[legendId] = undefined;
-    if (showLegend === false && !containerIn.uirevision)
+    if (showLegend === false) {
+        // Always process traceorder (needed by unified hover even when legend hidden)
+        coerce('traceorder', defaultOrder);
+        if (!containerIn.uirevision)
+            return;
+        coerce('uirevision', layoutOut.uirevision);
         return;
-    coerce('uirevision', layoutOut.uirevision);
-    if (showLegend === false)
-        return;
+    }
     coerce('borderwidth');
     const orientation = coerce('orientation');
     const yref = coerce('yref');
