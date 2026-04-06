@@ -145,6 +145,15 @@ export default {
         editType: 'legend',
         description: 'Sets the gap (in px) between legend items in both x and y directions.',
     },
+    textgap: {
+        valType: 'number',
+        min: 0,
+        editType: 'legend',
+        description: [
+            'Sets the gap (in px) between the legend symbol and the item text.',
+            'Defaults to `itemgap * 2` if not set.',
+        ].join(' '),
+    },
     itemclick: {
         valType: 'enumerated',
         values: ['toggle', 'toggleothers', false],
