@@ -133,10 +133,17 @@ export default {
     },
     itemwidth: {
         valType: 'number',
-        min: 30,
+        min: 10,
         dflt: 30,
         editType: 'legend',
         description: 'Sets the width (in px) of the legend item symbols (the part other than the title.text).',
+    },
+    itemgap: {
+        valType: 'number',
+        min: 0,
+        dflt: 5,
+        editType: 'legend',
+        description: 'Sets the gap (in px) between legend items in both x and y directions.',
     },
     itemclick: {
         valType: 'enumerated',

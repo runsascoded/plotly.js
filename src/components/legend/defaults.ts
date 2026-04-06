@@ -216,6 +216,7 @@ function groupDefaults(legendId: string, layoutIn: any, layoutOut: FullLayout, f
     coerce('indentation');
     coerce('itemsizing');
     coerce('itemwidth');
+    coerce('itemgap');
 
     coerce('itemclick');
     coerce('itemdoubleclick');
