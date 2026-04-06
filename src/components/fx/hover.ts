@@ -1227,12 +1227,8 @@ function createHoverText(hoverData: any[], opts: any): any {
 
             mockLegend.entries.push([pt]);
         }
-        const legendTraceOrder = fullLayout.legend ? fullLayout.legend.traceorder || '' : '';
-        const reverseEntries = legendTraceOrder.indexOf('reversed') !== -1;
-        mockLegend.entries.sort((a: any, b: any) => {
-            const diff = a[0].trace.index - b[0].trace.index;
-            return reverseEntries ? -diff : diff;
-        });
+        // Sort is handled by getLegendData inside legendDraw,
+        // which respects traceorder (including 'reversed').
         mockLegend.layer = container;
 
         // Draw unified hover label
