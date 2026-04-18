@@ -1511,6 +1511,54 @@ describe('annotation effects', function() {
         .then(done, done.fail);
     });
 
+    it('fires plotly_hoverannotation / plotly_unhoverannotation when captureevents is true', function(done) {
+        makePlot([
+            {x: 20, y: 20, text: 'bye', height: 40, showarrow: false},
+            {x: 80, y: 80, text: 'why?', ax: 0, ay: -40, captureevents: true}
+        ], {})
+        .then(function() {
+            var hoverData = [];
+            var unhoverData = [];
+            gd.on('plotly_hoverannotation', function(evt) {
+                delete evt.event;
+                hoverData.push(evt);
+            });
+            gd.on('plotly_unhoverannotation', function(evt) {
+                delete evt.event;
+                unhoverData.push(evt);
+            });
+
+            function innerEl(index) {
+                return gd.querySelector('.annotation[data-index="' + index + '"] .annotation-text-g > g');
+            }
+
+            // captureevents off → no hover events
+            mouseEvent('mouseenter', 0, 0, {element: innerEl(0)});
+            mouseEvent('mouseleave', 0, 0, {element: innerEl(0)});
+            expect(hoverData).toEqual([]);
+            expect(unhoverData).toEqual([]);
+
+            // captureevents on → both events fire
+            mouseEvent('mouseenter', 0, 0, {element: innerEl(1)});
+            expect(hoverData.length).toBe(1);
+            expect(hoverData[0]).toEqual({
+                index: 1,
+                annotation: gd.layout.annotations[1],
+                fullAnnotation: gd._fullLayout.annotations[1]
+            });
+            expect(unhoverData).toEqual([]);
+
+            mouseEvent('mouseleave', 0, 0, {element: innerEl(1)});
+            expect(unhoverData.length).toBe(1);
+            expect(unhoverData[0]).toEqual({
+                index: 1,
+                annotation: gd.layout.annotations[1],
+                fullAnnotation: gd._fullLayout.annotations[1]
+            });
+        })
+        .then(done, done.fail);
+    });
+
     // Currently annotations do *not* support right-click.
     // TODO: if we integrated this with dragElement rather than
     // annTextGroupInner.on('click') they could support right-click.
