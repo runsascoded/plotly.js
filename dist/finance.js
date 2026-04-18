@@ -44535,6 +44535,14 @@ var Plotly = (() => {
     const annTextGroupInner = annTextGroup.append("g").style("pointer-events", textEvents ? "all" : null).call(setCursor, "pointer").on("click", function(event) {
       gd._dragging = false;
       gd.emit("plotly_clickannotation", makeEventData2(event));
+    }).on("mouseenter", function(event) {
+      if (options.captureevents) {
+        gd.emit("plotly_hoverannotation", makeEventData2(event));
+      }
+    }).on("mouseleave", function(event) {
+      if (options.captureevents) {
+        gd.emit("plotly_unhoverannotation", makeEventData2(event));
+      }
     });
     if (options.hovertext) {
       annTextGroupInner.on("mouseover", function() {
@@ -45555,8 +45563,9 @@ var Plotly = (() => {
         "and click events, or allows those events to pass through to data",
         "points in the plot that may be behind the annotation. By default",
         "`captureevents` is *false* unless `hovertext` is provided.",
-        "If you use the event `plotly_clickannotation` without `hovertext`",
-        "you must explicitly enable `captureevents`."
+        "If you use the events `plotly_clickannotation`,",
+        "`plotly_hoverannotation`, or `plotly_unhoverannotation` without",
+        "`hovertext` you must explicitly enable `captureevents`."
       ].join(" ")
     },
     editType: "calc"

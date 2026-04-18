@@ -44205,8 +44205,9 @@ var Plotly = (() => {
         "and click events, or allows those events to pass through to data",
         "points in the plot that may be behind the annotation. By default",
         "`captureevents` is *false* unless `hovertext` is provided.",
-        "If you use the event `plotly_clickannotation` without `hovertext`",
-        "you must explicitly enable `captureevents`."
+        "If you use the events `plotly_clickannotation`,",
+        "`plotly_hoverannotation`, or `plotly_unhoverannotation` without",
+        "`hovertext` you must explicitly enable `captureevents`."
       ].join(" ")
     },
     editType: "calc"

@@ -146,6 +146,16 @@ function drawRaw(gd, options, index, subplotId, xa, ya) {
         .on('click', function (event) {
         gd._dragging = false;
         gd.emit('plotly_clickannotation', makeEventData(event));
+    })
+        .on('mouseenter', function (event) {
+        if (options.captureevents) {
+            gd.emit('plotly_hoverannotation', makeEventData(event));
+        }
+    })
+        .on('mouseleave', function (event) {
+        if (options.captureevents) {
+            gd.emit('plotly_unhoverannotation', makeEventData(event));
+        }
     });
     if (options.hovertext) {
         annTextGroupInner
