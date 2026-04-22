@@ -70833,6 +70833,7 @@ void main() {
     join = scatterLayer.selectAll("g.trace").data(cdscatterSorted, function(d2) {
       return d2[0].trace.uid;
     });
+    const joinExit = join.exit();
     const joinEnter = join.enter().append("g").attr("class", function(d2) {
       return "trace scatter trace" + d2[0].trace.uid;
     }).style("stroke-miterlimit", 2);
@@ -70859,7 +70860,7 @@ void main() {
       });
     }
     if (isFullReplot) {
-      join.exit().remove();
+      joinExit.remove();
     }
     scatterLayer.selectAll("path:not([d])").remove();
   }
@@ -71142,6 +71143,7 @@ void main() {
       }
       selection2 = points2.selectAll("path.point");
       join = selection2.data(markerFilter, keyFunc2);
+      const markerJoinExit = join.exit();
       const enter = join.enter().append("path").classed("point", true);
       if (hasTransition) {
         enter.call(pointStyle, trace2, gd).call(translatePoints, xa, ya).style("opacity", 0).transition().style("opacity", 1);
@@ -71169,12 +71171,13 @@ void main() {
         }
       });
       if (hasTransition) {
-        join.exit().transition().style("opacity", 0).remove();
+        markerJoinExit.transition().style("opacity", 0).remove();
       } else {
-        join.exit().remove();
+        markerJoinExit.remove();
       }
       selection2 = text2.selectAll("g");
       join = selection2.data(textFilter, keyFunc2);
+      const textJoinExit = join.exit();
       const textEnter = join.enter().append("g").classed("textpoint", true);
       textEnter.append("text");
       join = join.merge(textEnter);
@@ -71198,7 +71201,7 @@ void main() {
           transition3(select_default2(this)).attr("x", x).attr("y", y);
         });
       });
-      join.exit().remove();
+      textJoinExit.remove();
     }
     points.datum(cdscatter);
     text.datum(cdscatter);

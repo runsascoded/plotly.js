@@ -37,6 +37,9 @@ export function plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnC
         return cd[0].trace.uid;
     });
 
+    // d3 v7: capture exit before `.merge()` reassigns `join`
+    const joinExit = join.exit();
+
     // using same 'stroke-linejoin' as pie traces
     const joinEnter = join.enter().append('g').classed('trace', true).classed('sunburst', true).attr('stroke-linejoin', 'round');
 
@@ -79,7 +82,7 @@ export function plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any, makeOnC
     }
 
     if (isFullReplot) {
-        join.exit().remove();
+        joinExit.remove();
     }
 }
 

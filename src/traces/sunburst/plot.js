@@ -31,6 +31,8 @@ export function plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
     join = layer.selectAll('g.trace.sunburst').data(cdmodule, function (cd) {
         return cd[0].trace.uid;
     });
+    // d3 v7: capture exit before `.merge()` reassigns `join`
+    const joinExit = join.exit();
     // using same 'stroke-linejoin' as pie traces
     const joinEnter = join.enter().append('g').classed('trace', true).classed('sunburst', true).attr('stroke-linejoin', 'round');
     join = join.merge(joinEnter);
@@ -68,7 +70,7 @@ export function plot(gd, cdmodule, transitionOpts, makeOnCompleteCallback) {
         }
     }
     if (isFullReplot) {
-        join.exit().remove();
+        joinExit.remove();
     }
 }
 function plotOne(gd, cd, element, transitionOpts) {

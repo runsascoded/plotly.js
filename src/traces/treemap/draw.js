@@ -18,6 +18,8 @@ export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallba
     clearMinTextSize(type, fullLayout);
     join = layer.selectAll('g.trace.' + type)
         .data(cdmodule, function (cd) { return cd[0].trace.uid; });
+    // d3 v7: capture exit before `.merge()` reassigns `join`
+    const joinExit = join.exit();
     const joinEnter = join.enter().append('g')
         .classed('trace', true)
         .classed(type, true);
@@ -52,6 +54,6 @@ export default function _plot(gd, cdmodule, transitionOpts, makeOnCompleteCallba
         }
     }
     if (isFullReplot) {
-        join.exit().remove();
+        joinExit.remove();
     }
 }
