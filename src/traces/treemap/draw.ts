@@ -25,6 +25,9 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
     join = layer.selectAll('g.trace.' + type)
         .data(cdmodule, function(cd: any) { return cd[0].trace.uid; });
 
+    // d3 v7: capture exit before `.merge()` reassigns `join`
+    const joinExit = join.exit();
+
     const joinEnter = join.enter().append('g')
         .classed('trace', true)
         .classed(type, true);
@@ -64,6 +67,6 @@ export default function _plot(gd: GraphDiv, cdmodule: any[], transitionOpts: any
     }
 
     if(isFullReplot) {
-        join.exit().remove();
+        joinExit.remove();
     }
 }

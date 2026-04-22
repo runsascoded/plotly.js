@@ -26,6 +26,12 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
     join = scatterLayer.selectAll('g.trace')
         .data(cdscatterSorted, function(d: any) { return d[0].trace.uid; });
 
+    // Capture exit selection BEFORE `.merge()` reassigns `join`. In d3 v7,
+    // `.merge()` returns a fresh selection without the `_exit` state attached
+    // by `.data()`, so `join.exit()` after the merge is empty and stale
+    // `g.trace` DOM nodes leak on trace removal.
+    const joinExit = join.exit();
+
     // Append new traces:
     const joinEnter = join.enter().append('g')
         .attr('class', function(d: any) {
@@ -69,7 +75,7 @@ export default function plot(gd: GraphDiv, plotinfo: PlotInfo, cdscatter: CalcDa
     }
 
     if(isFullReplot) {
-        join.exit().remove();
+        joinExit.remove();
     }
 
     // remove paths that didn't get used
@@ -514,6 +520,9 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
 
         join = selection.data(markerFilter, keyFunc);
 
+        // d3 v7: capture exit before `.merge()` reassigns `join`
+        const markerJoinExit = join.exit();
+
         const enter = join.enter().append('path')
             .classed('point', true);
 
@@ -555,16 +564,19 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
         });
 
         if(hasTransition) {
-            join.exit().transition()
+            markerJoinExit.transition()
                 .style('opacity', 0)
                 .remove();
         } else {
-            join.exit().remove();
+            markerJoinExit.remove();
         }
 
         // text points
         selection = text.selectAll('g');
         join = selection.data(textFilter, keyFunc);
+
+        // d3 v7: capture exit before `.merge()` reassigns `join`
+        const textJoinExit = join.exit();
 
         // each text needs to go in its own 'g' in case
         // it gets converted to mathjax
@@ -603,7 +615,7 @@ function plotOne(gd: GraphDiv, idx: number, plotinfo: PlotInfo, cdscatter: CalcD
                 });
             });
 
-        join.exit().remove();
+        textJoinExit.remove();
     }
 
     points.datum(cdscatter);
