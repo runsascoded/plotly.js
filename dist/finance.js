@@ -13979,6 +13979,16 @@ var Plotly = (() => {
       }
       return true;
     }
+    /** Match Node's EventEmitter API — used by `plot_api.react()` to save and
+     *  restore user listeners across a config-change-triggered `newPlot`. */
+    eventNames() {
+      return Object.keys(this._events);
+    }
+    listeners(event) {
+      const handlers = this._events[event];
+      if (!handlers) return [];
+      return typeof handlers === "function" ? [handlers] : handlers.slice();
+    }
   };
   var Events = {
     init: function(plotObj) {

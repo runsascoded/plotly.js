@@ -65,6 +65,18 @@ class MiniEmitter {
         }
         return true;
     }
+
+    /** Match Node's EventEmitter API — used by `plot_api.react()` to save and
+     *  restore user listeners across a config-change-triggered `newPlot`. */
+    eventNames(): string[] {
+        return Object.keys(this._events);
+    }
+
+    listeners(event: string): EventHandler[] {
+        const handlers = this._events[event];
+        if(!handlers) return [];
+        return typeof handlers === 'function' ? [handlers as EventHandler] : (handlers as EventHandler[]).slice();
+    }
 }
 
 const Events = {
