@@ -44374,7 +44374,7 @@ void main() {
           if (oldUid === newTrace.uid) continue oldLoop;
         }
         if (hasInfoLayer) {
-          oldFullLayout._infolayer.select(".cb" + oldUid).remove();
+          oldFullLayout._infolayer.select(".cb" + CSS.escape(oldUid)).remove();
         }
       }
   }
