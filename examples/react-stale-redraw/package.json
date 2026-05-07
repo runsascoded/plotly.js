@@ -1,0 +1,22 @@
+{
+  "name": "@plotly/example-react-stale-redraw",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal React + Plotly.react reproducer for the legend/axis stale-redraw bug. See specs/react-trace-shape-uirev-stale-redraw.md.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "plotly.js": "link:../..",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.58.2",
+    "vite": "^5.4.11"
+  }
+}

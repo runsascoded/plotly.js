@@ -814,7 +814,12 @@ export function cleanPlot(newFullData?: any, newFullLayout?: any, oldFullData?: 
 
         // clean old colorbars
         if(hasInfoLayer) {
-            oldFullLayout._infolayer.select('.cb' + oldUid).remove();
+            // CSS.escape: user-supplied `uid` may contain CSS-special chars
+            // (`:`, `,`, `[`, `.`); without escape, querySelector throws
+            // SyntaxError, aborting supplyDefaults mid-cleanup and breaking
+            // the next Plotly.react. The class itself is set raw in
+            // src/components/colorbar/draw.ts.
+            oldFullLayout._infolayer.select('.cb' + CSS.escape(oldUid)).remove();
         }
     }
 };
