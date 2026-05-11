@@ -174549,6 +174549,8 @@ uniform ${i3} ${a4} u_${s3};
     const lines2 = ensureSingle(tr, "g", "lines");
     const points2 = ensureSingle(tr, "g", "points");
     const text = ensureSingle(tr, "g", "text");
+    points2.datum(cdscatter);
+    text.datum(cdscatter);
     getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
     transition4(tr).style("opacity", trace.opacity);
@@ -189913,6 +189915,7 @@ uniform ${i3} ${a4} u_${s3};
       const isHorizontal = trace.orientation === "h";
       const withTransition = hasTransition(opts);
       const pointGroup = ensureSingle(plotGroup, "g", "points");
+      pointGroup.datum(cd);
       const keyFunc2 = getKeyFunc(trace);
       const bars = pointGroup.selectAll("g.point").data(cd, keyFunc2);
       const barsEnter = bars.enter().append("g").classed("point", true);
@@ -253609,9 +253612,10 @@ uniform ${i3} ${a4} u_${s3};
     const angularAxis = subplot.angularAxis;
     const pathFn = makePathFn(subplot);
     const barLayer = subplot.layers.frontplot.select("g.barlayer");
-    lib_default.makeTraceGroups(barLayer, cdbar, "trace bars").each(function() {
+    lib_default.makeTraceGroups(barLayer, cdbar, "trace bars").each(function(cd) {
       const plotGroup = select_default2(this);
       const pointGroup = lib_default.ensureSingle(plotGroup, "g", "points");
+      pointGroup.datum(cd);
       const bars = pointGroup.selectAll("g.point").data(lib_default.identity);
       const barsEnter = bars.enter().append("g").style("vector-effect", isStatic ? "none" : "non-scaling-stroke").style("stroke-miterlimit", 2).classed("point", true);
       bars.exit().remove();

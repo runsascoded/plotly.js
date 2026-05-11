@@ -112,6 +112,12 @@ function plotOne(gd, idx, plotinfo, cdscatter, cdscatterAll, element, transition
     const lines = ensureSingle(tr, 'g', 'lines');
     const points = ensureSingle(tr, 'g', 'points');
     const text = ensureSingle(tr, 'g', 'text');
+    // `ensureSingle` does NOT refresh `__data__` on existing nodes. After
+    // `Plotly.react`, downstream readers (e.g. `Scatter.style`'s
+    // `selectAll('g.points').each`) would otherwise see the previous render's
+    // calcdata. Bind explicitly so the bound trace stays in sync.
+    points.datum(cdscatter);
+    text.datum(cdscatter);
     // error bars are at the bottom
     getComponentMethod('errorbars', 'plot')(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true)

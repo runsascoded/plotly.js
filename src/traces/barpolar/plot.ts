@@ -14,9 +14,14 @@ export default function plot(gd: GraphDiv, subplot: any, cdbar: any) {
     const pathFn = makePathFn(subplot);
     const barLayer = subplot.layers.frontplot.select('g.barlayer');
 
-    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function(this: any) {
+    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function(this: any, cd: any) {
         const plotGroup = select(this);
         const pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
+        // Refresh `g.points` __data__ — `ensureSingle` returns an existing
+        // node without rebinding, leaving downstream readers (e.g. style
+        // routines that iterate `selectAll('g.points')`) seeing stale
+        // calcdata after `Plotly.react`.
+        pointGroup.datum(cd);
         const bars = pointGroup.selectAll('g.point').data(Lib.identity);
 
         const barsEnter = bars.enter().append('g')

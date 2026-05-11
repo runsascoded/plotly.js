@@ -42623,6 +42623,8 @@ var Plotly = (() => {
     const lines2 = ensureSingle(tr, "g", "lines");
     const points2 = ensureSingle(tr, "g", "points");
     const text = ensureSingle(tr, "g", "text");
+    points2.datum(cdscatter);
+    text.datum(cdscatter);
     getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
     transition3(tr).style("opacity", trace.opacity);

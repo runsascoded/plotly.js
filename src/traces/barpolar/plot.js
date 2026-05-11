@@ -11,9 +11,14 @@ export default function plot(gd, subplot, cdbar) {
     const angularAxis = subplot.angularAxis;
     const pathFn = makePathFn(subplot);
     const barLayer = subplot.layers.frontplot.select('g.barlayer');
-    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function () {
+    Lib.makeTraceGroups(barLayer, cdbar, 'trace bars').each(function (cd) {
         const plotGroup = select(this);
         const pointGroup = Lib.ensureSingle(plotGroup, 'g', 'points');
+        // Refresh `g.points` __data__ — `ensureSingle` returns an existing
+        // node without rebinding, leaving downstream readers (e.g. style
+        // routines that iterate `selectAll('g.points')`) seeing stale
+        // calcdata after `Plotly.react`.
+        pointGroup.datum(cd);
         const bars = pointGroup.selectAll('g.point').data(Lib.identity);
         const barsEnter = bars.enter().append('g')
             .style('vector-effect', isStatic ? 'none' : 'non-scaling-stroke')

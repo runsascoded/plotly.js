@@ -102,6 +102,11 @@ function plot(gd, plotinfo, cdModule, traceLayer, opts, makeOnCompleteCallback) 
         const isHorizontal = trace.orientation === 'h';
         const withTransition = hasTransition(opts);
         const pointGroup = ensureSingle(plotGroup, 'g', 'points');
+        // `ensureSingle` returns an existing node verbatim (via querySelector
+        // + d3.select), which does NOT update `__data__`. Subsequent reads of
+        // `g.points.__data__` (e.g. `Bar.style`'s `selectAll('g.points').each`)
+        // would otherwise see the previous render's calcdata. Bind explicitly.
+        pointGroup.datum(cd);
         const keyFunc = getKeyFunc(trace);
         const bars = pointGroup.selectAll('g.point').data(cd, keyFunc);
         const barsEnter = bars.enter().append('g').classed('point', true);

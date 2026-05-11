@@ -41272,6 +41272,8 @@ var Plotly = (() => {
     const lines = ensureSingle(tr, "g", "lines");
     const points = ensureSingle(tr, "g", "points");
     const text = ensureSingle(tr, "g", "text");
+    points.datum(cdscatter);
+    text.datum(cdscatter);
     getComponentMethod("errorbars", "plot")(gd, errorBarGroup, plotinfo, transitionOpts);
     if (trace.visible !== true) return;
     transition4(tr).style("opacity", trace.opacity);
@@ -56615,6 +56617,7 @@ var Plotly = (() => {
       const isHorizontal = trace.orientation === "h";
       const withTransition = hasTransition(opts);
       const pointGroup = ensureSingle(plotGroup, "g", "points");
+      pointGroup.datum(cd);
       const keyFunc2 = getKeyFunc(trace);
       const bars = pointGroup.selectAll("g.point").data(cd, keyFunc2);
       const barsEnter = bars.enter().append("g").classed("point", true);
