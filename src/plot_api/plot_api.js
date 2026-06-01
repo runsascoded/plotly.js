@@ -1990,7 +1990,13 @@ function _relayout(gd, aobj) {
     if (updateAutosize(gd) || aobj.height || aobj.width)
         flags.plot = true;
     // update shape legends
-    const shapes = fullLayout.shapes;
+    // Guard against `fullLayout.shapes` being undefined: when used in
+    // React, a queued resize→setTimeout→relayout can fire after a
+    // `react()` call has swapped `_fullLayout` out from under it, and
+    // plotly's defaults haven't (re-)populated `shapes: []` yet. Reading
+    // `.length` on undefined here throws and the page goes blank on the
+    // next paint. Treat missing as empty (same as having no shapes).
+    const shapes = fullLayout.shapes || [];
     for (i = 0; i < shapes.length; i++) {
         if (shapes[i].showlegend) {
             flags.calc = true;

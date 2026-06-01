@@ -65825,7 +65825,7 @@ void main() {
       }
     }
     if (updateAutosize(gd) || aobj.height || aobj.width) flags.plot = true;
-    const shapes = fullLayout.shapes;
+    const shapes = fullLayout.shapes || [];
     for (i = 0; i < shapes.length; i++) {
       if (shapes[i].showlegend) {
         flags.calc = true;
